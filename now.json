@@ -1,0 +1,20 @@
+{
+  "name": "opds",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/next"
+    }
+  ],
+  "build": {
+    "env": {
+      "SECRET": "@my-secret-key",
+      "ANOTHER_SECRET": "my-other-secret-key"
+    }
+  },
+  "github": {
+    "silent": true,
+    "autoJobCancelation": true
+  }
+}
