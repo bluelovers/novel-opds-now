@@ -1,29 +1,22 @@
-# API routes with REST
+# my-project
 
-Next.js ships with [API routes](https://github.com/zeit/next.js#api-routes), which provide an easy solution to build your own `API`. This example shows how it can be used to create your [REST](https://en.wikipedia.org/wiki/Representational_state_transfer) api.
+## CLI Commands
 
-## Deploy your own
+``` bash
+# install dependencies
+npm install
 
-Deploy the example using [ZEIT Now](https://zeit.co/now):
+# serve with hot reload at localhost:8080
+npm run dev
 
-[![Deploy with ZEIT Now](https://zeit.co/button)](https://zeit.co/new/project?template=https://github.com/zeit/next.js/tree/canary/examples/api-routes-rest)
+# build for production with minification
+npm run build
 
-## How to use
+# test the production build locally
+npm run serve
 
-### Using `create-next-app`
-
-Execute [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npm init next-app --example api-routes-rest api-routes-rest-app
-# or
-yarn create next-app --example api-routes-rest api-routes-rest-app
+# run tests with jest and preact-render-spy 
+npm run test
 ```
 
-### Deploy to Now
-
-Deploy it to the cloud with [now](https://zeit.co/now) ([download](https://zeit.co/download)):
-
-```bash
-now
-```
+For detailed explanation on how things work, checkout the [CLI Readme](https://github.com/developit/preact-cli/blob/master/README.md).

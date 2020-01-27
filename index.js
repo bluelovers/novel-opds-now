@@ -1,0 +1,6 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = ((req, res) => {
+    res.end('77788');
+});
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyJpbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOztBQUtBLGtCQUErQixDQUFDLENBQUMsR0FBRyxFQUFFLEdBQUcsRUFBRSxFQUFFO0lBQzVDLEdBQUcsQ0FBQyxHQUFHLENBQUMsT0FBTyxDQUFDLENBQUE7QUFDakIsQ0FBQyxDQUFDLENBQUEiLCJzb3VyY2VzQ29udGVudCI6WyIvKipcbiAqIENyZWF0ZWQgYnkgdXNlciBvbiAyMDIwLzEvMjguXG4gKi9cbmltcG9ydCB7IFJlcXVlc3RIYW5kbGVyLCBidWZmZXIsIHRleHQsIGpzb24gfSBmcm9tICdtaWNybyc7XG5cbmV4cG9ydCBkZWZhdWx0IDxSZXF1ZXN0SGFuZGxlcj4oKHJlcSwgcmVzKSA9PiB7XG5cdHJlcy5lbmQoJzc3Nzg4Jylcbn0pXG4iXX0=
