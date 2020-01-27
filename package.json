@@ -15,5 +15,8 @@
     "preact-render-to-string": "^5.1.4",
     "preact-ssr-prepass": "^1.0.0"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "now": "^17.0.0-canary.19"
+  }
 }
