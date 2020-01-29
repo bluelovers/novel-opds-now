@@ -3,8 +3,8 @@
   "name": "opds",
   "alias": "opds.now.sh",
   "builds": [{
-    "src": "index.ts",
-    "use": "@now/node-server"
+    "src": "index.js",
+    "use": "@now/node@canary"
   }],
   "routes": [{
     "headers": {
@@ -13,7 +13,7 @@
       "Access-Control-Allow-Headers": "X-Requested-With, Content-Type, Accept"
     },
     "src": "/.*",
-    "dest": "/index.ts"
+    "dest": "/index.js"
   }],
   "env": {
     "VERSION": "@version"

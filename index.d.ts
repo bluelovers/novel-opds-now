@@ -1,3 +1,2 @@
-import { RequestHandler } from 'micro';
-declare const _default: RequestHandler;
-export default _default;
+declare const app: import("express-serve-static-core").Express;
+export default app;
