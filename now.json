@@ -16,6 +16,6 @@
     "dest": "/index.js"
   }],
   "env": {
-    "VERSION": "@version"
+    "VERSION": "1.0.0"
   }
 }
