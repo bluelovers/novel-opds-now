@@ -2,9 +2,6 @@
   "extends": "@bluelovers/tsconfig/esm/esModuleInterop",
   "compilerOptions": {
     "jsx": "preserve",
-    "skipLibCheck": true,
-    "allowJs": true,
-    "removeComments": true,
-    "isolatedModules": true
+    "removeComments": true
   }
 }
