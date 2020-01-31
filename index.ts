@@ -12,108 +12,30 @@ import { ICacheMap } from './lib/types';
 import { PassThrough } from 'stream';
 import { fromBuffer } from 'file-type';
 import { __cacheMapFile } from './lib/const';
+import fileHandler from './server/file';
+import __root from './lib/__root';
+import Gun from 'gun';
+import { setupGun } from './server/gun/setup';
 
 const app = express();
 
 console.log(`build cache`);
 spawnSync('node', [
-	join(__dirname, `./cli/cache.js`),
-]);
+	join(__root, `./cli/cache.js`),
+], {
+	stdio: 'inherit',
+});
 
-app.use('/file/:siteID/:id', (req, res) => {
-	return Bluebird
-		.resolve()
-		.then(async () => {
+app.use('/file', fileHandler());
 
-			console.log(req.baseUrl, req.url, req.params);
-
-			let siteID = req.params.siteID;
-			let novel_id= req.params.id;
-
-			if (siteID.toLowerCase() === 'dmzj')
-			{
-				siteID = EnumNovelSiteList.NovelSiteDmzjApi
-			}
-
-			let map_file = __cacheMapFile;
-
-			let cp = spawnSync('node', [
-				join(__dirname, `./cli/cli.js`),
-				'--mod',
-				'all',
-				'--siteID',
-				siteID,
-				'--novel_id',
-				novel_id,
-			], {
-				stdio: 'inherit',
-			});
-
-			let map = await readJSON(map_file) as ICacheMap;
-
-			let _data = map[siteID][novel_id];
-
-			if (map[_data.siteID]) delete map[_data.siteID][_data.novel_id2];
-			if (map[_data.IDKEY]) delete map[_data.IDKEY][_data.novel_id2];
-			if (map[_data.siteID]) delete map[_data.siteID][_data.novel_id];
-			if (map[_data.IDKEY]) delete map[_data.IDKEY][_data.novel_id];
-			if (map[siteID]) delete map[siteID][novel_id];
-
-			await writeJSON(map_file, map, {spaces:2}).catch(e => {
-				console.error(e)
-			});
-
-			return _data
-		})
-		.then(async (data) =>
-		{
-
-			let fileContents = await readFile(data.epub);
-
-			let readStream = new PassThrough();
-			readStream.end(fileContents);
-
-			let { mime, ext } = await fromBuffer(fileContents);
-
-			if (ext === 'epub' && mime === 'application/zip')
-			{
-				mime = 'application/epub+zip';
-			}
-
-			res.set('Content-disposition', 'attachment; filename=' + data.IDKEY + '_' + basename(data.epub));
-			res.set('Content-Type', mime);
-
-			console.log(`send file to client`)
-			readStream.pipe(res);
-
-			if (typeof data.removeCallback === 'function')
-			{
-				data.removeCallback();
-			}
-			else
-			{
-				remove(data.outputDir)
-			}
-		})
-		.catch(e => {
-
-			let { message } = e;
-			if (e.code === 'ENOENT')
-			{
-				message = `id 不存在 或 伺服器離線`
-			}
-
-			res.json({
-				error: message,
-				params: req.params,
-			})
-
-			console.error(`catch error`, e)
-
-		})
+app.use('/*', (req, res, next) => {
+	console.log(req.baseUrl, req.url, req.params);
+	next();
 });
 
 app.use('/*', (req, res) => res.end('Welcome to micro'));
+
+setupGun(app);
 
 console.log(`server setup ready`);
 export default app

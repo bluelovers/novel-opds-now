@@ -133,7 +133,6 @@ export function downloadNovel2(options: {
 							}
 						})
 						.tapCatch(e => {
-							console.dir(777777777)
 							return options.removeCallback()
 						})
 				}

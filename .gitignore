@@ -7,3 +7,4 @@ package-lock.json
 /report.*.json
 /.tmp/
 tsconfig.tsbuildinfo
+/radata/
