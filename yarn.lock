@@ -5864,10 +5864,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
-segment-dict@^2.3.48, segment-dict@^2.3.50:
-  version "2.3.50"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.50.tgz#900e9a4255fbaf39a306c92068aed27700ddcce8"
-  integrity sha512-T64kAHpl90aA0Pz3F74J8GDEf9gTuIz5UJk+gjKjNoA9Dh3Tz1BvoD006yDGjEmUfzeDo5hoapFGgV3esRG2yw==
+segment-dict@^2.3.48, segment-dict@^2.3.51:
+  version "2.3.51"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.51.tgz#708db2fc62b2841532f895e50f2bdd1b6d04dd45"
+  integrity sha512-E2ImKu/5Wa+KvsA6v40h+7KvMfzPVhbJ6gjVpFE5P0JhzMraYFY6hKgJGWQFX1VVOUtkDMKlJViz8TIsa3BdCQ==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"

@@ -9,11 +9,12 @@ import { __cacheMapFile } from '../lib/const';
 import { spawnSync } from "child_process";
 import { join, basename } from "path";
 import { readJSON, writeJSON, readFile, remove } from 'fs-extra';
-import { ICacheMap } from '../lib/types';
+import { ICacheMap, IGunEpubNode, IGunEpubData, ICacheMapRow } from '../lib/types';
 import { PassThrough } from "stream";
 import { fromBuffer } from 'file-type';
 import __root from '../lib/__root';
 import useGun from './gun/setup';
+import { raceGunEpubFile, allGunEpubFile } from '../lib/gun/epubFile';
 
 function fileHandler()
 {
@@ -37,11 +38,13 @@ function fileHandler()
 			.resolve()
 			.then(async () =>
 			{
-				let gunData = await useGun()
-					// @ts-ignore
-					.get('epub-file')
-					.get(req.params.siteID)
-					.get(req.params.id)
+				let gunData = await raceGunEpubFile([
+						req.params.siteID,
+						siteID,
+					], [
+						req.params.id,
+						novel_id,
+					])
 					.then(function (data)
 					{
 
@@ -73,7 +76,7 @@ function fileHandler()
 								exists,
 								timestamp,
 								isGun,
-							}
+							} as IGunEpubData
 						}
 						else
 						{
@@ -84,9 +87,11 @@ function fileHandler()
 
 				return gunData
 			})
-			.then(async (gunData) => {
+			.then(async (gunData) =>
+			{
 				return Promise.resolve()
-					.then(async () => {
+					.then(async () =>
+					{
 
 						if (gunData && gunData.isGun)
 						{
@@ -136,7 +141,8 @@ function fileHandler()
 
 						return _data
 					})
-					.catch(e => {
+					.catch(e =>
+					{
 
 						if (gunData && gunData.exists)
 						{
@@ -148,8 +154,8 @@ function fileHandler()
 						}
 
 						return Promise.reject(e)
-					})
-				;
+					}) as Promise<IGunEpubData & ICacheMapRow>
+					;
 			})
 			.then(async (data) =>
 			{
@@ -163,31 +169,26 @@ function fileHandler()
 				// @ts-ignore
 				if (!data.isGun)
 				{
-					let gunData = {
+					console.debug(`將檔案儲存到P2P緩存`);
+
+					let gunData: IGunEpubNode = {
 						timestamp: Date.now(),
 						exists: true,
 						filename,
 						base64: fileContents.toString('base64'),
 					};
 
-					if (req.params.siteID !== data.IDKEY || req.params.id !== data.novel_id)
-					{
-						useGun()
-							// @ts-ignore
-							.get('epub-file')
-							.get(req.params.siteID)
-							.get(req.params.id)
-							.put(gunData)
-						;
-					}
-
-					useGun()
-						// @ts-ignore
-						.get('epub-file')
-						.get(data.IDKEY)
-						.get(data.novel_id)
-						.put(gunData)
-					;
+					allGunEpubFile([
+						siteID,
+						req.params.siteID,
+						data.IDKEY,
+					], [
+						novel_id,
+						req.params.id,
+						data.novel_id,
+						data.novel_id2,
+						novel_id,
+					]).forEach(node => node.put(gunData));
 				}
 
 				let readStream = new PassThrough();
@@ -232,7 +233,7 @@ function fileHandler()
 					.put({
 						timestamp: Date.now(),
 						exists: false,
-					})
+					} as IGunEpubNode)
 				;
 
 				let data = {

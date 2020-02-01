@@ -26,3 +26,17 @@ export declare const enum EnumCacheMapRowStatus {
     WAITING = 1,
     DONE = 2
 }
+export declare type IGunEpubNode = {
+    timestamp: number;
+    exists: false;
+} | {
+    timestamp: number;
+    exists: true;
+    filename: string;
+    base64: string;
+};
+export interface IGunEpubData extends Extract<IGunEpubNode, {
+    exists: true;
+}> {
+    isGun: boolean;
+}
