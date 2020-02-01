@@ -14,19 +14,18 @@ import { fromBuffer } from 'file-type';
 import { __cacheMapFile } from './lib/const';
 import fileHandler from './server/file';
 import __root from './lib/__root';
-import Gun from 'gun';
+import favicon from 'serve-favicon';
 import { setupGun } from './server/gun/setup';
+
+import './server/init';
+import opdsHandler from './server/opds';
 
 const app = express();
 
-console.log(`build cache`);
-spawnSync('node', [
-	join(__root, `./cli/cache.js`),
-], {
-	stdio: 'inherit',
-});
+app.use(favicon(join(__root, 'static', 'favicon.png')));
 
 app.use('/file', fileHandler());
+app.use('/opds', opdsHandler());
 
 app.use('/*', (req, res, next) => {
 	console.log(req.baseUrl, req.url, req.params);

@@ -21,9 +21,9 @@ export declare function downloadNovel2(options: {
         epub?: string;
         status?: number;
         removeCallback(): void;
+        outputDir: string;
         siteID: string;
         novel_id2: string | number;
-        outputDir: string;
         outputRoot: string;
     }>;
 }>;

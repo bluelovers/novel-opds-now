@@ -3,10 +3,11 @@
  */
 
 import Gun from 'gun';
+import { Express } from 'express';
 
 let gun: ReturnType<typeof Gun>;
 
-export function setupGun(app): ReturnType<typeof Gun>
+export function setupGun(app?: Express): ReturnType<typeof Gun>
 {
 	// @ts-ignore
 	gun = new Gun({
@@ -22,7 +23,7 @@ export function setupGun(app): ReturnType<typeof Gun>
 
 export function useGun(): ReturnType<typeof Gun>
 {
-	return gun;
+	return gun || (gun = setupGun());
 }
 
 export { gun }

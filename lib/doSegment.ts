@@ -4,6 +4,7 @@
 import Segment, { IOptionsDoSegment } from 'novel-segment/lib/segment/core';
 import { useModules } from 'novel-segment/lib/segment/methods/useModules2';
 import getDefaultModList from 'novel-segment/lib/mod';
+import __root from './__root';
 
 let CACHED_SEGMENT: Segment;
 
@@ -25,7 +26,7 @@ async function getSegment()
 		return CACHED_SEGMENT;
 	}
 
-	const DICT = await import(`${__dirname}/../.cache/cache.json`).then(v => v.default || v) as any;
+	const DICT = await import(`${__root}/.cache/cache.json`).then(v => v.default || v) as any;
 
 	CACHED_SEGMENT = createSegment();
 

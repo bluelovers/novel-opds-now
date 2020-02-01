@@ -13,7 +13,6 @@ import { ICacheMap } from '../lib/types';
 import { PassThrough } from "stream";
 import { fromBuffer } from 'file-type';
 import __root from '../lib/__root';
-import gun from './gun/setup';
 import useGun from './gun/setup';
 
 function fileHandler()
@@ -218,7 +217,7 @@ function fileHandler()
 					params: req.params,
 				};
 
-				res.json(data);
+				res.status(404).json(data);
 
 				console.error(`catch error`, e)
 				console.dir(data)
