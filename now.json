@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "opds",
-  "alias": "opds.now.sh",
+  "name": "gun-opds",
+  "alias": "gun-opds.now.sh",
   "builds": [{
     "src": "index.js",
     "use": "@now/node@canary"
