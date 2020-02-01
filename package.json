@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -36,10 +36,10 @@
     "lint": "npx eslint **/*.ts",
     "ncu": "npx yarn-tool ncu -u",
     "npm:publish": "npm publish",
-    "update-deps": "exho update-deps",
+    "update-deps": "npx yarn-tool install && yarn run prepublish:lockfile",
     "postpublish": "git commit -m \"chore(release): publish\" .",
-    "prepublish:lockfile": "npx sync-lockfile .",
-    "prepublishOnly": "yarn run ncu && yarn run sort-package-json",
+    "prepublish:lockfile": "npx yarn-tool lockfile --npm --overwrite",
+    "prepublishOnly": "yarn run ncu && yarn run sort-package-json && yarn run prepublish:lockfile",
     "sort-package-json": "npx yarn-tool sort",
     "start": "micro",
     "test": "echo \"Error: no test specified\" && exit 1",

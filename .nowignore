@@ -1,3 +1,6 @@
 .tmp
 !.cache
 .idea
+docs
+radata
+**/radata
