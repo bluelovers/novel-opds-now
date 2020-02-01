@@ -46,5 +46,5 @@ app.use('/*', (req, res) => {
 
 setupGun(app);
 
-console.log(`server setup ready`);
+console.debug(`server setup ready`);
 export default app

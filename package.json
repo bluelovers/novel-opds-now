@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -58,6 +58,7 @@
     "@node-novel/layout-pattern": "^1.0.12",
     "@now/node": "^1.4.0",
     "@yarn-tool/update-notifier": "^1.0.6",
+    "address2": "^1.0.1",
     "bluebird": "^3.7.2",
     "calibre-opds": "^1.0.4",
     "cjk-conv": "^1.2.30",
@@ -76,7 +77,8 @@
     "novel-segment": "^2.5.3",
     "novel-segment-cli": "^1.1.1",
     "opds-extra": "^3.0.7",
-    "segment-dict": "^2.3.50",
+    "qrcode-terminal": "^0.12.0",
+    "segment-dict": "^2.3.51",
     "serve-favicon": "^2.5.0",
     "sort-object-keys2": "^1.1.0",
     "ta-json-x": "^2.5.2",

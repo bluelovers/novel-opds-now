@@ -27,6 +27,8 @@ export function setupGun(app?: Express): ReturnType<typeof Gun>
 		file
 	});
 
+	console.debug(`P2P緩存位於 ${file}`);
+
 	return gun
 }
 

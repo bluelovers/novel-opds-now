@@ -22,7 +22,7 @@ function buildCache()
 			let md = (Date.now() - st.mtimeMs) / 1000;
 			if (md < 3600)
 			{
-				return Promise.resolve(console.log(`[Segment][Cache] 距離上次緩存已過 ${md}s`))
+				return Promise.resolve(console.debug(`[Segment][Cache] 距離上次緩存已過 ${md}s`))
 			}
 		}
 		catch (e)
@@ -37,7 +37,7 @@ function buildCache()
 
 	return outputJSON(__cache, CACHED_SEGMENT.DICT)
 		.then(() => {
-			console.log('[Segment][Cache] build done')
+			console.debug('[Segment][Cache] build done')
 		})
 }
 

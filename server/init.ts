@@ -13,4 +13,4 @@ spawn('node', [
 	stdio: 'inherit',
 });
 
-updateCacheAll();
+updateCacheAll().tap(v => console.debug(`[UPDATE] 小說列表`));
