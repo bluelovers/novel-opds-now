@@ -8,6 +8,9 @@ import { spawnSync } from 'child_process';
 import http from 'http';
 import micro from 'micro';
 import app from '../index';
+import updateNotifier from '@yarn-tool/update-notifier';
+
+updateNotifier([__dirname, '..']);
 
 let argv = yargs
 	.option('port', {
