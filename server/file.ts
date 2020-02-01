@@ -45,7 +45,7 @@ function fileHandler()
 					.then(function (data)
 					{
 
-						if (data.exists)
+						if (data && data.exists)
 						{
 							let { base64, filename, exists, timestamp } = data;
 							let isGun = false;
@@ -85,6 +85,7 @@ function fileHandler()
 
 						console.log(`取得檔案中...`);
 						let cp = spawnSync('node', [
+							'--experimental-worker',
 							join(__root, `./cli/cli.js`),
 							'--mod',
 							'all',

@@ -39,6 +39,7 @@ switch (argv.mod as 'handle' | 'download')
 		}
 
 		spawnSync('node', [
+			'--experimental-worker',
 			resolve(__dirname, `./mod/${argv.mod}`),
 			'--IDKEY',
 			argv.siteID,
