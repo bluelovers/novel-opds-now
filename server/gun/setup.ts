@@ -3,6 +3,7 @@
  */
 
 import Gun from 'gun';
+import 'gun/lib/server';
 import { Express } from 'express';
 
 let gun: ReturnType<typeof Gun>;
