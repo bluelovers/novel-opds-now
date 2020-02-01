@@ -91,3 +91,4 @@ node_modules
 /.tmp/
 tsconfig.tsbuildinfo
 /radata/
+/now.json
