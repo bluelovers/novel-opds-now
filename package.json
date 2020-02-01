@@ -1,25 +1,43 @@
 {
-  "private": true,
-  "name": "my-project",
-  "version": "0.0.0",
+  "name": "novel-opds-now",
+  "version": "1.0.0",
+  "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "license": "MIT",
-  "scripts": {
-    "now": "now --debug",
-    "dev": "now dev --debug",
-    "start": "micro"
+  "author": "",
+  "main": "index.js",
+  "bin": {
+    "novel-opds-now": "bin/novel-opds-now.js"
   },
-  "devDependencies": {
-    "@bluelovers/tsconfig": "^1.0.17",
-    "@types/bluebird": "^3.5.29",
-    "@types/express": "^4.17.2",
-    "@types/fs-extra": "^8.0.1",
-    "@types/gun": "^0.9.2",
-    "@types/lodash": "^4.14.149",
-    "@types/node": "^13.7.0",
-    "@types/serve-favicon": "^2.5.0",
-    "@types/tmp": "^0.1.0",
-    "@types/yargs": "^15.0.3",
-    "now": "^17.0.0-canary.25"
+  "directories": {
+    "lib": "lib"
+  },
+  "keywords": [
+    "opds",
+    "server",
+    "gun",
+    "gun.js",
+    "epub",
+    "book",
+    "local",
+    "novel",
+    "node-novel"
+  ],
+  "scripts": {
+    "coverage": "npx nyc yarn run test",
+    "dev": "now dev --debug",
+    "lint": "npx eslint **/*.ts",
+    "ncu": "npx yarn-tool ncu -u",
+    "now": "now --debug",
+    "npm:publish": "npm publish",
+    "postpublish_": "git commit -m \"chore(release): publish\" .",
+    "prepublish:lockfile": "npx sync-lockfile .",
+    "prepublishOnly_": "yarn run ncu && yarn run sort-package-json && yarn run test",
+    "sort-package-json": "npx yarn-tool sort",
+    "start": "micro",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:mocha": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
+    "tsc:default": "tsc -p tsconfig.json",
+    "tsc:esm": "tsc -p tsconfig.esm.json"
   },
   "dependencies": {
     "@bluelovers/fast-glob": "^3.0.4",
@@ -49,9 +67,6 @@
     "novel-segment": "^2.5.3",
     "novel-segment-cli": "^1.1.1",
     "opds-extra": "^3.0.7",
-    "preact": "^10.2.1",
-    "preact-render-to-string": "^5.1.4",
-    "preact-router": "^3.2.1",
     "segment-dict": "^2.3.50",
     "serve-favicon": "^2.5.0",
     "sort-object-keys2": "^1.1.0",
@@ -60,5 +75,17 @@
     "ts-type": "^1.2.13",
     "yargs": "^15.1.0",
     "zero-width": "^1.0.5"
+  },
+  "devDependencies": {
+    "@bluelovers/tsconfig": "^1.0.17",
+    "@types/bluebird": "^3.5.29",
+    "@types/express": "^4.17.2",
+    "@types/fs-extra": "^8.0.1",
+    "@types/gun": "^0.9.2",
+    "@types/lodash": "^4.14.149",
+    "@types/node": "^13.7.0",
+    "@types/serve-favicon": "^2.5.0",
+    "@types/tmp": "^0.1.0",
+    "@types/yargs": "^15.0.3"
   }
 }

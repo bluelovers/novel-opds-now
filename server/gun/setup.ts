@@ -5,11 +5,18 @@
 import Gun from 'gun';
 import 'gun/lib/server';
 import { Express } from 'express';
+import __root from '../../lib/__root';
+import { join } from 'path';
+import { OUTPUT_DIR } from '../../lib/const';
+import { ensureDirSync } from 'fs-extra';
 
 let gun: ReturnType<typeof Gun>;
 
 export function setupGun(app?: Express): ReturnType<typeof Gun>
 {
+	let file = join(OUTPUT_DIR, 'novel-opds-now.cache', 'radata');
+	ensureDirSync(file);
+
 	// @ts-ignore
 	gun = new Gun({
 		web: app,
@@ -17,6 +24,7 @@ export function setupGun(app?: Express): ReturnType<typeof Gun>
 			"https://gunjs.herokuapp.com/gun",
 			"http://nmr.io:8765/gun",
 		],
+		file
 	});
 
 	return gun
