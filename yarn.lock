@@ -442,7 +442,7 @@
   dependencies:
     is-npx "^1.0.0"
 
-"@yarn-tool/update-notifier@^1.0.4":
+"@yarn-tool/update-notifier@^1.0.4", "@yarn-tool/update-notifier@^1.0.6":
   version "1.0.6"
   resolved "https://registry.npmjs.org/@yarn-tool/update-notifier/-/update-notifier-1.0.6.tgz#12d628297a770f1ea6218464e8b8bb31e3e60131"
   integrity sha512-FQ57aLqCnXdWecryQ/7k61tDrKv1nsB6Vvd3uru1QKKPb+isPdmQavJOhlcBn0pNV+kjnklWp1W8TT0g6c4T6w==
