@@ -40,8 +40,8 @@ function fileHandler()
 				let gunData = await useGun()
 					// @ts-ignore
 					.get('epub-file')
-					.get(siteID)
-					.get(novel_id)
+					.get(req.params.siteID)
+					.get(req.params.id)
 					.then(function (data)
 					{
 
@@ -49,6 +49,12 @@ function fileHandler()
 						{
 							let { base64, filename, exists, timestamp } = data;
 							let isGun = false;
+
+							if (!(base64 && filename && exists && timestamp))
+							{
+								console.warn(`於P2P緩存發現檔案...`, `但資料似乎已損毀`);
+								return null
+							}
 
 							console.log(`於P2P緩存發現檔案...`, new Date(timestamp));
 
@@ -68,6 +74,10 @@ function fileHandler()
 								timestamp,
 								isGun,
 							}
+						}
+						else
+						{
+							console.log(`沒有發現P2P緩存...`);
 						}
 					})
 				;
@@ -97,10 +107,21 @@ function fileHandler()
 							stdio: 'inherit',
 						});
 
-						let map = await readJSON(map_file) as ICacheMap;
+						if (cp.error)
+						{
+							return Promise.reject(cp.error)
+						}
+
+						let map: ICacheMap = await readJSON(map_file);
+
+						if (!map || !map[siteID] || !map[siteID][novel_id])
+						{
+							return Promise.reject(new Error(`建立檔案時失敗，${siteID} ${novel_id} 可能不存在或解析失敗...`))
+						}
 
 						let _data = map[siteID][novel_id];
 
+						if (map[req.params.siteID]) delete map[req.params.siteID][req.params.id];
 						if (map[_data.siteID]) delete map[_data.siteID][_data.novel_id2];
 						if (map[_data.IDKEY]) delete map[_data.IDKEY][_data.novel_id2];
 						if (map[_data.siteID]) delete map[_data.siteID][_data.novel_id];
@@ -109,6 +130,7 @@ function fileHandler()
 
 						await writeJSON(map_file, map, { spaces: 2 }).catch(e =>
 						{
+							console.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`);
 							console.error(e)
 						});
 
@@ -151,8 +173,8 @@ function fileHandler()
 					useGun()
 						// @ts-ignore
 						.get('epub-file')
-						.get(siteID)
-						.get(novel_id)
+						.get(req.params.siteID)
+						.get(req.params.id)
 						.put(gunData)
 					;
 
@@ -202,8 +224,8 @@ function fileHandler()
 				useGun()
 					// @ts-ignore
 					.get('epub-file')
-					.get(siteID)
-					.get(novel_id)
+					.get(req.params.siteID)
+					.get(req.params.id)
 					.put({
 						timestamp: Date.now(),
 						exists: false,
@@ -213,12 +235,14 @@ function fileHandler()
 				let data = {
 					error: message,
 					params: req.params,
+					timestamp: Date.now(),
 				};
 
 				res.status(404).json(data);
 
-				console.error(`catch error`, e)
-				console.dir(data)
+				console.warn(data);
+
+				console.warn(`以下錯誤訊息為除錯用，並非每個都會對程式造成影響 =>`, e)
 
 			})
 	});
