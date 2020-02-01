@@ -78,7 +78,7 @@ function fileHandler()
 				return Promise.resolve()
 					.then(async () => {
 
-						if (gunData.isGun)
+						if (gunData && gunData.isGun)
 						{
 							return gunData
 						}
@@ -93,7 +93,7 @@ function fileHandler()
 							'--novel_id',
 							novel_id,
 						], {
-							//stdio: 'inherit',
+							stdio: 'inherit',
 						});
 
 						let map = await readJSON(map_file) as ICacheMap;
@@ -115,7 +115,7 @@ function fileHandler()
 					})
 					.catch(e => {
 
-						if (gunData.exists)
+						if (gunData && gunData.exists)
 						{
 							console.warn(`檔案建立失敗，使用P2P緩存代替`);
 
@@ -127,9 +127,6 @@ function fileHandler()
 						return Promise.reject(e)
 					})
 				;
-			})
-			.catch(e => {
-
 			})
 			.then(async (data) =>
 			{
