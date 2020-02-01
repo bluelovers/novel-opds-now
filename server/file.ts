@@ -170,13 +170,16 @@ function fileHandler()
 						base64: fileContents.toString('base64'),
 					};
 
-					useGun()
-						// @ts-ignore
-						.get('epub-file')
-						.get(req.params.siteID)
-						.get(req.params.id)
-						.put(gunData)
-					;
+					if (req.params.siteID !== data.IDKEY || req.params.id !== data.novel_id)
+					{
+						useGun()
+							// @ts-ignore
+							.get('epub-file')
+							.get(req.params.siteID)
+							.get(req.params.id)
+							.put(gunData)
+						;
+					}
 
 					useGun()
 						// @ts-ignore
