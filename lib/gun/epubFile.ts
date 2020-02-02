@@ -23,9 +23,9 @@ export function makeArrayEntrys(siteID: ITSValueOrArray<string>, novel_id: ITSVa
 		.reduce((a, siteID) => {
 
 
-			(novel_id as string[]).forEach(novel_id => {
+			siteID && (novel_id as string[]).forEach(novel_id => {
 
-				a.push([siteID, novel_id])
+				novel_id && a.push([siteID, novel_id])
 			});
 
 			return a;
@@ -52,12 +52,12 @@ export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSVal
 		.reduce((a, siteID) => {
 
 
-		(novel_id as string[]).forEach(novel_id => {
+			siteID && (novel_id as string[]).forEach(novel_id => {
 
 			//console.log(siteID, novel_id);
 
 			// @ts-ignore
-			a.push(gun.get('epub-file').get(siteID).get(novel_id))
+				novel_id && a.push(gun.get('epub-file').get(siteID).get(novel_id))
 		});
 
 		return a;
@@ -67,6 +67,12 @@ export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSVal
 export function promiseGunEpubFile<T>(siteID: string | string[], novel_id: string | string[])
 {
 	return allGunEpubFile(siteID, novel_id).map(node => node.then() as Promise<T>)
+}
+
+export function nodeGunEpubFile(siteID: string, novel_id: string)
+{
+	// @ts-ignore
+	return useGun().get('epub-file').get(siteID).get(novel_id)
 }
 
 export function raceGunEpubFile(siteID: string | string[], novel_id: string | string[])

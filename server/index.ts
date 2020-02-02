@@ -8,17 +8,17 @@ import { spawnSync } from 'child_process';
 import { readJSON, readJSONSync, readFile, remove, writeJSON } from 'fs-extra';
 import { join, basename } from "path";
 import Bluebird from 'bluebird';
-import { ICacheMap } from './lib/types';
+import { ICacheMap } from '../lib/types';
 import { PassThrough } from 'stream';
 import { fromBuffer } from 'file-type';
-import { __cacheMapFile } from './lib/const';
-import fileHandler from './server/file';
-import __root from './lib/__root';
+import { __cacheMapFile } from '../lib/const';
+import fileHandler from './file';
+import __root from '../lib/__root';
 import favicon from 'serve-favicon';
-import { setupGun } from './server/gun/setup';
+import { setupGun } from './gun/setup';
 
-import './server/init';
-import opdsHandler from './server/opds';
+import './init';
+import opdsHandler from './opds';
 import gunServe from 'gun/lib/serve';
 import gunHttp from 'gun/lib/http';
 
@@ -45,8 +45,6 @@ app.use('/*', (req, res) => {
 
 	res.end(`${html}Welcome to micro<p>請將 <a href="/opds"><script>document.write(window.location.origin + '/opds')</script></a> 加入閱讀器的訂閱內</p><p><script>document.write('<img src="https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl= ' + window.location.origin + '/opds"/>')</script></p>`)
 });
-
-setupGun(app);
 
 console.debug(`server setup ready`);
 export default app
