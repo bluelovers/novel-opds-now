@@ -20,10 +20,12 @@ import { setupGun } from './server/gun/setup';
 import './server/init';
 import opdsHandler from './server/opds';
 import gunServe from 'gun/lib/serve';
+import gunHttp from 'gun/lib/http';
 
 const app = express();
 
 app.use(gunServe);
+//app.use('/gun', gunHttp);
 app.use(favicon(join(__root, 'static', 'favicon.png')));
 
 app.use('/file', fileHandler());
@@ -39,7 +41,7 @@ app.use('/*', (req, res) => {
 	res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
 	res.charset = 'utf-8';
 
-	let html = `<meta charset="utf-8"/><script src="/gun.js"></script><script>var gun = Gun(["https://gunjs.herokuapp.com/gun","http://nmr.io:8765/gun",window.location.origin + '/gun']);</script>`;
+	let html = `<meta charset="utf-8"/><script src="/gun.js"><script src="/gun/lib/webrtc.js"></script><script>var gun = Gun(["https://gunjs.herokuapp.com/gun","http://nmr.io:8765/gun",window.location.origin + '/gun']);</script>`;
 
 	res.end(`${html}Welcome to micro<p>請將 <a href="/opds"><script>document.write(window.location.origin + '/opds')</script></a> 加入閱讀器的訂閱內</p><p><script>document.write('<img src="https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl= ' + window.location.origin + '/opds"/>')</script></p>`)
 });

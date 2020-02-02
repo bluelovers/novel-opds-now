@@ -14,7 +14,7 @@ import { PassThrough } from "stream";
 import { fromBuffer } from 'file-type';
 import __root from '../lib/__root';
 import useGun from './gun/setup';
-import { raceGunEpubFile, allGunEpubFile } from '../lib/gun/epubFile';
+import { raceGunEpubFile, allGunEpubFile, makeArrayEntrys, nodeGunEpubFile } from '../lib/gun/epubFile';
 
 function fileHandler()
 {
@@ -167,17 +167,30 @@ function fileHandler()
 				let filename: string = data.filename || data.IDKEY + '_' + basename(data.epub);
 
 				// @ts-ignore
-				if (!data.isGun)
+				if (!data.isGun || true)
 				{
 					console.debug(`將檔案儲存到P2P緩存`);
 
 					let gunData: IGunEpubNode = {
-						timestamp: Date.now(),
+						timestamp: data.isGun ? data.timestamp : Date.now(),
 						exists: true,
 						filename,
 						base64: fileContents.toString('base64'),
 					};
 
+					makeArrayEntrys([
+						siteID,
+						req.params.siteID,
+						data.IDKEY,
+					], [
+						novel_id,
+						req.params.id,
+						data.novel_id,
+						data.novel_id2,
+						novel_id,
+					]).forEach(([siteID, novel_id]) => nodeGunEpubFile(siteID, novel_id).put(gunData));
+
+					/*
 					allGunEpubFile([
 						siteID,
 						req.params.siteID,
@@ -189,6 +202,7 @@ function fileHandler()
 						data.novel_id2,
 						novel_id,
 					]).forEach(node => node.put(gunData));
+					 */
 				}
 
 				let readStream = new PassThrough();
@@ -225,6 +239,7 @@ function fileHandler()
 					message = `id 不存在 或 伺服器離線`
 				}
 
+				/*
 				useGun()
 					// @ts-ignore
 					.get('epub-file')
@@ -235,6 +250,7 @@ function fileHandler()
 						exists: false,
 					} as IGunEpubNode)
 				;
+				 */
 
 				let data = {
 					error: message,
