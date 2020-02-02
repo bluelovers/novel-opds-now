@@ -7,10 +7,12 @@ export declare function downloadInfo(options: {
     outputRoot: string;
     useCached?: boolean;
 }): IDownloadInfo;
+export declare function is504<E extends Error>(e: E): boolean;
 export declare function downloadNovel2(options: {
     novel_id: string | number;
     siteID: string | EnumNovelSiteList;
     outputRoot: string;
+    useCached?: boolean;
 }): Bluebird<{
     options: IDownloadInfo;
     download(): Bluebird<{
@@ -21,10 +23,11 @@ export declare function downloadNovel2(options: {
         epub?: string;
         status?: number;
         removeCallback(): void;
-        outputDir: string;
         siteID: string;
         novel_id2: string | number;
+        outputDir: string;
         outputRoot: string;
+        timestamp: number;
     }>;
 }>;
 export declare function downloadNovel(novel_id: string | number, siteID: string | EnumNovelSiteList, outputDir?: string): Promise<{

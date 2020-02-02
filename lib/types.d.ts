@@ -15,6 +15,7 @@ export interface ICacheMapRow {
     removeCallback?(): void;
     epub: string;
     status: number | EnumCacheMapRowStatus;
+    timestamp: number;
 }
 export interface IDownloadInfo extends Omit<ICacheMapRow, 'epub' | 'status' | 'removeCallback'> {
     epub?: ICacheMapRow["epub"];
@@ -24,7 +25,8 @@ export interface IDownloadInfo extends Omit<ICacheMapRow, 'epub' | 'status' | 'r
 export declare const enum EnumCacheMapRowStatus {
     NONE = 0,
     WAITING = 1,
-    DONE = 2
+    DONE = 2,
+    WAITING_RETRY = 504
 }
 export declare type IGunEpubNode = {
     timestamp: number;

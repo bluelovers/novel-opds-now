@@ -10,18 +10,19 @@ import FastGlob from '@bluelovers/fast-glob/bluebird';
 import {
 	stat,
 	remove,
-	emptyDir,
-	readJSON,
 	readJSONSync,
 	removeSync,
 	pathExistsSync,
 	ensureFile,
-	ensureDir, ensureDirSync,
+	ensureDir,
+	ensureDirSync,
+	readJSON,
+	writeJSON,
 } from 'fs-extra';
 import { OUTPUT_DIR, __cacheMapFile } from './const';
 import Bluebird from 'bluebird';
 import tmpDir from './tmpDir';
-import { ICacheMap, ICacheMapRow, IDownloadInfo } from './types';
+import { ICacheMap, ICacheMapRow, IDownloadInfo, EnumCacheMapRowStatus } from './types';
 
 export function downloadInfo(options: {
 	novel_id: string | number,
@@ -60,11 +61,25 @@ export function downloadInfo(options: {
 
 			if (data && pathExistsSync(join(data.cwd, '.gitkeep')))
 			{
-				return {
-					...data,
-					removeCallback()
-					{
-						return removeSync(data.outputDir)
+				let _ok = false;
+
+				if (data.status === EnumCacheMapRowStatus.DONE && pathExistsSync(data.epub))
+				{
+					_ok = true
+				}
+				else if (data.status === EnumCacheMapRowStatus.WAITING_RETRY)
+				{
+					_ok = true
+				}
+
+				if (_ok)
+				{
+					return {
+						...data,
+						removeCallback()
+						{
+							return removeSync(data.outputDir)
+						}
 					}
 				}
 			}
@@ -82,6 +97,7 @@ export function downloadInfo(options: {
 
 	ensureDirSync(options.outputRoot);
 	let { name: outputDir, removeCallback } = tmpDir(options.outputRoot);
+	outputDir = `T:\\cache\\yarn-cache\\tmp\\tmp-18864MCwlTdjLia9p`;
 
 	let o = new oc({
 		outputDir,
@@ -109,13 +125,26 @@ export function downloadInfo(options: {
 			return removeSync(outputDir)
 		},
 		outputRoot: options.outputRoot,
+		timestamp: Date.now(),
 	}
+}
+
+export function is504<E extends Error>(e: E)
+{
+	// @ts-ignore
+	if (e.message.includes('504') || e.StatusCode == 504)
+	{
+		return true;
+	}
+
+	return false
 }
 
 export function downloadNovel2(options: {
 	novel_id: string | number,
 	siteID: string | EnumNovelSiteList,
 	outputRoot: string,
+	useCached?: boolean,
 })
 {
 	return Bluebird.resolve()
@@ -126,13 +155,67 @@ export function downloadNovel2(options: {
 				download()
 				{
 					return Bluebird.resolve(downloadNovel(options.novel_id, options.siteID, options.outputDir))
+						.catch(async (e) => {
+							if (is504(e))
+							{
+								console.dir(e);
+
+								await Bluebird.delay(5000);
+
+								return downloadNovel(options.novel_id, options.siteID, options.outputDir)
+							}
+
+							return Promise.reject(e)
+						})
+						.tapCatch(e => {
+							if (is504(e))
+							{
+								e.StatusCode = 504;
+								e.options = options;
+							}
+						})
 						.then(value => {
 							return {
 								...options,
 								...value,
 							}
 						})
-						.tapCatch(e => {
+						.tapCatch(async (e) => {
+
+							if (is504(e))
+							{
+								let map_file = __cacheMapFile;
+
+								let map: ICacheMap = await readJSON(map_file)
+									.catch(e => ({}))
+								;
+
+								map[options.siteID] = map[options.siteID] || {};
+
+								if (!map[options.siteID][options.novel_id] || map[options.siteID][options.novel_id].status !== EnumCacheMapRowStatus.DONE)
+								{
+									map[options.siteID][options.novel_id] = {
+										outputRoot: options.outputDir,
+
+										// @ts-ignore
+										...map[options.siteID][options.novel_id],
+										...options,
+										...e.options,
+
+										status: EnumCacheMapRowStatus.WAITING_RETRY,
+										timestamp: Date.now(),
+									} as any;
+
+									delete map[options.siteID][options.novel_id].removeCallback;
+
+									await writeJSON(map_file, map, {
+										spaces: 2,
+									});
+								}
+
+								return;
+							}
+
 							return options.removeCallback()
 						})
 				}
@@ -147,7 +230,7 @@ export async function downloadNovel(novel_id: string | number, siteID: string | 
 	let { IDKEY } = oc;
 
 	await ensureDir(join(outputDir, IDKEY, String(novel_id)));
-	await emptyDir(join(outputDir, IDKEY, String(novel_id)));
+	//await emptyDir(join(outputDir, IDKEY, String(novel_id)));
 
 	await ensureFile(join(outputDir, IDKEY, String(novel_id), '.gitkeep'));
 
