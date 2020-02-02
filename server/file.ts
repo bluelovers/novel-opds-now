@@ -2,19 +2,18 @@
  * Created by user on 2020/2/1.
  */
 
-import { Request, Response, Router } from 'express';
+import { Router } from 'express';
 import Bluebird from 'bluebird';
 import { EnumNovelSiteList } from 'novel-downloader/src/all';
 import { __cacheMapFile } from '../lib/const';
 import { spawnSync } from "child_process";
 import { join, basename } from "path";
 import { readJSON, writeJSON, readFile, remove } from 'fs-extra';
-import { ICacheMap, IGunEpubNode, IGunEpubData, ICacheMapRow } from '../lib/types';
+import { ICacheMap, IGunEpubNode, IGunEpubData, ICacheMapRow, EnumCacheMapRowStatus } from '../lib/types';
 import { PassThrough } from "stream";
 import { fromBuffer } from 'file-type';
 import __root from '../lib/__root';
-import useGun from './gun/setup';
-import { raceGunEpubFile, allGunEpubFile, makeArrayEntrys, nodeGunEpubFile } from '../lib/gun/epubFile';
+import { raceGunEpubFile, makeArrayEntrys, nodeGunEpubFile } from '../lib/gun/epubFile';
 
 function fileHandler()
 {
@@ -117,11 +116,22 @@ function fileHandler()
 							return Promise.reject(cp.error)
 						}
 
-						let map: ICacheMap = await readJSON(map_file);
+						let map: ICacheMap = await readJSON(map_file).catch(e => null);
 
 						if (!map || !map[siteID] || !map[siteID][novel_id])
 						{
+							console.dir(map);
+
 							return Promise.reject(new Error(`建立檔案時失敗，${siteID} ${novel_id} 可能不存在或解析失敗...`))
+						}
+						else if (map[siteID][novel_id].status === EnumCacheMapRowStatus.WAITING_RETRY)
+						{
+							let e = new Error(`抓取 ${siteID} ${novel_id} 來源時失敗，伺服器可能忙碌或拒絕回應，請之後再重試...`);
+
+							// @ts-ignore
+							e.StatusCode = 504;
+
+							return Promise.reject(e)
 						}
 
 						let _data = map[siteID][novel_id];

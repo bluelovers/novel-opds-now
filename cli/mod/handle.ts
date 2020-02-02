@@ -21,5 +21,6 @@ let argv = yargs
 ;
 
 handleAsync(argv.novel_id, argv.IDKEY, argv.outputDir)
-	.then(v => console.log(v))
+	.then(v => console.log(`ok`, v))
+	.tapCatch(e => console.error(`fail`, e))
 ;

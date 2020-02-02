@@ -259,6 +259,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/debug@^4.1.5":
+  version "4.1.5"
+  resolved "https://registry.npmjs.org/@types/debug/-/debug-4.1.5.tgz#b14efa8852b7768d898906613c23f688713e02cd"
+  integrity sha512-Q1y515GcOdTHgagaVFhHnIFQ38ygs/kmxdNpvpou+raI9UO3YZcHDngBSYKQklcKlvA7iuQlmIKbzvmxcOE9CQ==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.npmjs.org/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"
@@ -1557,6 +1562,15 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
+cwebp-bin@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/cwebp-bin/-/cwebp-bin-5.1.0.tgz#d5bea87c127358558e7bf7a90a6d440d42dcb074"
+  integrity sha512-BsPKStaNr98zfxwejWWLIGELbPERULJoD2v5ijvpeutSAGsegX7gmABgnkRK7MUucCPROXXfaPqkLAwI509JzA==
+  dependencies:
+    bin-build "^3.0.0"
+    bin-wrapper "^4.0.1"
+    logalot "^2.1.0"
+
 cyclist@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/cyclist/-/cyclist-1.0.1.tgz#596e9698fd0c80e12038c2b82d6eb1b35b6224d9"
@@ -1953,10 +1967,10 @@ env-bool@^1.0.3:
   resolved "https://registry.npmjs.org/env-bool/-/env-bool-1.0.3.tgz#4b564760816766eed01b59b3a3c95e87c925548d"
   integrity sha512-Y8SeCpZmIEyCiiOTdKnIofJSlj43RmxoNHB3YNZyU17VE6VVGBEBG9J/f+t/bdydMsghLVlIOeayqV2M8x5iMg==
 
-epub-maker2@^2.4.20:
-  version "2.4.20"
-  resolved "https://registry.npmjs.org/epub-maker2/-/epub-maker2-2.4.20.tgz#47956761670f52e9306cf5aa16e55cec27e9e439"
-  integrity sha512-DEdViPFpvM8KXFxcOLuKMU0H77knxudCd9tZuQL9fWDn3Ags2xCSdIiBrP+QGlz5C1eQqgYkhIPyac9sHyXMTQ==
+epub-maker2@^2.4.21:
+  version "2.4.21"
+  resolved "https://registry.npmjs.org/epub-maker2/-/epub-maker2-2.4.21.tgz#ec8f5560fc307da0c14ba4ee41c6732177333004"
+  integrity sha512-8lyjnQ8yxo4novkWB0saeQtNpFaq1znqqu1/CaiRfP1jBu8Fh5j9OBTnv6NcUS8cvoRA/k0Hcesf3r502+K5Aw==
   dependencies:
     "@types/bluebird" "^3"
     "@types/bluebird-global" "^3"
@@ -1967,8 +1981,8 @@ epub-maker2@^2.4.20:
     autoprefixer "^9.7.4"
     bluebird "^3.7.2"
     bluebird-cancellation "^1.0.9"
-    debug-color2 "^1.1.6"
-    file-type "^13.1.0"
+    debug-color2 "^1.1.7"
+    file-type "^14.0.0"
     fs-iconv "^2"
     handlebars "< 4.6 && >= 4.5"
     hash-sum "^2.0.0"
@@ -1976,21 +1990,23 @@ epub-maker2@^2.4.20:
     html-minifier "^4.0.0"
     imagemin "^7.0.1"
     imagemin-jpegtran "^6.0.0"
+    imagemin-mozjpeg "^8.0.0"
     imagemin-optipng "^7.1.0"
     imagemin-pngquant "^8.0.0"
+    imagemin-webp "^5.1.0"
     isomorphic-fetch "^2.2.1"
     js-beautify "^1.10.3"
     jszip "^3.2.2"
     jszip-fixed-date "^1.0.0"
     moment "^2.24.0"
-    node-novel-info "^2.3.33"
+    node-novel-info "^3.0.0"
     postcss "^7.0.26"
     postcss-epub "^3.0.1"
     postcss-scss "^2.0.0"
     postcss-strip-inline-comments "^0.1.5"
     shortid "^2.2.15"
     slugify "^1.3.6"
-    uuid "^3.3.3"
+    uuid "^3.4.0"
     uuid-by-string "^3.0.2"
 
 err-code@^1.0.0:
@@ -2322,13 +2338,13 @@ file-type@^12.0.0:
   resolved "https://registry.npmjs.org/file-type/-/file-type-12.4.2.tgz#a344ea5664a1d01447ee7fb1b635f72feb6169d9"
   integrity sha512-UssQP5ZgIOKelfsaB5CuGAL+Y+q7EmONuiwF3N5HAH0t27rvrttgi6Ra9k/+DVaY9UF6+ybxu5pOXLUdA8N7Vg==
 
-file-type@^13.1.0, file-type@^13.1.2:
-  version "13.1.2"
-  resolved "https://registry.npmjs.org/file-type/-/file-type-13.1.2.tgz#0e5b72bca7569c152e2d5a84ece07e94f77f833f"
-  integrity sha512-NiHXbmclwHN38eHZfRklosbm7/W+1yacDzRCyddd0NiyuJUArQDmzJ8GPSFJGl82+I59u7sNGfcAVnJsfXJb8A==
+file-type@^14.0.0:
+  version "14.0.0"
+  resolved "https://registry.npmjs.org/file-type/-/file-type-14.0.0.tgz#2b83ebbd39dd57b35eb6dc61f7b22ccca2751c1d"
+  integrity sha512-+gxNvurlwHfTohZC6gqf0ybMl+cXYB9f1x++kw9AgKItdFx20J0fV9wCVR38a5/jphL5EUcusJ9tLYkPRtGHaw==
   dependencies:
     readable-web-to-node-stream "^2.0.0"
-    strtok3 "^5.0.2"
+    strtok3 "^6.0.0"
     token-types "^2.0.0"
     typedarray-to-buffer "^3.1.5"
 
@@ -2337,7 +2353,7 @@ file-type@^3.8.0:
   resolved "https://registry.npmjs.org/file-type/-/file-type-3.9.0.tgz#257a078384d1db8087bc449d107d52a52672b9e9"
   integrity sha1-JXoHg4TR24CHvESdEH1SpSZyuek=
 
-file-type@^4.2.0:
+file-type@^4.2.0, file-type@^4.3.0:
   version "4.4.0"
   resolved "https://registry.npmjs.org/file-type/-/file-type-4.4.0.tgz#1b600e5fca1fbdc6e80c0a70c71c8dba5f7906c5"
   integrity sha1-G2AOX8ofvcboDApwxxyNul95BsU=
@@ -3038,6 +3054,15 @@ imagemin-jpegtran@^6.0.0:
     is-jpg "^2.0.0"
     jpegtran-bin "^4.0.0"
 
+imagemin-mozjpeg@^8.0.0:
+  version "8.0.0"
+  resolved "https://registry.npmjs.org/imagemin-mozjpeg/-/imagemin-mozjpeg-8.0.0.tgz#d2ca4e8c982c7c6eda55069af89dee4c1cebcdfd"
+  integrity sha512-+EciPiIjCb8JWjQNr1q8sYWYf7GDCNDxPYnkD11TNIjjWNzaV+oTg4DpOPQjl5ZX/KRCPMEgS79zLYAQzLitIA==
+  dependencies:
+    execa "^1.0.0"
+    is-jpg "^2.0.0"
+    mozjpeg "^6.0.0"
+
 imagemin-optipng@^7.1.0:
   version "7.1.0"
   resolved "https://registry.npmjs.org/imagemin-optipng/-/imagemin-optipng-7.1.0.tgz#2225c82c35e5c29b7fa98d4f9ecee1161a68e888"
@@ -3057,6 +3082,15 @@ imagemin-pngquant@^8.0.0:
     is-stream "^2.0.0"
     ow "^0.13.2"
     pngquant-bin "^5.0.0"
+
+imagemin-webp@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.npmjs.org/imagemin-webp/-/imagemin-webp-5.1.0.tgz#ddb1307ad97aff97293c5a600e384e40c07f68a7"
+  integrity sha512-BsPTpobgbDPFBBsI3UflnU/cpIVa15qInEDBcYBw16qI/6XiB4vDF/dGp9l4aM3pfFDDYqR0mANMcKpBD7wbCw==
+  dependencies:
+    cwebp-bin "^5.0.0"
+    exec-buffer "^3.0.0"
+    is-cwebp-readable "^2.0.1"
 
 imagemin@^7.0.1:
   version "7.0.1"
@@ -3176,6 +3210,13 @@ is-ci@^2.0.0:
   integrity sha512-YfJT7rkpQB0updsdHLGWrvhBJfcfzNNawYDNIyQXJz0IViGf75O8EBPKSdvw2rF+LGCsX4FZ8tcr3b19LcZq4w==
   dependencies:
     ci-info "^2.0.0"
+
+is-cwebp-readable@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.npmjs.org/is-cwebp-readable/-/is-cwebp-readable-2.0.1.tgz#afb93b0c0abd0a25101016ae33aea8aedf926d26"
+  integrity sha1-r7k7DAq9CiUQEBauM66ort+SbSY=
+  dependencies:
+    file-type "^4.3.0"
 
 is-data-descriptor@^0.1.4:
   version "0.1.4"
@@ -3833,7 +3874,7 @@ log-ok@^0.1.1:
     ansi-green "^0.1.1"
     success-symbol "^0.1.0"
 
-logalot@^2.0.0:
+logalot@^2.0.0, logalot@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npmjs.org/logalot/-/logalot-2.1.0.tgz#5f8e8c90d304edf12530951a5554abb8c5e3f552"
   integrity sha1-X46MkNME7fElMJUaVVSruMXj9VI=
@@ -3967,10 +4008,10 @@ markdown-it-ruby@^0.1.1:
   resolved "https://registry.npmjs.org/markdown-it-ruby/-/markdown-it-ruby-0.1.1.tgz#6e2050a9b2c3275afc2844920d53cdffbbe12f78"
   integrity sha1-biBQqbLDJ1r8KESSDVPN/7vhL3g=
 
-markdown-it-title@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/markdown-it-title/-/markdown-it-title-1.0.4.tgz#ac09244da2ad9646620302075d292eb7f5e72a58"
-  integrity sha1-rAkkTaKtlkZiAwIHXSkut/XnKlg=
+markdown-it-title@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/markdown-it-title/-/markdown-it-title-2.0.0.tgz#dcbddd46d884c03bb97b01051053365818d336d1"
+  integrity sha512-LXuPJpHawtkrjfkmlRtrq/IgCWaQPQQcMXpyeoQo9pKGl4dalastj5NmwcmxnBBiCSHRzn9e8KX8CgVDQ9dg4A==
 
 markdown-it-toc-and-anchor@^4.2.0:
   version "4.2.0"
@@ -4218,6 +4259,15 @@ move-concurrently@^1.0.1:
     mkdirp "^0.5.1"
     rimraf "^2.5.4"
     run-queue "^1.0.3"
+
+mozjpeg@^6.0.0:
+  version "6.0.1"
+  resolved "https://registry.npmjs.org/mozjpeg/-/mozjpeg-6.0.1.tgz#56969dddb5741ef2bcb1af066cae21e61a91a27b"
+  integrity sha512-9Z59pJMi8ni+IUvSH5xQwK5tNLw7p3dwDNCZ3o1xE+of3G5Hc/yOz6Ue/YuLiBXU3ZB5oaHPURyPdqfBX/QYJA==
+  dependencies:
+    bin-build "^3.0.0"
+    bin-wrapper "^4.0.0"
+    logalot "^2.1.0"
 
 ms@2.0.0:
   version "2.0.0"
@@ -4476,23 +4526,23 @@ novel-downloader@^1.3.10:
     ts-type "^1.2.13"
     upath2 "^2.1.3"
 
-novel-epub@^1.1.58:
-  version "1.1.58"
-  resolved "https://registry.npmjs.org/novel-epub/-/novel-epub-1.1.58.tgz#e02c89649497741d2420a9c1b0f7726f587e2e3f"
-  integrity sha512-3LHRSryz/2P2c9Hyo28xPILqRUBv6i0WW6Jf1SyZfC4Zucapsc+otkjRzm6MU45Kv1iWk7UgLL25AFIu6AYgRw==
+novel-epub@^1.1.60:
+  version "1.1.60"
+  resolved "https://registry.npmjs.org/novel-epub/-/novel-epub-1.1.60.tgz#aba6dcb081301ee3b5038862d9b7e9b95975728c"
+  integrity sha512-kEPi17P6xyzC+ImbkdvM9FT1tpBhy08pHLhMt+2RTYnrkEoSrNHU9I1WRPLoHe9gvfw18t01+VMOn11KVSfWFA==
   dependencies:
     "@node-novel/epub-util" "^1.0.2"
     "@node-novel/normalize" "^1.0.10"
     "@node-novel/parse-txt-tag" "^1.0.5"
     "@toycode/markdown-it-class" "^1.2.1"
-    "@yarn-tool/update-notifier" "^1.0.4"
+    "@yarn-tool/update-notifier" "^1.0.6"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
-    cjk-conv "^1.2.28"
+    cjk-conv "^1.2.30"
     crlf-normalize "^1.0.3"
-    debug-color2 "^1.1.6"
+    debug-color2 "^1.1.7"
     deepmerge-plus "^2.1.3"
-    epub-maker2 "^2.4.20"
+    epub-maker2 "^2.4.21"
     execall2 "^1.1.4"
     fs-iconv "^2.0.10"
     is-relative "^1.0.0"
@@ -4504,7 +4554,7 @@ novel-epub@^1.1.58:
     markdown-it-implicit-figures "^0.9.0"
     markdown-it-include "^1.1.0"
     markdown-it-ruby "^0.1.1"
-    markdown-it-title "^1.0.4"
+    markdown-it-title "^2.0.0"
     markdown-it-toc-and-anchor "^4.2.0"
     moment "^2.24.0"
     node-novel-globby "^2.0.9"
@@ -6296,12 +6346,13 @@ strip-outer@^1.0.0:
   dependencies:
     escape-string-regexp "^1.0.2"
 
-strtok3@^5.0.2:
-  version "5.0.2"
-  resolved "https://registry.npmjs.org/strtok3/-/strtok3-5.0.2.tgz#bb81f1f56742e16f1a30ccce5dc3d9498aa5475a"
-  integrity sha512-EFeVpFC5qDsqPEJSrIYyS/ueFBknGhgSK9cW+YAJF/cgJG/KSjoK7X6rK5xnpcLe7y1LVkVFCXWbAb+ClNKzKQ==
+strtok3@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/strtok3/-/strtok3-6.0.0.tgz#d6b900863daeacfe6c1724c6e7bb36d7a58e83c8"
+  integrity sha512-ZXlmE22LZnIBvEU3n/kZGdh770fYFie65u5+2hLK9s74DoFtpkQIdBZVeYEzlolpGa+52G5IkzjUWn+iXynOEQ==
   dependencies:
     "@tokenizer/token" "^0.1.1"
+    "@types/debug" "^4.1.5"
     debug "^4.1.1"
     peek-readable "^3.1.0"
 
@@ -6890,7 +6941,7 @@ uuid-by-string@^3.0.2:
     js-md5 "^0.7.3"
     js-sha1 "^0.6.0"
 
-uuid@^3.0.1, uuid@^3.3.2, uuid@^3.3.3:
+uuid@^3.0.1, uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
