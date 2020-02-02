@@ -9,11 +9,12 @@ import FastGlob from '@bluelovers/fast-glob/bluebird';
 import { join, parse, normalize, sep, relative } from "path";
 import { OUTPUT_DIR } from '../../lib/const';
 import { EnumNovelSiteList } from 'novel-downloader/src/all';
-import { readFile, writeFile, rename } from 'fs-extra';
+import { readFile, writeFile, rename, move } from 'fs-extra';
 import Bluebird from 'bluebird';
 import doSegment from '../../lib/doSegment';
 import { cn2tw_min } from '../../lib/cn2tw_min';
 import handleContext from '../../lib/doLayout';
+import { array_unique } from 'array-hyper-unique';
 
 const handleAsync = function handleAsync(id: string | number, IDKEY: string, outputDir = OUTPUT_DIR): Bluebird<boolean>
 {
@@ -81,11 +82,14 @@ if (isMainThread)
 				file = normalize(file);
 				let p = parse(file);
 				let file_new = join(p.dir, cn2tw_min(p.name) + p.ext);
-				return rename(file, file_new)
+				return move(file, file_new, {
+					overwrite: true,
+				})
 					.then(value => file_new)
 					.catch(e => file)
 				;
 			})
+			.then(v => array_unique(v))
 		;
 	}
 
@@ -118,7 +122,7 @@ if (isMainThread)
 			});
 		}
 
-		if (skipSegment && skipSegment.length)
+		if (skipSegment && skipSegment.length && list.length)
 		{
 			list.forEach((value, index) => {
 
@@ -148,8 +152,14 @@ if (isMainThread)
 				workerData,
 			});
 
-			let timer = setTimeout(resolve, 60 * 1000);
 			const values = [] as T;
+
+			let timer = setTimeout(() => {
+
+				console.warn(`處理超時...再執行一次，本次已處理 ${values.length} 檔案`);
+
+				resolve(values)
+			}, 60 * 1000);
 
 			worker.on('message', (v) =>
 			{
