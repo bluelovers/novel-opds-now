@@ -65,7 +65,7 @@ Bluebird
 			outputPath: cwd,
 			padEndDate: false,
 			filename: novel_id,
-			noLog: true,
+			//noLog: true,
 			downloadRemoteFile: true,
 		})
 			.tapCatch(e => {
