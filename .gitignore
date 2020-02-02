@@ -92,3 +92,4 @@ node_modules
 tsconfig.tsbuildinfo
 /radata/
 /now.json
+/.cache/cached/demonovel/

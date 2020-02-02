@@ -4,6 +4,7 @@ import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
 import { Link } from 'opds-extra/lib/v1/core';
 import { OPDSV1 } from 'opds-extra';
 import loadCache from '../novel-cache/load';
+import { prefixRoot as prefixDemo, title as titleDemo } from '../demonovel/opds';
 
 export function makeOPDSSite(siteID: ISiteIDs)
 {
@@ -15,6 +16,17 @@ export function makeOPDSSite(siteID: ISiteIDs)
 		async (feed) =>
 		{
 			feed.books = feed.books || [];
+
+			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+				title: `所有書庫`,
+				links: [
+					{
+						href: `/opds`,
+						title: EnumLinkRel.ALTERNATE,
+						type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
+					} as Link,
+				],
+			}));
 
 			await loadCache<{
 				id,
@@ -56,16 +68,32 @@ export function makeOPDSPortal()
 		{
 			feed.books = feed.books || [];
 
-			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
-				title: `書庫：demonovel`,
-				links: [
-					{
-						href: `https://demonovel.netlify.com/static/opds.xml`,
-						title: EnumLinkRel.ALTERNATE,
-						type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
-					} as Link,
-				],
-			}));
+			if (0)
+			{
+				feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+					title: `書庫：${titleDemo}`,
+					links: [
+						{
+							href: `https://demonovel.netlify.com/static/opds.xml`,
+							title: EnumLinkRel.ALTERNATE,
+							type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
+						} as Link,
+					],
+				}));
+			}
+			else
+			{
+				feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+					title: `書庫：${titleDemo}`,
+					links: [
+						{
+							href: `${prefixDemo}/all.xml`,
+							title: EnumLinkRel.ALTERNATE,
+							type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
+						} as Link,
+					],
+				}));
+			}
 
 			Object.keys(id_titles_map)
 				.forEach((siteID) =>
