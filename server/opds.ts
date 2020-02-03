@@ -2,10 +2,20 @@ import { Router } from 'express';
 import { id_titles_map } from '../lib/novel-cache/types';
 import makeOPDSPortal, { makeOPDSSite } from '../lib/opds/index';
 import opdsDemoNovelHandler from './opds/demonovel';
+import updateCacheAll from '../lib/novel-cache/update';
+import updateCache from '../lib/demonovel/update';
 
 function opdsHandler()
 {
 	const router = Router();
+
+	router.use('/*', async (req, res, next) =>
+	{
+		updateCacheAll();
+		updateCache();
+
+		next();
+	});
 
 	router.use(opdsDemoNovelHandler());
 

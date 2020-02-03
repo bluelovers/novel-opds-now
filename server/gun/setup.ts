@@ -3,7 +3,7 @@
  */
 
 import Gun from 'gun';
-import 'gun/lib/server';
+//import 'gun/lib/server';
 import { Express } from 'express';
 import __root from '../../lib/__root';
 import { join } from 'path';

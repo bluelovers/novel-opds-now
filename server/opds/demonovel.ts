@@ -5,8 +5,6 @@ import makeOPDSPortal, { prefix, makeOPDSType } from '../../lib/demonovel/opds';
 import buildCache from '../../lib/demonovel/build';
 import updateCache from '../../lib/demonovel/update';
 
-updateCache();
-
 function opdsDemoNovelHandler()
 {
 	const router = Router();
