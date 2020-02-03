@@ -1,4 +1,4 @@
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 export declare type ICacheMap = {
     [siteID in (ICacheMapRow["IDKEY"] & ICacheMapRow["siteID"])]: {
         [novel_id: string]: ICacheMapRow;

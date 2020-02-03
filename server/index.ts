@@ -3,7 +3,7 @@
  */
 import micro, { RequestHandler, buffer, text, json } from 'micro';
 import express from 'express';
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { spawnSync } from 'child_process';
 import { readJSON, readJSONSync, readFile, remove, writeJSON } from 'fs-extra';
 import { join, basename } from "path";

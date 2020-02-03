@@ -4,7 +4,7 @@
 
 import { Router } from 'express';
 import Bluebird from 'bluebird';
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { __cacheMapFile } from '../lib/const';
 import { spawnSync } from "child_process";
 import { join, basename } from "path";
@@ -14,6 +14,7 @@ import { PassThrough } from "stream";
 import { fromBuffer } from 'file-type';
 import __root from '../lib/__root';
 import { raceGunEpubFile, makeArrayEntrys, nodeGunEpubFile } from '../lib/gun/epubFile';
+import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 
 function fileHandler()
 {
@@ -31,15 +32,24 @@ function fileHandler()
 			siteID = EnumNovelSiteList.NovelSiteDmzjApi
 		}
 
+		let IDKEY = siteID2IDKEY(siteID);
+
 		let map_file = __cacheMapFile;
 
 		return Bluebird
-			.resolve()
+			.resolve(IDKEY)
+			.tap(IDKEY => {
+				if (!IDKEY)
+				{
+					return Promise.reject(new Error(`${siteID} 模組不存在`))
+				}
+			})
 			.then(async () =>
 			{
 				let gunData = await raceGunEpubFile([
-						req.params.siteID,
-						siteID,
+						//req.params.siteID,
+						//siteID,
+					IDKEY,
 					], [
 						req.params.id,
 						novel_id,
@@ -118,13 +128,13 @@ function fileHandler()
 
 						let map: ICacheMap = await readJSON(map_file).catch(e => null);
 
-						if (!map || !map[siteID] || !map[siteID][novel_id])
+						if (!map || !map[IDKEY] || !map[IDKEY][novel_id])
 						{
 							console.dir(map);
 
 							return Promise.reject(new Error(`建立檔案時失敗，${siteID} ${novel_id} 可能不存在或解析失敗...`))
 						}
-						else if (map[siteID][novel_id].status === EnumCacheMapRowStatus.WAITING_RETRY)
+						else if (map[IDKEY][novel_id].status === EnumCacheMapRowStatus.WAITING_RETRY)
 						{
 							let e = new Error(`抓取 ${siteID} ${novel_id} 來源時失敗，伺服器可能忙碌或拒絕回應，請之後再重試...`);
 
@@ -134,14 +144,10 @@ function fileHandler()
 							return Promise.reject(e)
 						}
 
-						let _data = map[siteID][novel_id];
+						let _data = map[IDKEY][novel_id];
 
-						if (map[req.params.siteID]) delete map[req.params.siteID][req.params.id];
-						if (map[_data.siteID]) delete map[_data.siteID][_data.novel_id2];
-						if (map[_data.IDKEY]) delete map[_data.IDKEY][_data.novel_id2];
-						if (map[_data.siteID]) delete map[_data.siteID][_data.novel_id];
-						if (map[_data.IDKEY]) delete map[_data.IDKEY][_data.novel_id];
-						if (map[siteID]) delete map[siteID][novel_id];
+						delete map[IDKEY][_data.novel_id2];
+						delete map[IDKEY][_data.novel_id];
 
 						await writeJSON(map_file, map, { spaces: 2 }).catch(e =>
 						{
@@ -174,7 +180,7 @@ function fileHandler()
 				// @ts-ignore
 				let fileContents: Buffer = data.base64 && Buffer.from(data.base64, 'base64') || await readFile(data.epub);
 				// @ts-ignore
-				let filename: string = data.filename || data.IDKEY + '_' + basename(data.epub);
+				let filename: string = data.filename || IDKEY + '_' + basename(data.epub);
 
 				// @ts-ignore
 				if (!data.isGun || true)
@@ -189,9 +195,10 @@ function fileHandler()
 					};
 
 					makeArrayEntrys([
-						siteID,
-						req.params.siteID,
-						data.IDKEY,
+						//siteID,
+						//req.params.siteID,
+						//data.IDKEY,
+						IDKEY,
 					], [
 						novel_id,
 						req.params.id,
@@ -199,20 +206,6 @@ function fileHandler()
 						data.novel_id2,
 						novel_id,
 					]).forEach(([siteID, novel_id]) => nodeGunEpubFile(siteID, novel_id).put(gunData));
-
-					/*
-					allGunEpubFile([
-						siteID,
-						req.params.siteID,
-						data.IDKEY,
-					], [
-						novel_id,
-						req.params.id,
-						data.novel_id,
-						data.novel_id2,
-						novel_id,
-					]).forEach(node => node.put(gunData));
-					 */
 				}
 
 				let readStream = new PassThrough();

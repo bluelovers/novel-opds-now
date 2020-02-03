@@ -1,7 +1,7 @@
 /**
  * Created by user on 2020/2/1.
  */
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 
 export type ICacheMap = {
 	[siteID in (ICacheMapRow["IDKEY"] & ICacheMapRow["siteID"])]: {

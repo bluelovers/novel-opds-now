@@ -81,7 +81,6 @@ Bluebird
 			.catch(e => ({}))
 		;
 
-		map[argv.siteID] = map[argv.siteID] || {};
 		map[IDKEY] = map[IDKEY] || {};
 
 		let _data: ICacheMapRow = {
@@ -95,7 +94,7 @@ Bluebird
 			timestamp: Date.now(),
 		};
 
-		map[argv.siteID][novel_id] = map[argv.siteID][argv.novel_id] = map[IDKEY][novel_id] = map[IDKEY][argv.novel_id] = _data;
+		map[IDKEY][novel_id] = map[IDKEY][argv.novel_id] = _data;
 
 		await outputJSON(map_file, map, {
 			spaces: 2,

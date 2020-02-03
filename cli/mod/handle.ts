@@ -2,7 +2,7 @@
 
 import yargs from 'yargs';
 import handleAsync from '../lib/threads';
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 
 let argv = yargs
 	.option('IDKEY', {

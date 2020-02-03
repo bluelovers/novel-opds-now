@@ -3,8 +3,8 @@
  */
 
 import { download } from "novel-downloader-cli"
-import { requireNovelSiteClass } from 'novel-downloader';
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { requireNovelSiteClass } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { join } from 'path';
 import FastGlob from '@bluelovers/fast-glob/bluebird';
 import {
@@ -23,6 +23,7 @@ import { OUTPUT_DIR, __cacheMapFile } from './const';
 import Bluebird from 'bluebird';
 import tmpDir from './tmpDir';
 import { ICacheMap, ICacheMapRow, IDownloadInfo, EnumCacheMapRowStatus } from './types';
+import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 
 export function downloadInfo(options: {
 	novel_id: string | number,
@@ -31,8 +32,7 @@ export function downloadInfo(options: {
 	useCached?: boolean,
 }): IDownloadInfo
 {
-	let oc = requireNovelSiteClass(options.siteID);
-	let { IDKEY } = oc;
+	let IDKEY = siteID2IDKEY(options.siteID);
 
 	if (options.useCached)
 	{
@@ -40,11 +40,13 @@ export function downloadInfo(options: {
 		{
 			let map: ICacheMap = readJSONSync(__cacheMapFile);
 
-			let o2 = map[IDKEY] || map[options.siteID];
+			let o2 = map[IDKEY];
 			let data: ICacheMapRow = o2[options.novel_id];
 
 			if (!data)
 			{
+				let oc = requireNovelSiteClass(options.siteID);
+
 				let o3 = new oc({
 					// @ts-ignore
 					pathNovelStyle: true,
@@ -97,7 +99,8 @@ export function downloadInfo(options: {
 
 	ensureDirSync(options.outputRoot);
 	let { name: outputDir, removeCallback } = tmpDir(options.outputRoot);
-	outputDir = `T:\\cache\\yarn-cache\\tmp\\tmp-18864MCwlTdjLia9p`;
+
+	let oc = requireNovelSiteClass(options.siteID);
 
 	let o = new oc({
 		outputDir,
@@ -150,6 +153,9 @@ export function downloadNovel2(options: {
 	return Bluebird.resolve()
 		.then(() => downloadInfo(options))
 		.then(options => {
+
+			const { IDKEY } = options;
+
 			return {
 				options,
 				download()
@@ -190,15 +196,15 @@ export function downloadNovel2(options: {
 									.catch(e => ({}))
 								;
 
-								map[options.siteID] = map[options.siteID] || {};
+								let _data = map[IDKEY] = map[IDKEY] || {};
 
-								if (!map[options.siteID][options.novel_id] || map[options.siteID][options.novel_id].status !== EnumCacheMapRowStatus.DONE)
+								if (!_data[options.novel_id] || _data[options.novel_id].status !== EnumCacheMapRowStatus.DONE)
 								{
-									map[options.siteID][options.novel_id] = {
+									_data[options.novel_id] = {
 										outputRoot: options.outputDir,
 
 										// @ts-ignore
-										...map[options.siteID][options.novel_id],
+										..._data[options.novel_id],
 										...options,
 										...e.options,
 
@@ -206,7 +212,7 @@ export function downloadNovel2(options: {
 										timestamp: Date.now(),
 									} as any;
 
-									delete map[options.siteID][options.novel_id].removeCallback;
+									delete _data[options.novel_id].removeCallback;
 
 									await writeJSON(map_file, map, {
 										spaces: 2,
@@ -226,8 +232,7 @@ export function downloadNovel2(options: {
 
 export async function downloadNovel(novel_id: string | number, siteID: string | EnumNovelSiteList, outputDir = OUTPUT_DIR)
 {
-	let oc = requireNovelSiteClass(siteID);
-	let { IDKEY } = oc;
+	let IDKEY = siteID2IDKEY(siteID);
 
 	await ensureDir(join(outputDir, IDKEY, String(novel_id)));
 	//await emptyDir(join(outputDir, IDKEY, String(novel_id)));

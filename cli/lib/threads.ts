@@ -8,7 +8,7 @@ import {
 import FastGlob from '@bluelovers/fast-glob/bluebird';
 import { join, parse, normalize, sep, relative } from "path";
 import { OUTPUT_DIR } from '../../lib/const';
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { readFile, writeFile, rename, move } from 'fs-extra';
 import Bluebird from 'bluebird';
 import doSegment from '../../lib/doSegment';

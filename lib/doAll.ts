@@ -3,7 +3,7 @@
  */
 
 import { downloadNovel } from './download';
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import FastGlob from '@bluelovers/fast-glob/bluebird';
 import { stat, remove, readFile, writeFile, pathExists } from 'fs-extra';
 import doSegment from './doSegment';

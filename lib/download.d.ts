@@ -1,4 +1,4 @@
-import { EnumNovelSiteList } from 'novel-downloader/src/all';
+import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import Bluebird from 'bluebird';
 import { IDownloadInfo } from './types';
 export declare function downloadInfo(options: {
@@ -17,22 +17,22 @@ export declare function downloadNovel2(options: {
     options: IDownloadInfo;
     download(): Bluebird<{
         cwd: string;
-        IDKEY: string;
+        IDKEY: import("novel-downloader/src/all/const").EnumIDKEYList;
         novel_id: string;
         novel: import("novel-downloader").NovelSite.INovel;
         epub?: string;
         status?: number;
         removeCallback(): void;
-        outputDir: string;
         siteID: string;
         novel_id2: string | number;
+        outputDir: string;
         outputRoot: string;
         timestamp: number;
     }>;
 }>;
 export declare function downloadNovel(novel_id: string | number, siteID: string | EnumNovelSiteList, outputDir?: string): Promise<{
     cwd: string;
-    IDKEY: string;
+    IDKEY: import("novel-downloader/src/all/const").EnumIDKEYList;
     novel_id: string;
     novel: import("novel-downloader").NovelSite.INovel;
 }>;
