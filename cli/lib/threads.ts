@@ -71,6 +71,8 @@ if (isMainThread)
 						cwd,
 					}}`)
 				}
+
+				console.debug(`本次將處理 ${list.length} 個檔案`)
 			})
 			;
 	}
@@ -212,10 +214,10 @@ else
 				const handleContext = await import('../../lib/doLayout').then(v => v.default);
 
 				return Bluebird.resolve(list)
-					.each(async (file, index) =>
+					.each(async (file, index, length) =>
 					{
 
-						console.dir(relative(outputDir, file));
+						console.log(`${String(index).padStart(4, '0')}/${String(length).padStart(4, '0')}`, relative(outputDir, file));
 
 						let text = await readFile(file, 'utf8');
 

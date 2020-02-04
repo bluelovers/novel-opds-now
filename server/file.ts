@@ -22,7 +22,12 @@ function fileHandler()
 
 	router.use('/:siteID/:id', (req, res) =>
 	{
-		console.log(req.baseUrl, req.url, req.params);
+		let query = {
+			...req.params,
+			...req.query,
+		};
+
+		console.log(req.baseUrl, req.url, req.params, query);
 
 		let siteID = req.params.siteID;
 		let novel_id = req.params.id;
@@ -70,7 +75,11 @@ function fileHandler()
 
 							console.log(`於P2P緩存發現檔案...`, new Date(timestamp));
 
-							if ((Date.now() - data.timestamp) < 86400 * 1000)
+							if (query.debug || query.force)
+							{
+								console.log(`發現強制下載指令，本次將無視緩存`, query)
+							}
+							else if ((Date.now() - data.timestamp) < 86400 * 1000)
 							{
 								isGun = true;
 							}
@@ -224,7 +233,11 @@ function fileHandler()
 				console.log(`將檔案傳送至客戶端...`);
 				readStream.pipe(res);
 
-				if (typeof data.removeCallback === 'function')
+				if (query.debug)
+				{
+					//console.log(`忽略刪除下載暫存 ${data.outputDir}`);
+				}
+				else if (typeof data.removeCallback === 'function')
 				{
 					data.removeCallback();
 				}

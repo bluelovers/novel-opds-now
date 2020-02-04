@@ -68,10 +68,10 @@
     html-minifier "^4.0.0"
     zero-width "^1.0.5"
 
-"@node-novel/layout-pattern@^1.0.13":
-  version "1.0.13"
-  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.13.tgz#cbcccbccc8cc075660518f0bb8bd6ffb6f80ac51"
-  integrity sha512-Vi0wk3uDCblb6/JmlueBmgl9nh6qphMITgg5yJm7tgYPp5+lye+F/Jmt2wdIbFRX8Pa/6zT3dBP0ZlIMoNdt9Q==
+"@node-novel/layout-pattern@^1.0.14":
+  version "1.0.14"
+  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.14.tgz#9e23e54fcb2ad144a5d9abf77d221ecb22d35ffc"
+  integrity sha512-JxM6P9N3Tx4LZcPNnGCkNP1OUIZZOj6B5hr9cZcOHx4sFkF75ToNBw3TDfTZxvttepeb3NfolvdtsXQy/hbVKw==
   dependencies:
     "@node-novel/layout" "^2.0.4"
     debug-color2 "^1.1.7"
@@ -2830,6 +2830,18 @@ graceful-fs@^4.0.0, graceful-fs@^4.1.10, graceful-fs@^4.1.15, graceful-fs@^4.1.2
   resolved "https://registry.npmjs.org/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
   integrity sha1-TK+tdrxi8C+gObL5Tpo906ORpyU=
 
+gun-synclist@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/gun-synclist/-/gun-synclist-1.0.2.tgz#a42dc8009df36b2cc12c050344af34d46306ce69"
+  integrity sha512-05e0Ar92MY2SLLvWJBiELnLAIAFtwSPSwFSj7n7TpZzpWEnjPkRXMz3GznyKlD+5FyDcHpMeuMJq+s9JjFD6/w==
+
+gun-tag@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/gun-tag/-/gun-tag-3.0.2.tgz#6531e7b0ca7fde2283922512c186d86b8be93979"
+  integrity sha512-T3lwOoYNuo/EXjAvJPmElCR6HNghJ8zMZCAHUrAD0g/4ykYmfiqqZjx+sr+yzI6EadzkazIRwMTZtyv+bmOjKg==
+  dependencies:
+    gun-synclist "^1.0.2"
+
 gun@^0.2020.116:
   version "0.2020.116"
   resolved "https://registry.npmjs.org/gun/-/gun-0.2020.116.tgz#83329506064552fd699f3ab7028bc9a094f06cb7"
@@ -4523,10 +4535,10 @@ novel-downloader-cli@^1.0.23:
     update-notifier "^4.0.0"
     yargs "^15.1.0"
 
-novel-downloader@^1.3.10, novel-downloader@^1.3.11:
-  version "1.3.11"
-  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-1.3.11.tgz#cc367674e6ce6a748b43fbf29e4493b4c62766e9"
-  integrity sha512-VdhchF0WZIeJDiC8hM1axgqX5uk7Uy4rY3FC+je+bLIiL9rBixcMYziyGqQ3qWRyXNurS6r4tW99D0WX50cbJA==
+novel-downloader@^1.3.10, novel-downloader@^1.3.12:
+  version "1.3.12"
+  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-1.3.12.tgz#34cddc0a1603871e7daf1e8958f151cae9e5955b"
+  integrity sha512-blii9qG7jgiZcChWxfIums8CfCICbDMWyAxjVNuZ5xGJ4rV9qbHFlsdmU7TFr85nocSncM7ah4GMwHEQEP054Q==
   dependencies:
     "@node-novel/layout-reporter" "^1.0.3"
     array-hyper-unique "^1.1.0"
