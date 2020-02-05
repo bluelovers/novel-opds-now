@@ -497,10 +497,10 @@ acorn@^7.1.0:
   resolved "https://registry.npmjs.org/acorn/-/acorn-7.1.0.tgz#949d36f2c292535da602283586c2477c57eb2d6c"
   integrity sha512-kL5CuoXA/dgxlBbVrflsflzQ3PAas7RYZB52NOm/6839iVYJgKMJ3cQJD+t2i5+qFa8h3MDpEOJiS64E8JLnSQ==
 
-address2@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/address2/-/address2-1.0.1.tgz#8626d852da9187e8d59f78296bf9ae8a805d618c"
-  integrity sha512-j1oqCJXrD7DdTBQhNnY7H1VqSi0j084ESpLWzqLtUrj9Lv6rq9qJeuT049DQ9A/QlAVXUa3VG/lqZAJRLIRCNQ==
+address2@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/address2/-/address2-1.0.3.tgz#bc8358b1e372d5844feebfdfadfaa8bd6d3c8582"
+  integrity sha512-VzHPdRFhYu7GEP4z9Oiu70rPwTZqZqo2nbHtXIDMZemoTM88yHyrlt4PlwAZI+axDPjYIqcpcf7tx6CfpKyvpQ==
   dependencies:
     address "^1.1.2"
 
@@ -1119,10 +1119,10 @@ cached-request@^2.0.1:
     graceful-fs "^4.0.0"
     mkdirp "^0.5.1"
 
-calibre-opds@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/calibre-opds/-/calibre-opds-1.0.4.tgz#c6ec96b4891a2adbb2fcbaa8f16e9e7187dffe82"
-  integrity sha512-GMdHUiAx6mV7T1pxNNf1n3flW1ya54DkiTOt02yP27P4s0r3GzVuldUY84LdJHB07UcvG+WZ7KygVNUtTS+KAw==
+calibre-opds@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/calibre-opds/-/calibre-opds-1.0.5.tgz#f7d74f846ffcc53aaff4f6c35067fc5841a67f76"
+  integrity sha512-yE15/GhezKRcVPbJAiBe1FcdrPJ8DFafazriyVEUcL9/1s4PcUTnO64EYzk2q/hbHML4dq6CdypwCc7M6aLyCg==
   dependencies:
     bluebird "^3.7.2"
     opds-extra "^3.0.7"
