@@ -9,6 +9,7 @@ import NodeNovelInfo from 'node-novel-info/class';
 import { moment } from 'novel-downloader/src/site';
 import MIMETypes from "mime-types";
 import addCover from '../opds/addCover';
+import { makeOPDSShared } from '../opds/index';
 
 export let prefix = `/demo`;
 export let prefixRoot = `/opds` + prefix;
@@ -16,7 +17,7 @@ export let title = `demonovel`;
 
 export async function makeOPDSType(type: string)
 {
-	let feed = makeOPDSPortal();
+	let feed = await makeOPDSPortal();
 
 	//let mainCache = await loadCache();
 	let rawUrl = 'https://gitlab.com/demonovel/epub-txt/raw/master/';
@@ -74,20 +75,10 @@ export function makeOPDSPortal()
 		icon: '/favicon.ico',
 	}), [
 
+		makeOPDSShared,
+
 		(feed) =>
 		{
-			feed.books = feed.books || [];
-
-			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
-				title: `所有書庫`,
-				links: [
-					{
-						href: `/opds`,
-						title: EnumLinkRel.ALTERNATE,
-						type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
-					} as Link,
-				],
-			}));
 
 			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 				title: `書庫：${siteID}`,

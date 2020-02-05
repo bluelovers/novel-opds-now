@@ -6,6 +6,24 @@ import { OPDSV1 } from 'opds-extra';
 import loadCache from '../novel-cache/load';
 import { prefixRoot as prefixDemo, title as titleDemo } from '../demonovel/opds';
 
+export function makeOPDSShared(feed, msg: string = ''): OPDSV1.Feed
+{
+	feed.books = feed.books || [];
+
+	feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+		title: `所有書庫${msg}`,
+		links: [
+			{
+				href: `/opds`,
+				title: EnumLinkRel.ALTERNATE,
+				type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
+			} as Link,
+		],
+	}));
+
+	return feed
+}
+
 export function makeOPDSSite(siteID: ISiteIDs)
 {
 	return buildAsync(initMain({
@@ -13,20 +31,12 @@ export function makeOPDSSite(siteID: ISiteIDs)
 		subtitle: `EPub 自動生成：${siteID}`,
 		icon: '/favicon.ico',
 	}), [
+
+		(feed) => makeOPDSShared(feed, `，目前位於 ${siteID}`),
+
 		async (feed) =>
 		{
 			feed.books = feed.books || [];
-
-			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
-				title: `所有書庫`,
-				links: [
-					{
-						href: `/opds`,
-						title: EnumLinkRel.ALTERNATE,
-						type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
-					} as Link,
-				],
-			}));
 
 			await loadCache<{
 				id,

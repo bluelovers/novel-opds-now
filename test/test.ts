@@ -35,6 +35,7 @@ fetch(`http://localhost:3000/file/dmzj/${id}`)
 			.then(v => console.log(`here should return { timestamp, base64 }, but`, v))
 		;
 	})
+	.catch(e => null)
 ;
 
 
