@@ -8,22 +8,26 @@ import fetch from 'cross-fetch';
 import { INovelStatCache } from '@node-novel/cache-loader';
 import { getLocalFilename } from './load';
 import buildCache from './build';
+import console from 'debug-color2/logger';
 
 let url = `https://gitlab.com/novel-group/txt-source/raw/master/novel-stat.json`;
 
-export async function updateCache()
+export async function updateCache(force?: boolean)
 {
 	let localFile = getLocalFilename();
 
 	return Bluebird.resolve(stat(localFile))
 		.then<INovelStatCache>(async (st) => {
-			if (st && (Date.now() - st.mtimeMs) < 86400 * 1000)
+			if (!force && st && (Date.now() - st.mtimeMs) < 86400 * 1000)
 			{
 				return readJSON(localFile)
 			}
 			return Promise.reject()
 		})
-		.catch(e => fetchCache())
+		.catch(e => {
+			console.debug(`更新 ${url}`);
+			return fetchCache()
+		})
 		.catch<INovelStatCache>(e => {
 			console.warn(e.message);
 			return readJSON(localFile)

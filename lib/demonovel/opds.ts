@@ -29,6 +29,11 @@ export async function makeOPDSType(type: string)
 			await loadCache<IFilterNovelData[]>('array.json')
 				.each(novel => {
 
+					if (!novel.cache.epub_basename)
+					{
+						return;
+					}
+
 					let href = new URL([
 						novel.pathMain_base,
 						novel.cache.epub_basename,

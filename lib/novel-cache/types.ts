@@ -17,6 +17,13 @@ export const id_update_map = {
 	wenku8: 'cached-wenku8/data/novel/id_update.json',
 };
 
+export const id_chapters_map = {
+	dmzj: 'cached-dmzj/data/novel/id_chapters.json',
+	esjzone: 'cached-esjzone/data/novel/id_chapters.json',
+	//masiro: 'cached-masiro/data/novel/id_chapters.json',
+	wenku8: 'cached-wenku8/data/novel/id_chapters.json',
+};
+
 export const builded_map = {
 	dmzj: 'builded.json',
 	esjzone: 'builded.json',

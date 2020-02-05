@@ -9,6 +9,11 @@ export declare const id_update_map: {
     esjzone: string;
     wenku8: string;
 };
+export declare const id_chapters_map: {
+    dmzj: string;
+    esjzone: string;
+    wenku8: string;
+};
 export declare const builded_map: {
     dmzj: string;
     esjzone: string;
