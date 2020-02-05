@@ -15,22 +15,27 @@ import { fromBuffer } from 'file-type';
 import __root from '../lib/__root';
 import { raceGunEpubFile, makeArrayEntrys, nodeGunEpubFile } from '../lib/gun/epubFile';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
+import console from 'debug-color2/logger';
+import checkGunData from '../lib/gun/checkData';
 
 function fileHandler()
 {
 	const router = Router();
 
-	router.use('/:siteID/:id', (req, res) =>
+	router.use('/:siteID/:novelID', (req, res) =>
 	{
 		let query = {
 			...req.params,
 			...req.query,
 		};
 
-		console.log(req.baseUrl, req.url, req.params, query);
+		delete query.siteID;
+		delete query.id;
+
+		console.debug(req.baseUrl, req.url, req.params, query);
 
 		let siteID = req.params.siteID;
-		let novel_id = req.params.id;
+		let novel_id = req.params.novelID;
 
 		if (siteID.toLowerCase() === 'dmzj')
 		{
@@ -56,28 +61,23 @@ function fileHandler()
 						//siteID,
 					IDKEY,
 					], [
-						req.params.id,
+						req.params.novelID,
 						novel_id,
 					])
 					.then(function (data)
 					{
+						let bool: boolean = checkGunData(data);
 
-						if (data && data.exists)
+						if (checkGunData(data))
 						{
 							let { base64, filename, exists, timestamp } = data;
 							let isGun = false;
 
-							if (!(base64 && filename && exists && timestamp))
-							{
-								console.warn(`於P2P緩存發現檔案...`, `但資料似乎已損毀`);
-								return null
-							}
-
-							console.log(`於P2P緩存發現檔案...`, new Date(timestamp));
+							console.info(`於P2P緩存發現檔案...`, new Date(timestamp));
 
 							if (query.debug || query.force)
 							{
-								console.log(`發現強制下載指令，本次將無視緩存`, query)
+								console.info(`發現強制下載指令，本次將無視緩存`, query)
 							}
 							else if ((Date.now() - data.timestamp) < 86400 * 1000)
 							{
@@ -85,7 +85,7 @@ function fileHandler()
 							}
 							else
 							{
-								console.log(`目標檔案已過期，試圖重新建立檔案`)
+								console.warn(`目標檔案已過期，試圖重新建立檔案`)
 							}
 
 							return {
@@ -96,10 +96,16 @@ function fileHandler()
 								isGun,
 							} as IGunEpubData
 						}
+						else if (bool === false)
+						{
+							console.warn(`於P2P緩存發現檔案...`, `但資料似乎已損毀`);
+						}
 						else
 						{
-							console.log(`沒有發現P2P緩存...`);
+								console.info(`沒有發現P2P緩存...`);
 						}
+
+						return null
 					})
 				;
 
@@ -184,7 +190,7 @@ function fileHandler()
 			})
 			.then(async (data) =>
 			{
-				console.log(`成功取得檔案...`);
+				console.success(`成功取得檔案...`);
 
 				// @ts-ignore
 				let fileContents: Buffer = data.base64 && Buffer.from(data.base64, 'base64') || await readFile(data.epub);
@@ -210,7 +216,7 @@ function fileHandler()
 						IDKEY,
 					], [
 						novel_id,
-						req.params.id,
+						req.params.novelID,
 						data.novel_id,
 						data.novel_id2,
 						novel_id,
@@ -230,7 +236,7 @@ function fileHandler()
 				res.set('Content-disposition', 'attachment; filename=' + filename);
 				res.set('Content-Type', mime);
 
-				console.log(`將檔案傳送至客戶端...`);
+				console.info(`將檔案傳送至客戶端...`);
 				readStream.pipe(res);
 
 				if (query.debug)
@@ -255,19 +261,6 @@ function fileHandler()
 					message = `id 不存在 或 伺服器離線`
 				}
 
-				/*
-				useGun()
-					// @ts-ignore
-					.get('epub-file')
-					.get(req.params.siteID)
-					.get(req.params.id)
-					.put({
-						timestamp: Date.now(),
-						exists: false,
-					} as IGunEpubNode)
-				;
-				 */
-
 				let data = {
 					error: message,
 					params: req.params,
@@ -278,7 +271,7 @@ function fileHandler()
 
 				console.warn(data);
 
-				console.warn(`以下錯誤訊息為除錯用，並非每個都會對程式造成影響 =>`, e)
+				console.debug(`以下錯誤訊息為除錯用，並非每個都會對程式造成影響 =>`, e)
 
 			})
 	});

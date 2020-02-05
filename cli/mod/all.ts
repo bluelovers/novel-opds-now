@@ -9,6 +9,7 @@ import { join } from 'path';
 import Bluebird from 'bluebird';
 import { ICacheMapRow, ICacheMap, EnumCacheMapRowStatus } from '../../lib/types';
 import { __cacheMapFile } from '../../lib/const';
+import console from 'debug-color2/logger';
 
 let argv = yargs
 	.option('siteID', {

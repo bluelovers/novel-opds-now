@@ -68,10 +68,10 @@
     html-minifier "^4.0.0"
     zero-width "^1.0.5"
 
-"@node-novel/layout-pattern@^1.0.14":
-  version "1.0.14"
-  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.14.tgz#9e23e54fcb2ad144a5d9abf77d221ecb22d35ffc"
-  integrity sha512-JxM6P9N3Tx4LZcPNnGCkNP1OUIZZOj6B5hr9cZcOHx4sFkF75ToNBw3TDfTZxvttepeb3NfolvdtsXQy/hbVKw==
+"@node-novel/layout-pattern@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.15.tgz#0074991f47d0944ecdf1950fdd126d30eb6dc928"
+  integrity sha512-CT6AWBsWwX3nPjs2HlWN9SO1bbjsKg6lbx4oTqK8rMb0u5qfLH7GDcpPWAMh1O812nMl2IaWPrzdZtVXEZU+8g==
   dependencies:
     "@node-novel/layout" "^2.0.4"
     debug-color2 "^1.1.7"
@@ -317,11 +317,6 @@
   dependencies:
     globby "*"
 
-"@types/gun@^0.9.2":
-  version "0.9.2"
-  resolved "https://registry.npmjs.org/@types/gun/-/gun-0.9.2.tgz#72493631c5e7fb3fae9a195b1ea8bf3d727fd19d"
-  integrity sha512-s3O5tnnXtWaZqA2yjfN+Ty3OINRxV51lUevNVldAeky4lk3/6QHSc8hkfPTc0f44JrJCidILrU5bMBGN0SWz1A==
-
 "@types/hash-sum@^1.0.0":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@types/hash-sum/-/hash-sum-1.0.0.tgz#838f4e8627887d42b162d05f3d96ca636c2bc504"
@@ -535,6 +530,13 @@ ansi-align@^3.0.0:
   integrity sha512-ZpClVKqXN3RGBmKibdfWzqCY4lnjEuoNzU5T0oEFpfd/z5qJHVarukridD4juLO2FXMiwUQxr9WqQtaYa8XRYw==
   dependencies:
     string-width "^3.0.0"
+
+ansi-escapes@^4.2.1:
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/ansi-escapes/-/ansi-escapes-4.3.0.tgz#a4ce2b33d6b214b7950d8595c212f12ac9cc569d"
+  integrity sha512-EiYhwo0v255HUL6eDyuLrXEkTi7WwVCLAw+SeOQ7M7qdun1z1pum4DEm/nuqIVbPvi9RPPc9k9LbyBv6H0DwVg==
+  dependencies:
+    type-fest "^0.8.1"
 
 ansi-green@^0.1.1:
   version "0.1.1"
@@ -4516,10 +4518,10 @@ normalize-url@^4.1.0:
   resolved "https://registry.npmjs.org/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
   integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
 
-novel-downloader-cli@^1.0.23:
-  version "1.0.23"
-  resolved "https://registry.npmjs.org/novel-downloader-cli/-/novel-downloader-cli-1.0.23.tgz#fa23f5f53b99b0a4db7ff911120a95b93945c72e"
-  integrity sha512-yQ1Qz08DYwaOLsZ0i+M4g7aTK5gZFidDW02uuiO2Nn7dWKldj7r9iUDQ7wXB/Pm1Iobz6tofjyW8OiDVtyYWFg==
+novel-downloader-cli@^1.0.24:
+  version "1.0.24"
+  resolved "https://registry.npmjs.org/novel-downloader-cli/-/novel-downloader-cli-1.0.24.tgz#0cf914d0dada81ac05fb1c97233c74e6aaf5ff57"
+  integrity sha512-pW3kQI9IjsKTZpUtgg0a+N1XYaAj48r/R+iqa77d5UF4662ZEQKqlEa1NIklONvSnAvLoRTKrvjur3N1Y6q1bw==
   dependencies:
     "@yarn-tool/is-npx" "^1.0.0"
     array-hyper-unique "^1.1.0"
@@ -4530,15 +4532,15 @@ novel-downloader-cli@^1.0.23:
     moment "^2.24.0"
     node-alias "^1.0.4"
     node-novel-info "^3.0.0"
-    novel-downloader "^1.3.10"
+    novel-downloader "^1.3.13"
     ts-type "^1.2.13"
     update-notifier "^4.0.0"
     yargs "^15.1.0"
 
-novel-downloader@^1.3.10, novel-downloader@^1.3.12:
-  version "1.3.12"
-  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-1.3.12.tgz#34cddc0a1603871e7daf1e8958f151cae9e5955b"
-  integrity sha512-blii9qG7jgiZcChWxfIums8CfCICbDMWyAxjVNuZ5xGJ4rV9qbHFlsdmU7TFr85nocSncM7ah4GMwHEQEP054Q==
+novel-downloader@^1.3.13:
+  version "1.3.13"
+  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-1.3.13.tgz#248524f8feef82d0b2aacfd4192f63fbc81a9261"
+  integrity sha512-tgoTdXbuHOwK9kGqv5Rk74pDEJKNpBcudDSMmb2e/VB17Aqjr99i/OdiX6vFDlrDefzGpi7piVu+0eNdvQTEtw==
   dependencies:
     "@node-novel/layout-reporter" "^1.0.3"
     array-hyper-unique "^1.1.0"
@@ -6443,12 +6445,20 @@ supports-color@^6.1.0:
   dependencies:
     has-flag "^3.0.0"
 
-supports-color@^7.1.0:
+supports-color@^7.0.0, supports-color@^7.1.0:
   version "7.1.0"
   resolved "https://registry.npmjs.org/supports-color/-/supports-color-7.1.0.tgz#68e32591df73e25ad1c4b49108a2ec507962bfd1"
   integrity sha512-oRSIpR8pxT1Wr2FquTNnGet79b3BWljqOuoW/h4oBhxJ/HUbX5nX6JSruTkvXDCFMwDPvsaTTbvMLKZWSy0R5g==
   dependencies:
     has-flag "^4.0.0"
+
+supports-hyperlinks@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.npmjs.org/supports-hyperlinks/-/supports-hyperlinks-2.0.0.tgz#b1b94a159e9df00b0a554b2d5f0e0a89690334b0"
+  integrity sha512-bFhn0MQ8qefLyJ3K7PpHiPUTuTVPWw6RXfaMeV6xgJLXtBbszyboz1bvGTVv4R0YpQm2DqlXXn0fFHhxUHVE5w==
+  dependencies:
+    has-flag "^4.0.0"
+    supports-color "^7.0.0"
 
 symbol-tree@^3.2.2:
   version "3.2.4"
@@ -6497,6 +6507,14 @@ term-size@^2.1.0:
   version "2.1.1"
   resolved "https://registry.npmjs.org/term-size/-/term-size-2.1.1.tgz#f81ec25854af91a480d2f9d0c77ffcb26594ed1a"
   integrity sha512-UqvQSch04R+69g4RDhrslmGvGL3ucDRX/U+snYW0Mab4uCAyKSndUksaoqlJ81QKSpRnIsuOYQCbC2ZWx2896A==
+
+terminal-link@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/terminal-link/-/terminal-link-2.1.1.tgz#14a64a27ab3c0df933ea546fba55f2d078edc994"
+  integrity sha512-un0FmiRUQNr5PJqy9kP7c40F5BOfpGlYTrxonDChEZB7pzZxRNp/bt+ymiy9/npwXya9KH99nJ/GXFIiUkYGFQ==
+  dependencies:
+    ansi-escapes "^4.2.1"
+    supports-hyperlinks "^2.0.0"
 
 text-encoding@^0.7.0:
   version "0.7.0"

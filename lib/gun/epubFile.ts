@@ -4,6 +4,7 @@ import { array_unique_overwrite } from 'array-hyper-unique';
 import { IGunEpubNode } from '../types';
 import Gun from 'gun';
 import { ITSValueOrArray } from 'ts-type';
+import { EnumIDKEYList, EnumIDKEYListString } from 'novel-downloader/src/all/const';
 
 export function makeArrayEntrys(siteID: ITSValueOrArray<string>, novel_id: ITSValueOrArray<string | number>)
 {
@@ -32,7 +33,7 @@ export function makeArrayEntrys(siteID: ITSValueOrArray<string>, novel_id: ITSVa
 		}, [] as [string, string][])
 }
 
-export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSValueOrArray<string | number>): ReturnType<typeof Gun>[]
+export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSValueOrArray<string | number>)
 {
 	if (!Array.isArray(siteID))
 	{
@@ -46,9 +47,7 @@ export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSVal
 	siteID = array_unique_overwrite(siteID.map(v => String(v)));
 	novel_id = array_unique_overwrite(novel_id.map(v => String(v)));
 
-	let gun = useGun();
-
-	return siteID
+	return (siteID as EnumIDKEYListString[])
 		.reduce((a, siteID) => {
 
 
@@ -56,12 +55,11 @@ export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSVal
 
 			//console.log(siteID, novel_id);
 
-			// @ts-ignore
-				novel_id && a.push(gun.get('epub-file').get(siteID).get(novel_id))
+				novel_id && a.push(nodeGunEpubFile(siteID, novel_id))
 		});
 
 		return a;
-	}, [])
+	}, [] as ReturnType<typeof nodeGunEpubFile>[])
 }
 
 export function promiseGunEpubFile<T>(siteID: string | string[], novel_id: string | string[])
@@ -71,8 +69,7 @@ export function promiseGunEpubFile<T>(siteID: string | string[], novel_id: strin
 
 export function nodeGunEpubFile(siteID: string, novel_id: string)
 {
-	// @ts-ignore
-	return useGun().get('epub-file').get(siteID).get(novel_id)
+	return useGun().get(siteID).get(novel_id)
 }
 
 export function raceGunEpubFile(siteID: string | string[], novel_id: string | string[])

@@ -15,6 +15,7 @@ import doSegment from '../../lib/doSegment';
 import { cn2tw_min } from '../../lib/cn2tw_min';
 import handleContext from '../../lib/doLayout';
 import { array_unique } from 'array-hyper-unique';
+import console from 'debug-color2/logger';
 
 const handleAsync = function handleAsync(id: string | number, IDKEY: string, outputDir = OUTPUT_DIR): Bluebird<boolean>
 {
@@ -158,7 +159,7 @@ if (isMainThread)
 
 			let timer = setTimeout(() => {
 
-				console.warn(`處理超時...再執行一次，本次已處理 ${values.length} 檔案`);
+				console.warn(`處理超時...再執行一次，本次已處理 ${values.length}/${workerData.value.length} 檔案`);
 
 				resolve(values)
 			}, 60 * 1000);
@@ -217,7 +218,7 @@ else
 					.each(async (file, index, length) =>
 					{
 
-						console.log(`${String(index).padStart(4, '0')}/${String(length).padStart(4, '0')}`, relative(outputDir, file));
+						console.debug(`${String(index).padStart(4, '0')}/${String(length).padStart(4, '0')}`, relative(outputDir, file));
 
 						let text = await readFile(file, 'utf8');
 

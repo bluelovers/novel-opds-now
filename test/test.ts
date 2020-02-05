@@ -6,10 +6,10 @@ import Gun from 'gun';
 import fetch from 'cross-fetch';
 import Bluebird from 'bluebird';
 
-let id = String(2650);
+let id = String(2784);
 
-console.log(`wait a long time`)
-fetch(`http://localhost:3000/file/wenku8/${id}`)
+console.log(`wait a long time`);
+fetch(`http://localhost:3000/file/dmzj/${id}`)
 	.finally(async () => {
 
 		console.log(`ok again, wait 3s`);
@@ -31,6 +31,7 @@ fetch(`http://localhost:3000/file/wenku8/${id}`)
 		await gun.get('epub-file')
 			.get('wenku8')
 			.get(id)
+
 			.then(v => console.log(`here should return { timestamp, base64 }, but`, v))
 		;
 	})

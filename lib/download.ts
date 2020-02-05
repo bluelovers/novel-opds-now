@@ -5,7 +5,7 @@
 import { download } from "novel-downloader-cli"
 import { requireNovelSiteClass } from 'novel-downloader/src/all';
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
-import { join } from 'path';
+import { join, relative } from 'path';
 import FastGlob from '@bluelovers/fast-glob/bluebird';
 import {
 	stat,
@@ -24,6 +24,7 @@ import Bluebird from 'bluebird';
 import tmpDir from './tmpDir';
 import { ICacheMap, ICacheMapRow, IDownloadInfo, EnumCacheMapRowStatus } from './types';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
+import console from 'debug-color2/logger';
 
 export function downloadInfo(options: {
 	novel_id: string | number,
@@ -267,12 +268,13 @@ export async function downloadNovel(novel_id: string | number, siteID: string | 
 
 		let st = await stat(file);
 
-		if (st.size < 5)
+		if (st.size < 1)
 		{
+			console.warn(`${relative(cwd, file)} 此檔案沒有內容，進行刪除...`);
 			return remove(file)
 		}
 
-	})
+	});
 
 	return {
 		cwd,

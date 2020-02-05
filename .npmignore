@@ -71,3 +71,4 @@ radata
 !/package-lock.json
 !/yarn.lock
 !/.cache
+radata-*.tmp

@@ -8,6 +8,7 @@ import { join } from 'path';
 import __root from './__root';
 import { statSync } from 'fs-extra';
 import { existsSync } from 'fs';
+import console from 'debug-color2/logger';
 
 function buildCache()
 {

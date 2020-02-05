@@ -56,8 +56,8 @@ export type IGunEpubNode = {
 	base64: string,
 }
 
-export interface IGunEpubData extends Extract<IGunEpubNode, {
-	exists: true,
+export interface IGunEpubData extends Exclude<IGunEpubNode, {
+	exists: false,
 }>
 {
 	isGun: boolean,

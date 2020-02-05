@@ -10,16 +10,30 @@ import __root from '../../lib/__root';
 import { join } from 'path';
 import { OUTPUT_DIR } from '../../lib/const';
 import { ensureDirSync } from 'fs-extra';
+import console from 'debug-color2/logger';
+import { Server } from 'http';
+import { IGunStatic } from 'gun/types/static';
+import { IGunEpubNode } from '../../lib/types';
+import { EnumIDKEYList, EnumIDKEYListString } from 'novel-downloader/src/all/const';
+import Radisk from 'gun/lib/radisk';
 
-let gun: ReturnType<typeof Gun>;
+let gun: ReturnType<typeof setupGun>;
 
-export function setupGun(app?: Express): ReturnType<typeof Gun>
+// @ts-ignore
+Gun.log = Object.assign(() => {}, Gun.log, {
+	verbose: false,
+});
+
+export function setupGun(app?: Express | Server)
 {
 	let file = join(OUTPUT_DIR, 'novel-opds-now.cache', 'radata');
 	ensureDirSync(file);
 
-	// @ts-ignore
-	gun = new Gun({
+	let _gun = new Gun<{
+		'epub-file': {
+			[K in EnumIDKEYListString | EnumIDKEYList | string]: Record<string, IGunEpubNode>
+		}
+	}>({
 		web: app,
 		peers: [
 			//"http://localhost:3000/gun",
@@ -27,15 +41,28 @@ export function setupGun(app?: Express): ReturnType<typeof Gun>
 			"http://nmr.io:8765/gun",
 			"https://my-test-gun-server.herokuapp.com/gun",
 		],
-		file
+		file,
+		log()
+		{
+
+		},
 	});
 
-	console.debug(`P2P緩存位於 ${file}`);
+	console.debug(`P2P 緩存位於 ${file}`);
 
-	return gun
+	gun = _gun;
+
+	return _gun
 }
 
-export function useGun(): ReturnType<typeof Gun>
+export function useGun()
+{
+	return useGunRoot()
+		.get('epub-file')
+		;
+}
+
+export function useGunRoot()
 {
 	return gun || (gun = setupGun());
 }
@@ -43,5 +70,3 @@ export function useGun(): ReturnType<typeof Gun>
 export { gun }
 
 export default useGun
-
-

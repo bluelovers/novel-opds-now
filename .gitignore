@@ -94,3 +94,4 @@ tsconfig.tsbuildinfo
 /now.json
 /.cache/cached/demonovel/
 **/radata/
+radata-*.tmp
