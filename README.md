@@ -16,7 +16,11 @@
 npm install -g novel-opds-now
 ```
 
-**( 不推薦使用 npx 來進行安裝 )**
+**( 不推薦使用 npx 來進行安裝，但如果有奇奇怪怪的狀況可以嘗試看看 )**
+
+```
+npx novel-opds-now
+```
 
 ## start
 
