@@ -4,6 +4,7 @@ import makeOPDSPortal, { makeOPDSSite } from '../lib/opds/index';
 import opdsDemoNovelHandler from './opds/demonovel';
 import updateCacheAll from '../lib/novel-cache/update';
 import updateCache from '../lib/demonovel/update';
+import { makeOPDSOther } from '../lib/opds/other';
 
 function opdsHandler()
 {
@@ -18,6 +19,13 @@ function opdsHandler()
 	});
 
 	router.use(opdsDemoNovelHandler());
+
+	router.use('/other.xml', async (req, res) =>
+	{
+		let feed = await makeOPDSOther();
+		res.setHeader('Content-Type', 'application/xml');
+		res.send(feed.toXML())
+	});
 
 	router.use('/:siteID.xml', async (req, res) =>
 	{

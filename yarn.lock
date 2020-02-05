@@ -2361,10 +2361,10 @@ file-type@^12.0.0:
   resolved "https://registry.npmjs.org/file-type/-/file-type-12.4.2.tgz#a344ea5664a1d01447ee7fb1b635f72feb6169d9"
   integrity sha512-UssQP5ZgIOKelfsaB5CuGAL+Y+q7EmONuiwF3N5HAH0t27rvrttgi6Ra9k/+DVaY9UF6+ybxu5pOXLUdA8N7Vg==
 
-file-type@^14.0.0:
-  version "14.0.0"
-  resolved "https://registry.npmjs.org/file-type/-/file-type-14.0.0.tgz#2b83ebbd39dd57b35eb6dc61f7b22ccca2751c1d"
-  integrity sha512-+gxNvurlwHfTohZC6gqf0ybMl+cXYB9f1x++kw9AgKItdFx20J0fV9wCVR38a5/jphL5EUcusJ9tLYkPRtGHaw==
+file-type@^14.0.0, file-type@^14.1.0:
+  version "14.1.0"
+  resolved "https://registry.npmjs.org/file-type/-/file-type-14.1.0.tgz#32334d9c14462bc12e6c95f8a44630125c6c4e8c"
+  integrity sha512-HfxnzrPH+LLClSAsno88/0frRtamu1XfqEP4IP/8RqBmqQnBQkemv3Udde0t53wZmrdOtc70aaR9WUHyQhjCUQ==
   dependencies:
     readable-web-to-node-stream "^2.0.0"
     strtok3 "^6.0.0"
