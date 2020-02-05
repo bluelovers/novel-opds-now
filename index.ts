@@ -8,9 +8,11 @@ import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
 import debounce from 'lodash/debounce';
 
-export async function startServer(port: number | string = getPort(getPortEnv()))
+export async function startServer(port?: number | string)
 {
-	const web = _createServer(micro(await import('./server/index').then(m => m.default)));
+	const web = await _createServer(micro(await import('./server/index').then(m => m.default)));
+
+	port = (port as number | 0) || getPort(getPortEnv());
 
 	web.listen(port, async () =>
 	{
