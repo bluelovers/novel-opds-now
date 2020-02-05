@@ -5,7 +5,8 @@ import searchIPAddress from 'address2';
 import getPort, { getPortEnv } from './lib/getPort';
 import showIP from './lib/ip';
 import Bluebird from 'bluebird';
-
+import console from 'debug-color2/logger';
+import debounce from 'lodash/debounce';
 
 export async function startServer(port: number | string = getPort(getPortEnv()))
 {
@@ -15,18 +16,22 @@ export async function startServer(port: number | string = getPort(getPortEnv()))
 	{
 		showIP(port);
 
-		Bluebird.delay(5 * 1000)
-			.tap(v => {
-				showIP(port);
-			})
-		;
+		let _showIP = debounce(() => {
+			showIP(port);
+		}, 10 * 1000);
 
-		Bluebird.resolve(import('./server/gun/setup'))
-			.then(m => m.setupGun(web))
-			.delay(5 * 1000)
-			.tap(v => {
-				showIP(port);
+		_showIP();
+
+		Bluebird
+			.resolve(import('./server/gun/setup'))
+			.tap(async (m) => {
+				m.setupGun(web);
+
+				return m.useGun().then();
 			})
+			.catch(e => null)
+			.delay(5 * 1000)
+			.tap(_showIP)
 		;
 	});
 
