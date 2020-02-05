@@ -31,7 +31,7 @@ export function setupGun(app?: Express | Server)
 
 	let _gun = new Gun<{
 		'epub-file': {
-			[K in EnumIDKEYListString | EnumIDKEYList | string]: Record<string, IGunEpubNode>
+			[K in EnumIDKEYListString | EnumIDKEYList]: Record<string, IGunEpubNode>
 		}
 	}>({
 		web: app,

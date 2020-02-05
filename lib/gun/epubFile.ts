@@ -69,7 +69,7 @@ export function promiseGunEpubFile<T>(siteID: string | string[], novel_id: strin
 
 export function nodeGunEpubFile(siteID: string, novel_id: string)
 {
-	return useGun().get(siteID).get(novel_id)
+	return useGun().get(siteID as EnumIDKEYListString).get(novel_id)
 }
 
 export function raceGunEpubFile(siteID: string | string[], novel_id: string | string[])
