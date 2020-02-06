@@ -48,6 +48,9 @@ export const enum EnumCacheMapRowStatus
 export type IGunEpubNode = {
 	timestamp: number,
 	exists: false,
+
+	filename: never,
+	base64: never,
 } | {
 	timestamp: number,
 	exists: true,

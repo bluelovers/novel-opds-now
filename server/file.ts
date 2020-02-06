@@ -6,7 +6,7 @@ import { Router } from 'express';
 import Bluebird from 'bluebird';
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { __cacheMapFile } from '../lib/const';
-import { spawnSync } from "child_process";
+import { spawnSync, spawn } from "child_process";
 import { join, basename } from "path";
 import { readJSON, writeJSON, readFile, remove } from 'fs-extra';
 import { ICacheMap, IGunEpubNode, IGunEpubData, ICacheMapRow, EnumCacheMapRowStatus } from '../lib/types';
@@ -159,7 +159,7 @@ function fileHandler()
 						}
 
 						console.log(`取得檔案中...`);
-						let cp = spawnSync('node', [
+						let cp = await spawn('node', [
 							'--experimental-worker',
 							join(__root, `./cli/cli.js`),
 							'--mod',
@@ -172,12 +172,43 @@ function fileHandler()
 							stdio: 'inherit',
 						});
 
+						// @ts-ignore
 						if (cp.error)
 						{
+							// @ts-ignore
 							return Promise.reject(cp.error)
 						}
 
-						let map: ICacheMap = await readJSON(map_file).catch(e => null);
+						let map: ICacheMap = await readJSON(map_file)
+							.catch(e => null)
+						;
+
+						if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id]))
+						{
+							await raceGunEpubFile([
+								//req.params.siteID,
+								//siteID,
+								IDKEY,
+							], [
+								req.params.novelID,
+								novel_id,
+							]).then(async (data) =>
+							{
+								if (checkGunData(data))
+								{
+									let { base64, filename, exists, timestamp } = data;
+									let isGun = true;
+
+									return {
+										base64,
+										filename,
+										exists,
+										timestamp,
+										isGun,
+									} as IGunEpubData
+								}
+							});
+						}
 
 						if (!map || !map[IDKEY] || !map[IDKEY][novel_id])
 						{
