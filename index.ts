@@ -20,7 +20,7 @@ export async function startServer(port?: number | string)
 
 		let _showIP = debounce(() => {
 			showIP(port);
-		}, 10 * 1000);
+		}, 11 * 1000);
 
 		_showIP();
 
@@ -29,13 +29,17 @@ export async function startServer(port?: number | string)
 			.tap(async (m) => {
 				m.setupGun(web);
 
-				return Promise.all([
-					//m.useGun().then(),
-					m.useGun().get('dmzj').then(),
-					m.useGun().get('wenku8').then(),
-					m.useGun().get('esjzone').then(),
-				])
-					.timeout(5 * 1000)
+				return Bluebird.resolve([
+						'dmzj',
+						'wenku8',
+						'esjzone'
+					] as const)
+					.map(IDKEY => {
+						return Bluebird
+							.resolve(m.useGun().get(IDKEY).then())
+							.timeout(5 * 1000)
+							.catch(e => null)
+					})
 					;
 			})
 			.catch(e => null)

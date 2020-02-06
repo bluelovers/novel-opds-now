@@ -10,11 +10,11 @@ import { statSync } from 'fs-extra';
 import { existsSync } from 'fs';
 import console from 'debug-color2/logger';
 
-function buildCache()
+function buildCache(force?: boolean)
 {
 	let __cache = join(__root, `.cache/cache.json`);
 
-	if (existsSync(__cache))
+	if (!force && existsSync(__cache))
 	{
 		try
 		{
@@ -53,5 +53,5 @@ function createSegment()
 	});
 }
 
-export default buildCache();
+export default buildCache;
 

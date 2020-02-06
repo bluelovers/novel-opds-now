@@ -2361,10 +2361,10 @@ file-type@^12.0.0:
   resolved "https://registry.npmjs.org/file-type/-/file-type-12.4.2.tgz#a344ea5664a1d01447ee7fb1b635f72feb6169d9"
   integrity sha512-UssQP5ZgIOKelfsaB5CuGAL+Y+q7EmONuiwF3N5HAH0t27rvrttgi6Ra9k/+DVaY9UF6+ybxu5pOXLUdA8N7Vg==
 
-file-type@^14.0.0, file-type@^14.1.0:
-  version "14.1.0"
-  resolved "https://registry.npmjs.org/file-type/-/file-type-14.1.0.tgz#32334d9c14462bc12e6c95f8a44630125c6c4e8c"
-  integrity sha512-HfxnzrPH+LLClSAsno88/0frRtamu1XfqEP4IP/8RqBmqQnBQkemv3Udde0t53wZmrdOtc70aaR9WUHyQhjCUQ==
+file-type@^14.0.0, file-type@^14.1.1:
+  version "14.1.1"
+  resolved "https://registry.npmjs.org/file-type/-/file-type-14.1.1.tgz#d624d512da648cf8916d1416303297493a97011b"
+  integrity sha512-fGmNwmRgDi3uMDNbJfRRKaOUGN/uzeWRl2Ti9RJdvLpzFMKbl5cBGP3ngHYKiBSbHPB8wzMckP9x9SixJDFftg==
   dependencies:
     readable-web-to-node-stream "^2.0.0"
     strtok3 "^6.0.0"
@@ -5905,10 +5905,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
-segment-dict@^2.3.48, segment-dict@^2.3.53:
-  version "2.3.53"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.53.tgz#925be01cd1ecf7f1fb48ecbebe83a893c03b7d8a"
-  integrity sha512-jMSBhjvQ+tM22pV1C624ZmzhoUG/oXESFiGEyZAWrWQkVfnta03zRozwhkkQQ5ogRqD5zFJC+M9CKrO3W+k4SQ==
+segment-dict@^2.3.48, segment-dict@^2.3.54:
+  version "2.3.54"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.54.tgz#4ca4960d7928cf2f812263551c5ba737db454e07"
+  integrity sha512-aG3aTxHC/hKqJloQxaPzt07b//ELS6aO5SOniEzyz10+acNxNv5HCDpwQZ/wlPP3Dd4Sfx6H7Uk0dOOqkLv62w==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"

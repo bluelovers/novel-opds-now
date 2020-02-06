@@ -3,13 +3,17 @@
  */
 
 import Gun from 'gun';
+import 'gun/lib/then';
 import fetch from 'cross-fetch';
 import Bluebird from 'bluebird';
+import { EnumIDKEYListString } from 'novel-downloader/src/all/const';
 
-let id = String(2784);
+let id = String(2682);
+let IDKEY: EnumIDKEYListString = 'wenku8';
 
 console.log(`wait a long time`);
-fetch(`http://localhost:3000/file/dmzj/${id}`)
+Bluebird.resolve()
+	.thenReturn(fetch(`http://localhost:3000/file/${IDKEY}/${id}`))
 	.finally(async () => {
 
 		console.log(`ok again, wait 3s`);
@@ -28,12 +32,28 @@ fetch(`http://localhost:3000/file/dmzj/${id}`)
 		console.log(`ok again, wait 3s`);
 		await Bluebird.delay(3000);
 
-		await gun.get('epub-file')
-			.get('wenku8')
+		gun.get('epub-file')
+			.get(IDKEY)
 			.get(id)
-
-			.then(v => console.log(`here should return { timestamp, base64 }, but`, v))
+			//.get('filename')
+//			.then(raw => {
+//
+//				delete raw.base64;
+//
+//				console.log(7777)
+//				console.dir(raw)
+//
+//
+//			})
 		;
+
+//		await gun.get('epub-file')
+//			.get(IDKEY)
+//			.get(id)
+//			.get('filename')
+//
+//			.then(v => console.log(`here should return { timestamp, base64 }, but`, v))
+//		;
 	})
 	.catch(e => null)
 ;

@@ -1,2 +1,2 @@
-declare const _default: Promise<void>;
-export default _default;
+declare function buildCache(force?: boolean): Promise<void>;
+export default buildCache;

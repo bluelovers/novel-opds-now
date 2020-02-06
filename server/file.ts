@@ -64,9 +64,45 @@ function fileHandler()
 						req.params.novelID,
 						novel_id,
 					])
-					.then(function (data)
+					.then(async (data) =>
 					{
 						let bool: boolean = checkGunData(data);
+
+						if (!checkGunData(data))
+						{
+							let { base64, filename, exists, timestamp } = (data || {}) as Exclude<IGunEpubNode, {
+								exists: false,
+							}>;
+
+							let gun = nodeGunEpubFile<Exclude<IGunEpubNode, {
+								exists: false,
+							}>>(IDKEY, req.params.novelID);
+
+							// @ts-ignore
+							timestamp = timestamp || await gun.get('timestamp');
+
+							if (typeof timestamp === 'number')
+							{
+								// @ts-ignore
+								filename = filename || await gun.get('filename');
+
+								if (typeof filename === 'string')
+								{
+									// @ts-ignore
+									base64 = base64 || await gun.get('base64');
+
+									if (typeof base64 === 'string')
+									{
+										data = {
+											base64,
+											exists: true,
+											filename,
+											timestamp,
+										}
+									}
+								}
+							}
+						}
 
 						if (checkGunData(data))
 						{
