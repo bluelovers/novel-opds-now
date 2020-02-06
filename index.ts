@@ -29,7 +29,14 @@ export async function startServer(port?: number | string)
 			.tap(async (m) => {
 				m.setupGun(web);
 
-				return m.useGun().then();
+				return Promise.all([
+					//m.useGun().then(),
+					m.useGun().get('dmzj').then(),
+					m.useGun().get('wenku8').then(),
+					m.useGun().get('esjzone').then(),
+				])
+					.timeout(5 * 1000)
+					;
 			})
 			.catch(e => null)
 			.delay(5 * 1000)

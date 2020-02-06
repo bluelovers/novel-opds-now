@@ -5,24 +5,25 @@
 import Gun from 'gun';
 //import 'gun/lib/server';
 import 'gun-tag';
-import { Express } from 'express';
+import type { Express } from 'express';
 import __root from '../../lib/__root';
 import { join } from 'path';
 import { OUTPUT_DIR } from '../../lib/const';
 import { ensureDirSync } from 'fs-extra';
 import console from 'debug-color2/logger';
-import { Server } from 'http';
+import type { Server } from 'http';
 import { IGunStatic } from 'gun/types/static';
-import { IGunEpubNode } from '../../lib/types';
-import { EnumIDKEYList, EnumIDKEYListString } from 'novel-downloader/src/all/const';
+import type { IGunEpubNode } from '../../lib/types';
+import type { EnumIDKEYList, EnumIDKEYListString } from 'novel-downloader/src/all/const';
 import Radisk from 'gun/lib/radisk';
 
 let gun: ReturnType<typeof setupGun>;
 
 // @ts-ignore
-Gun.log = Object.assign(() => {}, Gun.log, {
-	verbose: false,
-});
+//Gun.log = Object.assign(() => {}, Gun.log, {
+//	verbose: false,
+//});
+Gun.log.off = true;
 
 export function setupGun(app?: Express | Server)
 {
