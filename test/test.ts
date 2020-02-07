@@ -3,7 +3,7 @@
  */
 
 import Gun from 'gun';
-import 'gun/lib/then';
+//import 'gun/lib/then';
 import fetch from 'cross-fetch';
 import Bluebird from 'bluebird';
 import { EnumIDKEYListString } from 'novel-downloader/src/all/const';
@@ -11,9 +11,14 @@ import { EnumIDKEYListString } from 'novel-downloader/src/all/const';
 let id = String(2682);
 let IDKEY: EnumIDKEYListString = 'wenku8';
 
+// @ts-ignore
+//console.LOG = false;
+//Gun.log.LOG = false;
+
 console.log(`wait a long time`);
 Bluebird.resolve()
 	.thenReturn(fetch(`http://localhost:3000/file/${IDKEY}/${id}`))
+	.catch(e => null)
 	.finally(async () => {
 
 		console.log(`ok again, wait 3s`);
@@ -23,7 +28,7 @@ Bluebird.resolve()
 		let gun = new Gun({
 			peers: [
 				//"http://localhost:3000/gun",
-				"https://gunjs.herokuapp.com/gun",
+				//"https://gunjs.herokuapp.com/gun",
 				"http://nmr.io:8765/gun",
 				"https://my-test-gun-server.herokuapp.com/gun",
 			]
@@ -32,20 +37,32 @@ Bluebird.resolve()
 		console.log(`ok again, wait 3s`);
 		await Bluebird.delay(3000);
 
-		gun.get('epub-file')
+		console.log(222)
+
+		await gun
+			.get('epub-file')
 			.get(IDKEY)
-			.get(id)
+			//.get(id)
 			//.get('filename')
-//			.then(raw => {
-//
-//				delete raw.base64;
-//
-//				console.log(7777)
-//				console.dir(raw)
-//
-//
-//			})
+			.then(raw => {
+
+				try
+				{
+					delete raw.base64;
+				}
+				catch (e)
+				{
+
+				}
+
+				console.log(7777)
+				console.dir(raw)
+
+			})
+
 		;
+
+		console.log(111)
 
 //		await gun.get('epub-file')
 //			.get(IDKEY)
@@ -54,8 +71,12 @@ Bluebird.resolve()
 //
 //			.then(v => console.log(`here should return { timestamp, base64 }, but`, v))
 //		;
+
+
+
+
 	})
-	.catch(e => null)
+	//.catch(e => null)
 ;
 
 

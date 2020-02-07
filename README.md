@@ -10,19 +10,11 @@
 
 ## install
 
-> 安裝
+### npm 安裝
 
 ```
 npm install -g novel-opds-now
 ```
-
-**( 不推薦使用 npx 來進行安裝，但如果有奇奇怪怪的狀況可以嘗試看看 )**
-
-```
-npx novel-opds-now
-```
-
-## start
 
 > 啟動伺服器
 
@@ -30,5 +22,12 @@ npx novel-opds-now
 novel-opds-now -p 3000
 ```
 
+### npx 安裝/啟動
+
+**( 不推薦使用 npx 來進行安裝，但如果有奇奇怪怪的狀況可以嘗試看看 )**
+
+```
+npx novel-opds-now
+```
 
 ![image](docs/image.png)

@@ -6,7 +6,6 @@ import { Router } from 'express';
 import Bluebird from 'bluebird';
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { __cacheMapFile } from '../lib/const';
-import { spawnSync, spawn } from "child_process";
 import { join, basename } from "path";
 import { readJSON, writeJSON, readFile, remove } from 'fs-extra';
 import { ICacheMap, IGunEpubNode, IGunEpubData, ICacheMapRow, EnumCacheMapRowStatus } from '../lib/types';
@@ -17,6 +16,7 @@ import { raceGunEpubFile, makeArrayEntrys, nodeGunEpubFile } from '../lib/gun/ep
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
 import checkGunData from '../lib/gun/checkData';
+import { async as crossSpawn } from 'cross-spawn-extra';
 
 function fileHandler()
 {
@@ -159,7 +159,7 @@ function fileHandler()
 						}
 
 						console.log(`取得檔案中...`);
-						let cp = await spawn('node', [
+						let cp = await crossSpawn('node', [
 							'--experimental-worker',
 							join(__root, `./cli/cli.js`),
 							'--mod',

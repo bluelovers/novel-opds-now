@@ -18,7 +18,7 @@ export async function updateCache(force?: boolean)
 
 	return Bluebird.resolve(stat(localFile))
 		.then<INovelStatCache>(async (st) => {
-			if (!force && st && (Date.now() - st.mtimeMs) < 86400 * 1000)
+			if (!force && st && (Date.now() - st.mtimeMs) < 12 * 60 * 60 * 1000)
 			{
 				return readJSON(localFile)
 			}
