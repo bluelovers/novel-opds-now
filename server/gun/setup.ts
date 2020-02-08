@@ -10,7 +10,7 @@ import __root from '../../lib/__root';
 import { join } from 'path';
 import { OUTPUT_DIR } from '../../lib/const';
 import { ensureDirSync } from 'fs-extra';
-import console from 'debug-color2/logger';
+import _console from 'debug-color2/logger';
 import type { Server } from 'http';
 import { IGunStatic } from 'gun/types/static';
 import type { IGunEpubNode } from '../../lib/types';
@@ -20,10 +20,13 @@ import Radisk from 'gun/lib/radisk';
 let gun: ReturnType<typeof setupGun>;
 
 // @ts-ignore
-//Gun.log = Object.assign(() => {}, Gun.log, {
-//	verbose: false,
-//});
+Gun.log = Object.assign(() => {}, Gun.log, {
+	verbose: false,
+});
+// @ts-ignore
 Gun.log.off = true;
+// @ts-ignore
+console.LOG = false;
 
 export function setupGun(app?: Express | Server)
 {
@@ -49,7 +52,7 @@ export function setupGun(app?: Express | Server)
 		},
 	});
 
-	console.debug(`P2P 緩存位於 ${file}`);
+	_console.debug(`P2P 緩存位於 ${file}`);
 
 	gun = _gun;
 

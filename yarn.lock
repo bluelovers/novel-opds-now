@@ -4537,10 +4537,10 @@ novel-downloader-cli@^1.0.24:
     update-notifier "^4.0.0"
     yargs "^15.1.0"
 
-novel-downloader@^1.3.13:
-  version "1.3.13"
-  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-1.3.13.tgz#248524f8feef82d0b2aacfd4192f63fbc81a9261"
-  integrity sha512-tgoTdXbuHOwK9kGqv5Rk74pDEJKNpBcudDSMmb2e/VB17Aqjr99i/OdiX6vFDlrDefzGpi7piVu+0eNdvQTEtw==
+novel-downloader@^1.3.13, novel-downloader@^1.3.14:
+  version "1.3.14"
+  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-1.3.14.tgz#5bac80989501b2d4f15e40f102bf77cfe01215f2"
+  integrity sha512-cPKe9LLnMlkGGxUNgKMdCNirNnWyvF8yIormuCWAuKipIW0fhDHi2XHsnEb8Ic1qJWqfBjiY/9+WCIr20AJ8ww==
   dependencies:
     "@node-novel/layout-reporter" "^1.0.3"
     array-hyper-unique "^1.1.0"
