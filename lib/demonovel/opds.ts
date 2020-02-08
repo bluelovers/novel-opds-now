@@ -10,6 +10,7 @@ import { moment } from 'novel-downloader/src/site';
 import MIMETypes from "mime-types";
 import addCover from '../opds/addCover';
 import { makeOPDSShared } from '../opds/index';
+import { IFilterNovelDataPlus } from './types';
 
 export let prefix = `/demo`;
 export let prefixRoot = `/opds` + prefix;
@@ -26,7 +27,7 @@ export async function makeOPDSType(type: string)
 	{
 		default:
 
-			await loadCache<IFilterNovelData[]>('array.json')
+			await loadCache<IFilterNovelDataPlus[]>('array.json')
 				.each(novel => {
 
 					if (!novel.cache.epub_basename)
@@ -62,6 +63,26 @@ export async function makeOPDSType(type: string)
 					{
 						entry.updated = createMoment(novel.cache.epub_date);
 					}
+
+					if (novel.authors && novel.authors.length)
+					{
+						// @ts-ignore
+						entry.authors = novel.authors.map(name => ({name}))
+					}
+
+					if (novel.mdconf.novel && novel.mdconf.novel.preface)
+					{
+						// @ts-ignore
+						//entry.summary = novel.mdconf.novel.preface;
+
+						// @ts-ignore
+						entry.content = {
+							value: novel.mdconf.novel.preface
+								.replace(/\n/g, '<br/>')
+						}
+					}
+
+					entry.subtitle = novel.mdconf.novel.title;
 
 					feed.books.push(entry);
 				})

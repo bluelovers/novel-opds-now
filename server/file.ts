@@ -32,7 +32,7 @@ function fileHandler()
 		delete query.siteID;
 		delete query.id;
 
-		console.debug(req.baseUrl, req.url, req.params, query);
+		console.debug(req.method, req.baseUrl, req.url, req.params, query);
 
 		let siteID = String(req.params.siteID || '')
 			.trim()

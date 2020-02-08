@@ -6,7 +6,7 @@ import { NodeNovelInfo } from 'node-novel-info/class';
 import { INovelStatCache, createFromJSON, IFilterNovelData, createMoment } from '@node-novel/cache-loader';
 import { removeZeroWidth } from 'zero-width/lib';
 import { toHalfWidth } from 'str-util';
-import { IOutputFile } from './types';
+import { IOutputFile, IFilterNovelDataPlus } from './types';
 import dotValues2 from 'dot-values2'
 import { writeJSON } from 'fs-extra';
 
@@ -20,15 +20,16 @@ export function buildCache()
 
 			let novels = nc.filterNovel();
 
-			let list = dotValues2.get(novels, `*.*`) as IFilterNovelData[];
+			let list = dotValues2.get(novels, `*.*`) as IFilterNovelDataPlus[];
 
 			list = list
 				.map(novel =>
 				{
 					let info = NodeNovelInfo.create(novel.mdconf);
 
-					// @ts-ignore
 					novel.title = info.title();
+
+					novel.authors = info.authors();
 
 					return novel
 				})

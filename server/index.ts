@@ -32,7 +32,7 @@ app.use('/file', fileHandler());
 app.use('/opds', opdsHandler());
 
 app.use('/*', (req, res, next) => {
-	console.log(req.baseUrl, req.url, req.params);
+	console.log(req.method, req.baseUrl, req.url, req.params);
 	next();
 });
 
