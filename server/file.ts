@@ -185,7 +185,7 @@ function fileHandler()
 
 						if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id]))
 						{
-							await raceGunEpubFile([
+							gunData = await raceGunEpubFile([
 								//req.params.siteID,
 								//siteID,
 								IDKEY,
@@ -208,6 +208,11 @@ function fileHandler()
 									} as IGunEpubData
 								}
 							});
+
+							if (gunData)
+							{
+								return gunData
+							}
 						}
 
 						if (!map || !map[IDKEY] || !map[IDKEY][novel_id])
