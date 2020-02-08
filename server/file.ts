@@ -34,11 +34,13 @@ function fileHandler()
 
 		console.debug(req.baseUrl, req.url, req.params, query);
 
-		let siteID = (req.params.siteID || '')
+		let siteID = String(req.params.siteID || '')
 			.trim()
 			.replace(/\.xml$|[\/\\]+/ig, '')
 		;
-		let novel_id = req.params.novelID;
+		let novel_id = String(req.params.novelID || '')
+			.trim()
+		;
 
 		if (siteID.toLowerCase() === 'dmzj')
 		{
@@ -55,6 +57,11 @@ function fileHandler()
 				if (!IDKEY)
 				{
 					return Promise.reject(new Error(`${siteID} 模組不存在`))
+				}
+
+				if (!novel_id)
+				{
+					return Promise.reject(new Error(`沒有指定需要下載的 id: '${novel_id}'`));
 				}
 			})
 			.then(async () =>

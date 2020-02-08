@@ -44,6 +44,8 @@ npx novel-opds-now
 
 1. 安裝成功，但啟動伺服器時出現 `'novel-opds-now' 不是內部或外部命令、可執行的程式或批次檔。` 訊息的話，請改用 `npx novel-opds-now` 指令來啟動伺服器
 
+2. 當手機與電腦不同網路環境下，請利用 https://www.npmjs.com/package/share-localhost 這類工具來讓試著連接伺服器
+
 ---
 
 ![image](docs/image.png)
