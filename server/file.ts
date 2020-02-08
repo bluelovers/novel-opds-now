@@ -34,7 +34,10 @@ function fileHandler()
 
 		console.debug(req.baseUrl, req.url, req.params, query);
 
-		let siteID = req.params.siteID;
+		let siteID = (req.params.siteID || '')
+			.trim()
+			.replace(/\.xml$|[\/\\]+/ig, '')
+		;
 		let novel_id = req.params.novelID;
 
 		if (siteID.toLowerCase() === 'dmzj')
