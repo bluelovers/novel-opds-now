@@ -40,4 +40,10 @@ novel-opds-now -p 3000
 npx novel-opds-now
 ```
 
+## FAQ
+
+1. 安裝成功，但啟動伺服器時出現 `'novel-opds-now' 不是內部或外部命令、可執行的程式或批次檔。` 訊息的話，請改用 `npx novel-opds-now` 指令來啟動伺服器
+
+---
+
 ![image](docs/image.png)
