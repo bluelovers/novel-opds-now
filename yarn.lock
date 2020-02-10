@@ -5905,10 +5905,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
-segment-dict@^2.3.48, segment-dict@^2.3.55:
-  version "2.3.55"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.55.tgz#58a0ef137e5b7311e2bcb6a8ed71225a591c4d1a"
-  integrity sha512-dfc2rTk8QchOBZvS7A0HjJndKeHIjVG/QklGeha4wfiGrr5MXvt26KbfcvIolyOA3nG+MBcKwSiC1j/YmZZlBQ==
+segment-dict@^2.3.48, segment-dict@^2.3.56:
+  version "2.3.56"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.56.tgz#f1374662fc9cf6843a5b528d8f5f42337d3cfacb"
+  integrity sha512-QcjANMyDahUakfwp1TH0dpKWEJ+DuZTqngRyxUT++65Yl3e6dKGwh3qRCPA6UFnOcadwgRq9xrAkVbSoc/fvcQ==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"
