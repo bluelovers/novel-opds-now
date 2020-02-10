@@ -66,6 +66,7 @@ function fileHandler()
 			})
 			.then(async () =>
 			{
+				console.info(`檢查是否存在緩存...`);
 				let gunData = await raceGunEpubFile([
 						//req.params.siteID,
 						//siteID,

@@ -6,6 +6,7 @@ import Gun from 'gun';
 import { ITSValueOrArray } from 'ts-type';
 import { EnumIDKEYList, EnumIDKEYListString } from 'novel-downloader/src/all/const';
 import { IGunChainReference } from 'gun/types/chain';
+import retryGunNode from './retryGunNode';
 
 export function makeArrayEntrys(siteID: ITSValueOrArray<string>, novel_id: ITSValueOrArray<string | number>)
 {
@@ -65,7 +66,8 @@ export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSVal
 
 export function promiseGunEpubFile<T = IGunEpubNode>(siteID: string | string[], novel_id: string | string[])
 {
-	return allGunEpubFile(siteID, novel_id).map(node => node.then() as Promise<T>)
+	return allGunEpubFile(siteID, novel_id)
+		.map(node => retryGunNode<T>(node).timeout(10 * 1000).catch(e => null))
 }
 
 export function nodeGunEpubFile<T = IGunEpubNode>(siteID: string, novel_id: string): IGunChainReference<T, string, false>

@@ -7,7 +7,10 @@ import { startServer } from '../';
 
 if (cluster.isMaster)
 {
-	cluster.fork() && cluster.on('exit', function () { cluster.fork() });
+	cluster.fork() && cluster.on('exit', () => {
+		console.log(`cluster.fork`);
+		cluster.fork();
+	});
 }
 else
 {
