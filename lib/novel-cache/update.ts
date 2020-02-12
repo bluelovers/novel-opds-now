@@ -5,9 +5,10 @@ import { ISiteIDs, pathPrefix, id_titles_map, id_update_map, getLocalFilename, i
 import Bluebird from 'bluebird';
 import { pathExists, stat, readJSON, writeJSON, outputJSON } from 'fs-extra';
 import { basename } from 'path';
-import fetch from 'cross-fetch';
+import fetch from '../fetch';
 import buildSortAll from './build';
 import console from 'debug-color2/logger';
+import getProxy from '../getProxy';
 
 export function updateCacheAll(force?: boolean)
 {
@@ -36,11 +37,19 @@ export async function updateCache(siteID: ISiteIDs, map: Record<ISiteIDs, string
 			return Promise.reject()
 		})
 		.catch(e => {
-			console.debug(`[${siteID}] 更新 ${map[siteID]}`);
+			let proxy = getProxy();
+
+			if (proxy)
+			{
+				console.debug(`use proxy`, proxy);
+			}
+			console.debug(`[${siteID}] 嘗試更新 ${map[siteID]}`);
 			return fetchCache(siteID, map)
 		})
 		.catch(e => {
-			console.warn(e.message)
+
+			console.warn(e.code, e.message);
+
 			return readJSON(localFile)
 		})
 		.catch(e => {

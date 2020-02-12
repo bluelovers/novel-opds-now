@@ -4,11 +4,12 @@
 
 import Bluebird from 'bluebird';
 import { stat, readJSON, outputJSON } from 'fs-extra';
-import fetch from 'cross-fetch';
+import fetch from '../fetch';
 import { INovelStatCache } from '@node-novel/cache-loader';
 import { getLocalFilename } from './load';
 import buildCache from './build';
 import console from 'debug-color2/logger';
+import getProxy from '../getProxy';
 
 let url = `https://gitlab.com/novel-group/txt-source/raw/master/novel-stat.json`;
 
@@ -25,7 +26,15 @@ export async function updateCache(force?: boolean)
 			return Promise.reject()
 		})
 		.catch(e => {
-			console.debug(`更新 ${url}`);
+
+			let proxy = getProxy();
+
+			if (proxy)
+			{
+				console.debug(`use proxy`, proxy);
+			}
+
+			console.debug(`嘗試更新 ${url}`);
 			return fetchCache()
 		})
 		.catch<INovelStatCache>(e => {

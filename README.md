@@ -32,6 +32,14 @@ npm install -g novel-opds-now
 novel-opds-now -p 3000
 ```
 
+> 使用 Proxy 的情況下
+
+```
+novel-opds-now -p 3000 --proxy http://xxx.xxx.xxx.xxx:xxxx
+```
+
+或者設定環境參數 `HTTP_PROXY`
+
 ### npx 安裝/啟動
 
 **( 不推薦使用 npx 來進行安裝，但如果有奇奇怪怪的狀況可以嘗試看看 )**

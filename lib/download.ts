@@ -25,6 +25,7 @@ import tmpDir from './tmpDir';
 import { ICacheMap, ICacheMapRow, IDownloadInfo, EnumCacheMapRowStatus } from './types';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
+import getProxy from './getProxy';
 
 export function downloadInfo(options: {
 	novel_id: string | number,
@@ -57,7 +58,7 @@ export function downloadInfo(options: {
 					debugLog: true,
 				});
 
-				let url_data2 = o3.parseUrl(options.novel_id);
+				let url_data2 = o3.parseUrl(options.novel_id as any);
 
 				data = o2[url_data2.novel_id];
 			}
@@ -113,7 +114,7 @@ export function downloadInfo(options: {
 		debugLog: true,
 	});
 
-	let url_data = o.parseUrl(options.novel_id);
+	let url_data = o.parseUrl(options.novel_id as any);
 
 	let cwd = join(outputDir, IDKEY, url_data.novel_id);
 
@@ -240,6 +241,13 @@ export async function downloadNovel(novel_id: string | number, siteID: string | 
 
 	await ensureFile(join(outputDir, IDKEY, String(novel_id), '.gitkeep'));
 
+	let proxy = getProxy();
+
+	if (proxy)
+	{
+		console.debug(`use proxy`, proxy);
+	}
+
 	let novel = await download(String(novel_id), {
 		disableTxtdownload: true,
 		//disableCheckExists: true,
@@ -247,6 +255,12 @@ export async function downloadNovel(novel_id: string | number, siteID: string | 
 		keepRuby: true,
 		keepFormat: true,
 		debugLog: true,
+		optionsJSDOM: {
+			requestOptions: {
+				// @ts-ignore
+				proxy,
+			}
+		}
 	}, siteID as EnumNovelSiteList, {
 		outputDir,
 		pathNovelStyle: true,
@@ -254,6 +268,7 @@ export async function downloadNovel(novel_id: string | number, siteID: string | 
 		keepRuby: true,
 		keepFormat: true,
 		debugLog: true,
+
 	});
 
 	let cwd = join(outputDir, IDKEY, novel.url_data.novel_id);

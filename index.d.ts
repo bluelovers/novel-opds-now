@@ -1,3 +1,6 @@
 /// <reference types="node" />
-export declare function startServer(port?: number | string): Promise<import("http").Server>;
+export declare function startServer(options: {
+    port?: number | string;
+    proxy?: string;
+}): Promise<import("http").Server>;
 export default startServer;

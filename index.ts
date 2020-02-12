@@ -8,8 +8,18 @@ import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
 import debounce from 'lodash/debounce';
 
-export async function startServer(port?: number | string)
+export async function startServer(options: {
+	port?: number | string,
+	proxy?: string
+})
 {
+	let { port } = options;
+
+	if (options.proxy)
+	{
+		process.env.HTTP_PROXY = process.env.HTTPS_PROXY = options.proxy;
+	}
+
 	const web = await _createServer(micro(await import('./server/index').then(m => m.default)));
 
 	port = (port as number | 0) || getPort(getPortEnv());

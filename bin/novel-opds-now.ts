@@ -13,7 +13,10 @@ let argv = yargs
 		alias: ['p'],
 		default: getPort(getPortEnv())
 	})
+	.option('proxy', {
+		string: true,
+	})
 	.argv
 ;
 
-export default startServer(argv.port);
+export default startServer(argv);

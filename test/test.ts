@@ -4,7 +4,7 @@
 
 import Gun from 'gun';
 //import 'gun/lib/then';
-import fetch from 'cross-fetch';
+import fetch from '../lib/fetch';
 import Bluebird from 'bluebird';
 import { EnumIDKEYListString } from 'novel-downloader/src/all/const';
 
