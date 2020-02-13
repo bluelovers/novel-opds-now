@@ -2011,10 +2011,10 @@ env-bool@^1.0.3:
   resolved "https://registry.npmjs.org/env-bool/-/env-bool-1.0.3.tgz#4b564760816766eed01b59b3a3c95e87c925548d"
   integrity sha512-Y8SeCpZmIEyCiiOTdKnIofJSlj43RmxoNHB3YNZyU17VE6VVGBEBG9J/f+t/bdydMsghLVlIOeayqV2M8x5iMg==
 
-epub-maker2@^2.4.22:
-  version "2.4.22"
-  resolved "https://registry.npmjs.org/epub-maker2/-/epub-maker2-2.4.22.tgz#b89d210215c445c3f61c83b17d78a93d1b4598c2"
-  integrity sha512-/BtzdotGBLkT/c7taA6YatLqpdlg6UthIRj3r0k+jc7AafUifmSL8NktwBBMXDGA5t7If42aYkpN2s1eBnoD6Q==
+epub-maker2@^2.4.23:
+  version "2.4.23"
+  resolved "https://registry.npmjs.org/epub-maker2/-/epub-maker2-2.4.23.tgz#e7ff6397f5c9d42020b3bcacdf20636a9d78a820"
+  integrity sha512-rvjQBpWkzKiGFVBdK2jvPm+sClRfiLI0HQSdWcdfhApCdaJqt/NARBU5Zz0xPRxESRSPTqosn0eQt1Xbw509Qg==
   dependencies:
     "@types/bluebird" "^3"
     "@types/bluebird-global" "^3"
@@ -4612,10 +4612,10 @@ novel-downloader@^1.3.13, novel-downloader@^1.3.14:
     ts-type "^1.2.13"
     upath2 "^2.1.3"
 
-novel-epub@^1.1.61:
-  version "1.1.61"
-  resolved "https://registry.npmjs.org/novel-epub/-/novel-epub-1.1.61.tgz#e1d57697c19063f336bd4242346af1363282dc7b"
-  integrity sha512-tnJz2P0w3nmCWw73jcH9udyf/Cq3GJSS2PqAxXUTIGyKtFYDL5djb5PADNq1+zVfYe8Ld2RGAi/dqjOTbLfNZg==
+novel-epub@^1.1.62:
+  version "1.1.62"
+  resolved "https://registry.npmjs.org/novel-epub/-/novel-epub-1.1.62.tgz#28ac19c6c4fd129345df1664ab77e860c57eae37"
+  integrity sha512-kXGkEZqyEdS5s2lmbQ+6WScXqvA18yxyAAaCwLu0vZiHrjZiQynyWMBN10dy1GyrEM8LzjGBitvyE1kWB93WDQ==
   dependencies:
     "@node-novel/epub-util" "^1.0.2"
     "@node-novel/normalize" "^1.0.10"
@@ -4628,7 +4628,7 @@ novel-epub@^1.1.61:
     crlf-normalize "^1.0.3"
     debug-color2 "^1.1.7"
     deepmerge-plus "^2.1.3"
-    epub-maker2 "^2.4.22"
+    epub-maker2 "^2.4.23"
     execall2 "^1.1.4"
     fs-iconv "^2.0.10"
     is-relative "^1.0.0"
