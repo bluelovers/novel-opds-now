@@ -1288,7 +1288,7 @@ ci-info@^2.0.0:
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.30, cjk-conv@^1.2.34:
+cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.34:
   version "1.2.34"
   resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.34.tgz#e508c69272b11407984fc0621dc3567cb7953e82"
   integrity sha512-rkNLVBihpT6lbAwWVsKVPOHgiaTbLC3V3CaayTmx1KhWei2ZlO8SFMxFIbMD3rYyxzOXghNqhMKV0T7cQR/7Rg==
@@ -2011,10 +2011,10 @@ env-bool@^1.0.3:
   resolved "https://registry.npmjs.org/env-bool/-/env-bool-1.0.3.tgz#4b564760816766eed01b59b3a3c95e87c925548d"
   integrity sha512-Y8SeCpZmIEyCiiOTdKnIofJSlj43RmxoNHB3YNZyU17VE6VVGBEBG9J/f+t/bdydMsghLVlIOeayqV2M8x5iMg==
 
-epub-maker2@^2.4.21:
-  version "2.4.21"
-  resolved "https://registry.npmjs.org/epub-maker2/-/epub-maker2-2.4.21.tgz#ec8f5560fc307da0c14ba4ee41c6732177333004"
-  integrity sha512-8lyjnQ8yxo4novkWB0saeQtNpFaq1znqqu1/CaiRfP1jBu8Fh5j9OBTnv6NcUS8cvoRA/k0Hcesf3r502+K5Aw==
+epub-maker2@^2.4.22:
+  version "2.4.22"
+  resolved "https://registry.npmjs.org/epub-maker2/-/epub-maker2-2.4.22.tgz#b89d210215c445c3f61c83b17d78a93d1b4598c2"
+  integrity sha512-/BtzdotGBLkT/c7taA6YatLqpdlg6UthIRj3r0k+jc7AafUifmSL8NktwBBMXDGA5t7If42aYkpN2s1eBnoD6Q==
   dependencies:
     "@types/bluebird" "^3"
     "@types/bluebird-global" "^3"
@@ -2026,7 +2026,7 @@ epub-maker2@^2.4.21:
     bluebird "^3.7.2"
     bluebird-cancellation "^1.0.9"
     debug-color2 "^1.1.7"
-    file-type "^14.0.0"
+    file-type "^14.1.2"
     fs-iconv "^2"
     handlebars "< 4.6 && >= 4.5"
     hash-sum "^2.0.0"
@@ -2387,7 +2387,7 @@ file-type@^12.0.0:
   resolved "https://registry.npmjs.org/file-type/-/file-type-12.4.2.tgz#a344ea5664a1d01447ee7fb1b635f72feb6169d9"
   integrity sha512-UssQP5ZgIOKelfsaB5CuGAL+Y+q7EmONuiwF3N5HAH0t27rvrttgi6Ra9k/+DVaY9UF6+ybxu5pOXLUdA8N7Vg==
 
-file-type@^14.0.0, file-type@^14.1.2:
+file-type@^14.1.2:
   version "14.1.2"
   resolved "https://registry.npmjs.org/file-type/-/file-type-14.1.2.tgz#ee7adfa2a0483d8be3a38aea58fdf2705ab00fb4"
   integrity sha512-9NI4+QzDlEPB6OETc/FcJt8i8vNT396VweRwEwLcE07MnorWkZDopNuc+MeoYA7ArbzoK044JbaDExWys8deTQ==
@@ -4612,10 +4612,10 @@ novel-downloader@^1.3.13, novel-downloader@^1.3.14:
     ts-type "^1.2.13"
     upath2 "^2.1.3"
 
-novel-epub@^1.1.60:
-  version "1.1.60"
-  resolved "https://registry.npmjs.org/novel-epub/-/novel-epub-1.1.60.tgz#aba6dcb081301ee3b5038862d9b7e9b95975728c"
-  integrity sha512-kEPi17P6xyzC+ImbkdvM9FT1tpBhy08pHLhMt+2RTYnrkEoSrNHU9I1WRPLoHe9gvfw18t01+VMOn11KVSfWFA==
+novel-epub@^1.1.61:
+  version "1.1.61"
+  resolved "https://registry.npmjs.org/novel-epub/-/novel-epub-1.1.61.tgz#e1d57697c19063f336bd4242346af1363282dc7b"
+  integrity sha512-tnJz2P0w3nmCWw73jcH9udyf/Cq3GJSS2PqAxXUTIGyKtFYDL5djb5PADNq1+zVfYe8Ld2RGAi/dqjOTbLfNZg==
   dependencies:
     "@node-novel/epub-util" "^1.0.2"
     "@node-novel/normalize" "^1.0.10"
@@ -4624,11 +4624,11 @@ novel-epub@^1.1.60:
     "@yarn-tool/update-notifier" "^1.0.6"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
-    cjk-conv "^1.2.30"
+    cjk-conv "^1.2.34"
     crlf-normalize "^1.0.3"
     debug-color2 "^1.1.7"
     deepmerge-plus "^2.1.3"
-    epub-maker2 "^2.4.21"
+    epub-maker2 "^2.4.22"
     execall2 "^1.1.4"
     fs-iconv "^2.0.10"
     is-relative "^1.0.0"
@@ -4646,7 +4646,7 @@ novel-epub@^1.1.60:
     node-novel-globby "^2.0.9"
     node-novel-info "^3.0.0"
     path-dir-normalize "^1.0.1"
-    regexp-cjk "^3.3.8"
+    regexp-cjk "^3.3.10"
     regexp-cjk-plugin-extra "^1.0.5"
     str-util "^2.3.21"
     transliteration "^2.1.8"

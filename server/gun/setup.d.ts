@@ -6,10 +6,9 @@ import type { IGunEpubNode } from '../../lib/types';
 declare let gun: ReturnType<typeof setupGun>;
 export declare function setupGun(app?: Express | Server): import("gun/types/chain").IGunChainReference<{
     'epub-file': {
-        dmzj: Record<string, IGunEpubNode>;
-        wenku8: Record<string, IGunEpubNode>;
-        esjzone: Record<string, IGunEpubNode>;
         alphapolis: Record<string, IGunEpubNode>;
+        dmzj: Record<string, IGunEpubNode>;
+        esjzone: Record<string, IGunEpubNode>;
         hetubook: Record<string, IGunEpubNode>;
         iqing: Record<string, IGunEpubNode>;
         kakuyomu: Record<string, IGunEpubNode>;
@@ -20,14 +19,14 @@ export declare function setupGun(app?: Express | Server): import("gun/types/chai
         syosetu: Record<string, IGunEpubNode>;
         uukanshu: Record<string, IGunEpubNode>;
         webqxs: Record<string, IGunEpubNode>;
+        wenku8: Record<string, IGunEpubNode>;
         x23qb: Record<string, IGunEpubNode>;
     };
 }, any, "pre_root">;
 export declare function useGun(): import("gun/types/chain").IGunChainReference<{
-    dmzj: Record<string, IGunEpubNode>;
-    wenku8: Record<string, IGunEpubNode>;
-    esjzone: Record<string, IGunEpubNode>;
     alphapolis: Record<string, IGunEpubNode>;
+    dmzj: Record<string, IGunEpubNode>;
+    esjzone: Record<string, IGunEpubNode>;
     hetubook: Record<string, IGunEpubNode>;
     iqing: Record<string, IGunEpubNode>;
     kakuyomu: Record<string, IGunEpubNode>;
@@ -38,14 +37,14 @@ export declare function useGun(): import("gun/types/chain").IGunChainReference<{
     syosetu: Record<string, IGunEpubNode>;
     uukanshu: Record<string, IGunEpubNode>;
     webqxs: Record<string, IGunEpubNode>;
+    wenku8: Record<string, IGunEpubNode>;
     x23qb: Record<string, IGunEpubNode>;
 }, "epub-file", "root">;
 export declare function useGunRoot(): import("gun/types/chain").IGunChainReference<{
     'epub-file': {
-        dmzj: Record<string, IGunEpubNode>;
-        wenku8: Record<string, IGunEpubNode>;
-        esjzone: Record<string, IGunEpubNode>;
         alphapolis: Record<string, IGunEpubNode>;
+        dmzj: Record<string, IGunEpubNode>;
+        esjzone: Record<string, IGunEpubNode>;
         hetubook: Record<string, IGunEpubNode>;
         iqing: Record<string, IGunEpubNode>;
         kakuyomu: Record<string, IGunEpubNode>;
@@ -56,6 +55,7 @@ export declare function useGunRoot(): import("gun/types/chain").IGunChainReferen
         syosetu: Record<string, IGunEpubNode>;
         uukanshu: Record<string, IGunEpubNode>;
         webqxs: Record<string, IGunEpubNode>;
+        wenku8: Record<string, IGunEpubNode>;
         x23qb: Record<string, IGunEpubNode>;
     };
 }, any, "pre_root">;
