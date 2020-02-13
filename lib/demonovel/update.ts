@@ -51,7 +51,17 @@ function fetchCache()
 	return Bluebird
 		.resolve(fetch(url))
 		.then<INovelStatCache>(v => {
-			return v.json()
+			return Bluebird.resolve(v.json())
+				.tap(async (e) => {
+					try
+					{
+						console.red.dir(await v.text());
+					}
+					catch (e)
+					{
+
+					}
+				})
 		})
 		;
 }

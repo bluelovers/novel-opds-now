@@ -66,7 +66,17 @@ export function fetchCache<T>(siteID: ISiteIDs, map: Record<ISiteIDs, string>)
 	return Bluebird
 		.resolve(fetch(`${pathPrefix.github}${map[siteID]}`))
 		.then<T>(v => {
-			return v.json()
+			return Bluebird.resolve(v.json())
+				.tap(async (e) => {
+					try
+					{
+						console.red.dir(await v.text());
+					}
+					catch (e)
+					{
+
+					}
+				})
 		})
 		;
 }

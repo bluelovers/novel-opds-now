@@ -11,8 +11,9 @@ import debounce from 'lodash/debounce';
 export async function startServer(options: {
 	port?: number | string,
 	proxy?: string
-})
+} = {})
 {
+	options = options || {};
 	let { port } = options;
 
 	if (options.proxy)
