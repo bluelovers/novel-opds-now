@@ -68,15 +68,15 @@
     html-minifier "^4.0.0"
     zero-width "^1.0.5"
 
-"@node-novel/layout-pattern@^1.0.16":
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.16.tgz#e63b4a2f49d45c7731b15853fd06f18ff43120fd"
-  integrity sha512-3i4R05jyrIY5X1xF5FnmInVH5SO/XwLrLxdB3CYxNAiMQIwpzG6JFOytVgD7YGhRwlg4oxFWzCDNSnY+Ou2jSg==
+"@node-novel/layout-pattern@^1.0.18":
+  version "1.0.18"
+  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.18.tgz#7668819c61559c75e53313b07645dbbc4f3c5089"
+  integrity sha512-1FeAn572NKz8G+CmF3qVoeY9Vvw7p04oa2UjdJlu3NUH4NfgjzjlVV5TBtXzOiXwCjsf4d1+njH7ad5ns0f8Tg==
   dependencies:
     "@node-novel/layout" "^2.0.4"
     debug-color2 "^1.1.7"
     deepmerge-plus "^2.1.3"
-    regexp-cjk "^3.3.8"
+    regexp-cjk "^3.3.10"
     regexp-helper "^1.0.8"
     str-util "^2.3.21"
     tieba-harmony "^1.3.0"
@@ -1288,10 +1288,10 @@ ci-info@^2.0.0:
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.34:
-  version "1.2.34"
-  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.34.tgz#e508c69272b11407984fc0621dc3567cb7953e82"
-  integrity sha512-rkNLVBihpT6lbAwWVsKVPOHgiaTbLC3V3CaayTmx1KhWei2ZlO8SFMxFIbMD3rYyxzOXghNqhMKV0T7cQR/7Rg==
+cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.34, cjk-conv@^1.2.36:
+  version "1.2.36"
+  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.36.tgz#8b03edc62fb2ed2960123a3d31194b08e629471d"
+  integrity sha512-226Q9A8SyoF4DIXq3XwBzPDtEKX+vOz7z6So6lu6xS1OKn4Bv5lHfvq2lUokjzSj2GquLsTdNUh+WUVPgmf15w==
   dependencies:
     array-hyper-unique "^1.1.0"
     chinese_convert "1.0.8"
@@ -4681,23 +4681,23 @@ novel-segment-cli@^1.1.1:
     update-notifier "^4.0.0"
     yargs "^15"
 
-novel-segment@^2, novel-segment@^2.5.4:
-  version "2.5.4"
-  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.5.4.tgz#b65cc2c6ae0e56b357d732b23e34bfd8c116cd81"
-  integrity sha512-BfS1H6xT5Evs4Uy8AwsMQhVz1EsHw9huCVc/yQvpDNLHafdfFQLniHPGL6fiRcpTjwbXwBzKwjI0l27KAbvLbQ==
+novel-segment@^2, novel-segment@^2.5.5:
+  version "2.5.5"
+  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.5.5.tgz#73e227cc9ad29b80335fb52180fdd4132ed66a82"
+  integrity sha512-zJAmsdLRpJL7hUFks+2rFs6qPbpCAdsvFTqsjB3ffn0h7PhczKQpzdodRomQuOzdUjaciSmRifmdmL+M3noqkw==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
-    cjk-conv "^1.2.34"
+    cjk-conv "^1.2.36"
     core-decorators "^0.20.0"
     crlf-normalize "^1.0.3"
     deepmerge-plus "^2.1.3"
     fs-extra "^8.1.0"
     lodash.clonedeep "^4.5.0"
     regexp-cjk "^3.3.10"
-    segment-dict "^2.3.58"
+    segment-dict "^2.3.61"
     sort-object-keys2 "^1.1.0"
     str-util "^2.3.21"
     ts-enum-util "4.0.1"
@@ -5940,10 +5940,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
-segment-dict@^2.3.58, segment-dict@^2.3.59:
-  version "2.3.59"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.59.tgz#effb125d264d48bed3f24b602dbb7041d416d3de"
-  integrity sha512-Vi+t21WaVa42h8GxoWyX5An/ZCOxHLNHeq2lGNSikUIYWcjSFN6fBkBT0jE5v1acKZoJcXSN6KirmYgOsbHwAQ==
+segment-dict@^2.3.61:
+  version "2.3.61"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.61.tgz#03a0ddb95321c442a501ebc4a21ef163c32c37cb"
+  integrity sha512-i2FqOH/7ccLNUIs3uOR9gn6MpV/YPoSHWB54engL9weqiVaBxk/BRiKyMZYc64C6u1SP2JnJC3E7k7/ej4XnYw==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"

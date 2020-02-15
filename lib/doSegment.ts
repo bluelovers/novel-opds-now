@@ -16,6 +16,7 @@ function createSegment()
 			convertSynonym: true,
 		},
 		all_mod: true,
+		nodeNovelMode: true,
 	});
 }
 
