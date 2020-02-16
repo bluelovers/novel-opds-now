@@ -9,6 +9,7 @@ import __root from './__root';
 import { statSync } from 'fs-extra';
 import { existsSync } from 'fs';
 import console from 'debug-color2/logger';
+import createSegment from './segment/createSegment';
 
 function buildCache(force?: boolean)
 {
@@ -40,17 +41,6 @@ function buildCache(force?: boolean)
 		.then(() => {
 			console.debug('[Segment][Cache] build done')
 		})
-}
-
-function createSegment()
-{
-	return new Segment({
-		autoCjk: true,
-		optionsDoSegment: {
-			convertSynonym: true,
-		},
-		all_mod: true,
-	});
 }
 
 export default buildCache;

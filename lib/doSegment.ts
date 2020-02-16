@@ -5,20 +5,9 @@ import Segment, { IOptionsDoSegment } from 'novel-segment/lib/segment/core';
 import { useModules } from 'novel-segment/lib/segment/methods/useModules2';
 import getDefaultModList from 'novel-segment/lib/mod';
 import __root from './__root';
+import createSegment from './segment/createSegment';
 
 let CACHED_SEGMENT: Segment;
-
-function createSegment()
-{
-	return new Segment({
-		autoCjk: true,
-		optionsDoSegment: {
-			convertSynonym: true,
-		},
-		all_mod: true,
-		nodeNovelMode: true,
-	});
-}
 
 async function getSegment()
 {
