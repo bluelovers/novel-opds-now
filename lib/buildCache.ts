@@ -21,7 +21,7 @@ function buildCache(force?: boolean)
 			let st = statSync(__cache);
 
 			let md = (Date.now() - st.mtimeMs) / 1000;
-			if (md < 3600)
+			if (md < 24 * 3600)
 			{
 				return Promise.resolve(console.debug(`[Segment][Cache] 距離上次緩存已過 ${md}s`))
 			}
