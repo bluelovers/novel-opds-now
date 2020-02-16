@@ -67,7 +67,7 @@ export function allGunEpubFile(siteID: ITSValueOrArray<string>, novel_id: ITSVal
 export function promiseGunEpubFile<T = IGunEpubNode>(siteID: string | string[], novel_id: string | string[])
 {
 	return allGunEpubFile(siteID, novel_id)
-		.map(node => retryGunNode<T>(node).timeout(10 * 1000).catch(e => null))
+		.map(node => retryGunNode<T>(node).timeout(15 * 1000).catch(e => null))
 }
 
 export function nodeGunEpubFile<T = IGunEpubNode>(siteID: string, novel_id: string): IGunChainReference<T, string, false>

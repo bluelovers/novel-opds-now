@@ -154,6 +154,8 @@ function fileHandler()
 
 						return null
 					})
+					.timeout(20 * 1000)
+					.catch(e => console.error(e))
 				;
 
 				return gunData
