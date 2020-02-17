@@ -1288,10 +1288,10 @@ ci-info@^2.0.0:
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.34, cjk-conv@^1.2.36:
-  version "1.2.36"
-  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.36.tgz#8b03edc62fb2ed2960123a3d31194b08e629471d"
-  integrity sha512-226Q9A8SyoF4DIXq3XwBzPDtEKX+vOz7z6So6lu6xS1OKn4Bv5lHfvq2lUokjzSj2GquLsTdNUh+WUVPgmf15w==
+cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.34, cjk-conv@^1.2.37:
+  version "1.2.37"
+  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.37.tgz#0142a0ea8d5a2b3cb8ad5dc92faf24c059e428d1"
+  integrity sha512-pc3NNfueQXIO09QWxMEsDWX1v6yrAUo02cynwpYc/43ro0TPs9CkzQ/sCKjRvvQTw8clCsCXPHVbtMAeoHGpkQ==
   dependencies:
     array-hyper-unique "^1.1.0"
     chinese_convert "1.0.8"
@@ -4686,23 +4686,23 @@ novel-segment-cli@^1.1.1:
     update-notifier "^4.0.0"
     yargs "^15"
 
-novel-segment@^2, novel-segment@^2.5.5:
-  version "2.5.5"
-  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.5.5.tgz#73e227cc9ad29b80335fb52180fdd4132ed66a82"
-  integrity sha512-zJAmsdLRpJL7hUFks+2rFs6qPbpCAdsvFTqsjB3ffn0h7PhczKQpzdodRomQuOzdUjaciSmRifmdmL+M3noqkw==
+novel-segment@^2, novel-segment@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.5.6.tgz#263cb576e70335439d7c764b362888c452c1c03d"
+  integrity sha512-LEuVA4Qj6YMuYcjeOmnfzCS61lRwT/p2GhCrHP3WWqicYKYm85lqzIrzDjNtgxM6WW3rOW+Q1zouG19HIP4/aQ==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
-    cjk-conv "^1.2.36"
+    cjk-conv "^1.2.37"
     core-decorators "^0.20.0"
     crlf-normalize "^1.0.3"
     deepmerge-plus "^2.1.3"
     fs-extra "^8.1.0"
     lodash.clonedeep "^4.5.0"
     regexp-cjk "^3.3.10"
-    segment-dict "^2.3.61"
+    segment-dict "^2.3.62"
     sort-object-keys2 "^1.1.0"
     str-util "^2.3.21"
     ts-enum-util "4.0.1"
@@ -5952,10 +5952,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
-segment-dict@^2.3.61:
-  version "2.3.61"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.61.tgz#03a0ddb95321c442a501ebc4a21ef163c32c37cb"
-  integrity sha512-i2FqOH/7ccLNUIs3uOR9gn6MpV/YPoSHWB54engL9weqiVaBxk/BRiKyMZYc64C6u1SP2JnJC3E7k7/ej4XnYw==
+segment-dict@^2.3.62:
+  version "2.3.62"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.62.tgz#b701f27d39ade92c9b4d47507e3455cbf1b75740"
+  integrity sha512-mUdXWIr5DyqtBycHlxxyQqZTYYmlaz6kLMYA4pdS7FG6sGSXPNKYqRSpmbaK4Fb7P/Mqoi7TofDCedxg2vBXrg==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"
