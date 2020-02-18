@@ -23,11 +23,11 @@ export declare function downloadNovel2(options: {
         epub?: string;
         status?: number;
         removeCallback(): void;
-        outputDir: string;
+        timestamp: number;
         siteID: string;
+        outputDir: string;
         novel_id2: string | number;
         outputRoot: string;
-        timestamp: number;
     }>;
 }>;
 export declare function downloadNovel(novel_id: string | number, siteID: string | EnumNovelSiteList, outputDir?: string): Promise<{

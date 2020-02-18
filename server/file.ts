@@ -3,7 +3,7 @@
  */
 
 import { Router } from 'express';
-import Bluebird from 'bluebird';
+import Bluebird, { TimeoutError } from 'bluebird';
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { __cacheMapFile } from '../lib/const';
 import { join, basename } from "path";
@@ -53,7 +53,8 @@ function fileHandler()
 
 		return Bluebird
 			.resolve(IDKEY)
-			.tap(IDKEY => {
+			.tap(IDKEY =>
+			{
 				if (!IDKEY)
 				{
 					return Promise.reject(new Error(`${siteID} 模組不存在`))
@@ -70,7 +71,7 @@ function fileHandler()
 				let gunData = await raceGunEpubFile([
 						//req.params.siteID,
 						//siteID,
-					IDKEY,
+						IDKEY,
 					], [
 						req.params.novelID,
 						novel_id,
@@ -149,12 +150,13 @@ function fileHandler()
 						}
 						else
 						{
-								console.info(`沒有發現P2P緩存...`);
+							console.info(`沒有發現P2P緩存...`);
 						}
 
 						return null
 					})
 					.timeout(20 * 1000)
+					.catch(TimeoutError, e => null)
 					.catch(e => console.error(e))
 				;
 
@@ -205,22 +207,26 @@ function fileHandler()
 							], [
 								req.params.novelID,
 								novel_id,
-							]).then(async (data) =>
-							{
-								if (checkGunData(data))
+							])
+								.then(async (data) =>
 								{
-									let { base64, filename, exists, timestamp } = data;
-									let isGun = true;
+									if (checkGunData(data))
+									{
+										let { base64, filename, exists, timestamp } = data;
+										let isGun = true;
 
-									return {
-										base64,
-										filename,
-										exists,
-										timestamp,
-										isGun,
-									} as IGunEpubData
-								}
-							});
+										return {
+											base64,
+											filename,
+											exists,
+											timestamp,
+											isGun,
+										} as IGunEpubData
+									}
+								})
+								.timeout(10 * 1000)
+								.catch(TimeoutError, e => null)
+							;
 
 							if (gunData)
 							{

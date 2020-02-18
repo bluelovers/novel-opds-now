@@ -49,7 +49,6 @@ webpack.config.js
 vue.config.js
 /jestconfig.json
 /tslint.json
-.git
 webpack.*.config.js
 webpack.*.config.d.ts
 webpack.*.config.js.map
@@ -63,7 +62,6 @@ tsconfig.*.json
 tsconfig.esm.json.tpl
 /package.d.ts
 .mocharc.yml
-jest.config.js
 jest.config.*
 **/radata
 now.json
