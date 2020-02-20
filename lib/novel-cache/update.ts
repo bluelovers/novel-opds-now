@@ -45,6 +45,7 @@ export async function updateCache(siteID: ISiteIDs, map: Record<ISiteIDs, string
 			}
 			console.debug(`[${siteID}] 嘗試更新 ${map[siteID]}`);
 			return fetchCache(siteID, map)
+				.tap(v => console.debug(`[${siteID}] 更新完成 ${map[siteID]}`))
 		})
 		.catch(e => {
 
@@ -67,7 +68,7 @@ export function fetchCache<T>(siteID: ISiteIDs, map: Record<ISiteIDs, string>)
 		.resolve(fetch(`${pathPrefix.github}${map[siteID]}`))
 		.then<T>(v => {
 			return Bluebird.resolve(v.json())
-				.tap(async (e) => {
+				.tapCatch(async (e) => {
 					try
 					{
 						console.red.dir(await v.text());

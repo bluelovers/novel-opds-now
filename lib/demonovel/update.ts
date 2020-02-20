@@ -36,6 +36,7 @@ export async function updateCache(force?: boolean)
 
 			console.debug(`嘗試更新 ${url}`);
 			return fetchCache()
+				.tap(v => console.debug(`更新完成 ${url}`))
 		})
 		.catch<INovelStatCache>(e => {
 			console.warn(e.message);
@@ -52,7 +53,7 @@ function fetchCache()
 		.resolve(fetch(url))
 		.then<INovelStatCache>(v => {
 			return Bluebird.resolve(v.json())
-				.tap(async (e) => {
+				.tapCatch(async (e) => {
 					try
 					{
 						console.red.dir(await v.text());

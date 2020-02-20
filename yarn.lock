@@ -37,25 +37,25 @@
     str-util "^2.3.21"
     upath2 "^2.1.3"
 
-"@node-novel/cached-dmzj@^1.1.74":
-  version "1.1.74"
-  resolved "https://registry.npmjs.org/@node-novel/cached-dmzj/-/cached-dmzj-1.1.74.tgz#3430d1dc1a86cc6ba0eb07726702dc0f33d6e6dc"
-  integrity sha512-WyJ2v3lZRkAyw1J+cFFjsSn3KMrHBXyRoczn0fkAfsvr6tMbyFwccxcZU8z80UEqC/1AAoHvCFrLFMl3GVnwCg==
+"@node-novel/cached-dmzj@^1.1.75":
+  version "1.1.75"
+  resolved "https://registry.npmjs.org/@node-novel/cached-dmzj/-/cached-dmzj-1.1.75.tgz#58bc0cf8b18a835f9754133c9ff44d15d3c0df79"
+  integrity sha512-OKryVREVY9sn2qWmPtpCNJlkktdJxs4KW8zE5GJbJC16uHgHQMBFWZ1S0pHPrqei+1632Q1XYu33TxCAP7BfYQ==
 
-"@node-novel/cached-esjzone@^1.0.43":
-  version "1.0.43"
-  resolved "https://registry.npmjs.org/@node-novel/cached-esjzone/-/cached-esjzone-1.0.43.tgz#0f1fd0420aa4d564322aa08e6334753dbad2b0be"
-  integrity sha512-F2o++6szQldIDNP6VutdatkUdqPTVvUxsKlsFULyPQHR13aPfWOZ1HxkvCQPRZLfYJPkm7VLUnEOyzLwAcI35g==
+"@node-novel/cached-esjzone@^1.0.44":
+  version "1.0.44"
+  resolved "https://registry.npmjs.org/@node-novel/cached-esjzone/-/cached-esjzone-1.0.44.tgz#a7da2b3b3191c0c2aca082e4e3cb97808f1f1490"
+  integrity sha512-Vp1byRuu8hQ36iLboLitUYc5IKcomxGbmBRE0VHKi8FsbqcBWY6V7ldSRczYWSMTubarMGQUngjkAybHTjEeYA==
 
-"@node-novel/cached-masiro@^1.0.40":
-  version "1.0.40"
-  resolved "https://registry.npmjs.org/@node-novel/cached-masiro/-/cached-masiro-1.0.40.tgz#b2ad5390f574873d3726de26ae4b7eb1f69d3bf8"
-  integrity sha512-DpT7EHbrIQvOdseewqr9dUb/ZoV/twRXrcSOI21vYYNlqG/N/gwzJFyFJYQXlnpzfWv7L2ULNSYh3H6KyDjesQ==
+"@node-novel/cached-masiro@^1.0.41":
+  version "1.0.41"
+  resolved "https://registry.npmjs.org/@node-novel/cached-masiro/-/cached-masiro-1.0.41.tgz#7f7478e29164ab5c277bc2cc49eeee07f98123a0"
+  integrity sha512-YpZRFZYlTRpJ/uwsMz4GKFEf6kzdcGQSSJ06109RWIsmBG7wi2D6fPOtf4ctx+3QdbLe+44LbVGJC/mtdC7AXg==
 
-"@node-novel/cached-wenku8@^1.0.48":
-  version "1.0.48"
-  resolved "https://registry.npmjs.org/@node-novel/cached-wenku8/-/cached-wenku8-1.0.48.tgz#45532786f3f25a1593983f4c327bd584809c6217"
-  integrity sha512-sOMwlv/TaAXvFeftOv9qy4j3wWeVMLD+ClCLr33X4RsuMOXrneO2hFMq4bhW3GdIvOEuuken0sZuH9pRm3GgnA==
+"@node-novel/cached-wenku8@^1.0.49":
+  version "1.0.49"
+  resolved "https://registry.npmjs.org/@node-novel/cached-wenku8/-/cached-wenku8-1.0.49.tgz#e4a94b12f1f1f5d76d29de3085ff8b58d812c863"
+  integrity sha512-WrZbR+hcfTzH486qAdFo4cEvH3VgIi/W6FM07TP/ov0eRx1MjPYQYUXM2NiZAPYyHexSr7DqVKKHYpBqUi/gZg==
 
 "@node-novel/epub-util@^1.0.2":
   version "1.0.2"
@@ -385,10 +385,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@^13.7.1":
-  version "13.7.1"
-  resolved "https://registry.npmjs.org/@types/node/-/node-13.7.1.tgz#238eb34a66431b71d2aaddeaa7db166f25971a0d"
-  integrity sha512-Zq8gcQGmn4txQEJeiXo/KiLpon8TzAl0kmKH4zdWctPj05nWwp1ClMdAVEloqrQKfaC48PNLdgN/aVaLqUrluA==
+"@types/node@*", "@types/node@^13.7.4":
+  version "13.7.4"
+  resolved "https://registry.npmjs.org/@types/node/-/node-13.7.4.tgz#76c3cb3a12909510f52e5dc04a6298cdf9504ffd"
+  integrity sha512-oVeL12C6gQS/GAExndigSaLxTrKpQPxewx9bOcwfvJiJge4rr7wNaph4J+ns5hrmIV2as5qxqN8YKthn9qh0jw==
 
 "@types/node@^12.0.12":
   version "12.12.26"
@@ -1288,10 +1288,10 @@ ci-info@^2.0.0:
   resolved "https://registry.npmjs.org/ci-info/-/ci-info-2.0.0.tgz#67a9e964be31a51e15e5010d58e6f12834002f46"
   integrity sha512-5tK7EtrZ0N+OLFMthtqOj4fI2Jeb88C4CAZPu25LDVUgXJ0A3Js4PMGqrn0JU1W0Mh1/Z8wZzYPxqUrXeBboCQ==
 
-cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.34, cjk-conv@^1.2.38:
-  version "1.2.38"
-  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.38.tgz#15cab04f2734c9d4085eab0a2f3b38bbeb8b274d"
-  integrity sha512-DtyEDc5Nb0rA8ujXebY8lpfZixtrqCJvuXeZpA4fLjRfmPeAsXD6fLK5ehD5iay2KRpK9UTVzrgkpiAlSFIecw==
+cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.1.83, cjk-conv@^1.2.34, cjk-conv@^1.2.38, cjk-conv@^1.2.40:
+  version "1.2.40"
+  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.40.tgz#869fda96b384c90695ff1ee76a62b311c47f9b74"
+  integrity sha512-qpIp6N5GyTbJudvRIcImiUbQCQcXjl/JsYjpzrBFHw/4uWE0pSOugcBP44+Si7U2CtATtTGNBKeGnmJRY4ZVSA==
   dependencies:
     array-hyper-unique "^1.1.0"
     chinese_convert "1.0.8"
@@ -5947,10 +5947,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
-segment-dict@^2.3.63:
-  version "2.3.63"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.63.tgz#09e24c8b60f0e2ef6ee12ac205c6026cdc754450"
-  integrity sha512-CQeA/23KPTrKroTsMXZJGRLZ4TESgfYEws/S1SJY00RGPmS/0eJHUs6E6+anq4pqouyFs5DWjFluyp/4DGGQjA==
+segment-dict@^2.3.63, segment-dict@^2.3.64:
+  version "2.3.64"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.64.tgz#dbbee23370867ac21c2892dd629622af0a617224"
+  integrity sha512-RF2/XodegpWTxIuoiuzAkBfZcSeY3puHNvit/uj8d/dpNwUBMeHArz1ateWMz8tzkhaBQ3bhhcOlxPOJ9TE86g==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"
