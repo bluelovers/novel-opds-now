@@ -41,8 +41,8 @@ export function setupGun(app?: Express | Server)
 		web: app,
 		peers: [
 			//"http://localhost:3000/gun",
-			"https://gunjs.herokuapp.com/gun",
-			"http://nmr.io:8765/gun",
+			//"https://gunjs.herokuapp.com/gun",
+			//"http://nmr.io:8765/gun",
 			"https://my-test-gun-server.herokuapp.com/gun",
 		],
 		file,

@@ -17,6 +17,7 @@ import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
 import checkGunData from '../lib/gun/checkData';
 import { async as crossSpawn } from 'cross-spawn-extra';
+import { getGunEpubFile, getGunEpubFile2, putGunEpubFile } from '../lib/store';
 
 function fileHandler()
 {
@@ -68,99 +69,13 @@ function fileHandler()
 			.then(async () =>
 			{
 				console.info(`檢查是否存在緩存...`);
-				let gunData = await raceGunEpubFile([
-						//req.params.siteID,
-						//siteID,
-						IDKEY,
-					], [
-						req.params.novelID,
-						novel_id,
-					])
-					.then(async (data) =>
-					{
-						let bool: boolean = checkGunData(data);
 
-						if (!checkGunData(data))
-						{
-							let { base64, filename, exists, timestamp } = (data || {}) as Exclude<IGunEpubNode, {
-								exists: false,
-							}>;
-
-							let gun = nodeGunEpubFile<Exclude<IGunEpubNode, {
-								exists: false,
-							}>>(IDKEY, req.params.novelID);
-
-							// @ts-ignore
-							timestamp = timestamp || await gun.get('timestamp');
-
-							if (typeof timestamp === 'number')
-							{
-								// @ts-ignore
-								filename = filename || await gun.get('filename');
-
-								if (typeof filename === 'string')
-								{
-									// @ts-ignore
-									base64 = base64 || await gun.get('base64');
-
-									if (typeof base64 === 'string')
-									{
-										data = {
-											base64,
-											exists: true,
-											filename,
-											timestamp,
-										}
-									}
-								}
-							}
-						}
-
-						if (checkGunData(data))
-						{
-							let { base64, filename, exists, timestamp } = data;
-							let isGun = false;
-
-							console.info(`於P2P緩存發現檔案...`, new Date(timestamp));
-
-							if (query.debug || query.force)
-							{
-								console.info(`發現強制下載指令，本次將無視緩存`, query)
-							}
-							else if ((Date.now() - data.timestamp) < 86400 * 1000)
-							{
-								isGun = true;
-							}
-							else
-							{
-								console.warn(`目標檔案已過期，試圖重新建立檔案`)
-							}
-
-							return {
-								base64,
-								filename,
-								exists,
-								timestamp,
-								isGun,
-							} as IGunEpubData
-						}
-						else if (bool === false)
-						{
-							console.warn(`於P2P緩存發現檔案...`, `但資料似乎已損毀`);
-						}
-						else
-						{
-							console.info(`沒有發現P2P緩存...`);
-						}
-
-						return null
-					})
-					.timeout(20 * 1000)
-					.catch(TimeoutError, e => null)
-					.catch(e => console.error(e))
-				;
-
-				return gunData
+				return getGunEpubFile(IDKEY, [
+					req.params.novelID,
+					novel_id,
+				], {
+					query,
+				})
 			})
 			.then(async (gunData) =>
 			{
@@ -200,33 +115,16 @@ function fileHandler()
 
 						if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id]))
 						{
-							gunData = await raceGunEpubFile([
+							gunData = await getGunEpubFile2([
 								//req.params.siteID,
 								//siteID,
 								IDKEY,
 							], [
 								req.params.novelID,
 								novel_id,
-							])
-								.then(async (data) =>
-								{
-									if (checkGunData(data))
-									{
-										let { base64, filename, exists, timestamp } = data;
-										let isGun = true;
-
-										return {
-											base64,
-											filename,
-											exists,
-											timestamp,
-											isGun,
-										} as IGunEpubData
-									}
-								})
-								.timeout(10 * 1000)
-								.catch(TimeoutError, e => null)
-							;
+							], {
+								query,
+							});
 
 							if (gunData)
 							{
@@ -297,10 +195,10 @@ function fileHandler()
 						timestamp: data.isGun ? data.timestamp : Date.now(),
 						exists: true,
 						filename,
-						base64: fileContents.toString('base64'),
+						base64: data.isGun && data.base64 ? data.base64 : fileContents.toString('base64'),
 					};
 
-					makeArrayEntrys([
+					putGunEpubFile([
 						//siteID,
 						//req.params.siteID,
 						//data.IDKEY,
@@ -309,9 +207,12 @@ function fileHandler()
 						novel_id,
 						req.params.novelID,
 						data.novel_id,
+						// @ts-ignore
 						data.novel_id2,
 						novel_id,
-					]).forEach(([siteID, novel_id]) => nodeGunEpubFile(siteID, novel_id).put(gunData));
+					], gunData, {
+
+					});
 				}
 
 				let readStream = new PassThrough();

@@ -1,3 +1,6 @@
-import _fetch from 'cross-fetch';
-export declare function fetch(...argv: Parameters<typeof _fetch>): Promise<Response>;
+import { RequestInit, RequestInfo, Response } from 'node-fetch';
+import Bluebird from 'bluebird';
+export declare function fetch(url: RequestInfo, init?: RequestInit & {
+    timeout?: number;
+}, ...argv: any[]): Bluebird<Response>;
 export default fetch;

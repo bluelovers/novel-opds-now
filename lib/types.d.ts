@@ -33,11 +33,13 @@ export declare type IGunEpubNode = {
     exists: false;
     filename: never;
     base64: never;
+    href?: string;
 } | {
     timestamp: number;
     exists: true;
     filename: string;
     base64: string;
+    href?: string;
 };
 export interface IGunEpubData extends Exclude<IGunEpubNode, {
     exists: false;

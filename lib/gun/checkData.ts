@@ -11,7 +11,12 @@ export function checkGunData(data: IGunEpubNode): data is Exclude<IGunEpubNode, 
 	{
 		if (data.exists)
 		{
-			let { base64, filename, exists, timestamp } = data;
+			let { base64, filename, exists, timestamp, href } = data;
+
+			if (href && filename && exists && timestamp)
+			{
+				return true;
+			}
 
 			if (!(base64 && filename && exists && timestamp))
 			{
