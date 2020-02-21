@@ -6,7 +6,8 @@ import fetch from '../fetch';
 import hashSum from 'hash-sum';
 import { IGunEpubNode } from '../types';
 
-const server = `https://api-file-server.epub.now.sh/`;
+//const server = `https://api-file-server.epub.now.sh/`;
+const server = `https://calm-inlet-73656.herokuapp.com`;
 
 export function newURL(siteID: string, novelID: string)
 {
