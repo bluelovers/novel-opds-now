@@ -54,6 +54,8 @@ npx novel-opds-now
 
 2. 當手機與電腦不同網路環境下，請利用 https://www.npmjs.com/package/share-localhost 這類工具來讓試著連接伺服器
 
+3. 安裝時出現 assemblyscript 安裝失敗，請安裝 yarn
+
 ---
 
 ![image](docs/image.png)

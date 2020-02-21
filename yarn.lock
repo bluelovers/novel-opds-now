@@ -376,12 +376,12 @@
     html-minifier "^4.0.0"
     zero-width "^1.0.5"
 
-"@node-novel/layout-pattern@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.18.tgz#7668819c61559c75e53313b07645dbbc4f3c5089"
-  integrity sha512-1FeAn572NKz8G+CmF3qVoeY9Vvw7p04oa2UjdJlu3NUH4NfgjzjlVV5TBtXzOiXwCjsf4d1+njH7ad5ns0f8Tg==
+"@node-novel/layout-pattern@^1.0.19":
+  version "1.0.19"
+  resolved "https://registry.npmjs.org/@node-novel/layout-pattern/-/layout-pattern-1.0.19.tgz#bdd4b9c6820d17d7ed1a74518f74e7fc8c8c552a"
+  integrity sha512-E5w5yW/KQNFBuZsa14l40hId7fU8sPAbJAJeap70HsdFmAfhl47rlDWnG6/oWFUhoq+kxxdJsgg4OFHRXCwVGg==
   dependencies:
-    "@node-novel/layout" "^2.0.4"
+    "@node-novel/layout" "^2.0.5"
     debug-color2 "^1.1.7"
     deepmerge-plus "^2.1.3"
     regexp-cjk "^3.3.10"
@@ -401,7 +401,7 @@
     string-natural-compare "^2.0.3"
     ts-type "^1.2.9"
 
-"@node-novel/layout@^2.0.4", "@node-novel/layout@^2.0.5":
+"@node-novel/layout@^2.0.5":
   version "2.0.5"
   resolved "https://registry.npmjs.org/@node-novel/layout/-/layout-2.0.5.tgz#4a02c64749cd560467938c3b925df4be00b2e42e"
   integrity sha512-BtK/FYsiX9PVFior7hEcvVQD+/9wmeHqKK3xwwaouwsajuq0D/bqqxxWDRGUHTUhZq9+5B3QCx1FOXyCMXIl7g==
@@ -493,11 +493,6 @@
     pvtsutils "^1.0.9"
     tslib "^1.10.0"
     webcrypto-core "^1.0.17"
-
-"@protobufjs/utf8@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.npmjs.org/@protobufjs/utf8/-/utf8-1.1.0.tgz#a777360b5b39a1a2e5106f8e858f2fd2d060c570"
-  integrity sha1-p3c2C1s5oaLlEG+OhY8v0tBgxXA=
 
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
@@ -1218,16 +1213,13 @@ asn1js@^2.0.22, asn1js@^2.0.26:
   dependencies:
     pvutils latest
 
-"assemblyscript@github:assemblyscript/assemblyscript#v0.6":
-  version "0.6.0"
-  resolved "https://codeload.github.com/assemblyscript/assemblyscript/tar.gz/3ed76a97f05335504166fce1653da75f4face28f"
+assemblyscript@^0.9.2, "assemblyscript@github:assemblyscript/assemblyscript#v0.6":
+  version "0.9.2"
+  resolved "https://registry.npmjs.org/assemblyscript/-/assemblyscript-0.9.2.tgz#dd254370b8436bd997d14bb7e867535180907995"
+  integrity sha512-eqPbxS323ivXdUclGJjvihxEEMBaXcNYHLb17j3j3UaYvkqVPNSrNuJ/H1r7G/UwmQnFQ8NDrQ9BncOFCGmahg==
   dependencies:
-    "@protobufjs/utf8" "^1.1.0"
-    binaryen "77.0.0-nightly.20190407"
-    glob "^7.1.3"
+    binaryen "90.0.0-nightly.20200214"
     long "^4.0.0"
-    opencollective-postinstall "^2.0.0"
-    source-map-support "^0.5.11"
 
 assert-plus@1.0.0, assert-plus@^1.0.0:
   version "1.0.0"
@@ -1489,10 +1481,10 @@ binary@~0.3.0:
     buffers "~0.1.1"
     chainsaw "~0.1.0"
 
-binaryen@77.0.0-nightly.20190407:
-  version "77.0.0-nightly.20190407"
-  resolved "https://registry.npmjs.org/binaryen/-/binaryen-77.0.0-nightly.20190407.tgz#fbe4f8ba0d6bd0809a84eb519d2d5b5ddff3a7d1"
-  integrity sha512-1mxYNvQ0xywMe582K7V6Vo2zzhZZxMTeGHH8aE/+/AND8f64D8Q1GThVY3RVRwGY/4p+p95ccw9Xbw2ovFXRIg==
+binaryen@90.0.0-nightly.20200214:
+  version "90.0.0-nightly.20200214"
+  resolved "https://registry.npmjs.org/binaryen/-/binaryen-90.0.0-nightly.20200214.tgz#c2f46314dda59ef359c5fa24c0b6180b0ba2f00b"
+  integrity sha512-ZHajaPd2aP6kDrM9q77afnA402Ufsuw9yLUxtAfgmIglP1JMB2XSRmaXc5pgCELaX53PWJIdcH07LL8uNfTBRw==
 
 bindings@^1.2.1, bindings@^1.3.0, bindings@^1.5.0:
   version "1.5.0"
@@ -10117,14 +10109,6 @@ source-map-resolve@^0.5.0:
     source-map-url "^0.4.0"
     urix "^0.1.0"
 
-source-map-support@^0.5.11:
-  version "0.5.16"
-  resolved "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.16.tgz#0ae069e7fe3ba7538c64c98515e35339eac5a042"
-  integrity sha512-efyLRJDr68D9hBBNIPWFjhpFzURh+KJykQwvMyW5UiZzYwoF6l4YMMDIJJEyFWxWCqfyxLzz6tSfUFR+kXXsVQ==
-  dependencies:
-    buffer-from "^1.0.0"
-    source-map "^0.6.0"
-
 source-map-url@^0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/source-map-url/-/source-map-url-0.4.0.tgz#3e935d7ddd73631b97659956d55128e87b5084a3"
@@ -10135,7 +10119,7 @@ source-map@^0.5.6:
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
   integrity sha1-igOdLRAh0i0eoUyA2OpGi6LvP8w=
 
-source-map@^0.6.0, source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
+source-map@^0.6.1, source-map@~0.6.0, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.npmjs.org/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
   integrity sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==
