@@ -98,6 +98,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 		for await (const result of ipfs.add({
 			path: data.filename,
 			content,
+		}, {
 			pin: false,
 		}))
 		{
