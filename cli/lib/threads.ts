@@ -16,6 +16,7 @@ import { cn2tw_min } from '../../lib/cn2tw_min';
 import handleContext from '../../lib/doLayout';
 import { array_unique } from 'array-hyper-unique';
 import console from 'debug-color2/logger';
+import fixZhHarmony from 'fix-zh-harmony';
 
 const handleAsync = function handleAsync(id: string | number, IDKEY: string, outputDir = OUTPUT_DIR): Bluebird<boolean>
 {
@@ -220,7 +221,9 @@ else
 
 						console.debug(`${String(index).padStart(4, '0')}/${String(length).padStart(4, '0')}`, relative(outputDir, file));
 
-						let text = await readFile(file, 'utf8');
+						let text = await readFile(file, 'utf8')
+							.then(fixZhHarmony)
+						;
 
 						if (!(skipSegment && skipSegment.includes(file)))
 						{
