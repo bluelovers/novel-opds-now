@@ -3870,6 +3870,11 @@ find-versions@^3.0.0:
   dependencies:
     semver-regex "^2.0.0"
 
+fix-zh-harmony@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/fix-zh-harmony/-/fix-zh-harmony-1.0.1.tgz#77abb94f81ea6cf57965fc73a039c90fed049dd2"
+  integrity sha512-bYitl3/iSBTpys9now26qa6pbz/E1jM50KT+nBR05wEbZ6UHCO7Qqldp1bGA3syc0p5x6pWcJIst3viN+Cj2Yg==
+
 flatstr@^1.0.12:
   version "1.0.12"
   resolved "https://registry.npmjs.org/flatstr/-/flatstr-1.0.12.tgz#c2ba6a08173edbb6c9640e3055b95e287ceb5931"
