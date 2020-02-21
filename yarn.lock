@@ -3684,10 +3684,10 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fetch-ipfs@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.2.tgz#774339413aeca0cede90b610a49c322bf5f49a6b"
-  integrity sha512-liC6v+8Nv+AtgVZrHO3BUKnZFRbOHtgNb00NUoRrfZU0bDlBSYNMbSSDBmkPhxTdezXXPk+jCKpyHyfQ2cfKuA==
+fetch-ipfs@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.3.tgz#7c66fcb611ea3dda814ddaac90fb6321070b6bbc"
+  integrity sha512-DBQwK+gOdkoxeqLcrUOLnXeASnGNfZhjlz8nrU4V2IOMa28pDNh64gFod/WaKJAnfG/qyuZ2Nm6hDIvLqBBySw==
   dependencies:
     abort-controller "^3.0.0"
     bluebird "^3.7.2"

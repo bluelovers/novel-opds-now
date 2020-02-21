@@ -55,7 +55,7 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 			{
 				let url = newURL(siteID, novelID);
 
-				console.debug(url.href)
+				//console.debug(url.href)
 
 				fetch(url.href, {
 					timeout,
@@ -88,7 +88,7 @@ export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubN
 
 	//return Bluebird.resolve(body);
 
-	console.debug(url.href);
+	//console.debug(url.href);
 
 	return fetch(url.href, {
 		method: 'POST',

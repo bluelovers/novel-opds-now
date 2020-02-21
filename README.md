@@ -10,7 +10,7 @@
 
 ## install
 
-請記得先安裝 [Node.js](https://nodejs.org/zh-tw/)
+請記得先安裝 [Node.js](https://nodejs.org/zh-tw/) 推薦安裝最新版
 
 接著如果是 windows 系統 可以利用 win + R 然後輸入 cmd /k
 
@@ -54,7 +54,7 @@ npx novel-opds-now
 
 2. 當手機與電腦不同網路環境下，請利用 https://www.npmjs.com/package/share-localhost 這類工具來讓試著連接伺服器
 
-3. 安裝時出現 assemblyscript 安裝失敗，請安裝 yarn
+3. 安裝時出現 assemblyscript 安裝失敗，請安裝 yarn 與 git
 
 ---
 
