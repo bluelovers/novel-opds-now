@@ -39,7 +39,7 @@ export async function updateCache(force?: boolean)
 				.tap(v => console.debug(`更新完成 ${url}`))
 		})
 		.catch<INovelStatCache>(e => {
-			console.warn(e.message);
+			console.warn(e.message || e);
 			return readJSON(localFile)
 		})
 		.tap(data => outputJSON(localFile, data, { spaces: 2 }))

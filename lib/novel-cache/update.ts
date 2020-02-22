@@ -49,12 +49,12 @@ export async function updateCache(siteID: ISiteIDs, map: Record<ISiteIDs, string
 		})
 		.catch(e => {
 
-			console.warn(e.code, e.message);
+			console.warn(e.code, e.message || e);
 
 			return readJSON(localFile)
 		})
 		.catch(e => {
-			console.warn(e.message)
+			console.warn(e.message || e)
 			let moduleFile = `${pathPrefix.module}${map[siteID]}`;
 			return import(moduleFile).then(v => v.default || v)
 		})
