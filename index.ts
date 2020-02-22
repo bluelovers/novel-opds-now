@@ -73,9 +73,14 @@ export async function startServer(options: {
 		else
 		{
 			Bluebird
-				.resolve(useIPFS() as any)
+				.resolve(useIPFS())
+				.tap(async ({
+					address
+				}) => {
+					console.info(await address())
+				})
 				.catch(e => null)
-				.tap(e => _showIP())
+				.tap(() => _showIP())
 			;
 		}
 	});

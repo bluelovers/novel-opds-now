@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -110,7 +110,7 @@
     "to-ipfs-hash": "^1.0.1",
     "to-ipfs-url": "^1.0.1",
     "ts-type": "^1.2.13",
-    "use-ipfs": "^1.0.7",
+    "use-ipfs": "^1.0.8",
     "yargs": "^15.1.0",
     "zero-width": "^1.0.5"
   },

@@ -11,4 +11,4 @@ export declare function putIPFSEpubFile(_siteID: string | string[], _novelID: st
         debug?: boolean;
         force?: boolean;
     };
-}): Promise<void>;
+}): Promise<any>;

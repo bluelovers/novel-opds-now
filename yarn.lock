@@ -6881,11 +6881,6 @@ lodash.deburr@^4.1.0:
   resolved "https://registry.npmjs.org/lodash.deburr/-/lodash.deburr-4.1.0.tgz#ddb1bbb3ef07458c0177ba07de14422cb033ff9b"
   integrity sha1-3bG7s+8HRYwBd7oH3hRCLLAz/5s=
 
-lodash.defaultsdeep@^4.6.1:
-  version "4.6.1"
-  resolved "https://registry.npmjs.org/lodash.defaultsdeep/-/lodash.defaultsdeep-4.6.1.tgz#512e9bd721d272d94e3d3a63653fa17516741ca6"
-  integrity sha512-3j8wdDzYuWO3lM3Reg03MuQR957t287Rpcxp1njpEa8oDrikb+FwGdW3n+FELh/A6qib6yPit0j/pv9G/yeAqA==
-
 lodash.find@4.6.0:
   version "4.6.0"
   resolved "https://registry.npmjs.org/lodash.find/-/lodash.find-4.6.0.tgz#cb0704d47ab71789ffa0de8b97dd926fb88b13b1"
@@ -11150,13 +11145,13 @@ ursa-optional@~0.10.1:
     bindings "^1.5.0"
     nan "^2.14.0"
 
-use-ipfs@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.7.tgz#b0e93684c24bdc66e00824b90e377b86b6d4b803"
-  integrity sha512-NJhQ/ch4Qo96ROcrRWfFPk/Qme0tJ3ELIfmqwiOWkNiDv0zOmqrD/BeMf1pBFF0oD3CyXY3ct0TpDzoMlmQh5w==
+use-ipfs@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.8.tgz#24fb109d5135b29caffffbba2d71313ddc0949d3"
+  integrity sha512-58TSKBZgS+wqQHIxbZVcBkFiD+XH/6dvJcHXVh2RzHrgRQel9Zz9mla1/lbHdcFL6YJLWLNjNPIcj504MbJRrQ==
   dependencies:
     "@bluelovers/ipfs-http-client" "^1.0.5"
-    lodash.defaultsdeep "^4.6.1"
+    lodash "^4.17.15"
 
 use@^3.1.0:
   version "3.1.1"
