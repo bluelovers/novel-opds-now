@@ -11150,10 +11150,10 @@ ursa-optional@~0.10.1:
     bindings "^1.5.0"
     nan "^2.14.0"
 
-use-ipfs@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.6.tgz#16180b384ba2ec7b7dd2c689eb4c075cdb24a13e"
-  integrity sha512-ntQCn9e0veKQlocQxUBNt6+8MeKAgmkIrdXI7oCgWIxqEPQ9zynfcqg5ZfTjucfXrzt7Vf5BjdSAx0GnriWPYQ==
+use-ipfs@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.7.tgz#b0e93684c24bdc66e00824b90e377b86b6d4b803"
+  integrity sha512-NJhQ/ch4Qo96ROcrRWfFPk/Qme0tJ3ELIfmqwiOWkNiDv0zOmqrD/BeMf1pBFF0oD3CyXY3ct0TpDzoMlmQh5w==
   dependencies:
     "@bluelovers/ipfs-http-client" "^1.0.5"
     lodash.defaultsdeep "^4.6.1"
