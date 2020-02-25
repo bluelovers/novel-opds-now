@@ -123,6 +123,18 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	delete data.base64;
 
 	await putEpubFileInfo(siteID, novelID, data as any)
-		.tap(async (v) => console.debug(await v.json()))
+		.tap(async (v) => {
+			let json = await v.json();
+
+			console.debug(json);
+
+			setTimeout(() => {
+
+				fetchIPFS(json.json)
+					.catch(e => null)
+				;
+
+			}, 5 * 1000)
+		})
 		.tapCatch(v => console.error(v))
 }

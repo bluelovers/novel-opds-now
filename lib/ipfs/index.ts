@@ -77,7 +77,7 @@ export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubN
 {
 	let url = newURL(siteID, novelID);
 
-	let timeout = 5 * 1000;
+	let timeout = 60 * 1000;
 
 //	let body = new URLSearchParams();
 //
