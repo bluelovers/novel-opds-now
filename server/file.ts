@@ -181,8 +181,25 @@ function fileHandler()
 			{
 				console.success(`成功取得檔案...`);
 
-				// @ts-ignore
-				let fileContents: Buffer = data.base64 && Buffer.from(data.base64, 'base64') || await readFile(data.epub);
+				let fileContents: Buffer;
+				let isFromBuffer: boolean;
+
+				if (data.base64)
+				{
+					let buf = Buffer.from(data.base64, 'base64');
+
+					if (buf.length)
+					{
+						fileContents = buf;
+						isFromBuffer = true;
+					}
+				}
+
+				if (!fileContents)
+				{
+					fileContents = await readFile(data.epub);
+				}
+
 				// @ts-ignore
 				let filename: string = data.filename || IDKEY + '_' + basename(data.epub);
 
@@ -192,10 +209,10 @@ function fileHandler()
 					console.debug(`將檔案儲存到P2P緩存`);
 
 					let gunData: IGunEpubNode = {
-						timestamp: data.isGun ? data.timestamp : Date.now(),
+						timestamp: isFromBuffer && data.timestamp ? data.timestamp : Date.now(),
 						exists: true,
 						filename,
-						base64: data.isGun && data.base64 ? data.base64 : fileContents.toString('base64'),
+						base64: isFromBuffer ? data.base64 : fileContents.toString('base64'),
 					};
 
 					putGunEpubFile([

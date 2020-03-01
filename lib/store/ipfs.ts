@@ -1,6 +1,6 @@
 import { handleArgvList } from '../util/index';
 import { getEpubFileInfo, putEpubFileInfo } from '../ipfs/index';
-import { TimeoutError } from 'bluebird';
+import Bluebird, { TimeoutError } from 'bluebird';
 import checkGunData from '../gun/checkData';
 import fetchIPFS from 'fetch-ipfs';
 import useIPFS from 'use-ipfs';
@@ -126,15 +126,14 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 		.tap(async (v) => {
 			let json = await v.json();
 
-			console.debug(json);
+			console.debug(`putEpubFileInfo:return`, json);
 
-			setTimeout(() => {
+			Bluebird
+				.delay(5 * 1000)
+				.then(() => fetchIPFS(json.data.href))
+				.catch(e => null)
+			;
 
-				fetchIPFS(json.json)
-					.catch(e => null)
-				;
-
-			}, 5 * 1000)
 		})
 		.tapCatch(v => console.error(v))
 }
