@@ -5,6 +5,7 @@ import fetchIPFS from 'fetch-ipfs';
 import fetch from '../fetch';
 import hashSum from 'hash-sum';
 import { IGunEpubNode } from '../types';
+import { RequestInit, RequestInfo, Response, FetchError } from 'node-fetch';
 
 //const server = `https://api-file-server.epub.now.sh/`;
 const server = `https://calm-inlet-73656.herokuapp.com`;
@@ -90,7 +91,7 @@ export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubN
 
 	//console.debug(url.href);
 
-	return fetch(url.href, {
+	let opts: RequestInit = {
 		method: 'POST',
 		headers: {
 			'Accept': 'application/json',
@@ -98,5 +99,23 @@ export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubN
 		},
 		body: JSON.stringify(data),
 		timeout,
-	})
+	};
+
+	return fetch(url.href, opts)
+		.catch((e: Response) => {
+
+			if (e.status == 503)
+			{
+				return Promise.delay(5000)
+					.then(e => fetch(url.href, opts))
+				;
+			}
+
+			return Promise.reject(e)
+		})
+		.catch(e => {
+			console.error(`putEpubFileInfo`, `上傳資料時發生錯誤`);
+
+			return Promise.reject(e)
+		})
 }
