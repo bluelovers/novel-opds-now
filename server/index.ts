@@ -21,6 +21,7 @@ import './init';
 import opdsHandler from './opds';
 import gunServe from 'gun/lib/serve';
 import gunHttp from 'gun/lib/http';
+import searchHandler from "./search";
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(favicon(join(__root, 'static', 'favicon.png')));
 
 app.use('/file', fileHandler());
 app.use('/opds', opdsHandler());
+app.use('/search', searchHandler());
 
 app.use('/*', (req, res, next) => {
 	console.log(req.method, req.baseUrl, req.url, req.params);
