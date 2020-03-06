@@ -54,6 +54,7 @@
   "dependencies": {
     "@bluelovers/fast-glob": "^3.0.4",
     "@bluelovers/ipfs-http-client": "^1.0.6",
+    "@demonovel/cached-data": "^1.0.3",
     "@node-novel/cache-loader": "^1.0.15",
     "@node-novel/cached-dmzj": "^1.1.77",
     "@node-novel/cached-esjzone": "^1.0.46",

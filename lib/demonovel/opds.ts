@@ -11,6 +11,8 @@ import MIMETypes from "mime-types";
 import addCover from '../opds/addCover';
 import { makeOPDSShared } from '../opds/index';
 import { IFilterNovelDataPlus } from './types';
+import { addOpenSearch } from '../opds/search';
+import { ISiteIDs } from '../novel-cache/types';
 
 export let prefix = `/demo`;
 export let prefixRoot = `/opds` + prefix;
@@ -28,7 +30,7 @@ export async function makeOPDSType(type: string)
 		default:
 
 			await loadCache<IFilterNovelDataPlus[]>('array.json')
-				.each(novel => {
+				.each((novel, id) => {
 
 					if (!novel.cache.epub_basename)
 					{
@@ -57,6 +59,7 @@ export async function makeOPDSType(type: string)
 						// @ts-ignore
 						title: novel.title,
 						links,
+						identifier: `book${id}`,
 					});
 
 					if (novel.cache.epub_date)
@@ -100,6 +103,8 @@ export function makeOPDSPortal()
 		subtitle: ``,
 		icon: '/favicon.ico',
 	}), [
+
+		(feed) => addOpenSearch(feed, siteID),
 
 		makeOPDSShared,
 

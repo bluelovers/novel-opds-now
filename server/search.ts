@@ -1,27 +1,81 @@
 import { Router } from 'express';
-import { id_titles_map } from '../lib/novel-cache/types';
+import { id_titles_map, builded_map, ISiteIDs } from '../lib/novel-cache/types';
 import makeOPDSPortal, { makeOPDSSite } from '../lib/opds/index';
 import opdsDemoNovelHandler from './opds/demonovel';
 import updateCacheAll from '../lib/novel-cache/update';
 import updateCache from '../lib/demonovel/update';
 import { makeOPDSOther } from '../lib/opds/other';
+import { OPDSV1 } from 'opds-extra';
+import { makeOPDSType } from '../lib/demonovel/opds';
+import { filterOPDSBook, addOpenSearch } from '../lib/opds/search';
+import Bluebird from 'bluebird';
 
 function searchHandler()
 {
-    const router = Router();
+	const router = Router();
 
-    router.use('/:siteID/:searchTerms', async (req, res) =>
-    {
-        let feed = await makeOPDSSite(req.params.siteID as any, req.params.searchTerms);
-        res.setHeader('Content-Type', 'application/xml');
-        res.send(feed.toXML())
-    });
+	router.use('/:siteID/:searchTerms', async (req, res) =>
+	{
+		let { siteID, searchTerms } = req.params;
+		let feed: OPDSV1.Feed;
+		let onlyBook: boolean;
 
-    router.use('/:siteID.xml', async (req, res) =>
-    {
+		if (!siteID || siteID === 'all')
+		{
+			feed = await makeOPDSType('all')
 
-        res.setHeader('Content-Type', 'application/xml');
-        res.send(`<?xml version="1.0" encoding="UTF-8"?>
+			feed.books = await Bluebird
+				.resolve(Object.keys(builded_map) as ISiteIDs[])
+				.reduce(async (books, siteID) => {
+
+					let feed2 = await makeOPDSSite(siteID as any);
+
+					books.push(...feed2.books);
+
+					return books;
+				}, feed.books)
+			;
+
+			let feed2 = await makeOPDSOther();
+			feed.books.push(...feed2.books);
+
+			onlyBook = true;
+
+			feed.links = feed.links || [];
+			feed.links = feed.links.filter(entry => entry.rel != 'search');
+
+			feed = await addOpenSearch(feed, 'all');
+		}
+		else if (siteID === 'demonovel')
+		{
+			feed = await makeOPDSType('all')
+		}
+		else if (siteID === 'other')
+		{
+			feed = await makeOPDSOther()
+		}
+		else
+		{
+			feed = await makeOPDSSite(siteID as any);
+		}
+
+		if (searchTerms)
+		{
+			feed = await filterOPDSBook(feed, {
+				searchTerms,
+				onlyBook,
+			});
+		}
+
+		res.setHeader('Content-Type', 'application/xml');
+		res.send(feed.toXML())
+	});
+
+	router.use('/:siteID.xml', async (req, res) =>
+	{
+
+		res.setHeader('Content-Type', 'application/xml');
+		res.send(`<?xml version="1.0" encoding="UTF-8"?>
 <OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
   <!--<ShortName>Web Search</ShortName>
   <Description>Use Example.com to search the Web.</Description>
@@ -49,11 +103,9 @@ function searchHandler()
   <OutputEncoding>UTF-8</OutputEncoding>
   <InputEncoding>UTF-8</InputEncoding>
 </OpenSearchDescription>`)
-    });
+	});
 
-
-
-    return router
+	return router
 }
 
 export default searchHandler

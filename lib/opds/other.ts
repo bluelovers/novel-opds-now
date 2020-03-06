@@ -5,6 +5,7 @@ import { ISiteIDs, builded_map } from '../novel-cache/types';
 import { buildAsync, initMain } from 'calibre-opds/lib';
 import loadCache from '../novel-cache/load';
 import { makeOPDSShared } from './index';
+import { addOpenSearch } from './search';
 
 export function makeOPDSOtherSource(feed: OPDSV1.Feed): OPDSV1.Feed
 {
@@ -48,6 +49,8 @@ export function makeOPDSOther()
 		title: `書庫：other`,
 		icon: '/favicon.ico',
 	}), [
+
+		(feed) => addOpenSearch(feed, 'other'),
 
 		(feed) => makeOPDSShared(feed, `，目前位於 other`),
 		makeOPDSOtherSource,

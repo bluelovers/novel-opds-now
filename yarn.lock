@@ -1472,11 +1472,6 @@ bitcoinjs-lib@^5.0.0:
     varuint-bitcoin "^1.0.4"
     wif "^2.0.1"
 
-bl-to-buffer@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.npmjs.org/bl-to-buffer/-/bl-to-buffer-1.0.3.tgz#5c63f446b2e0a44ebb036c255b1829a7dbd03e28"
-  integrity sha512-fn4WoQmZVRHPdMbd8tFKHuB0QxxJBRo1NoGdpcHs+ph/F56pjtqrL2iJ6Y8RF7/5dO6TNlr4R+3x9Im543jAsA==
-
 bl@^1.0.0:
   version "1.2.2"
   resolved "https://registry.npmjs.org/bl/-/bl-1.2.2.tgz#a160911717103c07410cef63ef51b397c025af9c"

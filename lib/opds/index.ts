@@ -5,6 +5,7 @@ import { Link } from 'opds-extra/lib/v1/core';
 import { OPDSV1 } from 'opds-extra';
 import loadCache from '../novel-cache/load';
 import { prefixRoot as prefixDemo, title as titleDemo } from '../demonovel/opds';
+import { addOpenSearch, filterOPDSBook } from './search';
 
 export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
 {
@@ -24,18 +25,15 @@ export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
 	return feed
 }
 
-export function makeOPDSSite(siteID: ISiteIDs, searchTerm: string = '')
+export function makeOPDSSite(siteID: ISiteIDs)
 {
 	return buildAsync(initMain({
 		title: `書庫：${siteID}`,
 		subtitle: `EPub 自動生成：${siteID}`,
 		icon: '/favicon.ico',
-		links: [{
-			rel: "search",
-			href: `/search/${siteID}.xml`,
-			type:"application/opensearchdescription+xml"
-		}]
 	}), [
+
+		(feed) => addOpenSearch(feed, siteID),
 
 		(feed) => makeOPDSShared(feed, `，目前位於 ${siteID}`),
 
@@ -54,6 +52,13 @@ export function makeOPDSSite(siteID: ISiteIDs, searchTerm: string = '')
 
 					feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 						title,
+						// @FIXME: 靜讀天下不知道為什麼只能用作者顯示
+						authors: [
+							{
+								name: siteID,
+							} as any,
+						],
+						identifier: `book_${siteID}_${id}`,
 						links: [
 							{
 								rel: EnumLinkRel.ACQUISITION,
@@ -65,12 +70,16 @@ export function makeOPDSSite(siteID: ISiteIDs, searchTerm: string = '')
 
 				})
 			;
-			if (searchTerm)
-			{
-				feed.books = feed.books.filter(p=>p.title.includes(searchTerm));
-			}
+
 			return feed
 		},
+
+		/*
+		(feed) => filterOPDSBook(feed, {
+			searchTerms,
+		}),
+		 */
+
 	])
 }
 
@@ -81,6 +90,8 @@ export function makeOPDSPortal()
 		subtitle: `EPub 自動生成`,
 		icon: '/favicon.ico',
 	}), [
+
+		(feed) => addOpenSearch(feed, 'all'),
 
 		(feed) =>
 		{
