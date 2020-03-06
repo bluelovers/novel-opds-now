@@ -44,6 +44,7 @@ export async function startServer(options: {
 
 		if (0)
 		{
+			/*
 			Bluebird
 				.resolve(import('./server/gun/setup'))
 				.tap(async (m) =>
@@ -69,6 +70,7 @@ export async function startServer(options: {
 				.delay(5 * 1000)
 				.tap(_showIP)
 			;
+			 */
 		}
 		else
 		{

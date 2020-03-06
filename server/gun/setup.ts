@@ -1,5 +1,5 @@
 /**
- * Created by user on 2020/2/1.
+ * @deprecated
  */
 
 import Gun from 'gun';
@@ -28,6 +28,9 @@ Gun.log.off = true;
 // @ts-ignore
 console.LOG = false;
 
+/**
+ * @deprecated
+ */
 export function setupGun(app?: Express | Server)
 {
 	let file = join(OUTPUT_DIR, 'novel-opds-now.cache', 'radata');
@@ -59,6 +62,9 @@ export function setupGun(app?: Express | Server)
 	return _gun
 }
 
+/**
+ * @deprecated
+ */
 export function useGun()
 {
 	return useGunRoot()
@@ -66,6 +72,9 @@ export function useGun()
 		;
 }
 
+/**
+ * @deprecated
+ */
 export function useGunRoot()
 {
 	return gun || (gun = setupGun());
