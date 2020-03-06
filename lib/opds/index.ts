@@ -24,12 +24,17 @@ export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
 	return feed
 }
 
-export function makeOPDSSite(siteID: ISiteIDs)
+export function makeOPDSSite(siteID: ISiteIDs, searchTerm: string = '')
 {
 	return buildAsync(initMain({
 		title: `書庫：${siteID}`,
 		subtitle: `EPub 自動生成：${siteID}`,
 		icon: '/favicon.ico',
+		links: [{
+			rel: "search",
+			href: `/search/${siteID}.xml`,
+			type:"application/opensearchdescription+xml"
+		}]
 	}), [
 
 		(feed) => makeOPDSShared(feed, `，目前位於 ${siteID}`),
@@ -60,7 +65,10 @@ export function makeOPDSSite(siteID: ISiteIDs)
 
 				})
 			;
-
+			if (searchTerm)
+			{
+				feed.books = feed.books.filter(p=>p.title.includes(searchTerm));
+			}
 			return feed
 		},
 	])
