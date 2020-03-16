@@ -12,10 +12,8 @@ import { ICacheMap, IGunEpubNode, IGunEpubData, ICacheMapRow, EnumCacheMapRowSta
 import { PassThrough } from "stream";
 import { fromBuffer } from 'file-type';
 import __root from '../lib/__root';
-import { raceGunEpubFile, makeArrayEntrys, nodeGunEpubFile } from '../lib/gun/epubFile';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
-import checkGunData from '../lib/gun/checkData';
 import { async as crossSpawn } from 'cross-spawn-extra';
 import { getGunEpubFile, getGunEpubFile2, putGunEpubFile } from '../lib/store';
 
@@ -76,6 +74,25 @@ function fileHandler()
 				], {
 					query,
 				})
+					.tap(gunData => {
+
+						if (gunData && gunData.exists)
+						{
+							let msg = '';
+							if (!gunData.isGun)
+							{
+								msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`
+							}
+
+							console.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp));
+						}
+						else
+						{
+							console.info(`沒有發現緩存，或緩存已損毀...`);
+						}
+
+					})
+				;
 			})
 			.then(async (gunData) =>
 			{
@@ -88,7 +105,7 @@ function fileHandler()
 							return gunData
 						}
 
-						console.log(`取得檔案中...`);
+						console.log(`從原始來源網站抓取打包小說中...`);
 						let cp = await crossSpawn('node', [
 							'--experimental-worker',
 							join(__root, `./cli/cli.js`),

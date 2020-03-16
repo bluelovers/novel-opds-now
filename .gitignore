@@ -96,3 +96,4 @@ tsconfig.tsbuildinfo
 **/radata/
 radata-*.tmp
 /.cache/cache.json
+!yarn.lock
