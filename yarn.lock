@@ -28,10 +28,10 @@
   resolved "https://registry.npmjs.org/@bluelovers/tsconfig/-/tsconfig-1.0.18.tgz#3890492e9bc3021e76e6546e274dbef66e4e8b38"
   integrity sha512-4Sr1GuX31CV188UZyHx5MomtBz20xft0MJSTAZ0EJA6u32EvAJJVy2mxfVngGbdqglJCWf3T+Mvz6q1c7qUodg==
 
-"@demonovel/cached-data@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@demonovel/cached-data/-/cached-data-1.0.4.tgz#c50e6997462e2bb5bae3e4fb6da82151ac28007f"
-  integrity sha512-VxF1T5LxuntuDbqtYrbKH6YXo73ELM5F56dUG5mTGkABmGXDx08NOB8BjE8DCObgD4Y5jhyiZi0I7/HQJNmgKw==
+"@demonovel/cached-data@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@demonovel/cached-data/-/cached-data-1.0.7.tgz#1881cdcefe0878167a635240b0cea54c76f3647f"
+  integrity sha512-Fbcq1S4fCVtu3FxLtJEzumcV3FINDXdPwKqoZ5oh8hGvtD6KZdKx6aHPe2yOrw0dB+xyXF+dDzmC848W5XGxUw==
 
 "@hapi/accept@^3.2.4":
   version "3.2.4"
@@ -351,25 +351,25 @@
     str-util "^2.3.21"
     upath2 "^2.1.3"
 
-"@node-novel/cached-dmzj@^1.1.78":
-  version "1.1.78"
-  resolved "https://registry.npmjs.org/@node-novel/cached-dmzj/-/cached-dmzj-1.1.78.tgz#76241e59cfc9fe7d1761e205279413a7d0ec6c5f"
-  integrity sha512-9pdMVSuLxFikqPmv9/scgg2iZnEqXFcASxppJUnERYkjOj7ixdab3kVs3viuV2mgDO5+7SPaG5FQibaqUpXeSA==
+"@node-novel/cached-dmzj@^1.1.80":
+  version "1.1.80"
+  resolved "https://registry.npmjs.org/@node-novel/cached-dmzj/-/cached-dmzj-1.1.80.tgz#eee1ab2c38b175d09ef501e60581d332098e0b23"
+  integrity sha512-JzGB2qLadViHJdH9Ww3Y9uVf27ok8VXUiFDkM7lJ87NGjPmGJFCWEkbyUyNhzN88EOzO/7pe0WEYDNj+OuQBRA==
 
-"@node-novel/cached-esjzone@^1.0.47":
-  version "1.0.47"
-  resolved "https://registry.npmjs.org/@node-novel/cached-esjzone/-/cached-esjzone-1.0.47.tgz#a286871c4b881e17eadcda20aafa956c4087a422"
-  integrity sha512-iE2rHcGAg+DMlvYyVmZVHN9eD6Q/TU1kaD+qLgda1tvk8jSR71z0B2VkmCKKjG5a6mh8WPqFcGTDjR4RnAnmSw==
+"@node-novel/cached-esjzone@^1.0.49":
+  version "1.0.49"
+  resolved "https://registry.npmjs.org/@node-novel/cached-esjzone/-/cached-esjzone-1.0.49.tgz#48277ed75383ab7f47da89ceb3f7644511be0cb0"
+  integrity sha512-H0QI08FTb3e2EdKITzO/c7WHmi+IsIeevvjPrRbPVeriQkNnDE6E83mLkNR+PofYN+Ic+X7fgi7Mp5bXHXejKw==
 
-"@node-novel/cached-masiro@^1.0.44":
-  version "1.0.44"
-  resolved "https://registry.npmjs.org/@node-novel/cached-masiro/-/cached-masiro-1.0.44.tgz#1d39b883e8e8d0ff0decb6d5816eed4c631bcb2c"
-  integrity sha512-Qzl69BkE1NY8CcS9xObBq6e14kiXBxvh204ajhT+fPGr0/FF1aG0x0tob0iFRsDlAR5t0uKL1QVCx7vMaR6TTw==
+"@node-novel/cached-masiro@^1.0.46":
+  version "1.0.46"
+  resolved "https://registry.npmjs.org/@node-novel/cached-masiro/-/cached-masiro-1.0.46.tgz#b562a10ab4aa1422e7a702f2e1a6106b42a765f7"
+  integrity sha512-+ohUvmOV3kTpK6Nld36mSBq0ixcunXw9m2EWCoNCfLWSxRajeXcrz9RsPPYITnYz4lAppOUqcidQEhLtdgktYA==
 
-"@node-novel/cached-wenku8@^1.0.52":
-  version "1.0.52"
-  resolved "https://registry.npmjs.org/@node-novel/cached-wenku8/-/cached-wenku8-1.0.52.tgz#4a3e259448454870b780dd2e1dc1a7eacfa88393"
-  integrity sha512-ih+10bGgzxaO0QZgDYEGtMwDHUEFk0wr7xJ07vvfUeZVPDFrRh/rYjs8NHzxFnXl2cbJ7DZc+4Cbhk24mum1dQ==
+"@node-novel/cached-wenku8@^1.0.54":
+  version "1.0.54"
+  resolved "https://registry.npmjs.org/@node-novel/cached-wenku8/-/cached-wenku8-1.0.54.tgz#dc3573f1f09b54e2e2e88763e5515905d04de9ae"
+  integrity sha512-Sn5hVybzaYqpUcU9ooqJgegg6mhva4cqeIcLghaT99R/qbc9MoKSG9Q8nTb2W3LQRsIR1vFzdShloxt8afTJFQ==
 
 "@node-novel/epub-util@^1.0.2":
   version "1.0.2"
@@ -709,10 +709,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@^13.9.1":
-  version "13.9.1"
-  resolved "https://registry.npmjs.org/@types/node/-/node-13.9.1.tgz#96f606f8cd67fb018847d9b61e93997dabdefc72"
-  integrity sha512-E6M6N0blf/jiZx8Q3nb0vNaswQeEyn0XlupO+xN6DtJ6r6IT4nXrTry7zhIfYvFCl3/8Cu6WIysmUBKiqV0bqQ==
+"@types/node@*", "@types/node@^13.9.2":
+  version "13.9.2"
+  resolved "https://registry.npmjs.org/@types/node/-/node-13.9.2.tgz#ace1880c03594cc3e80206d96847157d8e7fa349"
+  integrity sha512-bnoqK579sAYrQbp73wwglccjJ4sfRdKU7WNEZ5FW4K2U6Kc0/eZ5kvXG0JKsEKFB50zrFmfFt52/cvBbZa7eXg==
 
 "@types/node@10.12.18":
   version "10.12.18"
@@ -2048,10 +2048,10 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.2.34, cjk-conv@^1.2.38, cjk-conv@^1.2.40:
-  version "1.2.40"
-  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.40.tgz#869fda96b384c90695ff1ee76a62b311c47f9b74"
-  integrity sha512-qpIp6N5GyTbJudvRIcImiUbQCQcXjl/JsYjpzrBFHw/4uWE0pSOugcBP44+Si7U2CtATtTGNBKeGnmJRY4ZVSA==
+cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.2.34, cjk-conv@^1.2.38, cjk-conv@^1.2.40, cjk-conv@^1.2.41:
+  version "1.2.41"
+  resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.41.tgz#9e16a489ebc82518ad88175381da49c01ebb84f1"
+  integrity sha512-unEbywkzQYH8oCqk/jumUqlDaBGaPLvwOvq33HccrfZ2/15k3EKgFCNax2f+yI9IAoYJN1trOllbd3wQMOnjWQ==
   dependencies:
     array-hyper-unique "^1.1.0"
     chinese_convert "1.0.8"
@@ -9089,18 +9089,18 @@ regexp-cjk@^1.2.12:
     regexp2 "^1.2.0"
     str-util "^2.3.13"
 
-regexp-cjk@^3.3.10:
-  version "3.3.10"
-  resolved "https://registry.npmjs.org/regexp-cjk/-/regexp-cjk-3.3.10.tgz#f8452f59c92a2b640e9d8c4bdc9f1160fc7c30b0"
-  integrity sha512-gA7EUlOBF118JOK2CGQbF6c8XCb01/ZuJ6t7lJ8WQTSGXbmjpIB7R7wc2fM4sBTohoaUcMh5lQtepU/23sU2VQ==
+regexp-cjk@^3.3.10, regexp-cjk@^3.3.11:
+  version "3.3.11"
+  resolved "https://registry.npmjs.org/regexp-cjk/-/regexp-cjk-3.3.11.tgz#5a025fbe76d9f773506ad8a4dde8bb7f237a5d0b"
+  integrity sha512-uRSeuzUH/S0bnDVjZhpe2QctIPSkr+NRJ2U29TgCXuJ1TzafZ+9xUp5BGAIQqi19nb+pqXHw522cHBmbdbO1LQ==
   dependencies:
     array-hyper-unique "^1.1.0"
-    cjk-conv "^1.2.34"
+    cjk-conv "^1.2.41"
     lodash "^4.17.15"
     regexp-helper "^1.0.8"
     regexp-parser-event "^1.1.5"
     regexp-parser-literal "^1.1.0"
-    regexp-range "^1.0.7"
+    regexp-range "^1.0.8"
     regexp-support "^1.0.25"
 
 regexp-helper-core@^1.0.6, regexp-helper-core@^1.0.7:
@@ -9136,7 +9136,7 @@ regexp-parser-literal@^1.1.0:
     regexpp2 "^1.3.0"
     uni-string "^1.1.0"
 
-regexp-range@^1.0.7:
+regexp-range@^1.0.8:
   version "1.0.8"
   resolved "https://registry.npmjs.org/regexp-range/-/regexp-range-1.0.8.tgz#22495d9a4813dd9688b0027b8272badb3b2704d7"
   integrity sha512-2Feze0N5cxD6nECdzoGleMLDWjMXdu9Y/uxQlMMe2/eShCtz8G3qwv6c1EU9Tn8EXFPPyab9WsEiAXSEn3FjQw==
@@ -11209,10 +11209,10 @@ yargs-parser@^15.0.1:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
 
-yargs-parser@^18.1.0:
-  version "18.1.0"
-  resolved "https://registry.npmjs.org/yargs-parser/-/yargs-parser-18.1.0.tgz#1b0ab1118ebd41f68bb30e729f4c83df36ae84c3"
-  integrity sha512-o/Jr6JBOv6Yx3pL+5naWSoIA2jJ+ZkMYQG/ie9qFbukBe4uzmBatlXFOiu/tNKRWEtyf+n5w7jc/O16ufqOTdQ==
+yargs-parser@^18.1.1:
+  version "18.1.1"
+  resolved "https://registry.npmjs.org/yargs-parser/-/yargs-parser-18.1.1.tgz#bf7407b915427fc760fcbbccc6c82b4f0ffcbd37"
+  integrity sha512-KRHEsOM16IX7XuLnMOqImcPNbLVXMNHYAoFc3BKR8Ortl5gzDbtXvvEoGx9imk5E+X1VeNKNlcHr8B8vi+7ipA==
   dependencies:
     camelcase "^5.0.0"
     decamelize "^1.2.0"
@@ -11239,10 +11239,10 @@ yargs@^14.2.0:
     y18n "^4.0.0"
     yargs-parser "^15.0.1"
 
-yargs@^15, yargs@^15.0.1, yargs@^15.0.2, yargs@^15.1.0, yargs@^15.3.0:
-  version "15.3.0"
-  resolved "https://registry.npmjs.org/yargs/-/yargs-15.3.0.tgz#403af6edc75b3ae04bf66c94202228ba119f0976"
-  integrity sha512-g/QCnmjgOl1YJjGsnUg2SatC7NUYEiLXJqxNOQU9qSpjzGtGXda9b+OKccr1kLTy8BN9yqEyqfq5lxlwdc13TA==
+yargs@^15, yargs@^15.0.1, yargs@^15.0.2, yargs@^15.1.0, yargs@^15.3.1:
+  version "15.3.1"
+  resolved "https://registry.npmjs.org/yargs/-/yargs-15.3.1.tgz#9505b472763963e54afe60148ad27a330818e98b"
+  integrity sha512-92O1HWEjw27sBfgmXiixJWT5hRBp2eobqXicLtPBIDBhYB+1HpwZlXmbW2luivBJHBzki+7VyCLRtAkScbTBQA==
   dependencies:
     cliui "^6.0.0"
     decamelize "^1.2.0"
@@ -11254,7 +11254,7 @@ yargs@^15, yargs@^15.0.1, yargs@^15.0.2, yargs@^15.1.0, yargs@^15.3.0:
     string-width "^4.2.0"
     which-module "^2.0.0"
     y18n "^4.0.0"
-    yargs-parser "^18.1.0"
+    yargs-parser "^18.1.1"
 
 yauzl@^2.10.0, yauzl@^2.4.2:
   version "2.10.0"
