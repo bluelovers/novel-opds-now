@@ -2048,7 +2048,7 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.2.34, cjk-conv@^1.2.38, cjk-conv@^1.2.40, cjk-conv@^1.2.41:
+cjk-conv@^1.0.31, cjk-conv@^1.1.40, cjk-conv@^1.1.44, cjk-conv@^1.1.57, cjk-conv@^1.2.34, cjk-conv@^1.2.40, cjk-conv@^1.2.41:
   version "1.2.41"
   resolved "https://registry.npmjs.org/cjk-conv/-/cjk-conv-1.2.41.tgz#9e16a489ebc82518ad88175381da49c01ebb84f1"
   integrity sha512-unEbywkzQYH8oCqk/jumUqlDaBGaPLvwOvq33HccrfZ2/15k3EKgFCNax2f+yI9IAoYJN1trOllbd3wQMOnjWQ==
@@ -7744,23 +7744,23 @@ novel-segment-cli@^1.1.1:
     update-notifier "^4.0.0"
     yargs "^15"
 
-novel-segment@^2, novel-segment@^2.5.7:
-  version "2.5.7"
-  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.5.7.tgz#89c96bb0b8248296261b183618a9d9ece3d08cc6"
-  integrity sha512-7OVjTTNE0RDtEj1y5/KHhseZnqzKu0wT1no3p+3EwH/DKek4FGepRy2FcDEI3TTuY8aNfgKqN/Jv7D4YhAPKQg==
+novel-segment@^2, novel-segment@^2.5.8:
+  version "2.5.8"
+  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.5.8.tgz#77d82f3c921f32b9d0dadbe13ab5e9f2e2137900"
+  integrity sha512-v15zRXWlhtQOJN9ZahTGViLMIyMlPgu5BQuVMA3TmIopG37YqWLwbrAVPVJjDo4MNTs+fMSutvptRbemLkIk9w==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
-    cjk-conv "^1.2.38"
+    cjk-conv "^1.2.41"
     core-decorators "^0.20.0"
     crlf-normalize "^1.0.3"
     deepmerge-plus "^2.1.3"
     fs-extra "^8.1.0"
     lodash.clonedeep "^4.5.0"
-    regexp-cjk "^3.3.10"
-    segment-dict "^2.3.63"
+    regexp-cjk "^3.3.11"
+    segment-dict "^2.3.65"
     sort-object-keys2 "^1.1.0"
     str-util "^2.3.21"
     ts-enum-util "4.0.1"
@@ -9493,10 +9493,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "~2.8.1"
 
-segment-dict@^2.3.63, segment-dict@^2.3.64:
-  version "2.3.64"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.64.tgz#dbbee23370867ac21c2892dd629622af0a617224"
-  integrity sha512-RF2/XodegpWTxIuoiuzAkBfZcSeY3puHNvit/uj8d/dpNwUBMeHArz1ateWMz8tzkhaBQ3bhhcOlxPOJ9TE86g==
+segment-dict@^2.3.65:
+  version "2.3.65"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.65.tgz#986bb5163ec2ab7ed12eb59e33b7199e727b8c0d"
+  integrity sha512-kn4UPo5887F4s5OtJqTxC9XMYHADzkih+EYW7auNlcqL/y0ljPCu31L3dTA/Sd6UQ7zSg/rOEWCcbuB+/fIjrg==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/util" "^1.0.10"
