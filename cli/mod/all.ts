@@ -39,14 +39,15 @@ Bluebird
 	}) =>
 	{
 		let {
-			cwd,
-			novel_id,
-			IDKEY,
-			outputDir,
-			novel,
-			...arr
-		} = await download()
-			.tapCatch(e => {
+				cwd,
+				novel_id,
+				IDKEY,
+				outputDir,
+				novel,
+				...arr
+			} = await download()
+			.tapCatch(e =>
+			{
 				console.error(`下載來源時發生錯誤`, e)
 			})
 		;
@@ -54,7 +55,8 @@ Bluebird
 		console.log(`來源下載完成，開始處理排版`, outputDir);
 
 		await handleAsync(argv.novel_id, IDKEY, outputDir)
-			.tapCatch(e => {
+			.tapCatch(e =>
+			{
 				console.error(`處理排版時發生錯誤`, e)
 			})
 		;
@@ -62,14 +64,16 @@ Bluebird
 		console.log(`排版完成，開始打包 epub`);
 
 		let epub = await novelEpub({
-			inputPath: cwd,
-			outputPath: cwd,
-			padEndDate: false,
-			filename: novel_id,
-			//noLog: true,
-			downloadRemoteFile: true,
-		})
-			.tapCatch(e => {
+				inputPath: cwd,
+				outputPath: cwd,
+				padEndDate: false,
+				filename: novel_id,
+				//noLog: true,
+				downloadRemoteFile: true,
+				epubContextDate: true,
+			})
+			.tapCatch(e =>
+			{
 				console.error(`打包 epub 時發生錯誤`, e)
 			})
 		;
