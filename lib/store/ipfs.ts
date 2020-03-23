@@ -7,6 +7,12 @@ import useIPFS from 'use-ipfs';
 import { IGunEpubData, IGunEpubNode } from '../types';
 import console from 'debug-color2/logger';
 import { toLink } from 'to-ipfs-url';
+import raceFetchIPFS from 'fetch-ipfs/race';
+import ipfsServerList, { filterList } from 'ipfs-server-list';
+import { lazyRaceServerList } from 'fetch-ipfs/util';
+import { publishToIPFSAll } from 'fetch-ipfs/put';
+import { PromiseSettledResult } from 'fetch-ipfs/lib/put/all';
+import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -29,7 +35,10 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 					.catch(e => console.error(e) as null)
 				;
 
-				let buf = await fetchIPFS(data.href, ipfs)
+				let buf = await raceFetchIPFS(data.href, [
+					ipfs,
+					...lazyRaceServerList(),
+				], 10 * 1000)
 					.catch(e => null)
 				;
 
@@ -93,7 +102,8 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 	if (!ipfs)
 	{
-		return null;
+		console.debug(`local IPFS server is fail`);
+		//return null;
 	}
 
 	if (!data.href)
@@ -104,6 +114,50 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 		console.debug(`add to IPFS`);
 
+		/**
+		 * 試圖推送至其他 IPFS 伺服器來增加檔案存活率與分流
+		 */
+		await publishToIPFSAll({
+			path: data.filename,
+			content,
+		}, [
+			ipfs,
+			...filterList('API'),
+		], {
+			addOptions: {
+				pin: false,
+			},
+			timeout: 10 * 1000,
+		})
+			.tap(settledResult => {
+				console.debug(`publishToIPFSAll`, settledResult)
+			})
+			.each((settledResult, index) => {
+
+				// @ts-ignore
+				let value: IIPFSFileApiAddReturnEntry[] = settledResult.value ?? settledResult.reason?.value;
+
+				if (value?.length)
+				{
+					value.forEach((result, i) => {
+						const resultCID = result.cid.toString();
+
+						if (cid !== resultCID)
+						{
+							console.debug(result);
+							console.debug(cid = resultCID);
+						}
+					})
+				}
+				else
+				{
+					console.red.dir(settledResult)
+				}
+
+			})
+		;
+
+		/*
 		for await (const result of ipfs.add({
 			path: data.filename,
 			content,
@@ -114,8 +168,20 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			console.debug(result);
 			console.debug(cid = result.cid.toString())
 		}
+		 */
+
+		if (!cid)
+		{
+			console.warn(`publishToIPFSAll fail`);
+			return null
+		}
 
 		data.href = toLink(cid, data.filename);
+	}
+	else if (!ipfs)
+	{
+		console.red.debug(`putEpubFileInfo:skip`);
+		return null;
 	}
 
 	console.success(data.href);
@@ -130,7 +196,13 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 			Bluebird
 				.delay(5 * 1000)
-				.then(() => fetchIPFS(json.data.href))
+				.then(() => {
+					return raceFetchIPFS(json.data.href, [
+						...lazyRaceServerList(),
+						])
+					;
+				})
+				.timeout(10 * 1000)
 				.catch(e => null)
 			;
 
