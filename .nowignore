@@ -1,6 +1,12 @@
-.tmp
-!.cache
 .idea
-docs
-radata
-**/radata
+node_modules
+.git
+.github
+__mocks__
+__tests__
+__snapshots__
+/report.*.json
+*.tsbuildinfo
+.nyc_output
+coverage
+*.snap
