@@ -10,8 +10,7 @@ import { toLink } from 'to-ipfs-url';
 import raceFetchIPFS from 'fetch-ipfs/race';
 import ipfsServerList, { filterList } from 'ipfs-server-list';
 import { lazyRaceServerList } from 'fetch-ipfs/util';
-import { publishToIPFSAll } from 'fetch-ipfs/put';
-import { PromiseSettledResult } from 'fetch-ipfs/lib/put/all';
+import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
@@ -117,7 +116,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 		/**
 		 * 試圖推送至其他 IPFS 伺服器來增加檔案存活率與分流
 		 */
-		await publishToIPFSAll({
+		await publishToIPFSRace({
 			path: data.filename,
 			content,
 		}, [
@@ -130,7 +129,9 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			timeout: 10 * 1000,
 		})
 			.tap(settledResult => {
-				console.debug(`publishToIPFSAll`, settledResult)
+				console.debug(`publishToIPFSAll`, settledResult, {
+					depth: 5,
+				})
 			})
 			.each((settledResult, index) => {
 
