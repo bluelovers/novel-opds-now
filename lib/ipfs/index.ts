@@ -7,10 +7,10 @@ import hashSum from 'hash-sum';
 import { IGunEpubNode } from '../types';
 import { RequestInit, RequestInfo, Response, FetchError } from 'node-fetch';
 
-//const server = `https://api-file-server.epub.now.sh/`;
-const server = `https://calm-inlet-73656.herokuapp.com`;
+const server01 = `https://api-file-server.epub.now.sh/`;
+const server02 = `https://calm-inlet-73656.herokuapp.com`;
 
-export function newURL(siteID: string, novelID: string)
+export function newURL(siteID: string, novelID: string, server = server01)
 {
 	return new URL(`db/file/${siteID}/${hashSum(novelID)}`, server);
 }
@@ -106,7 +106,7 @@ export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubN
 
 			if (e.status == 503)
 			{
-				return Promise.delay(5000)
+				return Bluebird.delay(5000)
 					.then(e => fetch(url.href, opts))
 				;
 			}
