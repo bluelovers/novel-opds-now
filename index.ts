@@ -11,6 +11,7 @@ import findPort, { makeRange } from 'get-port';
 import useIPFS from 'use-ipfs';
 import { ipfsWebuiAddresses } from 'ipfs-util-lib/lib/api/multiaddr';
 import terminalLink from 'terminal-link';
+import { processExit } from './lib/processExit';
 
 export async function startServer(options: {
 	port?: number | string,
@@ -39,7 +40,7 @@ export async function startServer(options: {
 
 		let _showIP = debounce(() =>
 		{
-			showIP(port);
+			//showIP(port);
 		}, 11 * 1000);
 
 		_showIP();
@@ -81,9 +82,13 @@ export async function startServer(options: {
 				.tap(async ({
 					ipfs,
 					address,
+					stop,
 				}) => {
-					console.info(await address())
-					console.success(`Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
+					//console.info(await address())
+					console.success(`IPFS Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
+
+					processExit(stop)
+
 				})
 				.catch(e => {
 					console.error(`[IPFS]`, e)

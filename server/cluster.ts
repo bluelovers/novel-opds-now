@@ -5,7 +5,10 @@
 import cluster from 'cluster';
 import { startServer } from '../';
 
-if (cluster.isMaster)
+/**
+ * idea 無法停止 sub process 所以取消 cluster
+ */
+if (0 && cluster.isMaster)
 {
 	cluster.fork() && cluster.on('exit', () => {
 		console.log(`cluster.fork`);

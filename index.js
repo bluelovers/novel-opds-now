@@ -34,6 +34,7 @@ const get_port_1 = __importStar(require("get-port"));
 const use_ipfs_1 = __importDefault(require("use-ipfs"));
 const multiaddr_1 = require("ipfs-util-lib/lib/api/multiaddr");
 const terminal_link_1 = __importDefault(require("terminal-link"));
+const processExit_1 = require("./lib/processExit");
 async function startServer(options = {}) {
     options = options || {};
     let { port } = options;
@@ -48,7 +49,6 @@ async function startServer(options = {}) {
     web.listen(port, async () => {
         ip_1.default(port);
         let _showIP = debounce_1.default(() => {
-            ip_1.default(port);
         }, 11 * 1000);
         _showIP();
         if (0) {
@@ -56,9 +56,9 @@ async function startServer(options = {}) {
         else {
             bluebird_1.default
                 .resolve(use_ipfs_1.default())
-                .tap(async ({ ipfs, address, }) => {
-                logger_1.default.info(await address());
-                logger_1.default.success(`Web UI available at`, terminal_link_1.default(`webui`, await multiaddr_1.ipfsWebuiAddresses(ipfs)));
+                .tap(async ({ ipfs, address, stop, }) => {
+                logger_1.default.success(`IPFS Web UI available at`, terminal_link_1.default(`webui`, await multiaddr_1.ipfsWebuiAddresses(ipfs)));
+                processExit_1.processExit(stop);
             })
                 .catch(e => {
                 logger_1.default.error(`[IPFS]`, e);

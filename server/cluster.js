@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const cluster_1 = __importDefault(require("cluster"));
 const __1 = require("../");
-if (cluster_1.default.isMaster) {
+if (0 && cluster_1.default.isMaster) {
     cluster_1.default.fork() && cluster_1.default.on('exit', () => {
         console.log(`cluster.fork`);
         cluster_1.default.fork();

@@ -12,6 +12,7 @@ import ipfsServerList, { filterList } from 'ipfs-server-list';
 import { lazyRaceServerList } from 'fetch-ipfs/util';
 import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
+import { processExit } from '../processExit';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -31,6 +32,11 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 			if (checkGunData(data))
 			{
 				let { ipfs } = await useIPFS()
+					.tap(({
+						stop,
+					}) => {
+						processExit(stop)
+					})
 					.catch(e => console.error(e) as null)
 				;
 
@@ -96,6 +102,11 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	let content = Buffer.from(base64, 'base64');
 
 	let { ipfs } = await useIPFS()
+		.tap(({
+			stop,
+		}) => {
+			processExit(stop)
+		})
 		.catch(e => console.error(e) as null)
 	;
 
