@@ -9,6 +9,8 @@ import console from 'debug-color2/logger';
 import debounce from 'lodash/debounce';
 import findPort, { makeRange } from 'get-port';
 import useIPFS from 'use-ipfs';
+import { ipfsWebuiAddresses } from 'ipfs-util-lib/lib/api/multiaddr';
+import terminalLink from 'terminal-link';
 
 export async function startServer(options: {
 	port?: number | string,
@@ -77,11 +79,15 @@ export async function startServer(options: {
 			Bluebird
 				.resolve(useIPFS())
 				.tap(async ({
-					address
+					ipfs,
+					address,
 				}) => {
 					console.info(await address())
+					console.success(`Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
 				})
-				.catch(e => null)
+				.catch(e => {
+					console.error(`[IPFS]`, e)
+				})
 				.tap(() => _showIP())
 			;
 		}

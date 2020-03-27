@@ -92,7 +92,7 @@
     "dot-values2": "^2.0.1",
     "epub-maker2": "^2.4.23",
     "express": "^4.17.1",
-    "fetch-ipfs": "^1.0.18",
+    "fetch-ipfs": "^1.0.19",
     "file-type": "^14.1.4",
     "fix-zh-harmony": "^1.0.1",
     "fs-extra": "^9.0.0",
