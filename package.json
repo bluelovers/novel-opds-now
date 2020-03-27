@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -141,7 +141,7 @@
     "@types/http-proxy-agent": "^2.0.2",
     "@types/lodash": "^4.14.149",
     "@types/mime-types": "^2.1.0",
-    "@types/node": "^13.9.3",
+    "@types/node": "^13.9.5",
     "@types/node-fetch": "^2.5.5",
     "@types/serve-favicon": "^2.5.0",
     "@types/tmp": "^0.1.0",
