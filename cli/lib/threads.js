@@ -116,13 +116,19 @@ if (worker_threads_1.isMainThread) {
     }
     function _process(workerData) {
         return new bluebird_2.default((resolve, reject) => {
+            let _stop_by_self = false;
+            const _resolve = (...argv) => {
+                resolve(...argv);
+                _stop_by_self = true;
+                worker.terminate();
+            };
             const worker = new worker_threads_1.Worker(__worker, {
                 workerData,
             });
             const values = [];
             let timer = setTimeout(() => {
                 logger_1.default.warn(`處理超時...再執行一次，本次已處理 ${values.length}/${workerData.value.length} 檔案`);
-                resolve(values);
+                _resolve(values);
             }, 60 * 1000);
             worker.on('message', (v) => {
                 values.push(v);
@@ -132,14 +138,14 @@ if (worker_threads_1.isMainThread) {
                 if (e) {
                     logger_1.default.error(`Worker error`, e);
                 }
-                resolve(values);
+                _resolve(values);
             });
             worker.on('exit', (code) => {
                 clearTimeout(timer);
-                if (code !== 0) {
+                if (code !== 0 && !_stop_by_self) {
                     logger_1.default.error(`Worker stopped with exit code ${code}`);
                 }
-                resolve(values);
+                _resolve(values);
             });
         });
     }
