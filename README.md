@@ -6,7 +6,7 @@
 > 所有 epub 只在請求時才會打包<br/>
 > 並且如果發現有緩存的話，則會直接使用緩存<br/>
 > 而不會再打包一次，同一個檔案在 24 小時內只會更新一次<br/>
-> 使用了 [gun](https://github.com/amark/gun) 模組來進行緩存
+> 使用了 [IPFS](https://js.ipfs.io/zh-CN/) 模組來進行緩存
 
 ## install
 
@@ -26,10 +26,11 @@
 npm install -g novel-opds-now
 ```
 
-> 啟動伺服器，此指令每次要啟動伺服器時都要輸入
+> 啟動伺服器，此指令每次要啟動伺服器時都要輸入(以下兩個指令隨便選一個)
 
 ```
 novel-opds-now -p 3000
+npx novel-opds-now -p 3000
 ```
 
 > 使用 Proxy 的情況下
@@ -54,8 +55,12 @@ npx novel-opds-now
 
 2. 當手機與電腦不同網路環境下，請利用 https://www.npmjs.com/package/share-localhost 這類工具來讓試著連接伺服器
 
-3. 安裝時出現 assemblyscript 安裝失敗，請安裝 yarn 與 git
+3. 安裝時出現 assemblyscript 安裝失敗，請安裝 [git](https://gitforwindows.org/)
+
+4. 如果是大陸GFW牆內使用者 請依照此篇 來做設定 https://segmentfault.com/a/1190000004444283
 
 ---
 
 ![image](docs/image.png)
+
+![image_2](docs/image_2.png)

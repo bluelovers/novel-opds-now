@@ -3342,10 +3342,10 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fetch-ipfs@^1.0.19:
-  version "1.0.19"
-  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.19.tgz#ac65208d09bf56c3fa337c097fde32aa06f6222a"
-  integrity sha512-47DoRgf+t6qxWKxSWcz3a8NEUBsYbz4TexqCW3eVtHJSlJNJSV5d4LpXdJ6E2DJoGWoD7dI9Kzgg04l4VCUABg==
+fetch-ipfs@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.20.tgz#3efbc48b53ed6a746201ae47a7d03c1e0aa68c14"
+  integrity sha512-l3+xt6kWsy78yHO87vQk2IWI3IWXFjx/fABHmHEXOnoM9mHTYjGAb5vkWH2Xy1gE6nM9xq8E9quRD5yVCb3Wlg==
   dependencies:
     "@bluelovers/ipfs-http-client" "^1.0.16"
     abort-controller "^3.0.0"
@@ -3354,7 +3354,7 @@ fetch-ipfs@^1.0.19:
     buffer "^5.5.0"
     cross-fetch "^3.0.4"
     ipfs-types "^1.0.11"
-    ipfs-util-lib "^1.0.7"
+    ipfs-util-lib "^1.0.8"
     is-error-code "^1.0.0"
     p-any "^3.0.0"
     to-ipfs-url "^1.0.5"
@@ -4521,10 +4521,10 @@ ipfs-repo@^0.30.0, ipfs-repo@^0.30.1:
     proper-lockfile "^4.0.0"
     sort-keys "^4.0.0"
 
-ipfs-server-list@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.npmjs.org/ipfs-server-list/-/ipfs-server-list-1.0.12.tgz#139ed5523f11a7a81367a39cf2515533050304fb"
-  integrity sha512-kfq+iOhr8t6+2LLZ4S70hvqeL1XBwQnkRjF6p1EItqzi+OzEoizJGDXdHTS4h1YT1FNrm4ayW1UquUE9wYaiIw==
+ipfs-server-list@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.npmjs.org/ipfs-server-list/-/ipfs-server-list-1.0.13.tgz#cbe756e87b40d805fdac89b7a1e43400a79d60fd"
+  integrity sha512-uKvQok6VwXn8gRxv7JQKFZtm4R1QSdFoK+s1/kT/Dp3EMmfrAPNxo+76Qhc4/2js1tM/ap/0fovtTka5OCE+RA==
   dependencies:
     ipfs-types "^1.0.11"
     ts-type "^1.2.13"
@@ -4584,10 +4584,10 @@ ipfs-unixfs@^1.0.0:
     err-code "^2.0.0"
     protons "^1.1.0"
 
-ipfs-util-lib@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.7.tgz#57d1170c165cf0b1ef832616360b8a53bfeee4b2"
-  integrity sha512-gra0AzbzszPN6+Iz5yMNL3gy8pVvzCvON1hVasgnqCa38TUJpQlQbxrQQy2OeV69FnNpnmkmgebR7RO7vJnlKg==
+ipfs-util-lib@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.8.tgz#8b49e2a450cd2ee1b3b5bc7f0628929e8cc77c38"
+  integrity sha512-OlFZY4ZMoGHUulc0Az3VepMqpAXU9+d5RF0Au+AdtD/WnbzYjmywBIc14d7FsJ+mAWbu82Ky1howX8ON1oCQ4Q==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     buffer "^5.5.0"
