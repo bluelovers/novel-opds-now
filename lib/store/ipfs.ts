@@ -58,7 +58,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 					{
 
 					}
-					else if ((Date.now() - data.timestamp) < 86400 * 1000)
+					else if ((Date.now() - data.timestamp) < 86400 * 1000 * 2)
 					{
 						isGun = true;
 					}
