@@ -61,7 +61,7 @@ Bluebird
 			})
 		;
 
-		console.log(`排版完成，開始打包 epub`);
+		console.log(`排版結束，開始打包 epub`);
 
 		let epub = await novelEpub({
 				inputPath: cwd,
@@ -77,6 +77,8 @@ Bluebird
 				console.error(`打包 epub 時發生錯誤`, e)
 			})
 		;
+
+		console.log(`打包 epub 結束`)
 
 		//console.dir(epub.file);
 
@@ -100,6 +102,11 @@ Bluebird
 		};
 
 		map[IDKEY][novel_id] = map[IDKEY][argv.novel_id] = _data;
+
+		console.dir({
+			IDKEY,
+			novel_id,
+		})
 
 		await outputJSON(map_file, map, {
 			spaces: 2,

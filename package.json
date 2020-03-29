@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.1.12",
+  "version": "2.1.13",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -90,7 +90,7 @@
     "cross-spawn-extra": "^2.0.0",
     "debug-color2": "^1.1.7",
     "dot-values2": "^2.0.1",
-    "epub-maker2": "^2.5.1",
+    "epub-maker2": "^2.5.3",
     "express": "^4.17.1",
     "fetch-ipfs": "^1.0.20",
     "file-type": "^14.1.4",
@@ -110,7 +110,7 @@
     "node-novel-info": "^3.0.1",
     "novel-downloader": "^2.0.3",
     "novel-downloader-cli": "^1.0.32",
-    "novel-epub": "^1.1.65",
+    "novel-epub": "^1.1.67",
     "novel-segment": "^2.5.8",
     "novel-segment-cli": "^1.1.1",
     "opds-extra": "^3.0.8",
