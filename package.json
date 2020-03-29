@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.1.10",
+  "version": "2.1.11",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -118,7 +118,7 @@
     "regexp-cjk": "^3.3.11",
     "regexp-cjk-plugin-escape-unicode-property": "^1.0.1",
     "regexp-cjk-plugin-extra": "^1.0.5",
-    "segment-dict": "^2.3.67",
+    "segment-dict": "^2.3.68",
     "serve-favicon": "^2.5.0",
     "sort-object-keys2": "^1.1.0",
     "ta-json-x": "^2.5.2",

@@ -32,10 +32,9 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 			if (checkGunData(data))
 			{
 				let { ipfs } = await useIPFS()
-					.tap(({
-						stop,
-					}) => {
-						processExit(stop)
+					.then(data => {
+						processExit(data.stop)
+						return data;
 					})
 					.catch(e => console.error(e) as null)
 				;
@@ -102,10 +101,9 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	let content = Buffer.from(base64, 'base64');
 
 	let { ipfs } = await useIPFS()
-		.tap(({
-			stop,
-		}) => {
-			processExit(stop)
+		.then(data => {
+			processExit(data.stop)
+			return data;
 		})
 		.catch(e => console.error(e) as null)
 	;
