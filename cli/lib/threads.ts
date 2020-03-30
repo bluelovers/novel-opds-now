@@ -58,11 +58,27 @@ if (isMainThread)
 		let cwd = join(outputDir, IDKEY, String(id));
 
 		return FastGlob([
-			'**/*.txt',
+			'**/*',
 		], {
 			cwd,
-			absolute: true,
+			absolute: false,
+			markDirectories: true,
+			onlyDirectories: true,
 		})
+			.each(file => {
+				let _a = join(cwd, file);
+				let _b = join(cwd, cn2tw_min(file, {
+					safe: false,
+				}));
+
+				return rename(_a, _b)
+			})
+			.then(e => FastGlob([
+				'**/*.txt',
+			], {
+				cwd,
+				absolute: true,
+			}))
 			.tap(list =>
 			{
 				if (list.length === 0)
@@ -85,7 +101,9 @@ if (isMainThread)
 			.map(file => {
 				file = normalize(file);
 				let p = parse(file);
-				let file_new = join(p.dir, cn2tw_min(p.name) + p.ext);
+				let file_new = join(p.dir, cn2tw_min(p.name, {
+					safe: false,
+				}) + p.ext);
 				return move(file, file_new, {
 					overwrite: true,
 				})
