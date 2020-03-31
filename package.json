@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.1.17",
+  "version": "2.1.19",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -42,7 +42,7 @@
     "npm:publish": "npm publish",
     "postpublish_": "git commit -m \"chore(release): publish\" .",
     "prepublish:cache": "ts-node ./cli/cache.ts -f",
-    "prepublish:lockfile": "npx yarn-tool lockfile --npm --shrinkwrap --overwrite",
+    "prepublish:lockfile": "npx yarn-tool lockfile --npm --overwrite",
     "prepublish:update-deps": "yarn run ncu && yarn run sort-package-json && yarn run update-deps && yarn run prepublish:lockfile",
     "prepublishOnly": "yarn run prepublish:update-deps && yarn run prepublish:cache && yarn run prepublish:lockfile",
     "prepublishOnly_": "yarn run ncu && yarn run sort-package-json && yarn run test",
