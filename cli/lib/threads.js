@@ -51,11 +51,26 @@ if (worker_threads_1.isMainThread) {
         IDKEY = IDKEY.split('/')[0];
         let cwd = path_1.join(outputDir, IDKEY, String(id));
         return bluebird_1.default([
+            '**/*',
+        ], {
+            cwd,
+            absolute: false,
+            markDirectories: true,
+            onlyDirectories: true,
+        })
+            .each(file => {
+            let _a = path_1.join(cwd, file);
+            let _b = path_1.join(cwd, cn2tw_min_1.cn2tw_min(file, {
+                safe: false,
+            }));
+            return fs_extra_1.rename(_a, _b);
+        })
+            .then(e => bluebird_1.default([
             '**/*.txt',
         ], {
             cwd,
             absolute: true,
-        })
+        }))
             .tap(list => {
             if (list.length === 0) {
                 return Promise.reject(`can't found any file, ${{
@@ -72,7 +87,9 @@ if (worker_threads_1.isMainThread) {
             .map(file => {
             file = path_1.normalize(file);
             let p = path_1.parse(file);
-            let file_new = path_1.join(p.dir, cn2tw_min_1.cn2tw_min(p.name) + p.ext);
+            let file_new = path_1.join(p.dir, cn2tw_min_1.cn2tw_min(p.name, {
+                safe: false,
+            }) + p.ext);
             return fs_extra_1.move(file, file_new, {
                 overwrite: true,
             })

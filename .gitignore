@@ -105,3 +105,4 @@ radata-*.tmp
 *.spec.d.ts
 *.spec.js
 .nowignore
+/npm-shrinkwrap.json

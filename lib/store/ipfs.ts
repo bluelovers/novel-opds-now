@@ -13,6 +13,7 @@ import { lazyRaceServerList } from 'fetch-ipfs/util';
 import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import { processExit } from '../processExit';
+import { inspect } from 'util';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -118,9 +119,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	{
 		let cid: string;
 
-		console.dir(data);
-
-		console.debug(`add to IPFS`);
+		console.debug(`add to IPFS`, inspect(data));
 
 		/**
 		 * 試圖推送至其他 IPFS 伺服器來增加檔案存活率與分流
@@ -138,7 +137,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			timeout: 10 * 1000,
 		})
 			.tap(settledResult => {
-				console.debug(`publishToIPFSAll`, settledResult, {
+				(settledResult?.length > 1) && console.debug(`publishToIPFSAll`, settledResult, {
 					depth: 5,
 				})
 			})
@@ -149,13 +148,15 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 				if (value?.length)
 				{
+					const { status } = settledResult;
+
 					value.forEach((result, i) => {
 						const resultCID = result.cid.toString();
 
 						if (cid !== resultCID)
 						{
-							console.debug(result);
-							console.debug(cid = resultCID);
+							//console.debug(`[${status}]`, inspect(result));
+							console.debug(`[${status}]`, cid = resultCID);
 						}
 					})
 				}
@@ -205,14 +206,14 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			console.debug(`putEpubFileInfo:return`, json);
 
 			Bluebird
-				.delay(5 * 1000)
+				.delay(10 * 1000)
 				.then(() => {
 					return raceFetchIPFS(json.data.href, [
 						...lazyRaceServerList(),
 						])
 					;
 				})
-				.timeout(10 * 1000)
+				.timeout(60 * 1000)
 				.catch(e => null)
 			;
 
