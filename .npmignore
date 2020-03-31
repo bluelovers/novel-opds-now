@@ -83,3 +83,4 @@ radata
 !/yarn.lock
 !/.cache
 radata-*.tmp
+/docs

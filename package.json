@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.1.16",
+  "version": "2.1.17",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -57,8 +57,6 @@
   },
   "resolutions": {
     "@assemblyscript/loader": "^0.9.4",
-    "@hapi/boom": "^8.0.1",
-    "@hapi/joi": "^16.1.8",
     "@sindresorhus/is": "^0.14.0",
     "@types/node": "^13.9.5",
     "ansi-regex": "^5.0.0",
