@@ -134,7 +134,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			addOptions: {
 				pin: false,
 			},
-			timeout: 10 * 1000,
+			timeout: 30 * 1000,
 		})
 			.tap(settledResult => {
 				(settledResult?.length > 1) && console.debug(`publishToIPFSAll`, settledResult, {
