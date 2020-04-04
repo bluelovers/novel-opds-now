@@ -66,20 +66,6 @@ export async function pubsubHandler(msg: IIPFSPubsubMsg)
 
 export async function pubsubSubscribe(ipfs: IIPFSPubsubApi & IIPFSSwarmApi & IIPFSConfigApi)
 {
-
-	const AddressesSwarm: string[] = await ipfs.config.get('Addresses.Swarm')
-		.catch(e =>
-		{
-			return [] as string[]
-		})
-	;
-
-	if (!AddressesSwarm.includes(wssAddr))
-	{
-		AddressesSwarm.push(wssAddr);
-		await ipfs.config.set('Addresses.Swarm', AddressesSwarm)
-	}
-
 	return ipfs
 		.pubsub
 		.subscribe(EPUB_TOPIC, pubsubHandler)
