@@ -106,3 +106,4 @@ radata-*.tmp
 *.spec.js
 .nowignore
 /npm-shrinkwrap.json
+/test/pubsub.ts

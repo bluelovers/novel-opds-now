@@ -1,0 +1,13 @@
+import { IIPFSPubsubApi, IIPFSPubsubMsg } from "ipfs-types/lib/ipfs/pubsub";
+import { IIPFSSwarmApi } from "ipfs-types/lib/ipfs/swarm";
+import { IIPFSConfigApi } from "ipfs-types/lib/ipfs/config";
+import Bluebird from 'bluebird';
+import { IIPFSPromiseApi } from "ipfs-types/lib/ipfs/index";
+export declare function pubsubHandler(msg: IIPFSPubsubMsg): Promise<any>;
+export declare function pubsubSubscribe(ipfs: IIPFSPubsubApi & IIPFSSwarmApi & IIPFSConfigApi): Promise<void>;
+export declare function pubsubUnSubscribe(ipfs: IIPFSPubsubApi): Promise<void>;
+export declare function pubsubPublishHello(ipfs: IIPFSPromiseApi): Promise<void>;
+export declare function pubsubPublish(ipfs: IIPFSPromiseApi, data: any): Promise<void>;
+export declare function getPeers(ipfs: IIPFSPubsubApi): Promise<string[]>;
+export declare function connectPeers(ipfs: IIPFSPromiseApi, peerID: string): Promise<void>;
+export declare function connectPeersAll(ipfs: IIPFSPromiseApi): Bluebird<string[]>;

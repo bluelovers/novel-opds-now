@@ -12,6 +12,7 @@ import useIPFS from 'use-ipfs';
 import { ipfsWebuiAddresses } from 'ipfs-util-lib/lib/api/multiaddr';
 import terminalLink from 'terminal-link';
 import { processExit } from './lib/processExit';
+import { pubsubSubscribe, connectPeersAll, pubsubPublishHello } from './lib/ipfs/pubsub';
 
 export async function startServer(options: {
 	port?: number | string,
@@ -88,6 +89,12 @@ export async function startServer(options: {
 					console.success(`IPFS Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
 
 					processExit(stop)
+
+					await pubsubSubscribe(ipfs)
+						.then(e => connectPeersAll(ipfs))
+						.then(() => pubsubPublishHello(ipfs))
+						.catch(e => console.error(`[IPFS]`, e))
+					;
 
 				})
 				.catch(e => {

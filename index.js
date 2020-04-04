@@ -35,6 +35,7 @@ const use_ipfs_1 = __importDefault(require("use-ipfs"));
 const multiaddr_1 = require("ipfs-util-lib/lib/api/multiaddr");
 const terminal_link_1 = __importDefault(require("terminal-link"));
 const processExit_1 = require("./lib/processExit");
+const pubsub_1 = require("./lib/ipfs/pubsub");
 async function startServer(options = {}) {
     options = options || {};
     let { port } = options;
@@ -59,6 +60,10 @@ async function startServer(options = {}) {
                 .tap(async ({ ipfs, address, stop, }) => {
                 logger_1.default.success(`IPFS Web UI available at`, terminal_link_1.default(`webui`, await multiaddr_1.ipfsWebuiAddresses(ipfs)));
                 processExit_1.processExit(stop);
+                await pubsub_1.pubsubSubscribe(ipfs)
+                    .then(e => pubsub_1.connectPeersAll(ipfs))
+                    .then(() => pubsub_1.pubsubPublishHello(ipfs))
+                    .catch(e => logger_1.default.error(`[IPFS]`, e));
             })
                 .catch(e => {
                 logger_1.default.error(`[IPFS]`, e);
