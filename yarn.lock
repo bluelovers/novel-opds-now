@@ -40,14 +40,14 @@
     bluebird "^3"
     fast-glob "^3"
 
-"@bluelovers/ipfs-http-client@^1.0.35":
-  version "1.0.35"
-  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.35.tgz#627081a3b28b3e33fb04d3da3111c46ca93c5eda"
-  integrity sha512-be7qzuG8IbyrGfQF2yo8CjSkfZLds4Eb1Mn3jg8wdLqO14OwHWAu7Z3tohFd/IAa1y061RANonr+ezLUrX9KAQ==
+"@bluelovers/ipfs-http-client@^1.0.37":
+  version "1.0.37"
+  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.37.tgz#de677fd242c5558367a023f5fe6d4cfb75304409"
+  integrity sha512-evMIqseVVD9R0hNwDKAIEigorijMCft4Tz7Ii0YB6VorYrqZnnVHZJgYZojNr8wXCYqtpmuZJGvgoQeZz8aG3Q==
   dependencies:
     ipfs-env "^1.0.1"
-    ipfs-types "^1.0.16"
-    ipfs-util-lib "^1.0.21"
+    ipfs-types "^1.0.18"
+    ipfs-util-lib "^1.0.23"
     ts-type "^1.2.15"
 
 "@bluelovers/request-promise@^4.2.5", "request-promise@npm:@bluelovers/request-promise":
@@ -3463,19 +3463,19 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fetch-ipfs@^1.0.40:
-  version "1.0.40"
-  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.40.tgz#648a5c3ad3732259e87d28f3b48d3fd0c42cb132"
-  integrity sha512-tWLxyaOivO7bt6P17gsVXCXEKubpoWfkEQihgM2TXh4YcRJP4de2Rs1y/wzAp4J8/9J+zytyJ4LKntUMYDwcEw==
+fetch-ipfs@^1.0.42:
+  version "1.0.42"
+  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.42.tgz#c0ca3d7dfc06190fb3efab39954391721c0c78b7"
+  integrity sha512-i3WQ1UlCv7gZT1buNJjmQEEQKqGf5TgkQ0Yq3cB3PYf+5vMbuaTEWH90StiIYz7IvO9p7EiYjXsxGETiXIszAA==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.35"
+    "@bluelovers/ipfs-http-client" "^1.0.37"
     abort-controller "^3.0.0"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
     buffer "^5.5.0"
     cross-fetch "^3.0.4"
-    ipfs-types "^1.0.16"
-    ipfs-util-lib "^1.0.21"
+    ipfs-types "^1.0.18"
+    ipfs-util-lib "^1.0.23"
     is-error-code "^1.0.0"
     p-any "^3.0.0"
     to-ipfs-url "^1.0.6"
@@ -4552,12 +4552,12 @@ ipfs-core-utils@^0.0.1:
     err-code "^2.0.0"
     ipfs-utils "^1.0.0"
 
-ipfs-defaults@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/ipfs-defaults/-/ipfs-defaults-1.0.5.tgz#10a95df0d64ca5d5edfb942e424d515eb1dda09f"
-  integrity sha512-pXcUdEGD6qIp2k4S04HfJp0k/8C+GYC1J1nW55Xifpf7gsWBJyJFU9ekgAmWSmEhn3B61DWaHG0PMzrkrfo2+g==
+ipfs-defaults@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/ipfs-defaults/-/ipfs-defaults-1.0.7.tgz#5c47a67b169349d1b84fb02a590bd75a633e0eb1"
+  integrity sha512-j/ksoO/33sfkMsVLhuFtLML7gvHawZJWgdvFalQw8QWfvzjN/FOm5LaJ3dbWrbOYUKnOf7IFV1KsMoiBUj0Z4g==
   dependencies:
-    ipfs-server-list "^1.0.24"
+    ipfs-server-list "^1.0.26"
     lodash "^4.17.15"
 
 ipfs-env@^1.0.1:
@@ -4717,18 +4717,18 @@ ipfs-repo@^1.0.1:
     proper-lockfile "^4.0.0"
     sort-keys "^4.0.0"
 
-ipfs-server-list@^1.0.24:
-  version "1.0.24"
-  resolved "https://registry.npmjs.org/ipfs-server-list/-/ipfs-server-list-1.0.24.tgz#8f63337453820c0f71c1cfec4c89840b0ab1bf5c"
-  integrity sha512-1rbKzakKIF5vA5h4vadJYFd17LXEukpoI+04kpbgd2A8+lxnhg6ftMDnTWp7qKVZDSP5K4yajsUcPT40RHXcGQ==
+ipfs-server-list@^1.0.26:
+  version "1.0.26"
+  resolved "https://registry.npmjs.org/ipfs-server-list/-/ipfs-server-list-1.0.26.tgz#dca69960395583673699d7a3431ee593cbd43dd6"
+  integrity sha512-y4/NLmEGwLO7PITbkAsQCmQyJXO+XhaDQZvYwlPfp2Y5TLXEB8krT08555Mk/ADAR9F7nC+sb9ugD+mT3sVgLg==
   dependencies:
-    ipfs-types "^1.0.16"
+    ipfs-types "^1.0.18"
     ts-type "^1.2.15"
 
-ipfs-types@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/ipfs-types/-/ipfs-types-1.0.16.tgz#fdcf3350e588a7193de66bc55395ee8f833644bc"
-  integrity sha512-WwCg0UaRBlgmZZCK7dtqGUKZ1a2sHRYOD22vf6JWHPEVc4zO/PWMrKQKQSi5xRC1/ECfzDovKiWdTwjcXhPr5Q==
+ipfs-types@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.npmjs.org/ipfs-types/-/ipfs-types-1.0.18.tgz#539a2b86761661f15b1490a29346897a1b3b6d1c"
+  integrity sha512-5uoynCcX5fmRQNq/oEirKq2WL6fTDRSmarVRCnNWF8t7NcJz6RHVVPxGwTafnka6KOI6XL/kseEyUzu8H6ENpQ==
   dependencies:
     "@types/bl" "^2.1.0"
     ts-type "^1.2.15"
@@ -4772,10 +4772,10 @@ ipfs-unixfs@^1.0.1:
     err-code "^2.0.0"
     protons "^1.1.0"
 
-ipfs-util-lib@^1.0.21:
-  version "1.0.21"
-  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.21.tgz#ee5d46b7d4ad90ebff1e9f500d8f775746d54afa"
-  integrity sha512-hg7AE34C74eQg8o3CD5vbGUOK/vXWJjugsOyDiKh3q++ZBaEtJFkYFZgB1XFnRA8UPZrPdsztwJXMGoXQ2+1TA==
+ipfs-util-lib@^1.0.23:
+  version "1.0.23"
+  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.23.tgz#9882631495e2e4459a3f379b7fe3c5352766a09d"
+  integrity sha512-4xJuP36a7gedGU1jtV5UrpTvScP/GlM53IUb7dUwe8obi2EnpIpwGW4XvHHTEf8g3vRTrn8e3raMwZ2CWTXrVg==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     array-hyper-unique "^1.1.0"
@@ -4783,8 +4783,8 @@ ipfs-util-lib@^1.0.21:
     debug-color2 "^1.1.7"
     fast-glob "^3.2.2"
     get-stream "^5.1.0"
-    ipfs-server-list "^1.0.24"
-    ipfs-types "^1.0.16"
+    ipfs-server-list "^1.0.26"
+    ipfs-types "^1.0.18"
     micromatch "^4.0.2"
     multiaddr-to-uri "^5.1.0"
     multiaddr-to-url "^1.0.2"
@@ -10436,15 +10436,15 @@ ursa-optional@~0.10.1:
     bindings "^1.5.0"
     nan "^2.14.0"
 
-use-ipfs@^1.0.42:
-  version "1.0.42"
-  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.42.tgz#81b836f009913e14f57155556011259c5761a8b8"
-  integrity sha512-vbRD5zpnBOkMFhZkNB0sHNhbHnqyZFFSUBpG9hdZfwyNS5yvumf09NsMvA+GjFvhbTsyLrdOkerT/Dc0SQoG9A==
+use-ipfs@^1.0.44:
+  version "1.0.44"
+  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.44.tgz#afd796ad415f1bbad6914a76ce7e1d0b4600f13d"
+  integrity sha512-p1O2TNZlK3yCRMXGcke/4l06ZjO/fv/2QMVMY59krHaawi0dsFz3QEieIaJK0nPBsVtiLMv1bnJn67N1fDG2Dw==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.35"
+    "@bluelovers/ipfs-http-client" "^1.0.37"
     find-free-port-sync-fixed "^1.0.0"
     get-port "^5.1.1"
-    ipfs-defaults "^1.0.5"
+    ipfs-defaults "^1.0.7"
     lodash "^4.17.15"
     ts-type "^1.2.15"
 

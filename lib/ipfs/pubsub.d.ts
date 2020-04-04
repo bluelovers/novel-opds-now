@@ -7,7 +7,7 @@ export declare function pubsubHandler(msg: IIPFSPubsubMsg): Promise<any>;
 export declare function pubsubSubscribe(ipfs: IIPFSPubsubApi & IIPFSSwarmApi & IIPFSConfigApi): Promise<void>;
 export declare function pubsubUnSubscribe(ipfs: IIPFSPubsubApi): Promise<void>;
 export declare function pubsubPublishHello(ipfs: IIPFSPromiseApi): Promise<void>;
-export declare function pubsubPublish(ipfs: IIPFSPromiseApi, data: any): Promise<void>;
+export declare function pubsubPublish<T>(ipfs: IIPFSPromiseApi, data: T): Promise<void>;
 export declare function getPeers(ipfs: IIPFSPubsubApi): Promise<string[]>;
 export declare function connectPeers(ipfs: IIPFSPromiseApi, peerID: string): Promise<void>;
 export declare function connectPeersAll(ipfs: IIPFSPromiseApi): Bluebird<string[]>;

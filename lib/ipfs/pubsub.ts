@@ -7,38 +7,59 @@ import multiaddr from 'multiaddr';
 import { unsubscribeAll } from 'ipfs-util-lib/lib/ipfs/pubsub/unsubscribe';
 import { IIPFSPromiseApi } from "ipfs-types/lib/ipfs/index";
 import useIPFS from 'use-ipfs';
+import { cid as isCID } from 'is-ipfs';
 
 const EPUB_TOPIC = 'novel-opds-now';
 const wssAddr = '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star';
 
 export async function pubsubHandler(msg: IIPFSPubsubMsg)
 {
+	const { ipfs } = await useIPFS()
+		.catch(e => null as {
+			ipfs: IIPFSPromiseApi
+		})
+	;
+
+	if (!ipfs) return;
+
+	const me = await ipfs.id().catch(e => null);
+
 	try
 	{
 		const json = JSON.parse(msg.data.toString());
 
-		if (json.peerID && json.type)
+		//console.debug(`pubsubHandler:json`, json)
+
+		if (json)
 		{
-			await useIPFS()
-				.then(async ({
-					ipfs,
-				}) => {
-					return connectPeers(ipfs, json.peerID)
-			})
-				.catch(e => null)
+			if (msg.topicIDs.includes(EPUB_TOPIC))
+			{
+				if (json.peerID && json.type)
+				{
+					await connectPeers(ipfs, json.peerID)
+						.catch(e => null)
+				}
+			}
+
+			if (json.cid && me?.id !== msg.from)
+			{
+				const res = await ipfs
+					.resolve((isCID(json.cid) ? '/ipfs/' : '') + json.cid)
+					.catch(e => null)
+				;
+
+				//console.debug(`pubsubHandler`, res)
+			}
 		}
 	}
 	catch (e)
 	{
-		console.debug(`pubsubHandler`, msg)
+		//console.debug(`pubsubHandler:error`, e)
 	}
 
-	return useIPFS()
-		.then(({
-			ipfs,
-		}) => {
-			return connectPeers(ipfs, msg.from)
-		})
+	//console.debug(`pubsubHandler:raw`, msg)
+
+	return connectPeers(ipfs, msg.from)
 		.catch(e => null)
 	;
 }
@@ -89,11 +110,12 @@ export async function pubsubPublishHello(ipfs: IIPFSPromiseApi)
 		;
 }
 
-export async function pubsubPublish(ipfs: IIPFSPromiseApi, data)
+export async function pubsubPublish<T>(ipfs: IIPFSPromiseApi, data: T)
 {
 	return ipfs
 		.pubsub
 		.publish(EPUB_TOPIC, Buffer.from(JSON.stringify(data)))
+		.catch(e => console.error(`[pubsubPublish]`, e))
 	;
 }
 

@@ -14,6 +14,7 @@ import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import { processExit } from '../processExit';
 import { inspect } from 'util';
+import { pubsubPublish } from '../ipfs/pubsub';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -158,6 +159,12 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 							//console.debug(`[${status}]`, inspect(result));
 							console.debug(`[${status}]`, cid = resultCID);
 						}
+
+						pubsubPublish(ipfs, {
+							cid: resultCID,
+							path: result.path,
+							size: result.size,
+						})
 					})
 				}
 				else
