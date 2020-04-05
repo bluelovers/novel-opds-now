@@ -40,10 +40,10 @@
     bluebird "^3"
     fast-glob "^3"
 
-"@bluelovers/ipfs-http-client@^1.0.41":
-  version "1.0.41"
-  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.41.tgz#f601dee5ee7901b1346a67d5412dcc4fcaec7306"
-  integrity sha512-erRxm9YWQmWD1TdB02UaUXKgrIcXILm/pWSmIPVuBj2L1qoA0YTTqDcKEwT9UcFCuRlMZOTb/4wSFrbrVZwbZQ==
+"@bluelovers/ipfs-http-client@^1.0.42":
+  version "1.0.42"
+  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.42.tgz#04089d8502f50acc5ef16390d2c3e185c402eed7"
+  integrity sha512-VvTZw7MyWU0z/u7YEpC584BAwrRIbIKFC22AAFw0DfcGkgVN9ZdDb1sEPMOscDIs7KWGvBv3e5AgxkB5a58iWA==
   dependencies:
     ipfs-env "^1.0.1"
     ipfs-types "^1.0.19"
@@ -848,7 +848,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@yarn-tool/is-npx@^1.0.2", "@yarn-tool/is-npx@^1.0.3":
+"@yarn-tool/is-npx@^1.0.3":
   version "1.0.3"
   resolved "https://registry.npmjs.org/@yarn-tool/is-npx/-/is-npx-1.0.3.tgz#0c6444a59cb4517ef741ed0b9ccb1797916fa44a"
   integrity sha512-HZuZXk/5UWlTYA0J840accoYJESqpj45h+LyF8Q2PT3TEkmRpCO32OB7VbiO/UETKDbE9cjOM96gkZqcjs2JjA==
@@ -3120,7 +3120,7 @@ escodegen@^1.14.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-esjzone-api@^1.0.19:
+esjzone-api@^1.0.20:
   version "1.0.20"
   resolved "https://registry.npmjs.org/esjzone-api/-/esjzone-api-1.0.20.tgz#33e952b4652c0acd7ebb30fd6926f223a45711f9"
   integrity sha512-qAbzllpxlkeNlfGaZsUnG3J/Eo7Hrc6vOU7Nqxh4LZaP2bTWREbkkOxg4Ab5chJNF8fRYMBstq7VWeb6XjjFzA==
@@ -3463,12 +3463,12 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fetch-ipfs@^1.0.47:
-  version "1.0.47"
-  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.47.tgz#154958972ee0d3ba2a5168ef0c9799cee3ddb160"
-  integrity sha512-7oTURICgCZKtovb+YtBVIuERlyvq37mDh5N0UDKmIPsT5bjA4rtya/dKYGdQk4HQZ0ZCAlCkpDIe/n1xUr7H4Q==
+fetch-ipfs@^1.0.48:
+  version "1.0.48"
+  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.48.tgz#b1a634473d06e03cf6a827773e8651bf3fa5a3df"
+  integrity sha512-KdcugREdokwnL85lV36e3nQl63KdXvaafpKniIvMHHy/bGjBjWGhDvW8vNS66ee86Z+NxPhBp9QVMQqMm+bwWA==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.41"
+    "@bluelovers/ipfs-http-client" "^1.0.42"
     abort-controller "^3.0.0"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
@@ -7453,13 +7453,13 @@ normalize-url@^4.1.0:
   resolved "https://registry.npmjs.org/normalize-url/-/normalize-url-4.5.0.tgz#453354087e6ca96957bd8f5baf753f5982142129"
   integrity sha512-2s47yzUxdexf1OhyRi4Em83iQk0aPvwTddtFz4hnSSw9dCEsLEGf6SwIO8ss/19S9iBb5sJaOuTvTGDeZI00BQ==
 
-novel-downloader-cli@^1.0.42:
-  version "1.0.42"
-  resolved "https://registry.npmjs.org/novel-downloader-cli/-/novel-downloader-cli-1.0.42.tgz#056c6495df9efdfc00e505c5cff6b1c62e15889d"
-  integrity sha512-B8I93QGDQXgwc8hSyDh7jlh7rOM/yiuRwROCV5BhqOVzNOkBM1BoWqALMQJIhAg0YsMKqkfA1JS55gWc/WxxPA==
+novel-downloader-cli@^1.0.43:
+  version "1.0.43"
+  resolved "https://registry.npmjs.org/novel-downloader-cli/-/novel-downloader-cli-1.0.43.tgz#5ef9b49756db658ba1a845bbafee9eb7e86040c0"
+  integrity sha512-SZLZJrNd1/llFuWzJzSPN2MSszzqJfCXs6HYbNywlh44RiMWtmB77k9zyF6649OzKcGIEheHFdSOoCa+YpDfwQ==
   dependencies:
-    "@yarn-tool/is-npx" "^1.0.2"
-    "@yarn-tool/update-notifier" "^1.0.9"
+    "@yarn-tool/is-npx" "^1.0.3"
+    "@yarn-tool/update-notifier" "^1.0.10"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
     cross-spawn-extra "^2.0.0"
@@ -7468,14 +7468,14 @@ novel-downloader-cli@^1.0.42:
     moment "^2.24.0"
     node-alias "^1.0.4"
     node-novel-info "^3.0.1"
-    novel-downloader "^2.0.13"
-    ts-type "^1.2.13"
+    novel-downloader "^2.0.14"
+    ts-type "^1.2.15"
     yargs "^15.3.1"
 
-novel-downloader@^2.0.13:
-  version "2.0.13"
-  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-2.0.13.tgz#f997690b92b9239f7158d20522ba68eb3392fed7"
-  integrity sha512-xh+1axYWcINRQjj7aVQX6mL1qkZMm5po62bXeF9keVxuN1ns+rW2DlgW+J6fHg0jn+j4U4Rhzcbdk3KbSc793Q==
+novel-downloader@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-2.0.14.tgz#aa71d6a27f809928857238f08f0a5de19693a223"
+  integrity sha512-NLaNibqRF/wiM/2BkgTXxWycUqtwaRalsR4mndKK1vvgvikkF3Axu3J+NJFYIO7e6MM9dec2ahqJyq6mCNZTdg==
   dependencies:
     "@bluelovers/request-promise" "^4.2.5"
     "@node-novel/layout-reporter" "^1.0.3"
@@ -7488,7 +7488,7 @@ novel-downloader@^2.0.13:
     decorator-utils "^2.0.0"
     env-bool "^1.0.3"
     escape-string-regexp "^2.0.0"
-    esjzone-api "^1.0.19"
+    esjzone-api "^1.0.20"
     fs-extra "^9.0.0"
     fs-iconv "^2.0.10"
     get-value "^3.0.1"
@@ -7506,11 +7506,11 @@ novel-downloader@^2.0.13:
     regexp-cjk-plugin-escape-unicode-property "^1.0.1"
     regexp-cjk-plugin-extra "^1.0.5"
     request-promise "npm:@bluelovers/request-promise"
-    set-value "^3.0.1"
+    set-value "^3.0.2"
     shortid "^2.2.15"
     str-util "^2.3.21"
     symbol.inspect "^1.0.1"
-    ts-type "^1.2.13"
+    ts-type "^1.2.15"
     upath2 "^2.1.3"
     zero-width "^1.0.5"
 
@@ -9365,7 +9365,7 @@ set-immediate-shim@^1.0.1, set-immediate-shim@~1.0.1:
   resolved "https://registry.npmjs.org/set-immediate-shim/-/set-immediate-shim-1.0.1.tgz#4b2b1b27eb808a9f8dcc481a58e5e56f599f3f61"
   integrity sha1-SysbJ+uAip+NzEgaWOXlb1mfP2E=
 
-set-value@^3.0.1:
+set-value@^3.0.1, set-value@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npmjs.org/set-value/-/set-value-3.0.2.tgz#74e8ecd023c33d0f77199d415409a40f21e61b90"
   integrity sha512-npjkVoz+ank0zjlV9F47Fdbjfj/PfXyVhZvGALWsyIYU/qrMzpi6avjKW3/7KeSU2Df3I46BrN1xOI1+6vW0hA==
@@ -10441,12 +10441,12 @@ ursa-optional@~0.10.1:
     bindings "^1.5.0"
     nan "^2.14.0"
 
-use-ipfs@^1.0.48:
-  version "1.0.48"
-  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.48.tgz#883256a2607b8540ac6986e5dda8c68ca8abfeed"
-  integrity sha512-t+TOOaOALjRnNgZZBPHreADIcEwdOB6RUDVyUribBsZ7rMNkn88rO8VlzI0ppjsqyjE0VRU2R7aiSgFoXrNPxQ==
+use-ipfs@^1.0.49:
+  version "1.0.49"
+  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.49.tgz#e26e59c54ddad277e404d4aadec82d3567733904"
+  integrity sha512-Va0ev48qcfwmRYCgWF6dVCo75SOzFwvfJKfjmzJt0bOl+ZGSE46bfRTb7xiRKOt/cvcFjj0Vy96LjoY9CvkD8g==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.41"
+    "@bluelovers/ipfs-http-client" "^1.0.42"
     find-free-port-sync-fixed "^1.0.0"
     get-port "^5.1.1"
     ipfs-defaults "^1.0.8"
