@@ -40,14 +40,14 @@
     bluebird "^3"
     fast-glob "^3"
 
-"@bluelovers/ipfs-http-client@^1.0.40":
-  version "1.0.40"
-  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.40.tgz#3a2ede031d5552a52f409544e1ae5c96c4bccc1c"
-  integrity sha512-CewW49XE6tLk7/MBcqwrWYliqQW/Wf0lnZYunK/llLo15CR2gQlNz7lnkIxh5bti0dtuYAIUK+u9k3jEhidvGg==
+"@bluelovers/ipfs-http-client@^1.0.41":
+  version "1.0.41"
+  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.41.tgz#f601dee5ee7901b1346a67d5412dcc4fcaec7306"
+  integrity sha512-erRxm9YWQmWD1TdB02UaUXKgrIcXILm/pWSmIPVuBj2L1qoA0YTTqDcKEwT9UcFCuRlMZOTb/4wSFrbrVZwbZQ==
   dependencies:
     ipfs-env "^1.0.1"
     ipfs-types "^1.0.19"
-    ipfs-util-lib "^1.0.26"
+    ipfs-util-lib "^1.0.27"
     ts-type "^1.2.15"
 
 "@bluelovers/request-promise@^4.2.5", "request-promise@npm:@bluelovers/request-promise":
@@ -848,19 +848,19 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@yarn-tool/is-npx@^1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@yarn-tool/is-npx/-/is-npx-1.0.2.tgz#69875e5aea11175b1a1aa8ade0f3dd0434fed818"
-  integrity sha512-HCCOJCbu1MP/kUlP9GJHISmm/TXB92TlCf5c902Gk0XPPjbFrYNsihWjG5KblRngV5t6V5zVSaFog84MNiYevw==
+"@yarn-tool/is-npx@^1.0.2", "@yarn-tool/is-npx@^1.0.3":
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/@yarn-tool/is-npx/-/is-npx-1.0.3.tgz#0c6444a59cb4517ef741ed0b9ccb1797916fa44a"
+  integrity sha512-HZuZXk/5UWlTYA0J840accoYJESqpj45h+LyF8Q2PT3TEkmRpCO32OB7VbiO/UETKDbE9cjOM96gkZqcjs2JjA==
   dependencies:
     is-npx "^1.0.0"
 
-"@yarn-tool/update-notifier@^1.0.4", "@yarn-tool/update-notifier@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/@yarn-tool/update-notifier/-/update-notifier-1.0.9.tgz#3cb5b0e94cf7b556db5c1c05631fcb96db4d76ee"
-  integrity sha512-XKy/RhffkAAZbrTQT0TqMIaN29q2Kz/AGZngPEHpNb2EpeTNOtIH9XndzcdGbc+/2NsYRxG43bROgkTh6PGOUw==
+"@yarn-tool/update-notifier@^1.0.10", "@yarn-tool/update-notifier@^1.0.4", "@yarn-tool/update-notifier@^1.0.9":
+  version "1.0.10"
+  resolved "https://registry.npmjs.org/@yarn-tool/update-notifier/-/update-notifier-1.0.10.tgz#7850b657d91ce7ecc55c5fa72ec987c2abbb1e6f"
+  integrity sha512-K4YyJ0eEpDvmoiIPtmPNEFtzAysYvVyRNsdPOaPBaoW1IQU4rBOR4bM81kcOHDLw/5ASHpGajVvxJY0ulgd4Kg==
   dependencies:
-    "@yarn-tool/is-npx" "^1.0.2"
+    "@yarn-tool/is-npx" "^1.0.3"
     update-notifier "^4.1.0"
 
 abab@^2.0.3:
@@ -3463,19 +3463,19 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fetch-ipfs@^1.0.46:
-  version "1.0.46"
-  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.46.tgz#7f6ef559a50d364ec6f06a236bc4a9dd14c09db8"
-  integrity sha512-vg8kTj3QxYtxr22uTgsNuN5OERE9faKzAuh2uZEYUiX/333EMPi5qDvrjVdO6xFle7BYyO3AyfumsKHEprOHAw==
+fetch-ipfs@^1.0.47:
+  version "1.0.47"
+  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.47.tgz#154958972ee0d3ba2a5168ef0c9799cee3ddb160"
+  integrity sha512-7oTURICgCZKtovb+YtBVIuERlyvq37mDh5N0UDKmIPsT5bjA4rtya/dKYGdQk4HQZ0ZCAlCkpDIe/n1xUr7H4Q==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.40"
+    "@bluelovers/ipfs-http-client" "^1.0.41"
     abort-controller "^3.0.0"
     array-hyper-unique "^1.1.0"
     bluebird "^3.7.2"
     buffer "^5.5.0"
     cross-fetch "^3.0.4"
     ipfs-types "^1.0.19"
-    ipfs-util-lib "^1.0.26"
+    ipfs-util-lib "^1.0.27"
     is-error-code "^1.0.0"
     p-any "^3.0.0"
     to-ipfs-url "^1.0.6"
@@ -4779,10 +4779,10 @@ ipfs-unixfs@^1.0.1:
     err-code "^2.0.0"
     protons "^1.1.0"
 
-ipfs-util-lib@^1.0.26:
-  version "1.0.26"
-  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.26.tgz#1cc12c79b9102117308f0e8056ac01926ff41726"
-  integrity sha512-M3vLDnhgOq54y9IEPkKH7rPjT2DuCC5TVhFD8Vb4ZFCzfs3tUmVkVYpOfqn5LUmm4hwLVxDrusOFXzxzrPpduQ==
+ipfs-util-lib@^1.0.27:
+  version "1.0.27"
+  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.27.tgz#09a1b1b0ae5f510b9a51b33ef7c86ff7dd5bad3f"
+  integrity sha512-MpxfQOnkv3g/o+lWVvFa1VW8hcBuNfLqBJOmXQZ8yjLX7Bu5RAvcHAerWozpz8HWEp6/rAwzuSgTewjthkSzzQ==
   dependencies:
     array-hyper-unique "^1.1.0"
     debug-color2 "^1.1.7"
@@ -10441,12 +10441,12 @@ ursa-optional@~0.10.1:
     bindings "^1.5.0"
     nan "^2.14.0"
 
-use-ipfs@^1.0.47:
-  version "1.0.47"
-  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.47.tgz#93a730ca533b1aa616928acf7154be07284498df"
-  integrity sha512-ZiiANCjJeDVQNtOHBDn2r8hhzT5NETJKpUIWoQ2qs7izOFj8mK7ZMm95GWr3HNVkpLdyDRek7vls5a2p98OC/w==
+use-ipfs@^1.0.48:
+  version "1.0.48"
+  resolved "https://registry.npmjs.org/use-ipfs/-/use-ipfs-1.0.48.tgz#883256a2607b8540ac6986e5dda8c68ca8abfeed"
+  integrity sha512-t+TOOaOALjRnNgZZBPHreADIcEwdOB6RUDVyUribBsZ7rMNkn88rO8VlzI0ppjsqyjE0VRU2R7aiSgFoXrNPxQ==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.40"
+    "@bluelovers/ipfs-http-client" "^1.0.41"
     find-free-port-sync-fixed "^1.0.0"
     get-port "^5.1.1"
     ipfs-defaults "^1.0.8"

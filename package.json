@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.1.22",
+  "version": "2.1.23",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -90,7 +90,7 @@
   },
   "dependencies": {
     "@bluelovers/fast-glob": "^3.0.4",
-    "@bluelovers/ipfs-http-client": "^1.0.40",
+    "@bluelovers/ipfs-http-client": "^1.0.41",
     "@demonovel/cached-data": "^1.0.13",
     "@node-novel/cache-loader": "^1.0.15",
     "@node-novel/cached-dmzj": "^1.1.85",
@@ -99,7 +99,7 @@
     "@node-novel/cached-wenku8": "^1.0.60",
     "@node-novel/layout": "^2.0.5",
     "@node-novel/layout-pattern": "^1.0.19",
-    "@yarn-tool/update-notifier": "^1.0.9",
+    "@yarn-tool/update-notifier": "^1.0.10",
     "address2": "^1.0.3",
     "array-hyper-unique": "^1.1.0",
     "bluebird": "^3.7.2",
@@ -112,7 +112,7 @@
     "dot-values2": "^2.0.1",
     "epub-maker2": "^2.6.1",
     "express": "^4.17.1",
-    "fetch-ipfs": "^1.0.46",
+    "fetch-ipfs": "^1.0.47",
     "file-type": "^14.1.4",
     "fix-zh-harmony": "^1.0.1",
     "fs-extra": "^9.0.0",
@@ -147,7 +147,7 @@
     "to-ipfs-hash": "^1.0.6",
     "to-ipfs-url": "^1.0.6",
     "ts-type": "^1.2.15",
-    "use-ipfs": "^1.0.47",
+    "use-ipfs": "^1.0.48",
     "yargs": "^15.3.1",
     "zero-width": "^1.0.5"
   },
