@@ -36,7 +36,7 @@ export async function updateCache(force?: boolean)
 
 			console.debug(`嘗試更新 ${url}`);
 			return fetchCache()
-				.tap(v => console.debug(`更新完成 ${url}`))
+				.tap(v => console.debug(`更新完成`))
 		})
 		.catch<INovelStatCache>(e => {
 			console.warn(e.message || e);
