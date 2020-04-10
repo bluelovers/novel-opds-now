@@ -34,7 +34,7 @@ export async function updateCache(force?: boolean)
 				console.debug(`use proxy`, proxy);
 			}
 
-			console.debug(`嘗試更新 ${url}`);
+			console.debug(`嘗試更新 demonovel`);
 			return fetchCache()
 				.tap(v => console.debug(`更新完成`))
 		})
