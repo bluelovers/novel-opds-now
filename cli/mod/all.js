@@ -57,7 +57,10 @@ bluebird_1.default
     logger_1.default.log(`打包 epub 結束`);
     let map_file = const_1.__cacheMapFile;
     let map = await fs_extra_1.readJSON(map_file)
-        .catch(e => ({}));
+        .catch(e => {
+        logger_1.default.error(`儲存 cacheMapFile 時發生錯誤 (2)`, e);
+        return {};
+    });
     map[IDKEY] = map[IDKEY] || {};
     let _data = {
         ...arr,
@@ -77,5 +80,6 @@ bluebird_1.default
     await fs_extra_1.outputJSON(map_file, map, {
         spaces: 2,
     });
-});
+})
+    .tapCatch(e => logger_1.default.error(e));
 //# sourceMappingURL=all.js.map

@@ -6,6 +6,7 @@ import { OPDSV1 } from 'opds-extra';
 import loadCache from '../novel-cache/load';
 import { prefixRoot as prefixDemo, title as titleDemo } from '../demonovel/opds';
 import { addOpenSearch, filterOPDSBook } from './search';
+import { cn2tw_min } from '../cn2tw_min';
 
 export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
 {
@@ -49,6 +50,13 @@ export function makeOPDSSite(siteID: ISiteIDs)
 					id,
 					title,
 				}) => {
+
+					if (siteID === 'esjzone')
+					{
+						title = cn2tw_min(title, {
+							safe: false,
+						});
+					}
 
 					feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 						title,

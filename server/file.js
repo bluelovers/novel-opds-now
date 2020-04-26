@@ -90,7 +90,7 @@ function fileHandler() {
                     return Promise.reject(cp.error);
                 }
                 let map = await fs_extra_1.readJSON(map_file)
-                    .catch(e => null);
+                    .catch(e => logger_1.default.error(e));
                 if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id])) {
                     gunData = await store_1.getGunEpubFile2([
                         IDKEY,

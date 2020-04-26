@@ -85,4 +85,4 @@ radata
 radata-*.tmp
 /docs
 !yarn.lock
-!npm-shrinkwrap.json
+npm-shrinkwrap.json

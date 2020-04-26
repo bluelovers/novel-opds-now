@@ -158,6 +158,8 @@ export function downloadNovel2(options: {
 
 			const { IDKEY } = options;
 
+			console.debug(`[outputDir]`, options.outputDir)
+
 			return {
 				options,
 				download()
@@ -195,7 +197,10 @@ export function downloadNovel2(options: {
 								let map_file = __cacheMapFile;
 
 								let map: ICacheMap = await readJSON(map_file)
-									.catch(e => ({}))
+									.catch(e => {
+										console.error(`儲存 cacheMapFile 時發生錯誤 (1)`, e);
+										return {}
+									})
 								;
 
 								let _data = map[IDKEY] = map[IDKEY] || {};

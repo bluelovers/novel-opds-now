@@ -127,7 +127,7 @@ function fileHandler()
 						}
 
 						let map: ICacheMap = await readJSON(map_file)
-							.catch(e => null)
+							.catch(e => console.error(e))
 						;
 
 						if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id]))
