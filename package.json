@@ -158,7 +158,7 @@
     "@types/http-proxy-agent": "^2.0.2",
     "@types/lodash": "^4.14.150",
     "@types/mime-types": "^2.1.0",
-    "@types/node": "^13.13.2",
+    "@types/node": "^13.13.4",
     "@types/node-fetch": "^2.5.7",
     "@types/serve-favicon": "^2.5.0",
     "@types/tmp": "^0.1.0",
@@ -169,5 +169,6 @@
   ],
   "engines": {
     "node": ">= 13"
-  }
+  },
+  "gitHead": "04094d27dd4f2a9f3cd74198d0169d773d9d7fe9"
 }
