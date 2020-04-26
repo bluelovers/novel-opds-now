@@ -102,6 +102,7 @@
     "calibre-opds": "^1.0.5",
     "cids": "^0.8.0",
     "cjk-conv": "^1.2.42",
+    "computer-info": "^0.2.5",
     "cross-fetch": "^3.0.4",
     "cross-spawn-extra": "^2.0.0",
     "debug-color2": "^1.1.7",
