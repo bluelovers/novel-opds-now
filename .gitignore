@@ -6,7 +6,7 @@ node_modules
 *.stackdump
 *.bak
 *.old
-package-lock.json
+!package-lock.json
 test/**/*.js
 test/**/*.d.ts
 test/*.js
