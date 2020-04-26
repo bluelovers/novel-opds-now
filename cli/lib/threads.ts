@@ -48,6 +48,7 @@ if (isMainThread)
 			.then(_rename)
 			.then(v => _split(v, outputDir))
 			.thenReturn(true)
+			.tapCatch(e => console.error(`handleAsync`, e))
 		;
 	}
 

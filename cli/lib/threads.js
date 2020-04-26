@@ -45,7 +45,8 @@ if (worker_threads_1.isMainThread) {
         return _list(id, IDKEY, outputDir)
             .then(_rename)
             .then(v => _split(v, outputDir))
-            .thenReturn(true);
+            .thenReturn(true)
+            .tapCatch(e => logger_1.default.error(`handleAsync`, e));
     }
     function _list(id, IDKEY, outputDir) {
         IDKEY = IDKEY.split('/')[0];
