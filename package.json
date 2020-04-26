@@ -47,7 +47,6 @@
     "prepublish:update-deps": "yarn run ncu && yarn run sort-package-json && yarn run update-deps && yarn run prepublish:lockfile",
     "prepublishOnly": "yarn run prepublish:update-deps && yarn run prepublish:cache && yarn run prepublish:lockfile",
     "prepublishOnly_": "yarn run ncu && yarn run sort-package-json && yarn run test",
-    "postpublish": "git commit -m \"chore(release): publish\" .",
     "postpublish_": "git commit -m \"chore(release): publish\" .",
     "lerna:publish:yes": "npx lerna publish --yes --cd-version patch",
     "ncu": "npx yarn-tool ncu -u",
