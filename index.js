@@ -29,12 +29,12 @@ const getPort_1 = __importStar(require("./lib/getPort"));
 const ip_1 = __importDefault(require("./lib/ip"));
 const bluebird_1 = __importDefault(require("bluebird"));
 const logger_1 = __importDefault(require("debug-color2/logger"));
-const debounce_1 = __importDefault(require("lodash/debounce"));
 const get_port_1 = __importStar(require("get-port"));
 const use_ipfs_1 = __importDefault(require("use-ipfs"));
 const terminal_link_1 = __importDefault(require("terminal-link"));
 const processExit_1 = require("./lib/processExit");
 const pubsub_1 = require("./lib/ipfs/pubsub");
+const computer_info_1 = __importDefault(require("computer-info"));
 async function startServer(options = {}) {
     options = options || {};
     let { port } = options;
@@ -48,44 +48,59 @@ async function startServer(options = {}) {
     });
     web.listen(port, async () => {
         ip_1.default(port);
-        let _showIP = debounce_1.default(() => {
-        }, 11 * 1000);
-        _showIP();
-        if (0) {
-        }
-        else {
-            bluebird_1.default
-                .resolve(use_ipfs_1.default())
-                .tap(async ({ ipfs, address, stop, }) => {
-                await bluebird_1.default.props({
-                    id: ipfs.id(),
-                    version: ipfs.version(),
-                })
-                    .then(data => {
-                    const { id, agentVersion, protocolVersion } = data.id;
-                    logger_1.default.debug({
+        bluebird_1.default
+            .resolve(use_ipfs_1.default())
+            .tapCatch(e => {
+            logger_1.default.error(`[IPFS]`, `無法啟動 IPFS，將無法連接至 IPFS 網路`, e);
+        })
+            .tap(async ({ ipfs, address, stop, }) => {
+            await bluebird_1.default.props({
+                id: ipfs.id(),
+                version: ipfs.version(),
+            })
+                .then(data => {
+                const { id, agentVersion, protocolVersion } = data.id;
+                _info({
+                    ipfs: {
                         id,
                         agentVersion,
                         protocolVersion,
                         version: data.version.version,
-                    });
-                })
-                    .catch(e => logger_1.default.error(`[IPFS]`, e));
-                logger_1.default.success(`IPFS Web UI available at`, terminal_link_1.default(`webui`, `https://dev.webui.ipfs.io/`));
-                processExit_1.processExit(stop);
-                await pubsub_1.pubsubSubscribe(ipfs)
-                    .then(e => pubsub_1.connectPeersAll(ipfs))
-                    .then(() => pubsub_1.pubsubPublishHello(ipfs))
-                    .catch(e => logger_1.default.error(`[IPFS]`, e));
+                    },
+                });
             })
-                .catch(e => {
-                logger_1.default.error(`[IPFS]`, e);
-            })
-                .tap(() => _showIP());
-        }
+                .catch(e => logger_1.default.error(`[IPFS]`, e));
+            logger_1.default.success(`IPFS Web UI available at`, terminal_link_1.default(`webui`, `https://dev.webui.ipfs.io/`));
+            processExit_1.processExit(stop);
+            await pubsub_1.pubsubSubscribe(ipfs)
+                .then(e => pubsub_1.connectPeersAll(ipfs))
+                .then(() => pubsub_1.pubsubPublishHello(ipfs))
+                .catch(e => logger_1.default.error(`[IPFS]`, e));
+        })
+            .catch(e => {
+            logger_1.default.error(`[IPFS]`, e);
+        })
+            .tap(() => {
+            _info();
+        });
     });
     return web;
 }
 exports.startServer = startServer;
 exports.default = startServer;
+function _info(data) {
+    if (_info.disable) {
+        return;
+    }
+    let { osystem, ram, cpu, arch, node, } = computer_info_1.default();
+    logger_1.default.info({
+        ...data,
+        osystem,
+        ram,
+        cpu,
+        arch,
+        node,
+    });
+    _info.disable = true;
+}
 //# sourceMappingURL=index.js.map

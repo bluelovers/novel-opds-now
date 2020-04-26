@@ -13,6 +13,7 @@ import { ipfsWebuiAddresses } from 'ipfs-util-lib/lib/api/multiaddr';
 import terminalLink from 'terminal-link';
 import { processExit } from './lib/processExit';
 import { pubsubSubscribe, connectPeersAll, pubsubPublishHello } from './lib/ipfs/pubsub';
+import computerInfo from 'computer-info'
 
 export async function startServer(options: {
 	port?: number | string,
@@ -39,93 +40,102 @@ export async function startServer(options: {
 	{
 		showIP(port);
 
-		let _showIP = debounce(() =>
-		{
-			//showIP(port);
-		}, 11 * 1000);
+		Bluebird
+			.resolve(useIPFS())
+			.tapCatch(e =>
+			{
+				console.error(`[IPFS]`, `無法啟動 IPFS，將無法連接至 IPFS 網路`, e)
+			})
+			.tap(async ({
+				ipfs,
+				address,
+				stop,
+			}) =>
+			{
+				//console.info(await address())
 
-		_showIP();
-
-		if (0)
-		{
-			/*
-			Bluebird
-				.resolve(import('./server/gun/setup'))
-				.tap(async (m) =>
-				{
-					m.setupGun(web);
-
-					return Bluebird.resolve([
-							'dmzj',
-							'wenku8',
-							'esjzone',
-						] as const)
-						.map(IDKEY =>
-						{
-							return Bluebird
-								.resolve()
-								.then(v => m.useGun().get(IDKEY).then())
-								.timeout(5 * 1000)
-								.catch(e => null)
-						})
-						;
-				})
-				.catch(e => null)
-				.delay(5 * 1000)
-				.tap(_showIP)
-			;
-			 */
-		}
-		else
-		{
-			Bluebird
-				.resolve(useIPFS())
-				.tap(async ({
-					ipfs,
-					address,
-					stop,
-				}) => {
-					//console.info(await address())
-
-					await Bluebird.props({
+				await Bluebird.props({
 						id: ipfs.id(),
-							version: ipfs.version(),
+						version: ipfs.version(),
 					})
-						.then(data => {
+					.then(data =>
+					{
+						const { id, agentVersion, protocolVersion } = data.id;
 
-							const { id, agentVersion, protocolVersion } = data.id;
-
-							console.debug({
+						_info({
+							ipfs: {
 								id,
 								agentVersion,
 								protocolVersion,
 								version: data.version.version,
-							})
-						})
-						.catch(e => console.error(`[IPFS]`, e))
-					;
+							},
+						});
+					})
+					.catch(e => console.error(`[IPFS]`, e))
+				;
 
-					//console.success(`IPFS Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
-					console.success(`IPFS Web UI available at`, terminalLink(`webui`, `https://dev.webui.ipfs.io/`))
+				//console.success(`IPFS Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
+				console.success(`IPFS Web UI available at`, terminalLink(`webui`, `https://dev.webui.ipfs.io/`))
 
-					processExit(stop)
+				processExit(stop)
 
-					await pubsubSubscribe(ipfs)
-						.then(e => connectPeersAll(ipfs))
-						.then(() => pubsubPublishHello(ipfs))
-						.catch(e => console.error(`[IPFS]`, e))
-					;
+				await pubsubSubscribe(ipfs)
+					.then(e => connectPeersAll(ipfs))
+					.then(() => pubsubPublishHello(ipfs))
+					.catch(e => console.error(`[IPFS]`, e))
+				;
 
-				})
-				.catch(e => {
-					console.error(`[IPFS]`, e)
-				})
-				.tap(() => _showIP())
-			;
-		}
+			})
+			.catch(e =>
+			{
+				console.error(`[IPFS]`, e)
+			})
+			.tap(() =>
+			{
+				_info();
+			})
+		;
+
 	});
 
 	return web
 }
 
 export default startServer
+
+function _info(data?)
+{
+	// @ts-ignore
+	if (_info.disable)
+	{
+		return;
+	}
+
+	let {
+		osystem,
+		ram,
+		cpu,
+		arch,
+		node,
+	} = computerInfo() as {
+		name: 'USER-2019',
+		osystem: 'Windows_NT',
+		ram: '26',
+		freeram: '10',
+		cpu: 'Intel(R) Core(TM) i7-6700 CPU @ 3.40GHz',
+		arch: 'x64',
+		node: 'v14.0.0'
+	};
+
+	console.info({
+		...data,
+		osystem,
+		ram,
+		cpu,
+		arch,
+		node,
+	})
+
+	// @ts-ignore
+	_info.disable = true;
+}
