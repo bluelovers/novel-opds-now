@@ -86,7 +86,27 @@ export async function startServer(options: {
 					stop,
 				}) => {
 					//console.info(await address())
-					console.success(`IPFS Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
+
+					await Bluebird.props({
+						id: ipfs.id(),
+							version: ipfs.version(),
+					})
+						.then(data => {
+
+							const { id, agentVersion, protocolVersion } = data.id;
+
+							console.debug({
+								id,
+								agentVersion,
+								protocolVersion,
+								version: data.version.version,
+							})
+						})
+						.catch(e => console.error(`[IPFS]`, e))
+					;
+
+					//console.success(`IPFS Web UI available at`, terminalLink(`webui`, await ipfsWebuiAddresses(ipfs)))
+					console.success(`IPFS Web UI available at`, terminalLink(`webui`, `https://dev.webui.ipfs.io/`))
 
 					processExit(stop)
 

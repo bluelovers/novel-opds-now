@@ -32,7 +32,6 @@ const logger_1 = __importDefault(require("debug-color2/logger"));
 const debounce_1 = __importDefault(require("lodash/debounce"));
 const get_port_1 = __importStar(require("get-port"));
 const use_ipfs_1 = __importDefault(require("use-ipfs"));
-const multiaddr_1 = require("ipfs-util-lib/lib/api/multiaddr");
 const terminal_link_1 = __importDefault(require("terminal-link"));
 const processExit_1 = require("./lib/processExit");
 const pubsub_1 = require("./lib/ipfs/pubsub");
@@ -58,7 +57,21 @@ async function startServer(options = {}) {
             bluebird_1.default
                 .resolve(use_ipfs_1.default())
                 .tap(async ({ ipfs, address, stop, }) => {
-                logger_1.default.success(`IPFS Web UI available at`, terminal_link_1.default(`webui`, await multiaddr_1.ipfsWebuiAddresses(ipfs)));
+                await bluebird_1.default.props({
+                    id: ipfs.id(),
+                    version: ipfs.version(),
+                })
+                    .then(data => {
+                    const { id, agentVersion, protocolVersion } = data.id;
+                    logger_1.default.debug({
+                        id,
+                        agentVersion,
+                        protocolVersion,
+                        version: data.version.version,
+                    });
+                })
+                    .catch(e => logger_1.default.error(`[IPFS]`, e));
+                logger_1.default.success(`IPFS Web UI available at`, terminal_link_1.default(`webui`, `https://dev.webui.ipfs.io/`));
                 processExit_1.processExit(stop);
                 await pubsub_1.pubsubSubscribe(ipfs)
                     .then(e => pubsub_1.connectPeersAll(ipfs))

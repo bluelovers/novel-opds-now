@@ -28,7 +28,10 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 	let { siteID, novelID } = handleArgvList(_siteID, _novelID);
 
 	return getEpubFileInfo(siteID, novelID)
-		.catch(TimeoutError, e => null)
+		.catch(TimeoutError, e => {
+			console.error(e);
+			return null
+		})
 		.then(async (data) =>
 		{
 			if (checkGunData(data))
@@ -78,7 +81,10 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 
 			return null
 		})
-		.catch(e => null)
+		.catch(e => {
+			console.error(e);
+			return null
+		})
 		;
 }
 
@@ -190,7 +196,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 		if (!cid)
 		{
-			console.warn(`publishToIPFSAll fail`);
+			console.warn(`publishToIPFSAll fail`, `無法將檔案推送至 IPFS，如果發生多次，請檢查 ~/.ipfs , ~/.jsipfs 資料夾`);
 			return null
 		}
 
