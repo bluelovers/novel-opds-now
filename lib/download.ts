@@ -198,7 +198,7 @@ export function downloadNovel2(options: {
 
 								let map: ICacheMap = await readJSON(map_file)
 									.catch(e => {
-										console.error(`儲存 cacheMapFile 時發生錯誤 (1)`, e);
+										//console.error(`儲存 cacheMapFile 時發生錯誤 (1)`, e);
 										return {}
 									})
 								;

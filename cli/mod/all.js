@@ -58,7 +58,6 @@ bluebird_1.default
     let map_file = const_1.__cacheMapFile;
     let map = await fs_extra_1.readJSON(map_file)
         .catch(e => {
-        logger_1.default.error(`儲存 cacheMapFile 時發生錯誤 (2)`, e);
         return {};
     });
     map[IDKEY] = map[IDKEY] || {};

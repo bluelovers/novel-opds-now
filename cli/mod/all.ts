@@ -86,7 +86,7 @@ Bluebird
 
 		let map: ICacheMap = await readJSON(map_file)
 			.catch(e => {
-				console.error(`儲存 cacheMapFile 時發生錯誤 (2)`, e);
+				//console.error(`儲存 cacheMapFile 時發生錯誤 (2)`, e);
 				return {}
 			})
 		;
