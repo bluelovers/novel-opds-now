@@ -13,7 +13,8 @@ import { ipfsWebuiAddresses } from 'ipfs-util-lib/lib/api/multiaddr';
 import terminalLink from 'terminal-link';
 import { processExit } from './lib/processExit';
 import { pubsubSubscribe, connectPeersAll, pubsubPublishHello } from './lib/ipfs/pubsub';
-import computerInfo from 'computer-info'
+import computerInfo from 'computer-info';
+import packageJson from './package.json';
 
 export async function startServer(options: {
 	port?: number | string,
@@ -134,6 +135,7 @@ function _info(data?)
 		cpu,
 		arch,
 		node,
+		[packageJson.name]: packageJson.version,
 	})
 
 	// @ts-ignore

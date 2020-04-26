@@ -35,6 +35,7 @@ const terminal_link_1 = __importDefault(require("terminal-link"));
 const processExit_1 = require("./lib/processExit");
 const pubsub_1 = require("./lib/ipfs/pubsub");
 const computer_info_1 = __importDefault(require("computer-info"));
+const package_json_1 = __importDefault(require("./package.json"));
 async function startServer(options = {}) {
     options = options || {};
     let { port } = options;
@@ -100,6 +101,7 @@ function _info(data) {
         cpu,
         arch,
         node,
+        [package_json_1.default.name]: package_json_1.default.version,
     });
     _info.disable = true;
 }
