@@ -405,6 +405,11 @@
     "@hapi/bourne" "1.x.x"
     "@hapi/hoek" "8.x.x"
 
+"@lazy-http/content-disposition@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-http/content-disposition/-/content-disposition-1.0.1.tgz#664e70f12efcf76a2e94c6f9b067262a95e25e0e"
+  integrity sha512-TWBPgDyDWuItzwQYfxYCFWrXRCKFkKVsPx1OxS5p81grnLANToL7kgU8vn0gC6LbUkDUsL4w4gxaYIl+ucWXoQ==
+
 "@node-novel/cache-loader@^1.0.15":
   version "1.0.15"
   resolved "https://registry.npmjs.org/@node-novel/cache-loader/-/cache-loader-1.0.15.tgz#ab582e242bcf160dca5079875c8f0e535c87baef"

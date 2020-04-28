@@ -88,6 +88,7 @@
     "@bluelovers/fast-glob": "^3.0.4",
     "@bluelovers/ipfs-http-client": "^1.0.44",
     "@demonovel/cached-data": "^1.0.15",
+    "@lazy-http/content-disposition": "^1.0.1",
     "@node-novel/cache-loader": "^1.0.15",
     "@node-novel/cached-dmzj": "^1.1.87",
     "@node-novel/cached-esjzone": "^1.0.57",

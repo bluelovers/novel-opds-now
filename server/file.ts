@@ -16,6 +16,7 @@ import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
 import { async as crossSpawn } from 'cross-spawn-extra';
 import { getGunEpubFile, getGunEpubFile2, putGunEpubFile } from '../lib/store';
+import contentDisposition from '@lazy-http/content-disposition';
 
 function fileHandler()
 {
@@ -266,10 +267,21 @@ function fileHandler()
 					http_filename = String(query.filename)
 				}
 
-				res.set('Content-disposition', 'attachment; filename=' + http_filename);
+				let attachment = contentDisposition(http_filename);
+
+				/*
+				console.debug({
+					query,
+					http_filename,
+					attachment,
+					http_filename2: encodeURIComponent(http_filename),
+				})
+				 */
+
+				res.set('Content-disposition', attachment);
 				res.set('Content-Type', mime);
 
-				console.info(`將檔案傳送至客戶端...`, mime, http_filename);
+				console.info(`將檔案傳送至客戶端...`, filename, (filename !== http_filename) && `=> ${http_filename}`);
 				readStream.pipe(res);
 
 				if (query.debug)

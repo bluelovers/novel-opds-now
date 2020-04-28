@@ -16,6 +16,7 @@ const util_1 = require("novel-downloader/src/all/util");
 const logger_1 = __importDefault(require("debug-color2/logger"));
 const cross_spawn_extra_1 = require("cross-spawn-extra");
 const store_1 = require("../lib/store");
+const content_disposition_1 = __importDefault(require("@lazy-http/content-disposition"));
 function fileHandler() {
     const router = express_1.Router();
     router.use('/:siteID/:novelID', (req, res) => {
@@ -174,9 +175,10 @@ function fileHandler() {
             if (query.filename) {
                 http_filename = String(query.filename);
             }
-            res.set('Content-disposition', 'attachment; filename=' + http_filename);
+            let attachment = content_disposition_1.default(http_filename);
+            res.set('Content-disposition', attachment);
             res.set('Content-Type', mime);
-            logger_1.default.info(`將檔案傳送至客戶端...`, mime, http_filename);
+            logger_1.default.info(`將檔案傳送至客戶端...`, filename, (filename !== http_filename) && `=> ${http_filename}`);
             readStream.pipe(res);
             if (query.debug) {
                 logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
