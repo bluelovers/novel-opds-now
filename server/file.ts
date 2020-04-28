@@ -259,15 +259,22 @@ function fileHandler()
 					mime = 'application/epub+zip';
 				}
 
-				res.set('Content-disposition', 'attachment; filename=' + filename);
+				let http_filename = filename;
+
+				if (query.filename)
+				{
+					http_filename = String(query.filename)
+				}
+
+				res.set('Content-disposition', 'attachment; filename=' + http_filename);
 				res.set('Content-Type', mime);
 
-				console.info(`將檔案傳送至客戶端...`);
+				console.info(`將檔案傳送至客戶端...`, mime, http_filename);
 				readStream.pipe(res);
 
 				if (query.debug)
 				{
-					//console.log(`忽略刪除下載暫存 ${data.outputDir}`);
+					console.debug(`忽略刪除下載暫存 ${data.outputDir}`);
 				}
 				else if (typeof data.removeCallback === 'function')
 				{
