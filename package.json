@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.1.33",
+  "version": "2.1.34",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
