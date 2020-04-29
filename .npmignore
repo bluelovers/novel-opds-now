@@ -79,7 +79,7 @@ __snapshots__
 **/radata
 now.json
 radata
-!/package-lock.json
+package-lock.json
 !/yarn.lock
 !/.cache
 radata-*.tmp
