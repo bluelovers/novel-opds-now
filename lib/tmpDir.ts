@@ -26,6 +26,8 @@ export function tmpDir(outputDir?: string)
 	return dirSync({
 		unsafeCleanup: false,
 		dir: outputDir,
+		// @ts-ignore
+		tmpdir: outputDir,
 	});
 }
 
