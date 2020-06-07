@@ -25,8 +25,8 @@ export declare function downloadNovel2(options: {
         removeCallback(): void;
         siteID: string;
         timestamp: number;
-        novel_id2: string | number;
         outputDir: string;
+        novel_id2: string | number;
         outputRoot: string;
     }>;
 }>;
