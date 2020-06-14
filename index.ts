@@ -15,6 +15,7 @@ import { processExit } from './lib/processExit';
 import { pubsubSubscribe, connectPeersAll, pubsubPublishHello } from './lib/ipfs/pubsub';
 import computerInfo from 'computer-info';
 import packageJson from './package.json';
+import { updateAllCacheTask } from './lib/task/update-cache';
 
 export async function startServer(options: {
 	port?: number | string,

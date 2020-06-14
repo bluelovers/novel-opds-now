@@ -11,11 +11,14 @@ export function loadCache()
 		console,
 
 		makeFns: [
-			() => buildCache(),
+			() =>
+			{
+				console.debug(`嘗試更新 masiro`);
+				return buildCache()
+					.tap(v => console.success(`[masiro] 更新完成`))
+			},
 		],
 	})
 }
 
 export default loadCache
-
-loadCache();

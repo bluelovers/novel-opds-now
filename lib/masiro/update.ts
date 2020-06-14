@@ -43,6 +43,3 @@ export function updateCache2(force?: boolean): Bluebird<Record<string, number>>
 }
 
 export default updateCache
-
-updateCache2();
-

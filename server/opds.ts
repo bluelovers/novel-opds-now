@@ -6,6 +6,7 @@ import updateCacheAll from '../lib/novel-cache/update';
 import updateCache from '../lib/demonovel/update';
 import loadCacheMasiro from '../lib/masiro/load';
 import { makeOPDSOther } from '../lib/opds/other';
+import { updateAllCacheTask } from '../lib/task/update-cache';
 
 function opdsHandler()
 {
@@ -13,9 +14,7 @@ function opdsHandler()
 
 	router.use('/*', async (req, res, next) =>
 	{
-		updateCacheAll();
-		updateCache();
-		loadCacheMasiro();
+		updateAllCacheTask();
 
 		next();
 	});
