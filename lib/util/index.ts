@@ -1,4 +1,5 @@
 import { array_unique_overwrite } from 'array-hyper-unique';
+import { join } from 'path';
 
 /**
  * Created by user on 2020/2/21.
@@ -22,4 +23,9 @@ export function handleArgvList(siteID: string | string[], novelID: string | stri
 		siteID,
 		novelID,
 	}
+}
+
+export function getCacheFilename(filename: string)
+{
+	return join(__dirname, '../../', '.cache', 'cached', filename)
 }

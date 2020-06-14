@@ -107,3 +107,6 @@ radata-*.tmp
 .nowignore
 /npm-shrinkwrap.json
 /test/pubsub.ts
+/.cache/cached/masiro/masiro.json
+/.cache/cached/masiro/masiro.json.stat
+

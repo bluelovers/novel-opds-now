@@ -21,9 +21,9 @@ export function buildSortAll()
 export function buildSort(siteID: ISiteIDs)
 {
 	return Bluebird.props({
-			id_titles: loadCache<Record<string, string>>(siteID, id_titles_map),
-			id_update: loadCache<string[]>(siteID, id_update_map),
-			id_chapters: loadCache<string[]>(siteID, id_chapters_map),
+			id_titles: loadCache<Record<string, string>>(siteID, id_titles_map as any),
+			id_update: loadCache<string[]>(siteID, id_update_map as any),
+			id_chapters: loadCache<string[]>(siteID, id_chapters_map as any),
 		})
 		.then(({
 			id_titles,

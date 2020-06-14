@@ -36,6 +36,9 @@ function fileHandler() {
             siteID = const_1.EnumNovelSiteList.NovelSiteDmzjApi;
         }
         let IDKEY = util_1.siteID2IDKEY(siteID);
+        if (siteID === 'masiro') {
+            IDKEY = 'masiro';
+        }
         let map_file = const_2.__cacheMapFile;
         return bluebird_1.default
             .resolve(IDKEY)

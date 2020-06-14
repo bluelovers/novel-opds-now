@@ -49,6 +49,11 @@ function fileHandler()
 
 		let IDKEY = siteID2IDKEY(siteID);
 
+		if (siteID === 'masiro')
+		{
+			IDKEY = 'masiro' as any
+		}
+
 		let map_file = __cacheMapFile;
 
 		return Bluebird

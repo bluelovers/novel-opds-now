@@ -27,12 +27,14 @@ const index_1 = __importStar(require("../lib/opds/index"));
 const demonovel_1 = __importDefault(require("./opds/demonovel"));
 const update_1 = __importDefault(require("../lib/novel-cache/update"));
 const update_2 = __importDefault(require("../lib/demonovel/update"));
+const load_1 = __importDefault(require("../lib/masiro/load"));
 const other_1 = require("../lib/opds/other");
 function opdsHandler() {
     const router = express_1.Router();
     router.use('/*', async (req, res, next) => {
         update_1.default();
         update_2.default();
+        load_1.default();
         next();
     });
     router.use(demonovel_1.default());

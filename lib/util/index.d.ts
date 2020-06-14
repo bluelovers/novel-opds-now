@@ -2,3 +2,4 @@ export declare function handleArgvList(siteID: string | string[], novelID: strin
     siteID: string[];
     novelID: string[];
 };
+export declare function getCacheFilename(filename: string): string;

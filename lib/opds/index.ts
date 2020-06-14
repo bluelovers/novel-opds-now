@@ -132,7 +132,7 @@ export function makeOPDSPortal()
 				}));
 			}
 
-			Object.keys(id_titles_map)
+			Object.keys(builded_map)
 				.forEach((siteID) =>
 				{
 

@@ -4,6 +4,7 @@ import makeOPDSPortal, { makeOPDSSite } from '../lib/opds/index';
 import opdsDemoNovelHandler from './opds/demonovel';
 import updateCacheAll from '../lib/novel-cache/update';
 import updateCache from '../lib/demonovel/update';
+import loadCacheMasiro from '../lib/masiro/load';
 import { makeOPDSOther } from '../lib/opds/other';
 
 function opdsHandler()
@@ -14,6 +15,7 @@ function opdsHandler()
 	{
 		updateCacheAll();
 		updateCache();
+		loadCacheMasiro();
 
 		next();
 	});

@@ -15,9 +15,9 @@ export function updateCacheAll(force?: boolean)
 	return Bluebird.all(Object.keys(id_titles_map)
 		.reduce((a, b ) => {
 
-			a.push(updateCache(b as any, id_titles_map, force));
-			a.push(updateCache(b as any, id_update_map, force));
-			a.push(updateCache(b as any, id_chapters_map, force));
+			a.push(updateCache(b as any, id_titles_map as any, force));
+			a.push(updateCache(b as any, id_update_map as any, force));
+			a.push(updateCache(b as any, id_chapters_map as any, force));
 
 			return a
 		}, [] as Promise<unknown>[]))

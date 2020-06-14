@@ -59,7 +59,12 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 
 					let isGun = false;
 
-					if (query.debug || query.force)
+					// @ts-ignore
+					if (siteID === 'masiro')
+					{
+						isGun = true;
+					}
+					else if (query.debug || query.force)
 					{
 
 					}

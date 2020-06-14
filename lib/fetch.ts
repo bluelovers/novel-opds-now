@@ -19,6 +19,7 @@ export function fetch(...argv): Bluebird<Response>
 
 	if (proxy)
 	{
+		// @ts-ignore
 		options.agent = HttpProxyAgent(proxy);
 	}
 
