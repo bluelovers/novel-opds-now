@@ -10,6 +10,7 @@ import updateCacheAll from '../lib/novel-cache/update';
 import console from 'debug-color2/logger';
 import updateCache from '../lib/buildCache';
 import updateCache2 from '../lib/demonovel/update';
+import { updateAllCacheTask } from '../lib/task/update-cache';
 
 let argv = yargs
 	.option('force', {
@@ -19,14 +20,4 @@ let argv = yargs
 	.argv
 ;
 
-updateCache(argv.force)
-	.catch(e => console.error(e))
-;
-
-updateCacheAll(argv.force)
-	.catch(e => console.error(e))
-;
-
-updateCache2(argv.force)
-	.catch(e => console.error(e))
-;
+updateAllCacheTask(argv.force);

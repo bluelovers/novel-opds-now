@@ -4,7 +4,7 @@ import console from 'debug-color2/logger';
 import fetch from '../fetch';
 import { buildCache } from './build';
 
-export function loadCache()
+export function loadCache(force?: boolean)
 {
 	return getLocalOrRebuild(getCacheFilename('masiro/builded.json'), {
 

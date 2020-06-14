@@ -1,1 +1,1 @@
-export declare function updateAllCacheTask(): Promise<any>;
+export declare function updateAllCacheTask(force?: boolean): Promise<any>;
