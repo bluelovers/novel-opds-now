@@ -8,10 +8,12 @@ import { prefixRoot as prefixDemo, title as titleDemo } from '../demonovel/opds'
 import { addOpenSearch, filterOPDSBook } from './search';
 import { cn2tw_min } from '../cn2tw_min';
 
+// @ts-ignore
 export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
 {
 	feed.books = feed.books || [];
 
+	// @ts-ignore
 	feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 		title: `所有書庫${msg}`,
 		links: [
@@ -58,6 +60,7 @@ export function makeOPDSSite(siteID: ISiteIDs)
 						});
 					}
 
+					// @ts-ignore
 					feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 						title,
 						// @FIXME: 靜讀天下不知道為什麼只能用作者顯示
@@ -107,6 +110,7 @@ export function makeOPDSPortal()
 
 			if (0)
 			{
+				// @ts-ignore
 				feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 					title: `書庫：${titleDemo}`,
 					links: [
@@ -120,6 +124,7 @@ export function makeOPDSPortal()
 			}
 			else
 			{
+				// @ts-ignore
 				feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 					title: `書庫：${titleDemo}`,
 					links: [
@@ -136,6 +141,7 @@ export function makeOPDSPortal()
 				.forEach((siteID) =>
 				{
 
+					// @ts-ignore
 					feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 						title: `書庫：${siteID}`,
 						links: [
@@ -150,6 +156,7 @@ export function makeOPDSPortal()
 				})
 			;
 
+			// @ts-ignore
 			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
 				title: `書庫：other`,
 				links: [
