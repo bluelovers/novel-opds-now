@@ -6,29 +6,36 @@ import { useModules } from 'novel-segment/lib/segment/methods/useModules2';
 import getDefaultModList from 'novel-segment/lib/mod';
 import __root from './__root';
 import createSegment from './segment/createSegment';
+import { file } from './segment/const';
+import { readJSON } from 'fs-extra';
 
 let CACHED_SEGMENT: Segment;
 
-async function getSegment()
+export async function getSegment()
 {
 	if (CACHED_SEGMENT)
 	{
 		return CACHED_SEGMENT;
 	}
 
-	const DICT = await import(`${__root}/.cache/cache.json`).then(v => v.default || v) as any;
+	const DICT = await readJSON(file)
+		.catch(e => void 0)
+	;
 
 	CACHED_SEGMENT = createSegment();
 
-	useModules(CACHED_SEGMENT as any, getDefaultModList(CACHED_SEGMENT.options.all_mod));
+	if (Object.keys(DICT).length > 2)
+	{
+		useModules(CACHED_SEGMENT as any, getDefaultModList(CACHED_SEGMENT.options.all_mod));
 
-	CACHED_SEGMENT.DICT = DICT;
-	CACHED_SEGMENT.inited = true;
+		CACHED_SEGMENT.DICT = DICT;
+		CACHED_SEGMENT.inited = true;
+	}
 
 	return CACHED_SEGMENT
 }
 
-function doSegment(text: string, options?: IOptionsDoSegment)
+export function doSegment(text: string, options?: IOptionsDoSegment)
 {
 	return getSegment().then(v => v.doSegment(text, {
 		...options,

@@ -110,3 +110,4 @@ radata-*.tmp
 /.cache/cached/masiro/masiro.json
 /.cache/cached/masiro/masiro.json.stat
 
+/.cache/cache.json.stat
