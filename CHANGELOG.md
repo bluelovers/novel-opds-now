@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.7](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.6...novel-opds-now@2.2.7) (2020-07-03)
+
+
+### ✨　Features
+
+* 支援從網路更新 Segment 字典 ([15bbd6a](https://github.com/bluelovers/novel-opds-now/commit/15bbd6a8bcbb5ebc09de7263c7fa5d251f9d1f6d))
+
+
+### ♻️　Chores
+
+* update cache ([c25bb77](https://github.com/bluelovers/novel-opds-now/commit/c25bb777d7314c992f1e202b6c5fc91d2958931f))
+* update deps ([21bb4d1](https://github.com/bluelovers/novel-opds-now/commit/21bb4d1dd0126aef6a56a3bc971ed7b259f99cfa))
+
+
+
+
+
 ## [2.2.6](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.1.37...novel-opds-now@2.2.6) (2020-06-21)
 
 

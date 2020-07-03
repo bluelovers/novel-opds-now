@@ -84,5 +84,5 @@ package-lock.json
 !/.cache
 radata-*.tmp
 /docs
-!yarn.lock
+yarn.lock
 npm-shrinkwrap.json
