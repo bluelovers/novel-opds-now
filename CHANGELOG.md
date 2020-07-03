@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.10](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.9...novel-opds-now@2.2.10) (2020-07-03)
+
+
+### 🐛　Bug Fixes
+
+* 修正新版 ipfs 0.47 不支援 websocket-star 的問題 ([3cb8dfc](https://github.com/bluelovers/novel-opds-now/commit/3cb8dfc56bf92a419327d8a54dd0d71198099f6d))
+
+
+
+
+
 ## [2.2.9](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.8...novel-opds-now@2.2.9) (2020-07-03)
 
 **Note:** Version bump only for package novel-opds-now
