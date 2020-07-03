@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.11](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.10...novel-opds-now@2.2.11) (2020-07-03)
+
+**Note:** Version bump only for package novel-opds-now
+
+
+
+
+
 ## [2.2.10](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.9...novel-opds-now@2.2.10) (2020-07-03)
 
 

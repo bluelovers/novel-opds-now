@@ -122,6 +122,7 @@ export async function connectPeers(ipfs: IIPFSPromiseApi, peerID: string)
 		{
 			return (me.id && me.id !== peerID) && Bluebird
 				.any([
+					/*
 					ipfs.swarm.connect(`/dns4/ws-star-signal-1.servep2p.com/tcp/443/wss/p2p-websocket-star/ipfs/${peerID}`)
 						.catch(e => {
 
@@ -132,6 +133,7 @@ export async function connectPeers(ipfs: IIPFSPromiseApi, peerID: string)
 
 							console.warn(`[connectPeers]`, e)
 						}),
+					 */
 					ipfs.swarm.connect(`/p2p-circuit/ipfs/${peerID}`)
 						.catch(e => console.warn(`[connectPeers]`, e)),
 				])
