@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.12](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.11...novel-opds-now@2.2.12) (2020-08-26)
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([779a124](https://github.com/bluelovers/novel-opds-now/commit/779a124ef90a57806f41d9f92bb24e3548059f31))
+* update typescript ([99afd16](https://github.com/bluelovers/novel-opds-now/commit/99afd16e7d42c9c54aab0c6a1e5f3420cedb7566))
+
+
+### ♻️　Chores
+
+* update cache ([2b1cf81](https://github.com/bluelovers/novel-opds-now/commit/2b1cf81b8109923d03fc0f104c0a72bf85dab762))
+* **deps:** update deps ([acc4c3d](https://github.com/bluelovers/novel-opds-now/commit/acc4c3d5f2a2cdda8e8ae6acbd59e4e698a3ff21))
+
+
+
+
+
 ## [2.2.11](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.10...novel-opds-now@2.2.11) (2020-07-03)
 
 **Note:** Version bump only for package novel-opds-now

@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "2.2.11",
+  "version": "2.2.12",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -56,11 +56,11 @@
     "postpublish:git:commit": "git commit -m \"chore(release): publish\" . & echo postpublish:git:commit",
     "postpublish:git:push": "git push --follow-tags",
     "postpublish:git:tag": "ynpx --quiet @yarn-tool/tag",
+    "ipfs": "ipfs -h",
     "ncu": "npx yarn-tool ncu -u",
     "sort-package-json": "npx yarn-tool sort",
     "tsc:default": "tsc -p tsconfig.json",
     "tsc:esm": "tsc -p tsconfig.esm.json",
-    "ipfs": "ipfs -h",
     "update-deps": "npx yarn-tool install & echo update-deps"
   },
   "dependencies": {
