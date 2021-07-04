@@ -4,25 +4,13 @@ import { IUseIPFSApi } from '../types';
 export declare function useIPFS(options?: {
     disposable?: boolean;
 }): Bluebird<{
-    ipfsd: {
-        api: IUseIPFSApi;
-        init(options?: any): Promise<any>;
-        cleanup(): Promise<any>;
-        start(): Promise<any>;
-        stop(): Promise<any>;
-        version(): Promise<string>;
-        pid(): Promise<string>;
-    };
+    ipfsd: any;
     readonly ipfs: IUseIPFSApi;
     address(): Promise<IIPFSAddresses>;
-    stop(): Promise<{
-        api: IUseIPFSApi;
-        init(options?: any): Promise<any>;
-        cleanup(): Promise<any>;
-        start(): Promise<any>;
-        stop(): Promise<any>;
-        version(): Promise<string>;
-        pid(): Promise<string>;
-    }>;
+    stop(): Promise<void>;
+}>;
+export declare function searchIpfs(): Promise<{
+    ipfs: IUseIPFSApi;
+    stop: (options?: import("ipfs-core-types").AbortOptions) => Promise<void>;
 }>;
 export declare function _info(data?: any): void;

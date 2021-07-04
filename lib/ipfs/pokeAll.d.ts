@@ -10,45 +10,45 @@ export declare function pokeAll(cid: string, ipfs: any, options?: {
 }): Bluebird<import("ts-type").ITSPromiseSettledResult<{
     href: string;
     error?: Error;
-    headers?: Headers;
     status?: number;
+    headers?: Headers;
     statusText?: string;
     value: string;
 } | {
     href: string;
     error?: Error;
-    headers?: Headers;
     status?: number;
+    headers?: Headers;
     statusText?: string;
     value: false;
 } | {
     href: string;
-    headers?: Headers;
-    status?: number;
-    statusText?: string;
     value?: never;
+    status?: number;
+    headers?: Headers;
+    statusText?: string;
     error: Error;
 }, any>[]>;
 export declare function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>): import("ts-type").ITSPromiseSettledResult<{
     href: string;
     error?: Error;
-    headers?: Headers;
     status?: number;
+    headers?: Headers;
     statusText?: string;
     value: string;
 } | {
     href: string;
     error?: Error;
-    headers?: Headers;
     status?: number;
+    headers?: Headers;
     statusText?: string;
     value: false;
 } | {
     href: string;
-    headers?: Headers;
-    status?: number;
-    statusText?: string;
     value?: never;
+    status?: number;
+    headers?: Headers;
+    statusText?: string;
     error: Error;
 }, any>[];
 export default pokeAll;

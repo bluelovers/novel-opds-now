@@ -12,6 +12,9 @@ import computerInfo from 'computer-info';
 import terminalLink from 'terminal-link';
 import { connectPeersAll, pubsubPublishHello, pubsubSubscribe, pubsubUnSubscribe } from './pubsub';
 import { IUseIPFSApi } from '../types';
+import { findIpfsClient } from '@bluelovers/ipfs-http-client';
+import { getDefaultServerList } from '@bluelovers/ipfs-http-client/util';
+import ipfsEnv from 'ipfs-env';
 
 let _cache: ITSUnpackedPromiseLike<ReturnType<typeof _useIPFS>>;
 let _waiting: ReturnType<typeof _useIPFS>;
@@ -25,29 +28,31 @@ export function useIPFS(options?: {
 		if (typeof _waiting !== 'undefined')
 		{
 			_waiting = void 0;
-
-			if (_cache)
-			{
-				return _cache
-			}
 		}
 
 		if (_cache)
 		{
-			if (await checkIPFS(_cache.ipfs as any))
+			if (_cache.ipfsd?.started !== false && await checkIPFS(_cache.ipfs as any).catch(e => null))
 			{
 				return _cache
 			}
 
 			await _cache.stop().catch(e => console.error(e))
+
+			_cache = void 0;
 		}
 
 		_waiting = _useIPFS(options);
 
 		return _cache = await _waiting
 			.tap(_handle)
-			.tap(() => {
-				console.info(`[IPFS]`, `IPFS 已啟動`);
+			.tap(async ({
+				ipfs
+			}) =>
+			{
+				let info = await ipfsAddresses(ipfs as any).catch(e => null)
+
+				console.info(`[IPFS]`, `IPFS 已啟動`, info);
 			})
 	})
 }
@@ -76,7 +81,8 @@ function _handle({
 			pubsubSubscribe(ipfs as any)
 				.then(e => connectPeersAll(ipfs as any))
 				.then(() => pubsubPublishHello(ipfs as any))
-				.catch(e => {
+				.catch(e =>
+				{
 					console.error(`[IPFS]`, `連接 pubsub 時發生錯誤`)
 					console.error(e)
 				})
@@ -85,68 +91,112 @@ function _handle({
 			console.success(`IPFS Web UI available at`, terminalLink(`webui`, `https://dev.webui.ipfs.io/`))
 
 		})
-		.catch(e => {
+		.catch(e =>
+		{
 			console.error(`[IPFS]`, `啟動 IPFS 時發生錯誤，可能無法正常連接至 IPFS 網路`)
-			console.error(e)
+			console.dir(e)
 		})
-	;
+		;
+}
+
+export async function searchIpfs()
+{
+	console.info(`[IPFS]`, `搜尋可用的 IPFS 伺服器...`, `可使用 IPFS_ADDRESSES_API 來指定特定伺服器`);
+
+	let ipfsServerList = getDefaultServerList();
+
+	let ipfs: IUseIPFSApi = await findIpfsClient(ipfsServerList as any);
+
+	if (!await checkIPFS(ipfs).catch(e => null))
+	{
+		return Promise.reject(new Error)
+	}
+
+	return {
+		ipfs,
+		stop: ipfs.stop,
+	}
 }
 
 function _useIPFS(options?: {
 	disposable?: boolean,
 })
 {
-	return Bluebird.resolve().then(async () =>
-	{
-		console.info(`[IPFS]`, `嘗試啟動或連接至 IPFS`);
+	console.info(`[IPFS]`, `嘗試啟動或連接至 IPFS ...`);
 
-		const ipfsd = await createController({
-			ipfsHttpModule: await import('ipfs-http-client'),
-			ipfsBin: await import('go-ipfs').then(m => m.path()),
-			ipfsOptions: {
-				EXPERIMENTAL: {
-					ipnsPubsub: true,
-					repoAutoMigrate: true,
+	return Bluebird
+		.resolve(searchIpfs())
+		//.tapCatch(e => console.error(e))
+		.catch(async () =>
+		{
+			console.info(`[IPFS]`, `嘗試啟動 IPFS 伺服器...`, `可使用 IPFS_GO_EXEC 指定執行檔路徑`);
+
+			const ipfsd = await createController({
+				ipfsHttpModule: await import('ipfs-http-client'),
+				ipfsBin: ipfsEnv().IPFS_GO_EXEC || await import('go-ipfs').then(m => m.path()),
+				ipfsOptions: {
+					EXPERIMENTAL: {
+						ipnsPubsub: true,
+						repoAutoMigrate: true,
+					},
 				},
-			},
-			...options,
-		}) as {
-			api: IUseIPFSApi,
-			init(options?: any): Promise<typeof ipfsd>
-			cleanup(): Promise<typeof ipfsd>
-			start(): Promise<typeof ipfsd>
-			stop(): Promise<typeof ipfsd>
-			version(): Promise<string>
-			pid(): Promise<string>
-		}
+				...options,
+			}) as {
 
-		const ipfs = ipfsd.api;
+				started: boolean,
 
-		const ret = {
+				api: IUseIPFSApi,
+				init(options?: any): Promise<typeof ipfsd>
+				cleanup(): Promise<typeof ipfsd>
+				start(): Promise<typeof ipfsd>
+				stop(): Promise<typeof ipfsd>
+				version(): Promise<string>
+				pid(): Promise<string>
+			}
+
+			const ipfs = ipfsd.api;
+
+			ipfsd.stop = ipfsd.stop.bind(ipfsd);
+
+			return {
+				ipfsd,
+				ipfs,
+				stop: ipfsd.stop,
+			}
+		})
+		.then(({
+			// @ts-ignore
 			ipfsd,
-			get ipfs()
-			{
-				return ipfs
-			},
-			async address()
-			{
-				let addr = await ipfsAddresses(ipfs as any);
-				return cloneDeep(addr) as IIPFSAddresses
-			},
-			async stop()
-			{
-				console.info(`[IPFS]`, `ipfsd:stop`)
+			ipfs,
+			stop,
+		}) =>
+		{
 
-				await pubsubUnSubscribe(ipfs as any);
+			const ret = {
+				ipfsd,
+				get ipfs()
+				{
+					return ipfs
+				},
+				async address()
+				{
+					let addr = await ipfsAddresses(ipfs as any);
+					return cloneDeep(addr) as IIPFSAddresses
+				},
+				async stop()
+				{
+					console.info(`[IPFS]`, `ipfs:stop`)
+					await pubsubUnSubscribe(ipfs as any);
+					return stop({
+						timeout: 2000,
+					}) as any as void
+				},
+			};
 
-				return ipfsd.stop()
-			},
-		};
+			processExit(ret.stop);
 
-		processExit(ret.stop);
-
-		return ret
-	})
+			return ret
+		})
 }
 
 export function _info(data?)
