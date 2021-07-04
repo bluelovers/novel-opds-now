@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.0...novel-opds-now@3.0.1) (2021-07-04)
+
+
+### 🐛　Bug Fixes
+
+* 修正相容性，恢復可以偵測已經存在的 IPFS 伺服器 ([c492ffb](https://github.com/bluelovers/novel-opds-now/commit/c492ffb9f97dbe53f72dad2a5f5fd60a17400ed4))
+
+
+
+
+
 # [3.0.0](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.12...novel-opds-now@3.0.0) (2021-07-04)
 
 
