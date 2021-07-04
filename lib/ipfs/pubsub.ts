@@ -8,17 +8,23 @@ import { unsubscribeAll } from 'ipfs-util-lib/lib/ipfs/pubsub/unsubscribe';
 import { IIPFSPromiseApi } from "ipfs-types/lib/ipfs/index";
 import { useIPFS } from './use';
 import { cid as isCID } from 'is-ipfs';
+import { EndpointConfig } from 'ipfs-http-client';
+import { IUseIPFSApi } from '../types';
+import { Message } from 'ipfs-core-types/src/pubsub';
+import { filterPokeAllSettledResult, pokeAll } from './pokeAll';
 
 const EPUB_TOPIC = 'novel-opds-now';
 const wssAddr = '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star';
 
-export async function pubsubHandler(msg: IIPFSPubsubMsg)
+export async function pubsubHandler(msg: Message)
 {
 	const { ipfs } = await useIPFS()
 		.catch(e => null as {
-			ipfs: IIPFSPromiseApi
+			ipfs: IUseIPFSApi
 		})
 	;
+
+	//console.debug(`[IPFS]`, `pubsubHandler:raw`, msg)
 
 	if (!ipfs) return;
 
@@ -27,9 +33,9 @@ export async function pubsubHandler(msg: IIPFSPubsubMsg)
 
 	try
 	{
-		const json = JSON.parse(msg.data.toString());
+		const json = JSON.parse(Buffer.from(msg.data).toString());
 
-		//console.debug(`pubsubHandler:json`, json)
+		//console.debug(`[IPFS]`, `pubsubHandler:json`, json)
 
 		if (json)
 		{
@@ -37,6 +43,8 @@ export async function pubsubHandler(msg: IIPFSPubsubMsg)
 			{
 				if (json.peerID && json.type)
 				{
+					console.debug(`[IPFS]`, `peer:online`, me.id === msg.from ? 'You!' : json.peerID);
+
 					await connectPeers(ipfs as any, json.peerID)
 						.catch(e => null)
 				}
@@ -44,25 +52,34 @@ export async function pubsubHandler(msg: IIPFSPubsubMsg)
 
 			if (json.cid && me?.id !== msg.from)
 			{
-				const res = (isCID(json.cid) ? '/ipfs/' : '') + json.cid;
+				console.debug(`[IPFS]`, `pubsubHandler`, json);
 
-				//console.debug(`pubsubHandler`, res)
+				pokeAll(json.cid, ipfs)
+					.tap(settledResult =>
+					{
+						if (settledResult?.length)
+						{
+							let list = filterPokeAllSettledResult(settledResult);
+							console.info(`[IPFS]`, `pubsubHandler`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, json.cid, json.path);
+						}
+					})
+				;
+
+				//console.debug(`[IPFS]`, `pubsubHandler`, msg, json)
 			}
 		}
 	}
 	catch (e)
 	{
-		//console.debug(`pubsubHandler:error`, e)
+		console.debug(`[IPFS]`, `pubsubHandler:error`, Buffer.from(msg.data).toString(), e)
 	}
-
-	//console.debug(`pubsubHandler:raw`, msg)
 
 	return connectPeers(ipfs as any, msg.from)
 		.catch(e => null)
-	;
+		;
 }
 
-export async function pubsubSubscribe(ipfs: IIPFSPubsubApi & IIPFSSwarmApi & IIPFSConfigApi)
+export async function pubsubSubscribe(ipfs: IUseIPFSApi)
 {
 	return ipfs
 		.pubsub
@@ -72,7 +89,7 @@ export async function pubsubSubscribe(ipfs: IIPFSPubsubApi & IIPFSSwarmApi & IIP
 		;
 }
 
-export async function pubsubUnSubscribe(ipfs: IIPFSPubsubApi)
+export async function pubsubUnSubscribe(ipfs: IUseIPFSApi)
 {
 	return ipfs.pubsub.unsubscribe(EPUB_TOPIC, pubsubHandler)
 		.then(r => console.debug(`[IPFS]`, `unsubscribed from ${EPUB_TOPIC}`))
@@ -80,7 +97,7 @@ export async function pubsubUnSubscribe(ipfs: IIPFSPubsubApi)
 		;
 }
 
-export async function pubsubPublishHello(ipfs: IIPFSPromiseApi)
+export async function pubsubPublishHello(ipfs: IUseIPFSApi)
 {
 	return ipfs.id()
 		.then(data =>
@@ -89,21 +106,27 @@ export async function pubsubPublishHello(ipfs: IIPFSPromiseApi)
 				peerID: data.id,
 				type: 1,
 			})
-			;
+				;
 		})
 		;
 }
 
-export async function pubsubPublish<T>(ipfs: IIPFSPromiseApi, data: T)
+export async function pubsubPublish<T>(ipfs: IUseIPFSApi, data: T)
 {
+	// @ts-ignore
+	if (data && !(data.peerID && data.type === 1))
+	{
+		console.debug(`[IPFS]`, `[pubsubPublish]`, data)
+	}
+
 	return ipfs
 		.pubsub
 		.publish(EPUB_TOPIC, Buffer.from(JSON.stringify(data)))
 		.catch(e => console.error(`[IPFS]`, `[pubsubPublish]`, e))
-	;
+		;
 }
 
-export async function getPeers(ipfs: IIPFSPubsubApi): Promise<string[]>
+export async function getPeers(ipfs: IUseIPFSApi): Promise<string[]>
 {
 	return ipfs.pubsub.peers(EPUB_TOPIC)
 		.catch(e =>
@@ -113,7 +136,7 @@ export async function getPeers(ipfs: IIPFSPubsubApi): Promise<string[]>
 		})
 }
 
-export async function connectPeers(ipfs: IIPFSPromiseApi, peerID: string)
+export async function connectPeers(ipfs: IUseIPFSApi, peerID: string)
 {
 	return ipfs.id()
 		.then(me =>
@@ -140,10 +163,10 @@ export async function connectPeers(ipfs: IIPFSPromiseApi, peerID: string)
 					console.error(`[IPFS]`, `[connectPeers]`, e)
 				})
 		})
-	;
+		;
 }
 
-export function connectPeersAll(ipfs: IIPFSPromiseApi)
+export function connectPeersAll(ipfs: IUseIPFSApi)
 {
 	return Bluebird
 		.each(getPeers(ipfs), async (peerID) =>

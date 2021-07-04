@@ -11,6 +11,7 @@ import packageJson from '../../package.json';
 import computerInfo from 'computer-info';
 import terminalLink from 'terminal-link';
 import { connectPeersAll, pubsubPublishHello, pubsubSubscribe, pubsubUnSubscribe } from './pubsub';
+import { IUseIPFSApi } from '../types';
 
 let _cache: ITSUnpackedPromiseLike<ReturnType<typeof _useIPFS>>;
 let _waiting: ReturnType<typeof _useIPFS>;
@@ -110,9 +111,7 @@ function _useIPFS(options?: {
 			},
 			...options,
 		}) as {
-			api: import("ipfs-core-types").IPFS & {
-				getEndpointConfig(): EndpointConfig;
-			},
+			api: IUseIPFSApi,
 			init(options?: any): Promise<typeof ipfsd>
 			cleanup(): Promise<typeof ipfsd>
 			start(): Promise<typeof ipfsd>

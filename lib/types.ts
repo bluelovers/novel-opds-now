@@ -2,6 +2,8 @@
  * Created by user on 2020/2/1.
  */
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
+import { EndpointConfig } from 'ipfs-http-client';
+import { IPFS } from 'ipfs-core-types';
 
 export type ICacheMap = {
 	[siteID in (ICacheMapRow["IDKEY"] & ICacheMapRow["siteID"])]: {
@@ -68,4 +70,8 @@ export interface IGunEpubData extends Exclude<IGunEpubNode, {
 }>
 {
 	isGun: boolean,
+}
+
+export type IUseIPFSApi = IPFS & {
+	getEndpointConfig(): EndpointConfig;
 }

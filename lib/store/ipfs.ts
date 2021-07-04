@@ -15,7 +15,7 @@ import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnE
 import { processExit } from '../processExit';
 import { inspect } from 'util';
 import { pubsubPublish } from '../ipfs/pubsub';
-import { pokeAll } from '../ipfs/pokeAll';
+import { filterPokeAllSettledResult, pokeAll } from '../ipfs/pokeAll';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -170,7 +170,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 							console.debug(`[IPFS]`, `publishToIPFSAll`, `[${status}]`, cid = resultCID);
 						}
 
-						pubsubPublish(ipfs as any, {
+						pubsubPublish(ipfs, {
 							cid: resultCID,
 							path: result.path,
 							size: result.size,
@@ -206,11 +206,13 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 		pokeAll(cid, ipfs, data)
 			.tap(settledResult => {
+				if (settledResult?.length)
+				{
+					let list = filterPokeAllSettledResult(settledResult);
 
-				let list = settledResult.filter(v => !v.value.error && v.value.value !== false);
-
-				console.debug(`[IPFS]`, `pokeAll:done`, list)
-				console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`)
+					console.debug(`[IPFS]`, `pokeAll:done`, list)
+					console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, cid, data.filename)
+				}
 			})
 		;
 

@@ -1,12 +1,11 @@
 import { IIPFSAddresses } from 'ipfs-types';
 import Bluebird from 'bluebird';
+import { IUseIPFSApi } from '../types';
 export declare function useIPFS(options?: {
     disposable?: boolean;
 }): Bluebird<{
     ipfsd: {
-        api: import("ipfs-core-types").IPFS & {
-            getEndpointConfig(): import("ipfs-http-client/dist/src/types").EndpointConfig;
-        };
+        api: IUseIPFSApi;
         init(options?: any): Promise<any>;
         cleanup(): Promise<any>;
         start(): Promise<any>;
@@ -14,14 +13,10 @@ export declare function useIPFS(options?: {
         version(): Promise<string>;
         pid(): Promise<string>;
     };
-    readonly ipfs: import("ipfs-core-types").IPFS & {
-        getEndpointConfig(): import("ipfs-http-client/dist/src/types").EndpointConfig;
-    };
+    readonly ipfs: IUseIPFSApi;
     address(): Promise<IIPFSAddresses>;
     stop(): Promise<{
-        api: import("ipfs-core-types").IPFS & {
-            getEndpointConfig(): import("ipfs-http-client/dist/src/types").EndpointConfig;
-        };
+        api: IUseIPFSApi;
         init(options?: any): Promise<any>;
         cleanup(): Promise<any>;
         start(): Promise<any>;

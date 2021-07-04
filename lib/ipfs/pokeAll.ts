@@ -8,6 +8,7 @@ import Bluebird from 'bluebird';
 import { allSettled } from 'bluebird-allsettled';
 import ipfsSubdomain from '@lazy-ipfs/ipfs-subdomain';
 import console from 'debug-color2/logger';
+import { ITSUnpackedPromiseLike } from 'ts-type';
 
 export function notAllowedAddress(url: URL | string)
 {
@@ -50,11 +51,23 @@ export async function getIpfsGatewayList(ipfs)
 	}
 }
 
+/**
+ * make sure only poke once
+ */
+let cachePoke = new Set<string>();
+
 export function pokeAll(cid: string, ipfs, options?: {
 	filename?: string
 })
 {
 	return Bluebird.resolve(options).then(async (options) => {
+
+		if (cachePoke.has(cid))
+		{
+			return null
+		}
+
+		cachePoke.add(cid);
 
 		const { filename } = options ?? {};
 
@@ -88,7 +101,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 
 		list = array_unique_overwrite(list).filter(href => !notAllowedAddress(href));
 
-		console.debug(`[IPFS]`, `pokeAll:start`, list.length);
+		console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename);
 
 		return allSettled(list
 			.map((href) => {
@@ -110,7 +123,12 @@ export function pokeAll(cid: string, ipfs, options?: {
 					}
 				})
 			}))
-	})
+	}).finally(() => cachePoke.delete(cid))
+}
+
+export function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>)
+{
+	return settledResult.filter(v => !v.value.error && v.value.value !== false)
 }
 
 export default pokeAll
