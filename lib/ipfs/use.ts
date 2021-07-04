@@ -40,6 +40,8 @@ export function useIPFS(options?: {
 			await _cache.stop().catch(e => console.error(e))
 
 			_cache = void 0;
+
+			console.warn(`[IPFS]`, `IPFS 伺服器已斷線`);
 		}
 
 		_waiting = _useIPFS(options);
