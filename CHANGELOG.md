@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [3.0.0](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.12...novel-opds-now@3.0.0) (2021-07-04)
+
+
+### 🐛　Bug Fixes
+
+* **cli:** 修正 yargs v17 的 async type 問題 ([882d418](https://github.com/bluelovers/novel-opds-now/commit/882d41863c0785ee15ce29de681217f9c2227ce0))
+
+
+### ✨　Features
+
+* make sure only poke once and update pubsub ([cccc5a4](https://github.com/bluelovers/novel-opds-now/commit/cccc5a40f4bd87922316cade2d0d40789433391d))
+
+
+### 📦　Code Refactoring
+
+* 改用 `go-ipfs` 並且追加 poke 請求與增加更多提示訊息 ([7fc84ae](https://github.com/bluelovers/novel-opds-now/commit/7fc84ae2a8cef1ba134be6bd6615b008705b9bcf))
+
+
+### 🛠　Build System
+
+* update file ([cdf30cc](https://github.com/bluelovers/novel-opds-now/commit/cdf30cc2c5f70e25c55ba5cba99077998f7bf396))
+* **cache:** update cache ([1272724](https://github.com/bluelovers/novel-opds-now/commit/12727241f4726bfdae91f2fb9756644772f30f2a))
+
+
+### BREAKING CHANGE
+
+* 改用 `go-ipfs`
+
+
+
+
+
 ## [2.2.12](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@2.2.11...novel-opds-now@2.2.12) (2020-08-26)
 
 
