@@ -1,5 +1,5 @@
 import searchIPAddress from 'address2';
-import { generate as qrcode } from 'qrcode-terminal';
+import qrcode from 'qrcode-terminal';
 import terminalLink from 'terminal-link';
 import _console from 'debug-color2/logger';
 import console from 'debug-color2';
@@ -112,7 +112,7 @@ export function showIP(port: string | number)
 		});
 	}
 
-	qrcode(href, { small: true });
+	qrcode.generate(href, { small: true });
 }
 
 export default showIP

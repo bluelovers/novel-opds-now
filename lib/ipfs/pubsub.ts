@@ -6,7 +6,7 @@ import console from 'debug-color2/logger';
 import multiaddr from 'multiaddr';
 import { unsubscribeAll } from 'ipfs-util-lib/lib/ipfs/pubsub/unsubscribe';
 import { IIPFSPromiseApi } from "ipfs-types/lib/ipfs/index";
-import useIPFS from 'use-ipfs';
+import { useIPFS } from './use';
 import { cid as isCID } from 'is-ipfs';
 
 const EPUB_TOPIC = 'novel-opds-now';
@@ -22,6 +22,7 @@ export async function pubsubHandler(msg: IIPFSPubsubMsg)
 
 	if (!ipfs) return;
 
+	// @ts-ignore
 	const me = await ipfs.id().catch(e => null);
 
 	try
@@ -36,17 +37,14 @@ export async function pubsubHandler(msg: IIPFSPubsubMsg)
 			{
 				if (json.peerID && json.type)
 				{
-					await connectPeers(ipfs, json.peerID)
+					await connectPeers(ipfs as any, json.peerID)
 						.catch(e => null)
 				}
 			}
 
 			if (json.cid && me?.id !== msg.from)
 			{
-				const res = await ipfs
-					.resolve((isCID(json.cid) ? '/ipfs/' : '') + json.cid)
-					.catch(e => null)
-				;
+				const res = (isCID(json.cid) ? '/ipfs/' : '') + json.cid;
 
 				//console.debug(`pubsubHandler`, res)
 			}
@@ -59,7 +57,7 @@ export async function pubsubHandler(msg: IIPFSPubsubMsg)
 
 	//console.debug(`pubsubHandler:raw`, msg)
 
-	return connectPeers(ipfs, msg.from)
+	return connectPeers(ipfs as any, msg.from)
 		.catch(e => null)
 	;
 }
@@ -69,16 +67,16 @@ export async function pubsubSubscribe(ipfs: IIPFSPubsubApi & IIPFSSwarmApi & IIP
 	return ipfs
 		.pubsub
 		.subscribe(EPUB_TOPIC, pubsubHandler)
-		.then(r => console.debug(`subscribed to ${EPUB_TOPIC}`))
-		.catch(e => console.warn(`[pubsub.subscribe]`, e))
+		.then(r => console.debug(`[IPFS]`, `subscribed to ${EPUB_TOPIC}`))
+		.catch(e => console.warn(`[IPFS]`, `[pubsub.subscribe]`, e))
 		;
 }
 
 export async function pubsubUnSubscribe(ipfs: IIPFSPubsubApi)
 {
 	return ipfs.pubsub.unsubscribe(EPUB_TOPIC, pubsubHandler)
-		.then(r => console.debug(`unsubscribed from ${EPUB_TOPIC}`))
-		.catch(e => console.warn(`[pubsub.unsubscribe]`, e))
+		.then(r => console.debug(`[IPFS]`, `unsubscribed from ${EPUB_TOPIC}`))
+		.catch(e => console.warn(`[IPFS]`, `[pubsub.unsubscribe]`, e))
 		;
 }
 
@@ -101,7 +99,7 @@ export async function pubsubPublish<T>(ipfs: IIPFSPromiseApi, data: T)
 	return ipfs
 		.pubsub
 		.publish(EPUB_TOPIC, Buffer.from(JSON.stringify(data)))
-		.catch(e => console.error(`[pubsubPublish]`, e))
+		.catch(e => console.error(`[IPFS]`, `[pubsubPublish]`, e))
 	;
 }
 
@@ -110,7 +108,7 @@ export async function getPeers(ipfs: IIPFSPubsubApi): Promise<string[]>
 	return ipfs.pubsub.peers(EPUB_TOPIC)
 		.catch(e =>
 		{
-			console.warn(`[pubsub.peers]`, e)
+			console.warn(`[IPFS]`, `[pubsub.peers]`, e)
 			return [] as string[]
 		})
 }
@@ -135,11 +133,11 @@ export async function connectPeers(ipfs: IIPFSPromiseApi, peerID: string)
 						}),
 					 */
 					ipfs.swarm.connect(`/p2p-circuit/ipfs/${peerID}`)
-						.catch(e => console.warn(`[connectPeers]`, e)),
+						.catch(e => console.warn(`[IPFS]`, `[connectPeers]`, e)),
 				])
 				.catch(e =>
 				{
-					console.error(`[connectPeers]`, e)
+					console.error(`[IPFS]`, `[connectPeers]`, e)
 				})
 		})
 	;

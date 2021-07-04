@@ -3,7 +3,7 @@ import { getEpubFileInfo, putEpubFileInfo } from '../ipfs/index';
 import Bluebird, { TimeoutError } from 'bluebird';
 import checkGunData from '../gun/checkData';
 import fetchIPFS from 'fetch-ipfs';
-import useIPFS from 'use-ipfs';
+import { useIPFS } from '../ipfs/use';
 import { IGunEpubData, IGunEpubNode } from '../types';
 import console from 'debug-color2/logger';
 import { toLink } from 'to-ipfs-url';
@@ -15,6 +15,7 @@ import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnE
 import { processExit } from '../processExit';
 import { inspect } from 'util';
 import { pubsubPublish } from '../ipfs/pubsub';
+import { pokeAll } from '../ipfs/pokeAll';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -45,7 +46,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 				;
 
 				let buf = await raceFetchIPFS(data.href, [
-					ipfs,
+					ipfs as any,
 					...lazyRaceServerList(),
 				], 10 * 1000)
 					.catch(e => null)
@@ -123,7 +124,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 	if (!ipfs)
 	{
-		console.debug(`local IPFS server is fail`);
+		console.debug(`[IPFS]`, `local IPFS server is fail`);
 		//return null;
 	}
 
@@ -131,16 +132,16 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	{
 		let cid: string;
 
-		console.debug(`add to IPFS`, inspect(data));
+		console.debug(`[IPFS]`, `add to IPFS`, inspect(data));
 
 		/**
 		 * 試圖推送至其他 IPFS 伺服器來增加檔案存活率與分流
 		 */
-		await publishToIPFSRace({
+		await publishToIPFSAll({
 			path: data.filename,
 			content,
 		}, [
-			ipfs,
+			ipfs as any,
 			...filterList('API'),
 		], {
 			addOptions: {
@@ -149,9 +150,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			timeout: 30 * 1000,
 		})
 			.tap(settledResult => {
-				(settledResult?.length > 1) && console.debug(`publishToIPFSAll`, settledResult, {
-					depth: 5,
-				})
+				(settledResult?.length > 1) && console.debug(`[IPFS]`, `publishToIPFSAll`, settledResult)
 			})
 			.each((settledResult, index) => {
 
@@ -168,10 +167,10 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 						if (cid !== resultCID)
 						{
 							//console.debug(`[${status}]`, inspect(result));
-							console.debug(`[${status}]`, cid = resultCID);
+							console.debug(`[IPFS]`, `publishToIPFSAll`, `[${status}]`, cid = resultCID);
 						}
 
-						pubsubPublish(ipfs, {
+						pubsubPublish(ipfs as any, {
 							cid: resultCID,
 							path: result.path,
 							size: result.size,
@@ -201,9 +200,19 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 		if (!cid)
 		{
-			console.warn(`publishToIPFSAll fail`, `無法將檔案推送至 IPFS，如果發生多次，請檢查 ~/.ipfs , ~/.jsipfs 資料夾`);
+			console.warn(`[IPFS]`, `publishToIPFSAll fail`, `無法將檔案推送至 IPFS，如果發生多次，請檢查 ~/.ipfs , ~/.jsipfs 資料夾`);
 			return null
 		}
+
+		pokeAll(cid, ipfs, data)
+			.tap(settledResult => {
+
+				let list = settledResult.filter(v => !v.value.error && v.value.value !== false);
+
+				console.debug(`[IPFS]`, `pokeAll:done`, list)
+				console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`)
+			})
+		;
 
 		data.href = toLink(cid, data.filename);
 	}

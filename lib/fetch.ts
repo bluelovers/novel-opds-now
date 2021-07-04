@@ -5,6 +5,7 @@ import AbortController from 'abort-controller';
 import { RequestInit, RequestInfo, Response } from 'node-fetch';
 import Bluebird from 'bluebird';
 import isErrorCode from 'is-error-code';
+import AbortControllerTimer from 'abort-controller-timer';
 
 export function fetch(url: RequestInfo,
 	init?: RequestInit & {
@@ -27,11 +28,7 @@ export function fetch(...argv): Bluebird<Response>
 	{
 		if (options.timeout |= 0)
 		{
-			const controller = new AbortController();
-			const timer = setTimeout(
-				() => controller.abort(),
-				options.timeout,
-			);
+			const controller = new AbortControllerTimer(options.timeout);
 
 			options.signal = controller.signal;
 		}
