@@ -2,6 +2,7 @@
   "extends": "@bluelovers/tsconfig/esm/mapfile.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "removeComments": true
+    "removeComments": true,
+    "importHelpers": true
   }
 }

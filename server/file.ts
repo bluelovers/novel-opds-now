@@ -18,15 +18,22 @@ import { async as crossSpawn } from 'cross-spawn-extra';
 import { getGunEpubFile, getGunEpubFile2, putGunEpubFile } from '../lib/store';
 import contentDisposition from '@lazy-http/content-disposition';
 
+export type IRouter = Router;
+
 function fileHandler()
 {
-	const router = Router();
+	const router: IRouter = Router();
 
 	router.use('/:siteID/:novelID', (req, res) =>
 	{
 		let query = {
 			...req.params,
-			...req.query,
+			...req.query as {
+				filename?: string,
+				id?: string,
+				debug?: boolean,
+				force?: boolean,
+			},
 		};
 
 		delete query.siteID;

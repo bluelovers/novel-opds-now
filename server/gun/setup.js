@@ -1,15 +1,13 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.gun = exports.useGunRoot = exports.useGun = exports.setupGun = void 0;
-const gun_1 = __importDefault(require("gun"));
+const tslib_1 = require("tslib");
+const gun_1 = (0, tslib_1.__importDefault)(require("gun"));
 require("gun-tag");
 const path_1 = require("path");
 const const_1 = require("../../lib/const");
 const fs_extra_1 = require("fs-extra");
-const logger_1 = __importDefault(require("debug-color2/logger"));
+const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 let gun;
 exports.gun = gun;
 gun_1.default.log = Object.assign(() => { }, gun_1.default.log, {
@@ -18,8 +16,8 @@ gun_1.default.log = Object.assign(() => { }, gun_1.default.log, {
 gun_1.default.log.off = true;
 console.LOG = false;
 function setupGun(app) {
-    let file = path_1.join(const_1.OUTPUT_DIR, 'novel-opds-now.cache', 'radata');
-    fs_extra_1.ensureDirSync(file);
+    let file = (0, path_1.join)(const_1.OUTPUT_DIR, 'novel-opds-now.cache', 'radata');
+    (0, fs_extra_1.ensureDirSync)(file);
     let _gun = new gun_1.default({
         web: app,
         peers: [

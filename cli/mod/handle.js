@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const yargs_1 = __importDefault(require("yargs"));
-const threads_1 = __importDefault(require("../lib/threads"));
+const tslib_1 = require("tslib");
+const yargs_1 = (0, tslib_1.__importDefault)(require("yargs"));
+const threads_1 = (0, tslib_1.__importDefault)(require("../lib/threads"));
 let argv = yargs_1.default
     .option('IDKEY', {
     string: true,
@@ -20,7 +18,7 @@ let argv = yargs_1.default
     demandOption: true,
 })
     .argv;
-threads_1.default(argv.novel_id, argv.IDKEY, argv.outputDir)
+(0, threads_1.default)(argv.novel_id, argv.IDKEY, argv.outputDir)
     .then(v => console.log(`ok`, v))
     .tapCatch(e => console.error(`fail`, e));
 //# sourceMappingURL=handle.js.map

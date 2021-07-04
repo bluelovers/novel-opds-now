@@ -1,48 +1,46 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 const express_1 = require("express");
 const types_1 = require("../lib/novel-cache/types");
 const index_1 = require("../lib/opds/index");
 const other_1 = require("../lib/opds/other");
 const opds_1 = require("../lib/demonovel/opds");
 const search_1 = require("../lib/opds/search");
-const bluebird_1 = __importDefault(require("bluebird"));
+const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 function searchHandler() {
-    const router = express_1.Router();
+    const router = (0, express_1.Router)();
     router.use('/:siteID/:searchTerms', async (req, res) => {
         let { siteID, searchTerms } = req.params;
         let feed;
         let onlyBook;
         if (!siteID || siteID === 'all') {
-            feed = await opds_1.makeOPDSType('all');
+            feed = await (0, opds_1.makeOPDSType)('all');
             feed.books = await bluebird_1.default
                 .resolve(Object.keys(types_1.builded_map))
                 .reduce(async (books, siteID) => {
-                let feed2 = await index_1.makeOPDSSite(siteID);
+                let feed2 = await (0, index_1.makeOPDSSite)(siteID);
                 books.push(...feed2.books);
                 return books;
             }, feed.books);
-            let feed2 = await other_1.makeOPDSOther();
+            let feed2 = await (0, other_1.makeOPDSOther)();
             feed.books.push(...feed2.books);
             onlyBook = true;
             feed.links = feed.links || [];
             feed.links = feed.links.filter(entry => entry.rel != 'search');
-            feed = await search_1.addOpenSearch(feed, 'all');
+            feed = await (0, search_1.addOpenSearch)(feed, 'all');
         }
         else if (siteID === 'demonovel') {
-            feed = await opds_1.makeOPDSType('all');
+            feed = await (0, opds_1.makeOPDSType)('all');
         }
         else if (siteID === 'other') {
-            feed = await other_1.makeOPDSOther();
+            feed = await (0, other_1.makeOPDSOther)();
         }
         else {
-            feed = await index_1.makeOPDSSite(siteID);
+            feed = await (0, index_1.makeOPDSSite)(siteID);
         }
         if (searchTerms) {
-            feed = await search_1.filterOPDSBook(feed, {
+            feed = await (0, search_1.filterOPDSBook)(feed, {
                 searchTerms,
                 onlyBook,
             });

@@ -1,21 +1,19 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
+const tslib_1 = require("tslib");
+const express_1 = (0, tslib_1.__importDefault)(require("express"));
 const path_1 = require("path");
-const file_1 = __importDefault(require("./file"));
-const __root_1 = __importDefault(require("../lib/__root"));
-const serve_favicon_1 = __importDefault(require("serve-favicon"));
+const file_1 = (0, tslib_1.__importDefault)(require("./file"));
+const __root_1 = (0, tslib_1.__importDefault)(require("../lib/__root"));
+const serve_favicon_1 = (0, tslib_1.__importDefault)(require("serve-favicon"));
 require("./init");
-const opds_1 = __importDefault(require("./opds"));
-const search_1 = __importDefault(require("./search"));
-const app = express_1.default();
-app.use(serve_favicon_1.default(path_1.join(__root_1.default, 'static', 'favicon.png')));
-app.use('/file', file_1.default());
-app.use('/opds', opds_1.default());
-app.use('/search', search_1.default());
+const opds_1 = (0, tslib_1.__importDefault)(require("./opds"));
+const search_1 = (0, tslib_1.__importDefault)(require("./search"));
+const app = (0, express_1.default)();
+app.use((0, serve_favicon_1.default)((0, path_1.join)(__root_1.default, 'static', 'favicon.png')));
+app.use('/file', (0, file_1.default)());
+app.use('/opds', (0, opds_1.default)());
+app.use('/search', (0, search_1.default)());
 app.use('/*', (req, res, next) => {
     console.log(req.method, req.baseUrl, req.url, req.params);
     next();

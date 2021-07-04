@@ -1,24 +1,22 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
 const express_1 = require("express");
-const bluebird_1 = __importDefault(require("bluebird"));
+const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 const const_1 = require("novel-downloader/src/all/const");
 const const_2 = require("../lib/const");
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const stream_1 = require("stream");
 const file_type_1 = require("file-type");
-const __root_1 = __importDefault(require("../lib/__root"));
+const __root_1 = (0, tslib_1.__importDefault)(require("../lib/__root"));
 const util_1 = require("novel-downloader/src/all/util");
-const logger_1 = __importDefault(require("debug-color2/logger"));
+const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 const cross_spawn_extra_1 = require("cross-spawn-extra");
 const store_1 = require("../lib/store");
-const content_disposition_1 = __importDefault(require("@lazy-http/content-disposition"));
+const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
 function fileHandler() {
-    const router = express_1.Router();
+    const router = (0, express_1.Router)();
     router.use('/:siteID/:novelID', (req, res) => {
         let query = {
             ...req.params,
@@ -35,7 +33,7 @@ function fileHandler() {
         if (siteID.toLowerCase() === 'dmzj') {
             siteID = const_1.EnumNovelSiteList.NovelSiteDmzjApi;
         }
-        let IDKEY = util_1.siteID2IDKEY(siteID);
+        let IDKEY = (0, util_1.siteID2IDKEY)(siteID);
         if (siteID === 'masiro') {
             IDKEY = 'masiro';
         }
@@ -52,7 +50,7 @@ function fileHandler() {
         })
             .then(async () => {
             logger_1.default.info(`檢查是否存在緩存...`);
-            return store_1.getGunEpubFile(IDKEY, [
+            return (0, store_1.getGunEpubFile)(IDKEY, [
                 req.params.novelID,
                 novel_id,
             ], {
@@ -78,9 +76,9 @@ function fileHandler() {
                     return gunData;
                 }
                 logger_1.default.log(`從原始來源網站抓取打包小說中...`);
-                let cp = await cross_spawn_extra_1.async('node', [
+                let cp = await (0, cross_spawn_extra_1.async)('node', [
                     '--experimental-worker',
-                    path_1.join(__root_1.default, `./cli/cli.js`),
+                    (0, path_1.join)(__root_1.default, `./cli/cli.js`),
                     '--mod',
                     'all',
                     '--siteID',
@@ -93,10 +91,10 @@ function fileHandler() {
                 if (cp.error) {
                     return Promise.reject(cp.error);
                 }
-                let map = await fs_extra_1.readJSON(map_file)
+                let map = await (0, fs_extra_1.readJSON)(map_file)
                     .catch(e => logger_1.default.error(e));
                 if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id])) {
-                    gunData = await store_1.getGunEpubFile2([
+                    gunData = await (0, store_1.getGunEpubFile2)([
                         IDKEY,
                     ], [
                         req.params.novelID,
@@ -120,7 +118,7 @@ function fileHandler() {
                 let _data = map[IDKEY][novel_id];
                 delete map[IDKEY][_data.novel_id2];
                 delete map[IDKEY][_data.novel_id];
-                await fs_extra_1.writeJSON(map_file, map, { spaces: 2 }).catch(e => {
+                await (0, fs_extra_1.writeJSON)(map_file, map, { spaces: 2 }).catch(e => {
                     logger_1.default.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`);
                     logger_1.default.error(e);
                 });
@@ -147,9 +145,9 @@ function fileHandler() {
                 }
             }
             if (!fileContents) {
-                fileContents = await fs_extra_1.readFile(data.epub);
+                fileContents = await (0, fs_extra_1.readFile)(data.epub);
             }
-            let filename = data.filename || IDKEY + '_' + path_1.basename(data.epub);
+            let filename = data.filename || IDKEY + '_' + (0, path_1.basename)(data.epub);
             if (!data.isGun || true) {
                 logger_1.default.debug(`將檔案儲存到P2P緩存`);
                 let gunData = {
@@ -158,7 +156,7 @@ function fileHandler() {
                     filename,
                     base64: isFromBuffer ? data.base64 : fileContents.toString('base64'),
                 };
-                store_1.putGunEpubFile([
+                (0, store_1.putGunEpubFile)([
                     IDKEY,
                 ], [
                     novel_id,
@@ -170,7 +168,7 @@ function fileHandler() {
             }
             let readStream = new stream_1.PassThrough();
             readStream.end(fileContents);
-            let { mime, ext } = await file_type_1.fromBuffer(fileContents);
+            let { mime, ext } = await (0, file_type_1.fromBuffer)(fileContents);
             if (ext === 'epub' && mime === 'application/zip') {
                 mime = 'application/epub+zip';
             }
@@ -178,7 +176,7 @@ function fileHandler() {
             if (query.filename) {
                 http_filename = String(query.filename);
             }
-            let attachment = content_disposition_1.default(http_filename);
+            let attachment = (0, content_disposition_1.default)(http_filename);
             res.set('Content-disposition', attachment);
             res.set('Content-Type', mime);
             logger_1.default.info(`將檔案傳送至客戶端...`, filename, (filename !== http_filename) && `=> ${http_filename}`);
@@ -190,7 +188,7 @@ function fileHandler() {
                 data.removeCallback();
             }
             else if (data.outputDir) {
-                fs_extra_1.remove(data.outputDir);
+                (0, fs_extra_1.remove)(data.outputDir);
             }
         })
             .catch(e => {

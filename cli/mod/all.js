@@ -1,17 +1,15 @@
 #!/usr/bin/env node
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const yargs_1 = __importDefault(require("yargs"));
+const tslib_1 = require("tslib");
+const yargs_1 = (0, tslib_1.__importDefault)(require("yargs"));
 const download_1 = require("../../lib/download");
-const threads_1 = __importDefault(require("../lib/threads"));
-const novel_epub_1 = __importDefault(require("novel-epub"));
+const threads_1 = (0, tslib_1.__importDefault)(require("../lib/threads"));
+const novel_epub_1 = (0, tslib_1.__importDefault)(require("novel-epub"));
 const fs_extra_1 = require("fs-extra");
-const bluebird_1 = __importDefault(require("bluebird"));
+const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 const const_1 = require("../../lib/const");
-const logger_1 = __importDefault(require("debug-color2/logger"));
+const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 let argv = yargs_1.default
     .option('siteID', {
     string: true,
@@ -26,7 +24,7 @@ let argv = yargs_1.default
 })
     .argv;
 bluebird_1.default
-    .resolve(download_1.downloadNovel2({
+    .resolve((0, download_1.downloadNovel2)({
     novel_id: argv.novel_id,
     siteID: argv.siteID,
     outputRoot: argv.outputDir,
@@ -38,12 +36,12 @@ bluebird_1.default
         logger_1.default.error(`下載來源時發生錯誤`, e);
     });
     logger_1.default.log(`來源下載完成，開始處理排版`, outputDir);
-    await threads_1.default(argv.novel_id, IDKEY, outputDir)
+    await (0, threads_1.default)(argv.novel_id, IDKEY, outputDir)
         .tapCatch(e => {
         logger_1.default.error(`處理排版時發生錯誤`, e);
     });
     logger_1.default.log(`排版結束，開始打包 epub`);
-    let epub = await novel_epub_1.default({
+    let epub = await (0, novel_epub_1.default)({
         inputPath: cwd,
         outputPath: cwd,
         padEndDate: false,
@@ -56,7 +54,7 @@ bluebird_1.default
     });
     logger_1.default.log(`打包 epub 結束`);
     let map_file = const_1.__cacheMapFile;
-    let map = await fs_extra_1.readJSON(map_file)
+    let map = await (0, fs_extra_1.readJSON)(map_file)
         .catch(e => {
         return {};
     });
@@ -76,7 +74,7 @@ bluebird_1.default
         IDKEY,
         novel_id,
     });
-    await fs_extra_1.outputJSON(map_file, map, {
+    await (0, fs_extra_1.outputJSON)(map_file, map, {
         spaces: 2,
     });
 })

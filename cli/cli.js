@@ -1,10 +1,8 @@
 #!/usr/bin/env node
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const yargs_1 = __importDefault(require("yargs"));
+const tslib_1 = require("tslib");
+const yargs_1 = (0, tslib_1.__importDefault)(require("yargs"));
 const child_process_1 = require("child_process");
 const const_1 = require("../lib/const");
 const path_1 = require("path");
@@ -35,9 +33,9 @@ switch (argv.mod) {
             console.dir(argv);
             throw new Error();
         }
-        child_process_1.spawnSync('node', [
+        (0, child_process_1.spawnSync)('node', [
             '--experimental-worker',
-            path_1.resolve(__dirname, `./mod/${argv.mod}`),
+            (0, path_1.resolve)(__dirname, `./mod/${argv.mod}`),
             '--IDKEY',
             argv.siteID,
             '--novel_id',
@@ -53,8 +51,8 @@ switch (argv.mod) {
             console.dir(argv);
             throw new Error();
         }
-        child_process_1.spawnSync('node', [
-            path_1.resolve(__dirname, `./mod/${argv.mod}`),
+        (0, child_process_1.spawnSync)('node', [
+            (0, path_1.resolve)(__dirname, `./mod/${argv.mod}`),
             '--siteID',
             argv.siteID,
             '--novel_id',
