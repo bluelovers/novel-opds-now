@@ -16,7 +16,7 @@ let argv = yargs
 		string: true,
 		demandOption: true,
 	})
-	.argv
+	.parseSync()
 ;
 
 downloadNovel(argv.novel_id, argv.siteID as any, argv.outputDir)

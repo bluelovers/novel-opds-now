@@ -26,7 +26,7 @@ let argv = yargs_1.default
     demandOption: true,
     alias: ['i'],
 })
-    .argv;
+    .parseSync();
 switch (argv.mod) {
     case 'handle':
         if (argv.mod.includes('..')) {

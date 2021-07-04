@@ -16,7 +16,7 @@ let argv = yargs
 	.option('proxy', {
 		string: true,
 	})
-	.argv
+	.parseSync()
 ;
 
 export default startServer(argv);

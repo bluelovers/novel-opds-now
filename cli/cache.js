@@ -9,6 +9,6 @@ let argv = yargs_1.default
     boolean: true,
     alias: ['f'],
 })
-    .argv;
+    .parseSync();
 (0, update_cache_1.updateAllCacheTask)(argv.force);
 //# sourceMappingURL=cache.js.map

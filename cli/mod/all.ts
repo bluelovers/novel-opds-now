@@ -23,7 +23,7 @@ let argv = yargs
 	.option('outputDir', {
 		string: true,
 	})
-	.argv
+	.parseSync()
 ;
 
 Bluebird

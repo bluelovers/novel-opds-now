@@ -16,7 +16,7 @@ let argv = yargs
 		boolean: true,
 		alias: ['f'],
 	})
-	.argv
+	.parseSync()
 ;
 
 updateAllCacheTask(argv.force);

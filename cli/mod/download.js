@@ -17,7 +17,7 @@ let argv = yargs_1.default
     string: true,
     demandOption: true,
 })
-    .argv;
+    .parseSync();
 (0, download_1.default)(argv.novel_id, argv.siteID, argv.outputDir)
     .then(v => console.log(true));
 //# sourceMappingURL=download.js.map

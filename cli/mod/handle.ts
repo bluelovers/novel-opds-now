@@ -17,7 +17,7 @@ let argv = yargs
 		string: true,
 		demandOption: true,
 	})
-	.argv
+	.parseSync()
 ;
 
 handleAsync(argv.novel_id, argv.IDKEY, argv.outputDir)

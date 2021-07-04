@@ -17,7 +17,7 @@ let argv = yargs_1.default
     string: true,
     demandOption: true,
 })
-    .argv;
+    .parseSync();
 (0, threads_1.default)(argv.novel_id, argv.IDKEY, argv.outputDir)
     .then(v => console.log(`ok`, v))
     .tapCatch(e => console.error(`fail`, e));

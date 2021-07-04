@@ -25,7 +25,7 @@ let argv = yargs
 		demandOption: true,
 		alias: ['i'],
 	})
-	.argv
+	.parseSync()
 ;
 
 switch (argv.mod as 'handle' | 'download')

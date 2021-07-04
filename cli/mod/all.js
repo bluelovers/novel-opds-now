@@ -22,7 +22,7 @@ let argv = yargs_1.default
     .option('outputDir', {
     string: true,
 })
-    .argv;
+    .parseSync();
 bluebird_1.default
     .resolve((0, download_1.downloadNovel2)({
     novel_id: argv.novel_id,

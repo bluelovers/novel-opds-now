@@ -16,6 +16,6 @@ let argv = yargs_1.default
     .option('proxy', {
     string: true,
 })
-    .argv;
+    .parseSync();
 exports.default = (0, index_1.default)(argv);
 //# sourceMappingURL=novel-opds-now.js.map
