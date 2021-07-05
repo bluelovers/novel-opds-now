@@ -17,6 +17,7 @@ import console from 'debug-color2/logger';
 import { async as crossSpawn } from 'cross-spawn-extra';
 import { getGunEpubFile, getGunEpubFile2, putGunEpubFile } from '../lib/store';
 import contentDisposition from '@lazy-http/content-disposition';
+import { showClient } from './util/showClient';
 
 export type IRouter = Router;
 
@@ -40,6 +41,7 @@ function fileHandler()
 		delete query.id;
 
 		console.debug(req.method, req.baseUrl, req.url, req.params, query);
+		showClient(req, res);
 
 		let siteID = String(req.params.siteID || '')
 			.trim()
@@ -262,39 +264,47 @@ function fileHandler()
 					});
 				}
 
-				let readStream = new PassThrough();
-				readStream.end(fileContents);
-
-				let { mime, ext } = await fromBuffer(fileContents);
-
-				if (ext === 'epub' && mime === 'application/zip')
+				if (res.connection?.destroyed)
 				{
-					mime = 'application/epub+zip';
+					console.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`);
+					res.end();
 				}
-
-				let http_filename = filename;
-
-				if (query.filename)
+				else
 				{
-					http_filename = String(query.filename)
+					let readStream = new PassThrough();
+					readStream.end(fileContents);
+
+					let { mime, ext } = await fromBuffer(fileContents);
+
+					if (ext === 'epub' && mime === 'application/zip')
+					{
+						mime = 'application/epub+zip';
+					}
+
+					let http_filename = filename;
+
+					if (query.filename)
+					{
+						http_filename = String(query.filename)
+					}
+
+					let attachment = contentDisposition(http_filename);
+
+					/*
+					console.debug({
+						query,
+						http_filename,
+						attachment,
+						http_filename2: encodeURIComponent(http_filename),
+					})
+					 */
+
+					res.set('Content-disposition', attachment);
+					res.set('Content-Type', mime);
+
+					console.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '');
+					readStream.pipe(res);
 				}
-
-				let attachment = contentDisposition(http_filename);
-
-				/*
-				console.debug({
-					query,
-					http_filename,
-					attachment,
-					http_filename2: encodeURIComponent(http_filename),
-				})
-				 */
-
-				res.set('Content-disposition', attachment);
-				res.set('Content-Type', mime);
-
-				console.info(`將檔案傳送至客戶端...`, filename, (filename !== http_filename) && `=> ${http_filename}`);
-				readStream.pipe(res);
 
 				if (query.debug)
 				{

@@ -15,6 +15,7 @@ const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 const cross_spawn_extra_1 = require("cross-spawn-extra");
 const store_1 = require("../lib/store");
 const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
+const showClient_1 = require("./util/showClient");
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:siteID/:novelID', (req, res) => {
@@ -25,6 +26,7 @@ function fileHandler() {
         delete query.siteID;
         delete query.id;
         logger_1.default.debug(req.method, req.baseUrl, req.url, req.params, query);
+        (0, showClient_1.showClient)(req, res);
         let siteID = String(req.params.siteID || '')
             .trim()
             .replace(/\.xml$|[\/\\]+/ig, '');
@@ -134,6 +136,7 @@ function fileHandler() {
             });
         })
             .then(async (data) => {
+            var _a;
             logger_1.default.success(`成功取得檔案...`);
             let fileContents;
             let isFromBuffer;
@@ -166,21 +169,27 @@ function fileHandler() {
                     novel_id,
                 ], gunData, {});
             }
-            let readStream = new stream_1.PassThrough();
-            readStream.end(fileContents);
-            let { mime, ext } = await (0, file_type_1.fromBuffer)(fileContents);
-            if (ext === 'epub' && mime === 'application/zip') {
-                mime = 'application/epub+zip';
+            if ((_a = res.connection) === null || _a === void 0 ? void 0 : _a.destroyed) {
+                logger_1.default.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`);
+                res.end();
             }
-            let http_filename = filename;
-            if (query.filename) {
-                http_filename = String(query.filename);
+            else {
+                let readStream = new stream_1.PassThrough();
+                readStream.end(fileContents);
+                let { mime, ext } = await (0, file_type_1.fromBuffer)(fileContents);
+                if (ext === 'epub' && mime === 'application/zip') {
+                    mime = 'application/epub+zip';
+                }
+                let http_filename = filename;
+                if (query.filename) {
+                    http_filename = String(query.filename);
+                }
+                let attachment = (0, content_disposition_1.default)(http_filename);
+                res.set('Content-disposition', attachment);
+                res.set('Content-Type', mime);
+                logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '');
+                readStream.pipe(res);
             }
-            let attachment = (0, content_disposition_1.default)(http_filename);
-            res.set('Content-disposition', attachment);
-            res.set('Content-Type', mime);
-            logger_1.default.info(`將檔案傳送至客戶端...`, filename, (filename !== http_filename) && `=> ${http_filename}`);
-            readStream.pipe(res);
             if (query.debug) {
                 logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
             }
