@@ -6,14 +6,8 @@ import fetch from '../fetch';
 import hashSum from 'hash-sum';
 import { IGunEpubNode } from '../types';
 import { RequestInit, RequestInfo, Response, FetchError } from 'node-fetch';
-
-const server01 = `https://api-file-server.epub.now.sh/`;
-const server02 = `https://calm-inlet-73656.herokuapp.com`;
-
-export function newURL(siteID: string, novelID: string, server = server01)
-{
-	return new URL(`db/file/${siteID}/${hashSum(novelID)}`, server);
-}
+import { putFileRecord } from '@demonovel/db-api';
+import { newFileURL } from '@demonovel/db-api/lib/util';
 
 export function getEpubFileInfo(_siteID: string | string[], _novelID: string | string[])
 {
@@ -54,7 +48,7 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 		{
 			novelID.forEach(novelID =>
 			{
-				let url = newURL(siteID, novelID);
+				let url = newFileURL(siteID, novelID);
 
 				//console.debug(url.href)
 
@@ -76,46 +70,13 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 
 export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubNode)
 {
-	let url = newURL(siteID, novelID);
-
-	let timeout = 60 * 1000;
-
-//	let body = new URLSearchParams();
-//
-//	Object.entries(data)
-//		// @ts-ignore
-//		.forEach(([k, v]) => body.set(k, v))
-//	;
-
-	//return Bluebird.resolve(body);
-
-	//console.debug(url.href);
-
-	let opts: RequestInit = {
-		method: 'POST',
-		headers: {
-			'Accept': 'application/json',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(data),
-		timeout,
-	};
-
-	return fetch(url.href, opts)
-		.catch((e: Response) => {
-
-			if (e.status == 503)
-			{
-				return Bluebird.delay(5000)
-					.then(e => fetch(url.href, opts))
-				;
-			}
-
-			return Promise.reject(e)
-		})
-		.catch(e => {
-			console.error(`putEpubFileInfo`, `上傳資料時發生錯誤`);
-
-			return Promise.reject(e)
+	return putFileRecord({
+		siteID,
+		novelID,
+		// @ts-ignore
+		data,
+	})
+		.tapCatch(e => {
+			console.error(`putEpubFileInfo`, `上傳資料時發生錯誤`, e);
 		})
 }

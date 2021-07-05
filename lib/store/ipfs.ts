@@ -6,7 +6,7 @@ import fetchIPFS from 'fetch-ipfs';
 import { useIPFS } from '../ipfs/use';
 import { IGunEpubData, IGunEpubNode } from '../types';
 import console from 'debug-color2/logger';
-import { toLink } from 'to-ipfs-url';
+import { pathToCid, toLink } from 'to-ipfs-url';
 import raceFetchIPFS from 'fetch-ipfs/race';
 import ipfsServerList, { filterList } from 'ipfs-server-list';
 import { lazyRaceServerList } from 'fetch-ipfs/util';
@@ -150,7 +150,11 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			timeout: 30 * 1000,
 		})
 			.tap(settledResult => {
-				(settledResult?.length > 1) && console.debug(`[IPFS]`, `publishToIPFSAll`, settledResult)
+				/*
+				(settledResult?.length > 1) && console.debug(`[IPFS]`, `publishToIPFSAll`, inspect(settledResult, {
+					depth: null,
+				}))
+				 */
 			})
 			.each((settledResult, index) => {
 
@@ -229,11 +233,27 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	delete data.base64;
 
 	await putEpubFileInfo(siteID, novelID, data as any)
-		.tap(async (v) => {
-			let json = await v.json();
+		.tap(async (json) => {
 
 			console.debug(`putEpubFileInfo:return`, json);
 
+			let url = new URL(json.data.href);
+			let cid = pathToCid(url.pathname);
+			let filename = url.searchParams.get('filename');
+
+			/*
+			console.debug(`putEpubFileInfo:poke`, {
+				url,
+				cid,
+				filename,
+			})
+			 */
+
+			pokeAll(cid, {
+				filename,
+			}).catch(e => null);
+
+			/*
 			Bluebird
 				.delay(10 * 1000)
 				.then(() => {
@@ -245,7 +265,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 				.timeout(60 * 1000)
 				.catch(e => null)
 			;
+			 */
 
 		})
-		.tapCatch(v => console.error(v))
 }
