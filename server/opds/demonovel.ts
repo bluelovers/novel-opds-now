@@ -13,14 +13,18 @@ function opdsDemoNovelHandler()
 	{
 		let feed = await makeOPDSType(req.params.type);
 		res.setHeader('Content-Type', 'application/xml');
-		res.send(feed.toXML())
+
+		let xml = feed.toXML();
+		res.send(xml)
 	});
 
 	router.use(`${prefix}.xml`, async (req, res) =>
 	{
 		let feed = await makeOPDSPortal();
 		res.setHeader('Content-Type', 'application/xml');
-		res.send(feed.toXML())
+
+		let xml = feed.toXML();
+		res.send(xml)
 	});
 
 	return router

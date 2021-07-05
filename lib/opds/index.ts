@@ -3,10 +3,14 @@ import { id_titles_map, ISiteIDs, builded_map } from '../novel-cache/types';
 import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
 import { Link } from 'opds-extra/lib/v1/core';
 import { OPDSV1 } from 'opds-extra';
-import loadCache from '../novel-cache/load';
+//import loadCache from '../novel-cache/load';
 import { prefixRoot as prefixDemo, title as titleDemo } from '../demonovel/opds';
 import { addOpenSearch, filterOPDSBook } from './search';
 import { cn2tw_min } from '../cn2tw_min';
+import addCover from './addCover';
+import { addContent } from './addContent';
+import { loadCache } from '../site/cached-data/load';
+import { createMoment } from '@node-novel/cache-loader';
 
 // @ts-ignore
 export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
@@ -30,6 +34,8 @@ export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
 
 export function makeOPDSSite(siteID: ISiteIDs)
 {
+	let last_updated: number;
+
 	return buildAsync(initMain({
 		title: `書庫：${siteID}`,
 		subtitle: `EPub 自動生成：${siteID}`,
@@ -44,14 +50,16 @@ export function makeOPDSSite(siteID: ISiteIDs)
 		{
 			feed.books = feed.books || [];
 
-			await loadCache<{
-				id,
-				title,
-			}[]>(siteID, builded_map)
+			await loadCache(siteID)
 				.each(({
 					id,
 					title,
+					cover,
+					content,
+					updated,
 				}) => {
+
+					last_updated ??= updated;
 
 					if (siteID === 'esjzone')
 					{
@@ -71,12 +79,15 @@ export function makeOPDSSite(siteID: ISiteIDs)
 						],
 						identifier: `book_${siteID}_${id}`,
 						links: [
+							...addCover(cover),
 							{
 								rel: EnumLinkRel.ACQUISITION,
 								href: `/file/${siteID}/${id}`,
 								type: EnumMIME.epub,
-							} as any
+							} as any,
 						],
+						content: addContent(content),
+						updated,
 					}));
 
 				})
@@ -90,6 +101,13 @@ export function makeOPDSSite(siteID: ISiteIDs)
 			searchTerms,
 		}),
 		 */
+
+		(feed) => {
+
+			feed.updated = last_updated;
+
+			return feed
+		},
 
 	])
 }
@@ -174,3 +192,4 @@ export function makeOPDSPortal()
 }
 
 export default makeOPDSPortal
+

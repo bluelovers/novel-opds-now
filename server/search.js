@@ -8,8 +8,15 @@ const other_1 = require("../lib/opds/other");
 const opds_1 = require("../lib/demonovel/opds");
 const search_1 = require("../lib/opds/search");
 const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
+const showClient_1 = require("./util/showClient");
+const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 function searchHandler() {
     const router = (0, express_1.Router)();
+    router.use('/*', (req, res, next) => {
+        logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
+        (0, showClient_1.showClient)(req, res, next);
+        next();
+    });
     router.use('/:siteID/:searchTerms', async (req, res) => {
         let { siteID, searchTerms } = req.params;
         let feed;

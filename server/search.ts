@@ -9,14 +9,24 @@ import { OPDSV1 } from 'opds-extra';
 import { makeOPDSType } from '../lib/demonovel/opds';
 import { filterOPDSBook, addOpenSearch } from '../lib/opds/search';
 import Bluebird from 'bluebird';
+import { showClient } from './util/showClient';
+import console from 'debug-color2/logger';
+import app from './index';
 
 function searchHandler()
 {
 	const router = Router();
 
+	router.use('/*', (req, res, next) => {
+		console.log(req.method, req.baseUrl, req.url, req.params, req.query);
+		showClient(req, res, next);
+		next();
+	});
+
 	router.use('/:siteID/:searchTerms', async (req, res) =>
 	{
 		let { siteID, searchTerms } = req.params;
+		// @ts-ignore
 		let feed: OPDSV1.Feed;
 		let onlyBook: boolean;
 

@@ -25,6 +25,8 @@ export async function makeOPDSType(type: string)
 	//let mainCache = await loadCache();
 	let rawUrl = 'https://gitlab.com/demonovel/epub-txt/raw/master/';
 
+	let last_updated: number;
+
 	switch (type)
 	{
 		default:
@@ -73,7 +75,7 @@ export async function makeOPDSType(type: string)
 						entry.authors = novel.authors.map(name => ({name}))
 					}
 
-					if (novel.mdconf.novel && novel.mdconf.novel.preface)
+					if (novel.mdconf.novel?.preface)
 					{
 						// @ts-ignore
 						//entry.summary = novel.mdconf.novel.preface;
@@ -87,9 +89,13 @@ export async function makeOPDSType(type: string)
 
 					entry.subtitle = novel.mdconf.novel.title;
 
+					last_updated ??= entry.updated;
+
 					feed.books.push(entry);
 				})
 			;
+
+			feed.updated = last_updated;
 
 	}
 

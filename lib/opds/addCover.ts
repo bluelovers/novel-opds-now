@@ -7,6 +7,11 @@ import { EnumMIME, EnumLinkRel } from 'opds-extra/lib/const';
 
 export function addCover(href: string)
 {
+	if (!href?.length)
+	{
+		return [] as null;
+	}
+
 	let type = lookup(href);
 
 	if (!type || !/image/.test(type)) {

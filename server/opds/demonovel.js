@@ -8,12 +8,14 @@ function opdsDemoNovelHandler() {
     router.use(`${opds_1.prefix}/:type.xml`, async (req, res) => {
         let feed = await (0, opds_1.makeOPDSType)(req.params.type);
         res.setHeader('Content-Type', 'application/xml');
-        res.send(feed.toXML());
+        let xml = feed.toXML();
+        res.send(xml);
     });
     router.use(`${opds_1.prefix}.xml`, async (req, res) => {
         let feed = await (0, opds_1.default)();
         res.setHeader('Content-Type', 'application/xml');
-        res.send(feed.toXML());
+        let xml = feed.toXML();
+        res.send(xml);
     });
     return router;
 }
