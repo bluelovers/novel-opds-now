@@ -168,13 +168,13 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 						{
 							//console.debug(`[${status}]`, inspect(result));
 							console.debug(`[IPFS]`, `publishToIPFSAll`, `[${status}]`, cid = resultCID);
-						}
 
-						pubsubPublish(ipfs, {
-							cid: resultCID,
-							path: result.path,
-							size: result.size,
-						})
+							pubsubPublish(ipfs, {
+								cid: resultCID,
+								path: result.path,
+								size: result.size,
+							})
+						}
 					})
 				}
 				else
