@@ -24,6 +24,8 @@ export function fetch(...argv): Bluebird<Response>
 		options.agent = HttpProxyAgent(proxy);
 	}
 
+	let cb = () => {};
+
 	if (options.timeout > 0 && !options.signal)
 	{
 		if (options.timeout |= 0)
@@ -31,6 +33,8 @@ export function fetch(...argv): Bluebird<Response>
 			const controller = new AbortControllerTimer(options.timeout);
 
 			options.signal = controller.signal;
+
+			cb = () => controller.clear();
 		}
 		else
 		{
@@ -51,6 +55,7 @@ export function fetch(...argv): Bluebird<Response>
 				return Promise.reject(v)
 			}
 		})
+		.finally(cb)
 }
 
 export default fetch
