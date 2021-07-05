@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.3](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.2...novel-opds-now@3.0.3) (2021-07-05)
+
+
+### 🐛　Bug Fixes
+
+* 修正防止短時間內連續 poke 相同 cid 的判定 ([180eb5d](https://github.com/bluelovers/novel-opds-now/commit/180eb5dc12c366c749a0eccaab19429e146ec7c1))
+* 修正發送兩次 pubsubPublish 的問題 ([f043cb4](https://github.com/bluelovers/novel-opds-now/commit/f043cb4a630c7e82af2e3729a2ade35ada39096d))
+
+
+### ✨　Features
+
+* update fetch ([1ed9056](https://github.com/bluelovers/novel-opds-now/commit/1ed9056787a28c3cd8d2b1641971fedece87fbe1))
+* showClient ([92c85d5](https://github.com/bluelovers/novel-opds-now/commit/92c85d54db95b9c272ba16430c6352a0e75046a7))
+* 支援偵測客戶端是否斷線 ([4a023a3](https://github.com/bluelovers/novel-opds-now/commit/4a023a3d3abd4f58e66baecbc321cb01cf3bc304))
+
+
+### 📦　Code Refactoring
+
+* use `@demonovel/db-api` and poke ([483391d](https://github.com/bluelovers/novel-opds-now/commit/483391da3744c2839c397de434ef3fdba3f65747))
+* remove old code ([72c8595](https://github.com/bluelovers/novel-opds-now/commit/72c85958ced96a44877845040948b00d18249172))
+* update opds and build ([a5160c3](https://github.com/bluelovers/novel-opds-now/commit/a5160c3cb4a99b244703789c0c85fbe626ae3f90))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([403d602](https://github.com/bluelovers/novel-opds-now/commit/403d602954f13fe08c480ad4b5a9454e125f521e))
+* **cache:** update cache ([439bfdd](https://github.com/bluelovers/novel-opds-now/commit/439bfddfe0e0ef28f3bd2999f5b9576e9510e7f5))
+
+
+### ♻️　Chores
+
+* remove old cache ([66ceeb3](https://github.com/bluelovers/novel-opds-now/commit/66ceeb360ad74492259ad2645c7d2b2a519c4e00))
+* update deps ([98cafc0](https://github.com/bluelovers/novel-opds-now/commit/98cafc00b2490c3224035a55bf48f41e4e40649e))
+* update deps ([0fdaad8](https://github.com/bluelovers/novel-opds-now/commit/0fdaad818297a53ee92c971dc1fc988bf05f009c))
+
+
+
+
+
 ## [3.0.2](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.1...novel-opds-now@3.0.2) (2021-07-04)
 
 

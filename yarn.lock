@@ -110,6 +110,21 @@
   dependencies:
     tslib "^2.3.0"
 
+"@demonovel/db-api@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/@demonovel/db-api/-/db-api-1.0.6.tgz#201c4a8d0d32fda04a2d72e102617eecb2819cfc"
+  integrity sha512-pJPfbsoOVeOExEE2CY73ezETRtUjZ1t7HZAs7FIwo3XZ9nHDAXJXKso5A4wMRB1Uvl8dI2gecDI79ZOXRh9gKg==
+  dependencies:
+    abort-controller "^3.0.0"
+    abort-controller-timer "^1.0.6"
+    bluebird "^3.7.2"
+    cross-fetch "^3.1.4"
+    hash-sum "^2.0.0"
+    http-proxy-agent "^4.0.1"
+    is-error-code "^1.0.0"
+    ts-type "^1.2.35"
+    tslib "^2.3.0"
+
 "@demonovel/local-or-rebuild-file@^1.0.3":
   version "1.0.3"
   resolved "https://registry.npmjs.org/@demonovel/local-or-rebuild-file/-/local-or-rebuild-file-1.0.3.tgz#0c19ef79ea22bf2e8b81bc885ffd49b5a35080de"
