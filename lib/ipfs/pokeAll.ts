@@ -8,7 +8,7 @@ import Bluebird from 'bluebird';
 import { allSettled } from 'bluebird-allsettled';
 import ipfsSubdomain from '@lazy-ipfs/ipfs-subdomain';
 import console from 'debug-color2/logger';
-import { ITSUnpackedPromiseLike } from 'ts-type';
+import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 
 export function notAllowedAddress(url: URL | string)
 {

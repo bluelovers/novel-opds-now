@@ -1,5 +1,5 @@
 import Bluebird from 'bluebird';
-import { ITSUnpackedPromiseLike } from 'ts-type';
+import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 export declare function notAllowedAddress(url: URL | string): boolean;
 export declare function getIpfsGatewayList(ipfs: any): Promise<{
     ipfsGatewayMain: string;
@@ -9,46 +9,46 @@ export declare function pokeAll(cid: string, ipfs: any, options?: {
     filename?: string;
 }): Bluebird<import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: string;
 } | {
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: false;
 } | {
     href: string;
     value?: never;
     status?: number;
-    statusText?: string;
     headers?: Headers;
+    statusText?: string;
     error: Error;
 }, any>[]>;
 export declare function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>): import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: string;
 } | {
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: false;
 } | {
     href: string;
     value?: never;
     status?: number;
-    statusText?: string;
     headers?: Headers;
+    statusText?: string;
     error: Error;
 }, any>[];
 export default pokeAll;

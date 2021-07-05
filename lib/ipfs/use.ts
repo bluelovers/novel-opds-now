@@ -4,7 +4,7 @@ import processExit from '../processExit';
 import { ipfsAddresses, checkIPFS } from 'ipfs-util-lib';
 import cloneDeep from 'lodash/cloneDeep';
 import { IIPFSAddresses } from 'ipfs-types';
-import { ITSUnpackedPromiseLike } from 'ts-type';
+import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
 import packageJson from '../../package.json';
