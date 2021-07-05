@@ -15,6 +15,8 @@ import { IUseIPFSApi } from '../types';
 import { findIpfsClient } from '@bluelovers/ipfs-http-client';
 import { getDefaultServerList } from '@bluelovers/ipfs-http-client/util';
 import ipfsEnv from 'ipfs-env';
+import configApiCors from 'ipfs-util-lib/lib/ipfs/config/cors';
+import { multiaddrToURL } from 'multiaddr-to-url';
 
 let _cache: ITSUnpackedPromiseLike<ReturnType<typeof _useIPFS>>;
 let _waiting: ReturnType<typeof _useIPFS>;
@@ -55,6 +57,23 @@ export function useIPFS(options?: {
 				let info = await ipfsAddresses(ipfs as any).catch(e => null)
 
 				console.info(`[IPFS]`, `IPFS 已啟動`, info);
+
+				return configApiCors(ipfs as any).catch(e => null)
+					/*
+					.then(async (ls) => {
+						console.debug(`[IPFS]`, `configApiCors:done`, ls);
+
+						await ipfs.config.set('Experimental.AcceleratedDHTClient', true);
+
+						return ipfs.config.get('API.HTTPHeaders').then(value => {
+							console.dir(value)
+						}).catch(e => null)
+
+					})
+					.catch(e => {
+						console.debug(`[IPFS]`, `configApiCors:error`, e);
+					})
+					 */
 			})
 	})
 }
@@ -67,7 +86,7 @@ function _handle({
 			id: ipfs.id(),
 			version: ipfs.version(),
 		})
-		.then(data =>
+		.then(async (data) =>
 		{
 			const { id, agentVersion, protocolVersion } = data.id;
 
@@ -90,7 +109,18 @@ function _handle({
 				})
 			;
 
-			console.success(`IPFS Web UI available at`, terminalLink(`webui`, `https://dev.webui.ipfs.io/`))
+			let info = await ipfsAddresses(ipfs as any)
+				.then(info => {
+
+					let u = multiaddrToURL(info.API);
+
+					u.pathname = 'webui';
+
+					return u
+				})
+				.catch(e => null)
+
+			console.success(`IPFS Web UI available at`, terminalLink(`webui`, `https://dev.webui.ipfs.io/`), info ? terminalLink(`webui`, info) : '')
 
 		})
 		.catch(e =>

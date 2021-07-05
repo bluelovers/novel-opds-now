@@ -114,6 +114,7 @@
     "is-error-code": "^1.0.0",
     "lodash": "^4.17.21",
     "micro": "^9.3.5-canary.3",
+    "multiaddr-to-url": "^1.0.13",
     "node-novel-info": "^3.0.13",
     "novel-downloader": "^2.0.28",
     "novel-downloader-cli": "^1.0.57",
