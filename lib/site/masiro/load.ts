@@ -1,8 +1,6 @@
 import { getLocalOrRebuild } from '@demonovel/local-or-rebuild-file';
-import { getCacheFilename } from '../util';
+import { getCacheFilename } from '../../util/index';
 import console from 'debug-color2/logger';
-import fetch from '../fetch';
-import { buildCache } from './build';
 
 export function loadCache(force?: boolean)
 {
@@ -10,12 +8,14 @@ export function loadCache(force?: boolean)
 
 		console,
 
+		force,
+
 		makeFns: [
 			() =>
 			{
 				console.debug(`嘗試更新 masiro`);
-				return buildCache()
-					.tap(v => console.success(`[masiro] 更新完成`))
+				return import('./build').then(m => m.buildCache(force).tap(v => console.success(`[masiro] 更新完成`))
+					)
 			},
 		],
 	})

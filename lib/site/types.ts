@@ -1,8 +1,9 @@
 import { join, basename } from "path";
 import __root from '../__root';
 
-export type ISiteIDs = keyof typeof id_titles_map | keyof typeof builded_map;
+export type ISiteIDs = keyof typeof builded_map;
 
+/*
 export const id_titles_map = {
 	dmzj: 'cached-dmzj/data/novel/id_titles.json',
 	esjzone: 'cached-esjzone/data/novel/id_titles.json',
@@ -23,6 +24,7 @@ export const id_chapters_map = {
 	//masiro: 'cached-masiro/data/novel/id_chapters.json',
 	wenku8: 'cached-wenku8/data/novel/id_chapters.json',
 };
+ */
 
 export const builded_map = {
 	dmzj: 'builded.json',

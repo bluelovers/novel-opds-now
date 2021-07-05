@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const express_1 = require("express");
-const types_1 = require("../lib/novel-cache/types");
+const types_1 = require("../lib/site/types");
 const index_1 = (0, tslib_1.__importStar)(require("../lib/opds/index"));
 const demonovel_1 = (0, tslib_1.__importDefault)(require("./opds/demonovel"));
 const other_1 = require("../lib/opds/other");

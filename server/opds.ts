@@ -1,10 +1,7 @@
 import { Router } from 'express';
-import { builded_map, id_titles_map, ISiteIDs } from '../lib/novel-cache/types';
+import { builded_map, ISiteIDs } from '../lib/site/types';
 import makeOPDSPortal, { makeOPDSSite } from '../lib/opds/index';
 import opdsDemoNovelHandler from './opds/demonovel';
-import updateCacheAll from '../lib/novel-cache/update';
-import updateCache from '../lib/demonovel/update';
-import loadCacheMasiro from '../lib/masiro/load';
 import { makeOPDSOther } from '../lib/opds/other';
 import { updateAllCacheTask } from '../lib/task/update-cache';
 import { showClient } from './util/showClient';

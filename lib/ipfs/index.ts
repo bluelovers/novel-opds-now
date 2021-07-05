@@ -19,7 +19,7 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 {
 	let { siteID, novelID } = handleArgvList(_siteID, _novelID);
 
-	let timeout = 5 * 1000;
+	let timeout = 20 * 1000;
 
 	return new Bluebird<IGunEpubNode>((resolve, reject) =>
 	{

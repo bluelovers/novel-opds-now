@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const express_1 = require("express");
-const types_1 = require("../lib/novel-cache/types");
+const types_1 = require("../lib/site/types");
 const index_1 = require("../lib/opds/index");
 const other_1 = require("../lib/opds/other");
-const opds_1 = require("../lib/demonovel/opds");
+const opds_1 = require("../lib/site/demonovel/opds");
 const search_1 = require("../lib/opds/search");
 const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 const showClient_1 = require("./util/showClient");

@@ -1,4 +1,4 @@
-import { ISiteIDs } from '../../novel-cache/types';
+import { ISiteIDs } from '../types';
 import { buildCache } from './build';
 import Bluebird from 'bluebird';
 export declare function loadCacheAll(force?: boolean): Bluebird<{

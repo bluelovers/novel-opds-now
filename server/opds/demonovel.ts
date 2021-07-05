@@ -1,9 +1,5 @@
-import loadCache from '../../lib/demonovel/load';
-import { createFromJSON } from '@node-novel/cache-loader';
 import { Router } from 'express';
-import makeOPDSPortal, { prefix, makeOPDSType } from '../../lib/demonovel/opds';
-import buildCache from '../../lib/demonovel/build';
-import updateCache from '../../lib/demonovel/update';
+import makeOPDSPortal, { prefix, makeOPDSType } from '../../lib/site/demonovel/opds';
 
 function opdsDemoNovelHandler()
 {

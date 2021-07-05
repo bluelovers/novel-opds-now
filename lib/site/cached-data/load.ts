@@ -1,7 +1,7 @@
 import { getLocalOrRebuild } from '@demonovel/local-or-rebuild-file';
 import { getCacheFilename } from '../../util/index';
 import console from 'debug-color2/logger';
-import { ISiteIDs } from '../../novel-cache/types';
+import { ISiteIDs } from '../types';
 import { buildCache } from './build';
 import Bluebird from 'bluebird';
 
@@ -26,8 +26,7 @@ export function loadCache(siteID: ISiteIDs, force?: boolean): ReturnType<typeof 
 			() =>
 			{
 				console.debug(`嘗試更新 ${siteID}`);
-				return import('./build').then(m => m.buildCache(siteID))
-					.tap(v => console.success(`[${siteID}] 更新完成`))
+				return import('./build').then(m => m.buildCache(siteID).tap(v => console.success(`[${siteID}] 更新完成`)))
 			},
 		],
 	})

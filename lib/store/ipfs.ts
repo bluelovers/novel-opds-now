@@ -1,7 +1,7 @@
 import { handleArgvList } from '../util/index';
 import { getEpubFileInfo, putEpubFileInfo } from '../ipfs/index';
 import Bluebird, { TimeoutError } from 'bluebird';
-import checkGunData from '../gun/checkData';
+import checkGunData from '../util/checkData';
 import fetchIPFS from 'fetch-ipfs';
 import { useIPFS } from '../ipfs/use';
 import { IGunEpubData, IGunEpubNode } from '../types';

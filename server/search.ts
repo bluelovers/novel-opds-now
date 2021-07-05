@@ -1,12 +1,9 @@
 import { Router } from 'express';
-import { id_titles_map, builded_map, ISiteIDs } from '../lib/novel-cache/types';
+import { builded_map, ISiteIDs } from '../lib/site/types';
 import makeOPDSPortal, { makeOPDSSite } from '../lib/opds/index';
-import opdsDemoNovelHandler from './opds/demonovel';
-import updateCacheAll from '../lib/novel-cache/update';
-import updateCache from '../lib/demonovel/update';
 import { makeOPDSOther } from '../lib/opds/other';
 import { OPDSV1 } from 'opds-extra';
-import { makeOPDSType } from '../lib/demonovel/opds';
+import { makeOPDSType } from '../lib/site/demonovel/opds';
 import { filterOPDSBook, addOpenSearch } from '../lib/opds/search';
 import Bluebird from 'bluebird';
 import { showClient } from './util/showClient';

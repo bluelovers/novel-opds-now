@@ -7,7 +7,7 @@ export function checkGunData(data: IGunEpubNode): data is Exclude<IGunEpubNode, 
 	exists: false,
 }>
 {
-	if (data && data.timestamp)
+	if (data?.timestamp)
 	{
 		if (data.exists)
 		{

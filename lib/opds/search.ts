@@ -1,9 +1,10 @@
 import { OPDSV1 } from 'opds-extra';
-import { ISiteIDs } from '../novel-cache/types';
+import { ISiteIDs } from '../site/types';
 import zhRegExp from '../re';
 import { slugify } from 'cjk-conv/lib/zh/table/list';
+import { Entry, Feed } from 'opds-extra/lib/v1/core';
 
-export function addOpenSearch(feed: OPDSV1.Feed, siteID: ISiteIDs | string)
+export function addOpenSearch(feed: Feed, siteID: ISiteIDs | string)
 {
 	feed.links = feed.links || [];
 	feed.links.push({
@@ -15,7 +16,7 @@ export function addOpenSearch(feed: OPDSV1.Feed, siteID: ISiteIDs | string)
 	return feed
 }
 
-export function filterOPDSBook(feed: OPDSV1.Feed, searchTermOptions: {
+export function filterOPDSBook(feed: Feed, searchTermOptions: {
 	searchTerms: string,
 	onlyBook?: boolean,
 })

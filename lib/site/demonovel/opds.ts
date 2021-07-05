@@ -1,18 +1,18 @@
 import { buildSync, initMain } from 'calibre-opds/lib';
 import { OPDSV1 } from 'opds-extra';
 import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
-import { Link } from 'opds-extra/lib/v1/core';
+import { Link, Entry } from 'opds-extra/lib/v1/core';
 import loadCache, { siteID } from './load';
 import { createFromJSON, IFilterNovelData, createMoment } from '@node-novel/cache-loader';
 import dotValues2 from 'dot-values2'
 import NodeNovelInfo from 'node-novel-info/class';
 import { moment } from 'novel-downloader/src/site';
 import MIMETypes from "mime-types";
-import addCover from '../opds/addCover';
-import { makeOPDSShared } from '../opds/index';
+import addCover from '../../opds/addCover';
+import { makeOPDSShared } from '../../opds/index';
 import { IFilterNovelDataPlus } from './types';
-import { addOpenSearch } from '../opds/search';
-import { ISiteIDs } from '../novel-cache/types';
+import { addOpenSearch } from '../../opds/search';
+import { ISiteIDs } from '../types';
 
 export let prefix = `/demo`;
 export let prefixRoot = `/opds` + prefix;
@@ -57,7 +57,7 @@ export async function makeOPDSType(type: string)
 						links.push(...addCover(novel.mdconf.novel.cover));
 					}
 
-					let entry = OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+					let entry = Entry.deserialize<Entry>({
 						// @ts-ignore
 						title: novel.title,
 						links,
@@ -89,6 +89,7 @@ export async function makeOPDSType(type: string)
 
 					entry.subtitle = novel.mdconf.novel.title;
 
+					// @ts-ignore
 					last_updated ??= entry.updated;
 
 					feed.books.push(entry);
@@ -117,7 +118,7 @@ export function makeOPDSPortal()
 		(feed) =>
 		{
 
-			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+			feed.books.push(Entry.deserialize<Entry>({
 				title: `書庫：${siteID}`,
 				links: [
 					{
@@ -128,7 +129,7 @@ export function makeOPDSPortal()
 				],
 			}));
 
-			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+			feed.books.push(Entry.deserialize<Entry>({
 				title: `全部列表`,
 				links: [
 					{

@@ -1,13 +1,13 @@
 import { OPDSV1 } from 'opds-extra';
 import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
 import { Link } from 'opds-extra/lib/v1/core';
-import { ISiteIDs, builded_map } from '../novel-cache/types';
+import { ISiteIDs, builded_map } from '../site/types';
 import { buildAsync, initMain } from 'calibre-opds/lib';
-import loadCache from '../novel-cache/load';
 import { makeOPDSShared } from './index';
 import { addOpenSearch } from './search';
+import { Entry, Feed } from 'opds-extra/lib/v1/core';
 
-export function makeOPDSOtherSource(feed: OPDSV1.Feed): OPDSV1.Feed
+export function makeOPDSOtherSource(feed: Feed): Feed
 {
 	feed.books = feed.books || [];
 
@@ -26,7 +26,7 @@ export function makeOPDSOtherSource(feed: OPDSV1.Feed): OPDSV1.Feed
 			href,
 		}) => {
 
-			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+			feed.books.push(Entry.deserialize<Entry>({
 				title,
 				links: [
 					{

@@ -1,24 +1,22 @@
 import { initMain, buildSync, buildAsync } from 'calibre-opds/lib';
-import { id_titles_map, ISiteIDs, builded_map } from '../novel-cache/types';
+import { ISiteIDs, builded_map } from '../site/types';
 import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
 import { Link } from 'opds-extra/lib/v1/core';
 import { OPDSV1 } from 'opds-extra';
-//import loadCache from '../novel-cache/load';
-import { prefixRoot as prefixDemo, title as titleDemo } from '../demonovel/opds';
+import { prefixRoot as prefixDemo, title as titleDemo } from '../site/demonovel/opds';
 import { addOpenSearch, filterOPDSBook } from './search';
 import { cn2tw_min } from '../cn2tw_min';
 import addCover from './addCover';
 import { addContent } from './addContent';
 import { loadCache } from '../site/cached-data/load';
 import { createMoment } from '@node-novel/cache-loader';
+import { Entry, Feed } from 'opds-extra/lib/v1/core';
 
-// @ts-ignore
-export function makeOPDSShared(feed: OPDSV1.Feed, msg: string = ''): OPDSV1.Feed
+export function makeOPDSShared(feed: Feed, msg: string = ''): Feed
 {
 	feed.books = feed.books || [];
 
-	// @ts-ignore
-	feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+	feed.books.push(Entry.deserialize<Entry>({
 		title: `所有書庫${msg}`,
 		links: [
 			{

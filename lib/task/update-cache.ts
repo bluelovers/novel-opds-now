@@ -1,10 +1,9 @@
 
-import updateCacheAll from '../novel-cache/update';
-import updateCache from '../demonovel/update';
-import loadCacheMasiro from '../masiro/load';
+import updateCache from '../site/demonovel/update';
+import loadCacheMasiro from '../site/masiro/load';
 import updateSegmentCache from '../segment/update';
 import { loadCache, loadCacheAll } from '../site/cached-data/load';
-import { ISiteIDs } from '../novel-cache/types';
+import { ISiteIDs } from '../site/types';
 
 export function updateAllCacheTask(force?: boolean)
 {

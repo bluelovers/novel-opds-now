@@ -1,4 +1,4 @@
 /// <reference types="bluebird" />
-import { OPDSV1 } from 'opds-extra';
-export declare function makeOPDSOtherSource(feed: OPDSV1.Feed): OPDSV1.Feed;
+import { Feed } from 'opds-extra/lib/v1/core';
+export declare function makeOPDSOtherSource(feed: Feed): Feed;
 export declare function makeOPDSOther(): import("bluebird")<any>;
