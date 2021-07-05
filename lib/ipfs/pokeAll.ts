@@ -60,70 +60,78 @@ export function pokeAll(cid: string, ipfs, options?: {
 	filename?: string
 })
 {
-	return Bluebird.resolve(options).then(async (options) => {
+	return Bluebird.resolve()
+		.then(() => {
 
-		if (cachePoke.has(cid))
-		{
-			return null
-		}
+			if (cachePoke.has(cid))
+			{
+				return null
+			}
 
-		cachePoke.add(cid);
+			return Bluebird
+				.resolve(options)
+				.then(async (options) => {
 
-		const { filename } = options ?? {};
+					cachePoke.add(cid);
 
-		let list = await getIpfsGatewayList(ipfs)
-			.then(v => v.ipfsGatewayList)
-			.then(list => {
-				return list.map(gateway => {
-					return toIpfsLink(cid, {
-						prefix: {
-							ipfs: gateway,
-						},
-					});
-				})
-			})
-			.then(list => {
-				//const ipfs_url = ipfsProtocol(cid);
-				const ipfs_share_url = `https://share.ipfs.io/#/${cid}`;
+					const { filename } = options ?? {};
 
-				list.unshift(ipfs_share_url);
-				//list.unshift(ipfs_url);
+					let list = await getIpfsGatewayList(ipfs)
+						.then(v => v.ipfsGatewayList)
+						.then(list => {
+							return list.map(gateway => {
+								return toIpfsLink(cid, {
+									prefix: {
+										ipfs: gateway,
+									},
+								});
+							})
+						})
+						.then(list => {
+							//const ipfs_url = ipfsProtocol(cid);
+							const ipfs_share_url = `https://share.ipfs.io/#/${cid}`;
 
-				filterList('GatewayDomain')
-					.forEach((gateway) => {
-						list.push(ipfsSubdomain(cid, gateway));
-					})
-				;
+							list.unshift(ipfs_share_url);
+							//list.unshift(ipfs_url);
 
-				return list;
-			})
-		;
+							filterList('GatewayDomain')
+								.forEach((gateway) => {
+									list.push(ipfsSubdomain(cid, gateway));
+								})
+							;
 
-		list = array_unique_overwrite(list).filter(href => !notAllowedAddress(href));
+							return list;
+						})
+					;
 
-		console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename);
+					list = array_unique_overwrite(list).filter(href => !notAllowedAddress(href));
 
-		return allSettled(list
-			.map((href) => {
+					console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename);
 
-				if (filename?.length)
-				{
-					let url = new URL(href);
-					url.searchParams.set('filename', filename);
-					href = url.toString();
-				}
+					return allSettled(list
+						.map((href) => {
 
-				return pokeURL(href, {
-					//cors: true,
-					timeout: 10 * 60 * 1000,
-				}).then(data => {
-					return {
-						...data,
-						href,
-					}
-				})
-			}))
-	}).finally(() => cachePoke.delete(cid))
+							if (filename?.length)
+							{
+								let url = new URL(href);
+								url.searchParams.set('filename', filename);
+								href = url.toString();
+							}
+
+							return pokeURL(href, {
+								//cors: true,
+								timeout: 10 * 60 * 1000,
+							}).then(data => {
+								return {
+									...data,
+									href,
+								}
+							})
+						}))
+				}).finally(() => cachePoke.delete(cid))
+
+		})
+	;
 }
 
 export function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>)
