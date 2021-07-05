@@ -6,20 +6,27 @@ const path_1 = require("path");
 const file_1 = (0, tslib_1.__importDefault)(require("./file"));
 const __root_1 = (0, tslib_1.__importDefault)(require("../lib/__root"));
 const serve_favicon_1 = (0, tslib_1.__importDefault)(require("serve-favicon"));
+const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 require("./init");
 const opds_1 = (0, tslib_1.__importDefault)(require("./opds"));
 const search_1 = (0, tslib_1.__importDefault)(require("./search"));
+const request_ip_1 = require("request-ip");
+const express_useragent_1 = (0, tslib_1.__importDefault)(require("express-useragent"));
+const showClient_1 = require("./util/showClient");
 const app = (0, express_1.default)();
 app.use((0, serve_favicon_1.default)((0, path_1.join)(__root_1.default, 'static', 'favicon.png')));
+app.use((0, request_ip_1.mw)());
+app.use(express_useragent_1.default.express());
 app.use('/file', (0, file_1.default)());
 app.use('/opds', (0, opds_1.default)());
 app.use('/search', (0, search_1.default)());
 app.use('/*', (req, res, next) => {
-    console.log(req.method, req.baseUrl, req.url, req.params);
+    logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
+    (0, showClient_1.showClient)(req, res, next);
     next();
 });
 app.use('/.status', (req, res, next) => {
-    console.log(req.headers);
+    logger_1.default.log(req.headers);
     let url;
     try {
         url = new URL('/opds', req.headers.host).href;
@@ -42,6 +49,6 @@ app.use('/*', (req, res) => {
     let html = '';
     res.end(`${html}Welcome to micro<p>請將 <a href="/opds"><script>document.write(window.location.origin + '/opds')</script></a> 加入閱讀器的訂閱內</p><p><script>document.write('<img src="https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + window.location.origin + '/opds"/>')</script></p>`);
 });
-console.debug(`server setup ready`);
+logger_1.default.debug(`server setup ready`);
 exports.default = app;
 //# sourceMappingURL=index.js.map

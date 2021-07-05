@@ -16,25 +16,33 @@ import fileHandler from './file';
 import __root from '../lib/__root';
 import favicon from 'serve-favicon';
 //import { setupGun } from './gun/setup';
+import console from 'debug-color2/logger';
 
 import './init';
 import opdsHandler from './opds';
 //import gunServe from 'gun/lib/serve';
 //import gunHttp from 'gun/lib/http';
 import searchHandler from "./search";
+import { mw } from 'request-ip';
+import { Request } from 'express-serve-static-core';
+import useragent, { Details } from 'express-useragent';
+import { showClient } from './util/showClient';
 
 const app = express();
 
 //app.use(gunServe);
 //app.use('/gun', gunHttp);
 app.use(favicon(join(__root, 'static', 'favicon.png')));
+app.use(mw())
+app.use(useragent.express())
 
 app.use('/file', fileHandler());
 app.use('/opds', opdsHandler());
 app.use('/search', searchHandler());
 
 app.use('/*', (req, res, next) => {
-	console.log(req.method, req.baseUrl, req.url, req.params);
+	console.log(req.method, req.baseUrl, req.url, req.params, req.query);
+	showClient(req, res, next);
 	next();
 });
 
