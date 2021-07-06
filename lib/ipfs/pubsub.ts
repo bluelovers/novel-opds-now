@@ -6,23 +6,21 @@ import console from 'debug-color2/logger';
 import multiaddr from 'multiaddr';
 import { unsubscribeAll } from 'ipfs-util-lib/lib/ipfs/pubsub/unsubscribe';
 import { IIPFSPromiseApi } from "ipfs-types/lib/ipfs/index";
-import { useIPFS } from './use';
+import { useIPFS, getIPFS } from './use';
 import { cid as isCID } from 'is-ipfs';
 import { EndpointConfig } from 'ipfs-http-client';
 import { IUseIPFSApi } from '../types';
 import { Message } from 'ipfs-core-types/src/pubsub';
 import { filterPokeAllSettledResult, pokeAll } from './pokeAll';
+import CID from 'cids';
+import { addMutableFileSystem } from './mfs';
 
 const EPUB_TOPIC = 'novel-opds-now';
 const wssAddr = '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star';
 
 export async function pubsubHandler(msg: Message)
 {
-	const { ipfs } = await useIPFS()
-		.catch(e => null as {
-			ipfs: IUseIPFSApi
-		})
-	;
+	const ipfs = await getIPFS().catch(e => null);
 
 	//console.debug(`[IPFS]`, `pubsubHandler:raw`, msg)
 
@@ -64,6 +62,19 @@ export async function pubsubHandler(msg: Message)
 						}
 					})
 				;
+
+				if (json.siteID && json.novelID && json.path && json.size)
+				{
+					addMutableFileSystem({
+						siteID: json.siteID,
+						novelID: json.novelID,
+						data: {
+							cid: json.cid,
+							path: json.path,
+							size: json.size,
+						}
+					})
+				}
 
 				//console.debug(`[IPFS]`, `pubsubHandler`, msg, json)
 			}
@@ -111,6 +122,27 @@ export async function pubsubPublishHello(ipfs: IUseIPFSApi)
 		;
 }
 
+export async function pubsubPublishEpub<T extends {
+	siteID: string,
+	novelID: string | number,
+	data: {
+		path: string,
+		cid: string | CID,
+		size: number,
+	},
+}>(ipfs: IUseIPFSApi, {
+	siteID,
+	novelID,
+	...data
+}: T)
+{
+	return pubsubPublish(ipfs, {
+		...data,
+		siteID,
+		novelID,
+	})
+}
+
 export async function pubsubPublish<T>(ipfs: IUseIPFSApi, data: T)
 {
 	// @ts-ignore
@@ -119,11 +151,12 @@ export async function pubsubPublish<T>(ipfs: IUseIPFSApi, data: T)
 		console.debug(`[IPFS]`, `[pubsubPublish]`, data)
 	}
 
-	return ipfs
-		.pubsub
-		.publish(EPUB_TOPIC, Buffer.from(JSON.stringify(data)))
+	return Promise.resolve().then(() => {
+		return ipfs
+			.pubsub
+			.publish(EPUB_TOPIC, Buffer.from(JSON.stringify(data)))
+	})
 		.catch(e => console.error(`[IPFS]`, `[pubsubPublish]`, e))
-		;
 }
 
 export async function getPeers(ipfs: IUseIPFSApi): Promise<string[]>

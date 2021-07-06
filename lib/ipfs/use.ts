@@ -268,3 +268,8 @@ export function _info(data?)
 	// @ts-ignore
 	_info.disable = true;
 }
+
+export function getIPFS()
+{
+	return useIPFS().then<IUseIPFSApi>(m => m.ipfs).catch(e => null as IUseIPFSApi)
+}
