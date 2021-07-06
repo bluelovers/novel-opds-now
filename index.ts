@@ -42,16 +42,7 @@ export async function startServer(options: {
 	{
 		showIP(port);
 
-		useIPFS()
-			.catch(e =>
-			{
-				console.error(`[IPFS]`, e)
-			})
-			.tap(() =>
-			{
-				_info();
-			})
-		;
+		useIPFS().catch(e => console.error(`[IPFS]`, e)).tap(() => _info());
 
 	});
 

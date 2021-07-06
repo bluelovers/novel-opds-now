@@ -22,13 +22,7 @@ async function startServer(options = {}) {
     });
     web.listen(port, async () => {
         (0, ip_1.default)(port);
-        (0, use_1.useIPFS)()
-            .catch(e => {
-            logger_1.default.error(`[IPFS]`, e);
-        })
-            .tap(() => {
-            (0, use_1._info)();
-        });
+        (0, use_1.useIPFS)().catch(e => logger_1.default.error(`[IPFS]`, e)).tap(() => (0, use_1._info)());
     });
     return web;
 }
