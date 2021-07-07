@@ -92,7 +92,7 @@ function fileHandler()
 				})
 					.tap(gunData => {
 
-						if (gunData && gunData.exists)
+						if (gunData?.exists)
 						{
 							let msg = '';
 							if (!gunData.isGun)

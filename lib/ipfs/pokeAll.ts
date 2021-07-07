@@ -138,7 +138,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 
 export function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>)
 {
-	return settledResult.filter(v => !v.value.error && v.value.value !== false)
+	return settledResult.filter(v => !v.value.error && v.value.value !== false && v.value.value?.length)
 }
 
 export function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any)

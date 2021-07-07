@@ -60,7 +60,7 @@ function fileHandler() {
                 query,
             })
                 .tap(gunData => {
-                if (gunData && gunData.exists) {
+                if (gunData === null || gunData === void 0 ? void 0 : gunData.exists) {
                     let msg = '';
                     if (!gunData.isGun) {
                         msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`;

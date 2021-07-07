@@ -48,7 +48,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 				let buf = await raceFetchIPFS(data.href, [
 						ipfs as any,
 						...lazyRaceServerList(),
-					], 10 * 60 * 1000, {
+					], 20 * 60 * 1000, {
 //						filter(buf)
 //						{
 //							//console.log(buf)
@@ -61,7 +61,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 						.catch(e =>
 						{
 
-							console.debug(`下載緩存檔案失敗...`, data.href, e)
+							console.debug(`下載緩存檔案失敗...`, data.href, String(e))
 
 							return null as null
 						})

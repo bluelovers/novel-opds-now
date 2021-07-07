@@ -9,16 +9,16 @@ export declare function pokeAll(cid: string, ipfs: any, options?: {
     filename?: string;
 }): Bluebird<import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    error?: Error;
     status?: number;
     statusText?: string;
+    error?: Error;
     headers?: Headers;
     value: string;
 } | {
     href: string;
-    error?: Error;
     status?: number;
     statusText?: string;
+    error?: Error;
     headers?: Headers;
     value: false;
 } | {
@@ -31,16 +31,16 @@ export declare function pokeAll(cid: string, ipfs: any, options?: {
 }, any>[]>;
 export declare function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>): import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    error?: Error;
     status?: number;
     statusText?: string;
+    error?: Error;
     headers?: Headers;
     value: string;
 } | {
     href: string;
-    error?: Error;
     status?: number;
     statusText?: string;
+    error?: Error;
     headers?: Headers;
     value: false;
 } | {
@@ -53,16 +53,16 @@ export declare function filterPokeAllSettledResult(settledResult: ITSUnpackedPro
 }, any>[];
 export declare function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any): Bluebird<import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    error?: Error;
     status?: number;
     statusText?: string;
+    error?: Error;
     headers?: Headers;
     value: string;
 } | {
     href: string;
-    error?: Error;
     status?: number;
     statusText?: string;
+    error?: Error;
     headers?: Headers;
     value: false;
 } | {
