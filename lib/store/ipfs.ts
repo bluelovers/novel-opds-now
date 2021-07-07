@@ -149,7 +149,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 		/**
 		 * 試圖推送至其他 IPFS 伺服器來增加檔案存活率與分流
 		 */
-		await publishToIPFSAll({
+		await publishToIPFSRace({
 			path: data.filename,
 			content,
 		}, [
@@ -161,14 +161,6 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			},
 			timeout: 10 * 60 * 1000,
 		})
-			.tap(settledResult =>
-			{
-				/*
-				(settledResult?.length > 1) && console.debug(`[IPFS]`, `publishToIPFSAll`, inspect(settledResult, {
-					depth: null,
-				}))
-				 */
-			})
 			.each((settledResult, index) =>
 			{
 
