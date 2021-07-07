@@ -198,6 +198,7 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDRes
 					//ipfs.swarm.connect(`/p2p-circuit/ipfs/${peerID}`).catch(e => console.warn(`[IPFS]`, `[connectPeers]`, e)),
 					ipfs.swarm.connect(`/ip4/104.131.131.82/tcp/4001/p2p/${peerID}`, options),
 					ipfs.swarm.connect(`/ip4/123.456.78.90/tcp/4001/p2p/${peerID}`, options),
+					ipfs.swarm.connect(`/p2p/${peerID}`, options),
 
 					//ipfs.swarm.connect(`/ipfs/${me.id}/p2p/${peerID}`, options),
 					//ipfs.swarm.connect(`/ipfs/${me.id}/ipfs/${peerID}`, options),
@@ -208,7 +209,7 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDRes
 		})
 		.catch(e =>
 		{
-			console.error(`[IPFS]`, `[connectPeers]`, e)
+			console.error(`[IPFS]`, `[connectPeers]`, String(e))
 		})
 		;
 }
