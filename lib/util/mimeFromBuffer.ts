@@ -4,9 +4,17 @@ export async function mimeFromBuffer(buffer: Buffer)
 {
 	let { mime, ext } = await fromBuffer(buffer);
 
-	if (ext === 'epub' && mime === 'application/zip')
+	if (mime === 'application/zip')
 	{
-		mime = 'application/epub+zip' as const;
+		if (ext === 'zip')
+		{
+			mime = 'application/epub+zip' as const;
+			ext = 'epub' as const;
+		}
+		else if (ext === 'epub')
+		{
+			mime = 'application/epub+zip' as const;
+		}
 	}
 
 	return {
