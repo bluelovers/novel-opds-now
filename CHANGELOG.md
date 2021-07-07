@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.8](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.7...novel-opds-now@3.0.8) (2021-07-07)
+
+
+### ✨　Features
+
+* 將 zip 視為 epub ([0f3baf2](https://github.com/bluelovers/novel-opds-now/commit/0f3baf29b2d7445d6caba885ffc2383eaa92b720))
+* 加速下載緩存檔案 ([c7712f6](https://github.com/bluelovers/novel-opds-now/commit/c7712f6ab5fd10c6fa92606932eeb2e4cb4f2ef2))
+* 優化訊息顯示 並且延長下載允許時間 ([42f0ecb](https://github.com/bluelovers/novel-opds-now/commit/42f0ecb6de2ee518514eb9d588e508c79f99ae5f))
+* 由於可以用 poke 取代 publishToIPFSAll 所以改用 publishToIPFSRace ([a23972a](https://github.com/bluelovers/novel-opds-now/commit/a23972ab4b557102339ea7da7304f471212d1b88))
+* 優化錯誤訊息顯示 ([949a88e](https://github.com/bluelovers/novel-opds-now/commit/949a88e934eace1b8cbd876ca1777968addf8fdd))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([c89ee27](https://github.com/bluelovers/novel-opds-now/commit/c89ee2712b922a7112945304edaaaf382c8fb3a6))
+
+
+
+
+
 ## [3.0.7](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.6...novel-opds-now@3.0.7) (2021-07-07)
 
 
