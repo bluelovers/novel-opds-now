@@ -18,6 +18,7 @@ import { pubsubPublish, pubsubPublishEpub } from '../ipfs/pubsub';
 import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from '../ipfs/pokeAll';
 import { addMutableFileSystem } from '../ipfs/mfs';
 import { fromBuffer } from 'file-type';
+import { downloadEpubRace } from './downloadEpubRace';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -33,7 +34,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 	return getEpubFileInfo(siteID, novelID)
 		.catch(TimeoutError, e =>
 		{
-			console.error(e);
+			console.error(`getEpubFileInfo`, String(e));
 			return null
 		})
 		.then(async (data) =>
@@ -41,28 +42,12 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 			console.debug(`驗證緩存檔案...`)
 			if (checkGunData(data))
 			{
-				let ipfs = await getIPFS().timeout(3 * 1000).catch(e => null as null);
-
 				console.debug(`下載緩存檔案...`, data.href)
 
-				let buf = await raceFetchIPFS(data.href, [
-						ipfs as any,
-						...lazyRaceServerList(),
-					], 20 * 60 * 1000, {
-//						filter(buf)
-//						{
-//							//console.log(buf)
-//
-//							//let { mime, ext } = await fromBuffer(fileContents);
-//
-//							return true
-//						},
-					})
+				let buf = await downloadEpubRace(data.href)
 						.catch(e =>
 						{
-
 							console.debug(`下載緩存檔案失敗...`, data.href, String(e))
-
 							return null as null
 						})
 				;
@@ -104,9 +89,22 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 
 			return null as null
 		})
-		.catch(e =>
+		.catch(async (e) =>
 		{
-			console.error(e);
+			try
+			{
+				let json = await e.json()
+
+				if (json.error !== true)
+				{
+					console.debug(`getEpubFileInfo`, json);
+				}
+			}
+			catch (e2)
+			{
+				console.error(e);
+			}
+
 			return null as null
 		})
 		;

@@ -19,6 +19,7 @@ import { getGunEpubFile2 } from '../lib/store';
 import contentDisposition from '@lazy-http/content-disposition';
 import { showClient } from './util/showClient';
 import { getIPFSEpubFile, putIPFSEpubFile } from '../lib/store/ipfs';
+import { mimeFromBuffer } from '../lib/util/mimeFromBuffer';
 
 export type IRouter = Router;
 
@@ -276,12 +277,7 @@ function fileHandler()
 					let readStream = new PassThrough();
 					readStream.end(fileContents);
 
-					let { mime, ext } = await fromBuffer(fileContents);
-
-					if (ext === 'epub' && mime === 'application/zip')
-					{
-						mime = 'application/epub+zip';
-					}
+					let { mime, ext } = await mimeFromBuffer(fileContents);
 
 					let http_filename = filename;
 

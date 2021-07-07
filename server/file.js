@@ -8,7 +8,6 @@ const const_2 = require("../lib/const");
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const stream_1 = require("stream");
-const file_type_1 = require("file-type");
 const __root_1 = (0, tslib_1.__importDefault)(require("../lib/__root"));
 const util_1 = require("novel-downloader/src/all/util");
 const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
@@ -17,6 +16,7 @@ const store_1 = require("../lib/store");
 const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
 const showClient_1 = require("./util/showClient");
 const ipfs_1 = require("../lib/store/ipfs");
+const mimeFromBuffer_1 = require("../lib/util/mimeFromBuffer");
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:siteID/:novelID', (req, res) => {
@@ -177,10 +177,7 @@ function fileHandler() {
             else {
                 let readStream = new stream_1.PassThrough();
                 readStream.end(fileContents);
-                let { mime, ext } = await (0, file_type_1.fromBuffer)(fileContents);
-                if (ext === 'epub' && mime === 'application/zip') {
-                    mime = 'application/epub+zip';
-                }
+                let { mime, ext } = await (0, mimeFromBuffer_1.mimeFromBuffer)(fileContents);
                 let http_filename = filename;
                 if (query.filename) {
                     http_filename = String(query.filename);
