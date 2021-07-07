@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.5](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.4...novel-opds-now@3.0.5) (2021-07-07)
+
+
+### ✨　Features
+
+* 支援設定 `disposable` 模式 可使用 `process.env.IPFS_DISPOSABLE` 或啟動時 `--disposable` ([c94acdd](https://github.com/bluelovers/novel-opds-now/commit/c94acdd57804865e4ffaaf38be6573dc50eeba46))
+* reportPokeAllSettledResult ([ef44cba](https://github.com/bluelovers/novel-opds-now/commit/ef44cba8fb8151e53932491d7da5c415b3945b2e))
+* addMutableFileSystem ([8f6f706](https://github.com/bluelovers/novel-opds-now/commit/8f6f7060054b64f21f44af2581bd256f94a32ec4))
+* tmpPath() ([92cdbe2](https://github.com/bluelovers/novel-opds-now/commit/92cdbe2da74c2062d0528d3e5873e652b0457f46))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([f0ed4cc](https://github.com/bluelovers/novel-opds-now/commit/f0ed4cc3d4830d0bddb52251835358ae97f0a31c))
+* **cache:** update cache ([0ff1d8d](https://github.com/bluelovers/novel-opds-now/commit/0ff1d8d749b8ae7932232c4cdefba3d2cc4f33f6))
+* **cache:** update cache ([1617e54](https://github.com/bluelovers/novel-opds-now/commit/1617e54970da10547978ab8f8ea8027d9b9f4ebc))
+* **cache:** update cache ([60ca341](https://github.com/bluelovers/novel-opds-now/commit/60ca3418cdda5c81cb1e1bf373bcfe782519e606))
+* **cache:** update cache ([b7a67b1](https://github.com/bluelovers/novel-opds-now/commit/b7a67b1d435535d6eac15db0d1e29e8b0b98332b))
+* **cache:** update cache ([b9b50d6](https://github.com/bluelovers/novel-opds-now/commit/b9b50d60aeefb8f6bb35c556a50638d0f536e264))
+
+
+### 🔖　Miscellaneous
+
+* . ([b0dd8e9](https://github.com/bluelovers/novel-opds-now/commit/b0dd8e96dea8129c71344dac4b5914ed2f88927d))
+
+
+
+
+
 ## [3.0.4](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.3...novel-opds-now@3.0.4) (2021-07-05)
 
 
