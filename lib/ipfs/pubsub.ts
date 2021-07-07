@@ -14,6 +14,7 @@ import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from 
 import CID from 'cids';
 import { addMutableFileSystem } from './mfs';
 import { getIPFS } from './use';
+import { IDResult } from 'ipfs-core-types/src/root';
 
 const EPUB_TOPIC = 'novel-opds-now';
 const wssAddr = '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star';
@@ -109,11 +110,14 @@ export async function pubsubPublishHello(ipfs: IUseIPFSApi)
 	return ipfs.id()
 		.then(data =>
 		{
-			return pubsubPublish(ipfs, {
-				peerID: data.id,
-				type: 1,
-			})
-				;
+			return 	Promise.all([
+				connectPeers(ipfs, `12D3KooWEJeVsMMPWdnxHFMaU5uqggtULrF3gHxu15uW5scP8DTJ`)
+				,
+				pubsubPublish(ipfs, {
+					peerID: data.id,
+					type: 1,
+				})
+			])
 		})
 		;
 }
@@ -165,11 +169,18 @@ export async function getPeers(ipfs: IUseIPFSApi): Promise<string[]>
 		})
 }
 
-export async function connectPeers(ipfs: IUseIPFSApi, peerID: string)
+export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDResult)
 {
-	return ipfs.id()
+	return Promise.resolve(me ?? ipfs.id({
+		timeout: 3000
+		}))
 		.then(me =>
 		{
+
+			let options = {
+				timeout: 20 * 1000,
+			};
+
 			return (me.id && me.id !== peerID) && Bluebird
 				.any([
 					/*
@@ -184,13 +195,20 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string)
 							console.warn(`[connectPeers]`, e)
 						}),
 					 */
-					ipfs.swarm.connect(`/p2p-circuit/ipfs/${peerID}`)
-						.catch(e => console.warn(`[IPFS]`, `[connectPeers]`, e)),
+					//ipfs.swarm.connect(`/p2p-circuit/ipfs/${peerID}`).catch(e => console.warn(`[IPFS]`, `[connectPeers]`, e)),
+					ipfs.swarm.connect(`/ip4/104.131.131.82/tcp/4001/p2p/${peerID}`, options),
+					ipfs.swarm.connect(`/ip4/123.456.78.90/tcp/4001/p2p/${peerID}`, options),
+
+					//ipfs.swarm.connect(`/ipfs/${me.id}/p2p/${peerID}`, options),
+					//ipfs.swarm.connect(`/ipfs/${me.id}/ipfs/${peerID}`, options),
+
+					//ipfs.swarm.connect(`/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ/p2p-circuit/ipfs/${peerID}`, options),
+
 				])
-				.catch(e =>
-				{
-					console.error(`[IPFS]`, `[connectPeers]`, e)
-				})
+		})
+		.catch(e =>
+		{
+			console.error(`[IPFS]`, `[connectPeers]`, e)
 		})
 		;
 }
@@ -198,8 +216,17 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string)
 export function connectPeersAll(ipfs: IUseIPFSApi)
 {
 	return Bluebird
-		.each(getPeers(ipfs), async (peerID) =>
-		{
-			return connectPeers(ipfs, peerID)
+		.props({
+			me: ipfs.id({
+				timeout: 3000,
+			}),
+			peers: getPeers(ipfs),
 		})
+		.then(data => {
+			return Bluebird.each(data.peers, async (peerID) =>
+			{
+				return connectPeers(ipfs, peerID, data.me)
+			})
+		})
+
 }

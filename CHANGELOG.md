@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.7](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.6...novel-opds-now@3.0.7) (2021-07-07)
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([0983581](https://github.com/bluelovers/novel-opds-now/commit/09835815d5fc3d64fab2ba9404c3f5a5aee2c50b))
+
+
+
+
+
 ## [3.0.6](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.5...novel-opds-now@3.0.6) (2021-07-07)
 
 
