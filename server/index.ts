@@ -27,6 +27,12 @@ import { mw } from 'request-ip';
 import { Request } from 'express-serve-static-core';
 import useragent, { Details } from 'express-useragent';
 import { showClient } from './util/showClient';
+import { getIPFS, useIPFS } from '../lib/ipfs/use';
+import { isLocalNetwork, notAllowCors } from '../lib/ip';
+import { networkInterfaces } from 'os';
+import { format as urlFormat } from 'url';
+import terminalLink from 'terminal-link';
+import searchIPAddress from 'address2';
 
 const app = express();
 
@@ -46,7 +52,7 @@ app.use('/*', (req, res, next) => {
 	next();
 });
 
-app.use('/.status', (req, res, next) => {
+app.use('/.status', async (req, res, next) => {
 
 	console.log(req.headers)
 
@@ -63,11 +69,103 @@ app.use('/.status', (req, res, next) => {
 		url = (req.headers.host || '') + '/opds'
 	}
 
+	let isLocal = await Promise.resolve().then(() => isLocalNetwork(req.clientIp)).catch(e => null as null);
+
+	let interfaces = isLocal && Promise.resolve().then(() => {
+		let ip = searchIPAddress();
+		let interfaceName = ip;
+		let port = process.env.PORT;
+
+		let interfaces = networkInterfaces();
+		Object.entries(interfaces)
+			.forEach(([name, data]) =>
+			{
+
+				let _skip = false;
+
+				data = data
+					.filter(v =>
+					{
+
+						if (ip && v.address === ip)
+						{
+							interfaceName = name;
+							_skip = true;
+						}
+						else if (v.address === '127.0.0.1' || v.address === '::1')
+						{
+							_skip = true;
+						}
+
+						return v.address && !_skip
+					})
+				;
+
+				if (_skip)
+				{
+					return;
+				}
+
+				let ls = data
+					.filter(v =>
+					{
+						return v.family === 'IPv4'
+					})
+				;
+
+				return (ls.length ? ls : data)
+					.forEach(v =>
+					{
+						let ip = v.address;
+						return urlFormat({
+							protocol: 'http',
+							hostname: ip,
+							port,
+							pathname: '/opds',
+						});
+					})
+				;
+			})
+		;
+
+		return interfaces;
+	}).catch(e => null as null)
+
+	let ipfs = await useIPFS().timeout(3000).then(_cache => {
+		return Bluebird.props({
+			//ipfs: _cache.ipfs,
+			id: _cache.ipfs.id({
+				timeout: 3000,
+			}).then(v => {
+				let { id, agentVersion, protocolVersion } = v;
+
+				return {
+					id, agentVersion, protocolVersion
+				}
+			}).catch(e => null as null),
+			version: _cache.ipfs.version({
+				timeout: 3000,
+			}).catch(e => null as null),
+			address: isLocal && Bluebird.resolve(_cache.address()).timeout(3000).catch(e => null as null),
+		})
+	}).catch(e => null as null);
+
 	return res.json({
 		timestamp: Date.now(),
 		live: true,
 		opds: url,
 		opds_qr: 'https://chart.apis.google.com/chart?cht=qr&chs=300x300&chl=' + url,
+
+		ipfs: await ipfs,
+
+		interfaces: await interfaces,
+
+		user: {
+			client: req.clientIp,
+			useragent: req.useragent,
+			headers: req.headers,
+		},
+
 	})
 
 });

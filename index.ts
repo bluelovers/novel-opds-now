@@ -37,7 +37,8 @@ export async function startServer(options: {
 
 	port = (port as number | 0) || getPort(getPortEnv());
 
-	port = await findPort({
+	// @ts-ignore
+	process.env.PORT = port = await findPort({
 		port: makeRange(port, (port | 0) + 10),
 	});
 

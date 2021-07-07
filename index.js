@@ -19,7 +19,7 @@ async function startServer(options = {}) {
     process.env.IPFS_DISPOSABLE = (_a = options.disposable) !== null && _a !== void 0 ? _a : process.env.IPFS_DISPOSABLE;
     const web = await (0, http_1.createServer)((0, micro_1.default)(await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('./server/index'))).then(m => m.default)));
     port = port || (0, getPort_1.default)((0, getPort_1.getPortEnv)());
-    port = await (0, get_port_1.default)({
+    process.env.PORT = port = await (0, get_port_1.default)({
         port: (0, get_port_1.makeRange)(port, (port | 0) + 10),
     });
     web.listen(port, async () => {
