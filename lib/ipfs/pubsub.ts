@@ -6,14 +6,14 @@ import console from 'debug-color2/logger';
 import multiaddr from 'multiaddr';
 import { unsubscribeAll } from 'ipfs-util-lib/lib/ipfs/pubsub/unsubscribe';
 import { IIPFSPromiseApi } from "ipfs-types/lib/ipfs/index";
-import { useIPFS, getIPFS } from './use';
 import { cid as isCID } from 'is-ipfs';
 import { EndpointConfig } from 'ipfs-http-client';
 import { IUseIPFSApi } from '../types';
 import { Message } from 'ipfs-core-types/src/pubsub';
-import { filterPokeAllSettledResult, pokeAll } from './pokeAll';
+import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from './pokeAll';
 import CID from 'cids';
 import { addMutableFileSystem } from './mfs';
+import { getIPFS } from './use';
 
 const EPUB_TOPIC = 'novel-opds-now';
 const wssAddr = '/dns4/ws-star.discovery.libp2p.io/tcp/443/wss/p2p-websocket-star';
@@ -55,11 +55,7 @@ export async function pubsubHandler(msg: Message)
 				pokeAll(json.cid, ipfs)
 					.tap(settledResult =>
 					{
-						if (settledResult?.length)
-						{
-							let list = filterPokeAllSettledResult(settledResult);
-							console.info(`[IPFS]`, `pubsubHandler`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, json.cid, json.path);
-						}
+						return reportPokeAllSettledResult(settledResult, json.cid, json.path)
 					})
 				;
 

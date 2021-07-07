@@ -5,6 +5,7 @@ import { toCID } from '@lazy-ipfs/to-cid';
 import { DAGLink } from 'ipld-dag-pb'
 import console from 'debug-color2/logger';
 import { StatResult } from 'ipfs-core-types/src/files';
+import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from './pokeAll';
 
 export function addMutableFileSystem(options: {
 	siteID: string,
@@ -49,6 +50,21 @@ export function addMutableFileSystem(options: {
 			await ipfs.files.cp(`/ipfs/${patched}`, dir_path);
 
 		}
+
+		let root_stat: StatResult = await ipfs.files.stat(`/novel-opds-now/`, {
+			hash: true,
+		});
+
+		let root_cid = root_stat.cid;
+		root_stat = void 0;
+
+		console.debug(`[IPFS]`, `addMutableFileSystem:root`, `poke`, root_cid)
+		pokeAll(root_cid as any, ipfs)
+			.tap(settledResult =>
+			{
+				return reportPokeAllSettledResult(settledResult, root_cid)
+			})
+		;
 
 		console.debug(`[IPFS]`, `addMutableFileSystem:done`, dir_path, dir_stat)
 

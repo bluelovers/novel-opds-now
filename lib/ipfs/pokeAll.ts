@@ -60,10 +60,12 @@ export function pokeAll(cid: string, ipfs, options?: {
 	filename?: string
 })
 {
+	const cid_str = cid.toString();
+
 	return Bluebird.resolve()
 		.then(() => {
 
-			if (cachePoke.has(cid))
+			if (cachePoke.has(cid_str))
 			{
 				return null
 			}
@@ -72,7 +74,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 				.resolve(options)
 				.then(async (options) => {
 
-					cachePoke.add(cid);
+					cachePoke.add(cid_str);
 
 					const { filename } = options ?? {};
 
@@ -128,7 +130,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 								}
 							})
 						}))
-				}).finally(() => cachePoke.delete(cid))
+				}).finally(() => cachePoke.delete(cid_str))
 
 		})
 	;
@@ -137,6 +139,31 @@ export function pokeAll(cid: string, ipfs, options?: {
 export function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>)
 {
 	return settledResult.filter(v => !v.value.error && v.value.value !== false)
+}
+
+export function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any)
+{
+	return Bluebird.resolve(settledResult).tap(settledResult =>
+{
+	if (settledResult?.length)
+	{
+		let list = filterPokeAllSettledResult(settledResult)
+			.map(m => {
+
+				// @ts-ignore
+				if (m.value?.value?.length)
+				{
+					return m.value.href
+				}
+
+				return m
+			})
+		;
+
+		console.debug(`[IPFS]`, `pokeAll:done`, list)
+		console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, ...msg)
+	}
+})
 }
 
 export default pokeAll
