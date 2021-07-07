@@ -117,3 +117,4 @@ radata-*.tmp
 /.cache/cached/esjzone/esjzone.json
 /.cache/cached/wenku8/wenku8.json
 /.cache/cached/wenku8/wenku8.json.stat
+/tmp

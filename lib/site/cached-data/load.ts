@@ -5,7 +5,7 @@ import { ISiteIDs } from '../types';
 import { buildCache } from './build';
 import Bluebird from 'bluebird';
 
-export function loadCacheAll(force?: boolean)
+export function loadCacheAll(force: boolean)
 {
 	return Bluebird.all((<ISiteIDs[]>['wenku8', 'dmzj','esjzone'] ).map((siteID) => loadCache(siteID, force)))
 }
@@ -14,7 +14,7 @@ export function loadCacheAll(force?: boolean)
  * @example
  * loadCache('wenku8', true)
  */
-export function loadCache(siteID: ISiteIDs, force?: boolean): ReturnType<typeof buildCache>
+export function loadCache(siteID: ISiteIDs, force: boolean): ReturnType<typeof buildCache>
 {
 	return getLocalOrRebuild(getCacheFilename(`${siteID}/builded.json`), {
 
@@ -26,7 +26,7 @@ export function loadCache(siteID: ISiteIDs, force?: boolean): ReturnType<typeof 
 			() =>
 			{
 				console.debug(`嘗試更新 ${siteID}`);
-				return import('./build').then(m => m.buildCache(siteID).tap(v => console.success(`[${siteID}] 更新完成`)))
+				return import('./build').then(m => m.buildCache(siteID, force).tap(v => console.success(`[${siteID}] 更新完成`)))
 			},
 		],
 	})

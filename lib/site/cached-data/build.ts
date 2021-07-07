@@ -6,7 +6,7 @@ import { getCacheFilename } from '../../util/index';
 import console from 'debug-color2/logger';
 import fetch from '../../fetch';
 
-export function updateCache(siteID: ISiteIDs, force?: boolean): Bluebird<IRecordCachedJSONRow>
+export function updateCache(siteID: ISiteIDs, force: boolean): Bluebird<IRecordCachedJSONRow>
 {
 	const url = `https://raw.githubusercontent.com/bluelovers/ws-rest/master/packages/%40demonovel/cached-data/cache/build/${siteID}.json` as const;
 
@@ -26,7 +26,7 @@ export function updateCache(siteID: ISiteIDs, force?: boolean): Bluebird<IRecord
 	})
 }
 
-export function buildCache(siteID: ISiteIDs, force?: boolean)
+export function buildCache(siteID: ISiteIDs, force: boolean)
 {
 	return updateCache(siteID, force)
 		.then(table =>

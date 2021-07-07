@@ -10,11 +10,13 @@ const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 const get_port_1 = (0, tslib_1.__importStar)(require("get-port"));
 const use_1 = require("./lib/ipfs/use");
 async function startServer(options = {}) {
+    var _a;
     options = options || {};
     let { port } = options;
     if (options.proxy) {
         process.env.HTTP_PROXY = process.env.HTTPS_PROXY = options.proxy;
     }
+    process.env.IPFS_DISPOSABLE = (_a = options.disposable) !== null && _a !== void 0 ? _a : process.env.IPFS_DISPOSABLE;
     const web = await (0, http_1.createServer)((0, micro_1.default)(await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('./server/index'))).then(m => m.default)));
     port = port || (0, getPort_1.default)((0, getPort_1.getPortEnv)());
     port = await (0, get_port_1.default)({

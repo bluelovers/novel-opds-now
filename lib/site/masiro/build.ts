@@ -6,7 +6,7 @@ import Bluebird from 'bluebird';
 import newNovelUUID from '@demonovel/uuid';
 import { updateCache } from '../cached-data/build';
 
-export function buildCache(force?: boolean)
+export function buildCache(force: boolean)
 {
 	const siteID = 'masiro';
 

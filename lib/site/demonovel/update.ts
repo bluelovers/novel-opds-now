@@ -13,7 +13,7 @@ import getProxy from '../../getProxy';
 
 let url = `https://gitlab.com/novel-group/txt-source/raw/master/novel-stat.json`;
 
-export async function updateCache(force?: boolean)
+export async function updateCache(force: boolean)
 {
 	let localFile = getLocalFilename();
 

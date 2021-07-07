@@ -19,7 +19,8 @@ import { _info, useIPFS } from './lib/ipfs/use';
 
 export async function startServer(options: {
 	port?: number | string,
-	proxy?: string
+	proxy?: string,
+	disposable?: boolean,
 } = {})
 {
 	options = options || {};
@@ -29,6 +30,8 @@ export async function startServer(options: {
 	{
 		process.env.HTTP_PROXY = process.env.HTTPS_PROXY = options.proxy;
 	}
+
+	process.env.IPFS_DISPOSABLE = options.disposable ?? process.env.IPFS_DISPOSABLE;
 
 	const web = await _createServer(micro(await import('./server/index').then(m => m.default)));
 

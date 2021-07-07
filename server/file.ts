@@ -15,9 +15,10 @@ import __root from '../lib/__root';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
 import { async as crossSpawn } from 'cross-spawn-extra';
-import { getGunEpubFile, getGunEpubFile2, putGunEpubFile } from '../lib/store';
+import { getGunEpubFile2 } from '../lib/store';
 import contentDisposition from '@lazy-http/content-disposition';
 import { showClient } from './util/showClient';
+import { getIPFSEpubFile, putIPFSEpubFile } from '../lib/store/ipfs';
 
 export type IRouter = Router;
 
@@ -83,7 +84,7 @@ function fileHandler()
 			{
 				console.info(`檢查是否存在緩存...`);
 
-				return getGunEpubFile(IDKEY, [
+				return getIPFSEpubFile(IDKEY, [
 					req.params.novelID,
 					novel_id,
 				], {
@@ -247,7 +248,7 @@ function fileHandler()
 						base64: isFromBuffer ? data.base64 : fileContents.toString('base64'),
 					};
 
-					putGunEpubFile([
+					putIPFSEpubFile([
 						//siteID,
 						//req.params.siteID,
 						//data.IDKEY,
@@ -262,6 +263,7 @@ function fileHandler()
 					], gunData, {
 
 					});
+
 				}
 
 				if (res.connection?.destroyed)

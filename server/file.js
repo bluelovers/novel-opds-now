@@ -16,6 +16,7 @@ const cross_spawn_extra_1 = require("cross-spawn-extra");
 const store_1 = require("../lib/store");
 const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
 const showClient_1 = require("./util/showClient");
+const ipfs_1 = require("../lib/store/ipfs");
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:siteID/:novelID', (req, res) => {
@@ -52,7 +53,7 @@ function fileHandler() {
         })
             .then(async () => {
             logger_1.default.info(`檢查是否存在緩存...`);
-            return (0, store_1.getGunEpubFile)(IDKEY, [
+            return (0, ipfs_1.getIPFSEpubFile)(IDKEY, [
                 req.params.novelID,
                 novel_id,
             ], {
@@ -159,7 +160,7 @@ function fileHandler() {
                     filename,
                     base64: isFromBuffer ? data.base64 : fileContents.toString('base64'),
                 };
-                (0, store_1.putGunEpubFile)([
+                (0, ipfs_1.putIPFSEpubFile)([
                     IDKEY,
                 ], [
                     novel_id,

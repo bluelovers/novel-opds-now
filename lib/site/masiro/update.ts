@@ -9,7 +9,7 @@ import { getLocalOrRebuild } from '@demonovel/local-or-rebuild-file';
 
 const url2 = `https://raw.githubusercontent.com/demonovel/masiro-mega-to-ipfs/master/test/cache/cache.json`;
 
-export function updateCache2(force?: boolean): Bluebird<Record<string, number>>
+export function updateCache2(force: boolean): Bluebird<Record<string, number>>
 {
 	return getLocalOrRebuild(getCacheFilename('masiro/update.json'), {
 

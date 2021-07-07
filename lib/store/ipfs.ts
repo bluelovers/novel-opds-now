@@ -3,7 +3,7 @@ import { getEpubFileInfo, putEpubFileInfo } from '../ipfs/index';
 import Bluebird, { TimeoutError } from 'bluebird';
 import checkGunData from '../util/checkData';
 import fetchIPFS from 'fetch-ipfs';
-import { useIPFS } from '../ipfs/use';
+import { getIPFS } from '../ipfs/use';
 import { IGunEpubData, IGunEpubNode } from '../types';
 import console from 'debug-color2/logger';
 import { pathToCid, toLink } from 'to-ipfs-url';
@@ -14,8 +14,10 @@ import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import { processExit } from '../processExit';
 import { inspect } from 'util';
-import { pubsubPublish } from '../ipfs/pubsub';
-import { filterPokeAllSettledResult, pokeAll } from '../ipfs/pokeAll';
+import { pubsubPublish, pubsubPublishEpub } from '../ipfs/pubsub';
+import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from '../ipfs/pokeAll';
+import { addMutableFileSystem } from '../ipfs/mfs';
+import { fromBuffer } from 'file-type';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -29,31 +31,46 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 	let { siteID, novelID } = handleArgvList(_siteID, _novelID);
 
 	return getEpubFileInfo(siteID, novelID)
-		.catch(TimeoutError, e => {
+		.catch(TimeoutError, e =>
+		{
 			console.error(e);
 			return null
 		})
 		.then(async (data) =>
 		{
+			console.debug(`驗證緩存檔案...`)
 			if (checkGunData(data))
 			{
-				let { ipfs } = await useIPFS()
-					.then(data => {
-						processExit(data.stop)
-						return data;
-					})
-					.catch(e => console.error(e) as null)
-				;
+				let ipfs = await getIPFS().timeout(3 * 1000).catch(e => null as null);
+
+				console.debug(`下載緩存檔案...`, data.href)
 
 				let buf = await raceFetchIPFS(data.href, [
-					ipfs as any,
-					...lazyRaceServerList(),
-				], 10 * 1000)
-					.catch(e => null)
+						ipfs as any,
+						...lazyRaceServerList(),
+					], 10 * 60 * 1000, {
+//						filter(buf)
+//						{
+//							//console.log(buf)
+//
+//							//let { mime, ext } = await fromBuffer(fileContents);
+//
+//							return true
+//						},
+					})
+						.catch(e =>
+						{
+
+							console.debug(`下載緩存檔案失敗...`, data.href, e)
+
+							return null as null
+						})
 				;
 
-				if (buf && buf.length)
+				if (buf?.length)
 				{
+					console.debug(`分析緩存檔案...`, data.href)
+
 					data.base64 = buf.toString('base64');
 
 					let { base64, filename, exists, timestamp, href } = data;
@@ -85,11 +102,12 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 				}
 			}
 
-			return null
+			return null as null
 		})
-		.catch(e => {
+		.catch(e =>
+		{
 			console.error(e);
-			return null
+			return null as null
 		})
 		;
 }
@@ -114,13 +132,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 	let content = Buffer.from(base64, 'base64');
 
-	let { ipfs } = await useIPFS()
-		.then(data => {
-			processExit(data.stop)
-			return data;
-		})
-		.catch(e => console.error(e) as null)
-	;
+	let ipfs = await getIPFS().catch(e => null as null);
 
 	if (!ipfs)
 	{
@@ -147,16 +159,18 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			addOptions: {
 				pin: false,
 			},
-			timeout: 30 * 1000,
+			timeout: 10 * 60 * 1000,
 		})
-			.tap(settledResult => {
+			.tap(settledResult =>
+			{
 				/*
 				(settledResult?.length > 1) && console.debug(`[IPFS]`, `publishToIPFSAll`, inspect(settledResult, {
 					depth: null,
 				}))
 				 */
 			})
-			.each((settledResult, index) => {
+			.each((settledResult, index) =>
+			{
 
 				// @ts-ignore
 				let value: IIPFSFileApiAddReturnEntry[] = settledResult.value ?? settledResult.reason?.value;
@@ -165,7 +179,8 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 				{
 					const { status } = settledResult;
 
-					value.forEach((result, i) => {
+					value.forEach((result, i) =>
+					{
 						const resultCID = result.cid.toString();
 
 						if (cid !== resultCID)
@@ -173,11 +188,26 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 							//console.debug(`[${status}]`, inspect(result));
 							console.debug(`[IPFS]`, `publishToIPFSAll`, `[${status}]`, cid = resultCID);
 
+							/*
 							pubsubPublish(ipfs, {
 								cid: resultCID,
 								path: result.path,
 								size: result.size,
 							})
+							 */
+
+							ipfs && pubsubPublishEpub(ipfs, {
+								siteID,
+								novelID,
+								data: result,
+							});
+
+							ipfs && addMutableFileSystem({
+								siteID,
+								novelID,
+								data: result,
+							});
+
 						}
 					})
 				}
@@ -209,14 +239,9 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 		}
 
 		pokeAll(cid, ipfs, data)
-			.tap(settledResult => {
-				if (settledResult?.length)
-				{
-					let list = filterPokeAllSettledResult(settledResult);
-
-					console.debug(`[IPFS]`, `pokeAll:done`, list)
-					console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, cid, data.filename)
-				}
+			.tap(settledResult =>
+			{
+				return reportPokeAllSettledResult(settledResult, cid, data.filename)
 			})
 		;
 
@@ -233,7 +258,8 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	delete data.base64;
 
 	await putEpubFileInfo(siteID, novelID, data as any)
-		.tap(async (json) => {
+		.tap(async (json) =>
+		{
 
 			console.debug(`putEpubFileInfo:return`, json);
 
