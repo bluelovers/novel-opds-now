@@ -99,7 +99,16 @@ function fileHandler()
 						if (gunData?.exists)
 						{
 							let msg = '';
-							if (!gunData.isGun)
+							if (query.debug || query.force)
+							{
+								let mod = ` FORCE 模式`
+								if (query.debug)
+								{
+									mod = ` DEBUG 模式`
+								}
+								msg = `，但${mod}已啟動，將試圖先從原始網站抓取更新`
+							}
+							else if (!gunData.isGun)
 							{
 								msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`
 							}
@@ -125,6 +134,9 @@ function fileHandler()
 							return gunData
 						}
 
+						/**
+						 * @todo 在打包結束前只執行一次任務，不多次執行
+						 */
 						console.log(`從原始來源網站抓取打包小說中...`);
 						let cp = await crossSpawn('node', [
 							'--experimental-worker',

@@ -208,7 +208,7 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDRes
 		})
 		.catch(e =>
 		{
-			console.warn(`[IPFS]`, `[connectPeers]`, String(e))
+			console.warn(`[IPFS]`, `[connectPeers]`, peerID, String(e))
 		})
 		;
 }

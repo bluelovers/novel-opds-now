@@ -62,7 +62,14 @@ function fileHandler() {
                 .tap(gunData => {
                 if (gunData === null || gunData === void 0 ? void 0 : gunData.exists) {
                     let msg = '';
-                    if (!gunData.isGun) {
+                    if (query.debug || query.force) {
+                        let mod = ` FORCE 模式`;
+                        if (query.debug) {
+                            mod = ` DEBUG 模式`;
+                        }
+                        msg = `，但${mod}已啟動，將試圖先從原始網站抓取更新`;
+                    }
+                    else if (!gunData.isGun) {
                         msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`;
                     }
                     logger_1.default.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp));

@@ -26,7 +26,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 	},
 })
 {
-	let { query = {} } = options || {};
+	let { query = {} as null } = options || {} as null;
 
 	let { siteID, novelID } = handleArgvList(_siteID, _novelID);
 
