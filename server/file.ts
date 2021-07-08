@@ -85,6 +85,9 @@ function fileHandler()
 			{
 				console.info(`檢查是否存在緩存...`);
 
+				/**
+				 * @todo 修改為直接先判斷是否過期，如果過期則同時下載緩存以及從原始網站打包
+				 */
 				return getIPFSEpubFile(IDKEY, [
 					req.params.novelID,
 					novel_id,
