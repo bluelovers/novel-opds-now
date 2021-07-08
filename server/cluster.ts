@@ -3,7 +3,7 @@
  */
 
 import cluster from 'cluster';
-import { startServer } from '../';
+import { startServer } from '../index';
 
 /**
  * idea 無法停止 sub process 所以取消 cluster

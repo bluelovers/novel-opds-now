@@ -249,6 +249,19 @@ function fileHandler()
 					fileContents = await readFile(data.epub);
 				}
 
+				if (query.debug)
+				{
+					console.debug(`忽略刪除下載暫存 ${data.outputDir}`);
+				}
+				else if (typeof data.removeCallback === 'function')
+				{
+					data.removeCallback();
+				}
+				else if (data.outputDir)
+				{
+					remove(data.outputDir)
+				}
+
 				// @ts-ignore
 				let filename: string = data.filename || IDKEY + '_' + basename(data.epub);
 
@@ -319,18 +332,6 @@ function fileHandler()
 					readStream.pipe(res);
 				}
 
-				if (query.debug)
-				{
-					console.debug(`忽略刪除下載暫存 ${data.outputDir}`);
-				}
-				else if (typeof data.removeCallback === 'function')
-				{
-					data.removeCallback();
-				}
-				else if (data.outputDir)
-				{
-					remove(data.outputDir)
-				}
 			})
 			.catch(e =>
 			{

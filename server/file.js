@@ -158,6 +158,15 @@ function fileHandler() {
             if (!fileContents) {
                 fileContents = await (0, fs_extra_1.readFile)(data.epub);
             }
+            if (query.debug) {
+                logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
+            }
+            else if (typeof data.removeCallback === 'function') {
+                data.removeCallback();
+            }
+            else if (data.outputDir) {
+                (0, fs_extra_1.remove)(data.outputDir);
+            }
             let filename = data.filename || IDKEY + '_' + (0, path_1.basename)(data.epub);
             if (!data.isGun || true) {
                 logger_1.default.debug(`將檔案儲存到P2P緩存`);
@@ -194,15 +203,6 @@ function fileHandler() {
                 res.set('Content-Type', mime);
                 logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '');
                 readStream.pipe(res);
-            }
-            if (query.debug) {
-                logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
-            }
-            else if (typeof data.removeCallback === 'function') {
-                data.removeCallback();
-            }
-            else if (data.outputDir) {
-                (0, fs_extra_1.remove)(data.outputDir);
             }
         })
             .catch(e => {
