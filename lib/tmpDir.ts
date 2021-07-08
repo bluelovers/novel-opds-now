@@ -8,7 +8,7 @@ import __root from './__root';
 
 export function tmpPath()
 {
-	return resolve(process.env.YARN_CACHE_FOLDER || process.env.TEMP || join(__root, 'tmp'))
+	return resolve(process.env.YARN_CACHE_FOLDER || process.env.TEMP || __root, 'tmp')
 }
 
 export function tmpDir(outputDir?: string, options?: DirOptions)
