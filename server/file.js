@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.removeTempOutputDir = void 0;
 const tslib_1 = require("tslib");
 const express_1 = require("express");
 const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
@@ -158,15 +159,7 @@ function fileHandler() {
             if (!fileContents) {
                 fileContents = await (0, fs_extra_1.readFile)(data.epub);
             }
-            if (query.debug) {
-                logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
-            }
-            else if (typeof data.removeCallback === 'function') {
-                data.removeCallback();
-            }
-            else if (data.outputDir) {
-                (0, fs_extra_1.remove)(data.outputDir);
-            }
+            removeTempOutputDir(query, data);
             let filename = data.filename || IDKEY + '_' + (0, path_1.basename)(data.epub);
             if (!data.isGun || true) {
                 logger_1.default.debug(`將檔案儲存到P2P緩存`);
@@ -222,5 +215,17 @@ function fileHandler() {
     });
     return router;
 }
+function removeTempOutputDir(query, data) {
+    if (query.debug) {
+        logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
+    }
+    else if (typeof data.removeCallback === 'function') {
+        return data.removeCallback();
+    }
+    else if (data.outputDir) {
+        return (0, fs_extra_1.remove)(data.outputDir);
+    }
+}
+exports.removeTempOutputDir = removeTempOutputDir;
 exports.default = fileHandler;
 //# sourceMappingURL=file.js.map
