@@ -9,7 +9,7 @@ import { INovelStatCache } from '@node-novel/cache-loader';
 import { getLocalFilename } from './load';
 import buildCache from './build';
 import console from 'debug-color2/logger';
-import getProxy from '../../getProxy';
+import getProxy from '../../util/getProxy';
 
 let url = `https://gitlab.com/novel-group/txt-source/raw/master/novel-stat.json`;
 

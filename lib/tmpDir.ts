@@ -4,10 +4,11 @@
 
 import { DirOptions, dirSync } from 'tmp';
 import { join, resolve } from "path";
+import __root from './__root';
 
 export function tmpPath()
 {
-	return resolve(process.env.YARN_CACHE_FOLDER || process.env.TEMP || join(__dirname, '..'), 'tmp')
+	return resolve(process.env.YARN_CACHE_FOLDER || process.env.TEMP || join(__root, 'tmp'))
 }
 
 export function tmpDir(outputDir?: string, options?: DirOptions)

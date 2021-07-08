@@ -11,9 +11,7 @@ import { OUTPUT_DIR } from '../../lib/const';
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { readFile, writeFile, rename, move } from 'fs-extra';
 import Bluebird from 'bluebird';
-import doSegment from '../../lib/doSegment';
 import { cn2tw_min } from '../../lib/cn2tw_min';
-import handleContext from '../../lib/doLayout';
 import { array_unique } from 'array-hyper-unique';
 import console from 'debug-color2/logger';
 import fixZhHarmony from 'fix-zh-harmony';
@@ -243,7 +241,7 @@ else
 
 				//const cn2tw_min = await import('../../lib/cn2tw_min').then(v => v.default);
 				const doSegment = await import('../../lib/doSegment').then(v => v.default);
-				const handleContext = await import('../../lib/doLayout').then(v => v.default);
+				const handleContext = await import('../../lib/epub/doLayout').then(v => v.default);
 
 				return Bluebird.resolve(list)
 					.each(async (file, index, length) =>

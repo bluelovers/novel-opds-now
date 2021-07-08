@@ -154,7 +154,7 @@ else {
         return bluebird_2.default.resolve(list)
             .then(async (list) => {
             const doSegment = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('../../lib/doSegment'))).then(v => v.default);
-            const handleContext = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('../../lib/doLayout'))).then(v => v.default);
+            const handleContext = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('../../lib/epub/doLayout'))).then(v => v.default);
             return bluebird_2.default.resolve(list)
                 .each(async (file, index, length) => {
                 logger_1.default.debug(`${String(index).padStart(4, '0')}/${String(length).padStart(4, '0')}`, (0, path_1.relative)(outputDir, file));

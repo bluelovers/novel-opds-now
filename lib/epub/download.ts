@@ -19,13 +19,13 @@ import {
 	readJSON,
 	writeJSON,
 } from 'fs-extra';
-import { OUTPUT_DIR, __cacheMapFile } from './const';
+import { OUTPUT_DIR, __cacheMapFile } from '../const';
 import Bluebird from 'bluebird';
-import tmpDir from './tmpDir';
-import { ICacheMap, ICacheMapRow, IDownloadInfo, EnumCacheMapRowStatus } from './types';
+import tmpDir from '../tmpDir';
+import { ICacheMap, ICacheMapRow, IDownloadInfo, EnumCacheMapRowStatus } from '../types';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
-import getProxy from './getProxy';
+import getProxy from '../util/getProxy';
 
 export function downloadInfo(options: {
 	novel_id: string | number,

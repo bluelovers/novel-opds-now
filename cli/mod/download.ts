@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import yargs from 'yargs';
-import downloadNovel from '../../lib/download';
+import downloadNovel from '../../lib/epub/download';
 
 let argv = yargs
 	.option('siteID', {

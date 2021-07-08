@@ -1,20 +1,10 @@
 import { createServer as _createServer } from "http";
 import micro from 'micro';
-import { generate as qrcode } from 'qrcode-terminal';
-import searchIPAddress from 'address2';
-import getPort, { getPortEnv } from './lib/getPort';
+import getPort, { getPortEnv } from './lib/util/getPort';
 import showIP from './lib/ip';
 import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
-import debounce from 'lodash/debounce';
 import findPort, { makeRange } from 'get-port';
-import { ipfsWebuiAddresses } from 'ipfs-util-lib/lib/api/multiaddr';
-import terminalLink from 'terminal-link';
-import { processExit } from './lib/processExit';
-import { pubsubSubscribe, connectPeersAll, pubsubPublishHello } from './lib/ipfs/pubsub';
-import computerInfo from 'computer-info';
-import packageJson from './package.json';
-import { updateAllCacheTask } from './lib/task/update-cache';
 import { _info, useIPFS } from './lib/ipfs/use';
 
 export async function startServer(options: {

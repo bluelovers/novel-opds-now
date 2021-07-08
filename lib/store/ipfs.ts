@@ -12,7 +12,6 @@ import ipfsServerList, { filterList } from 'ipfs-server-list';
 import { lazyRaceServerList } from 'fetch-ipfs/util';
 import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
-import { processExit } from '../processExit';
 import { inspect } from 'util';
 import { pubsubPublish, pubsubPublishEpub } from '../ipfs/pubsub';
 import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from '../ipfs/pokeAll';

@@ -1,6 +1,6 @@
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import Bluebird from 'bluebird';
-import { IDownloadInfo } from './types';
+import { IDownloadInfo } from '../types';
 export declare function downloadInfo(options: {
     novel_id: string | number;
     siteID: string | EnumNovelSiteList;

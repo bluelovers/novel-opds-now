@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import yargs from 'yargs';
-import { downloadNovel2, is504 } from '../../lib/download';
+import { downloadNovel2, is504 } from '../../lib/epub/download';
 import handleAsync from '../lib/threads';
 import novelEpub from 'novel-epub';
 import { outputJSON, readJSON } from 'fs-extra';

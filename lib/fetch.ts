@@ -1,5 +1,5 @@
 import _fetch from 'cross-fetch';
-import getProxy from './getProxy';
+import getProxy from './util/getProxy';
 import HttpProxyAgent from 'http-proxy-agent';
 import AbortController from 'abort-controller';
 import { RequestInit, RequestInfo, Response } from 'node-fetch';
