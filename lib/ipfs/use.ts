@@ -1,6 +1,6 @@
 import { createController, createFactory  } from 'ipfsd-ctl';
 import ipfs_http_client, { EndpointConfig } from 'ipfs-http-client';
-import processExit from '../processExit';
+import processExit from '../util/processExit';
 import { ipfsAddresses, checkIPFS } from 'ipfs-util-lib';
 import { assertCheckIPFS } from 'ipfs-util-lib';
 import cloneDeep from 'lodash/cloneDeep';
@@ -198,7 +198,16 @@ export async function searchIpfs()
 	return {
 		ipfsd: undefined as null,
 		ipfs,
-		stop: ipfs.stop,
+
+		async stop(...argv)
+		{
+			// 連接到已經存在的 ipfs 伺服器時，不執行 stop 指令
+			return ipfsAddresses(ipfs as any)
+				.then(addr => {
+					console.warn(`[IPFS]`, `IPFS 伺服器可能仍在執行中，請自行停止伺服器`, addr);
+				})
+				.catch(e => null as null)
+		},
 	}
 }
 
@@ -362,7 +371,7 @@ function _useIPFS(options?: {
 				console.info(`[IPFS]`, `ipfs:stop`)
 				// @ts-ignore
 				return Promise.all([
-					_stop({
+					_stop?.({
 						timeout: 2000,
 					}),
 					pubsubUnSubscribe(ipfs as any),

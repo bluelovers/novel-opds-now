@@ -19,7 +19,7 @@ export declare function useIPFS(options?: {
 export declare function searchIpfs(): Promise<{
     ipfsd: null;
     ipfs: IUseIPFSApi;
-    stop: (options?: import("ipfs-core-types").AbortOptions) => Promise<void>;
+    stop(...argv: any[]): Promise<void>;
 }>;
 export interface IIPFSControllerDaemon {
     started: boolean;
