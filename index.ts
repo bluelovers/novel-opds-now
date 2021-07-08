@@ -34,7 +34,7 @@ export async function startServer(options: {
 
 	web.listen(port, async () =>
 	{
-		showIP(port);
+		await showIP(port);
 
 		useIPFS().catch(e => console.error(`[IPFS]`, e)).tap(() => _info());
 

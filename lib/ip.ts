@@ -5,8 +5,9 @@ import _console from 'debug-color2/logger';
 import console from 'debug-color2';
 import { NetworkInterfaceInfo, networkInterfaces, hostname as os_hostname } from "os";
 import { format as urlFormat } from 'url';
+import publicIp from 'public-ip';
 
-export function showIP(port: string | number)
+export async function showIP(port: string | number)
 {
 	_console.info(`如果不能連上伺服器的話\n請查詢自己的電腦IP\n或確認自己的防火牆與 wifi 設定\n或利用 ${terminalLink(`share-localhost`, `https://www.npmjs.com/package/share-localhost`)}\n這類工具來讓外部網路可以讀取自己內部網路的IP`);
 
@@ -30,6 +31,18 @@ export function showIP(port: string | number)
 	});
 	console.info(terminalLink(ip, href));
 
+	await publicIp.v4().catch(e => publicIp.v6())
+		.then(ip => {
+			href = urlFormat({
+				protocol: 'http',
+				hostname: ip,
+				port,
+				pathname: '/opds',
+			});
+			console.info(terminalLink(`public-ip`, href));
+		}).catch(e => null as null)
+	;
+
 	ip = searchIPAddress();
 	let interfaceName = ip;
 
@@ -43,7 +56,6 @@ export function showIP(port: string | number)
 			data = data
 				.filter(v =>
 				{
-
 					if (ip && v.address === ip)
 					{
 						interfaceName = name;
@@ -53,8 +65,12 @@ export function showIP(port: string | number)
 					{
 						_skip = true;
 					}
+					else if (!isLocalNetwork(v.address))
+					{
+						return true
+					}
 
-					return v.address && !_skip
+					return !_skip && v.address
 				})
 			;
 

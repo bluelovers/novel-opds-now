@@ -23,7 +23,7 @@ async function startServer(options = {}) {
         port: (0, get_port_1.makeRange)(port, (port | 0) + 10),
     });
     web.listen(port, async () => {
-        (0, ip_1.default)(port);
+        await (0, ip_1.default)(port);
         (0, use_1.useIPFS)().catch(e => logger_1.default.error(`[IPFS]`, e)).tap(() => (0, use_1._info)());
     });
     return web;
