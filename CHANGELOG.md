@@ -3,6 +3,56 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.9](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.8...novel-opds-now@3.0.9) (2021-07-08)
+
+
+### 🐛　Bug Fixes
+
+* 不小心改錯 tmp path ([e164298](https://github.com/bluelovers/novel-opds-now/commit/e164298f5a18fa253631332689ec81cec188ee3c))
+* updateSegmentCache 沒有正確觸發強制更新 ([69132ad](https://github.com/bluelovers/novel-opds-now/commit/69132ad7135bfa24a59385345c46e0ef157024c8))
+* 123.456.78.90 不是 ip 只是範例 ([4d9fef5](https://github.com/bluelovers/novel-opds-now/commit/4d9fef55cb9e8b2f98f463fceb0b5be1b0a3396d))
+
+
+### ✨　Features
+
+* 提早刪除 tmp ([1d28691](https://github.com/bluelovers/novel-opds-now/commit/1d2869189166d2325f9b4de8cac2e07a1ecb81e3))
+* 延長上傳 timeout ([3be47b2](https://github.com/bluelovers/novel-opds-now/commit/3be47b2f16abd52ae2104d09d03c99022c19f21e))
+* 改善訊息 ([3c34017](https://github.com/bluelovers/novel-opds-now/commit/3c340177f76782693adf14e121ad94dec6a75e0c))
+* display public-ip ([e8768fe](https://github.com/bluelovers/novel-opds-now/commit/e8768fec900ae8f988ac4a5e860196d58af4f9ca))
+* error => warn ([14510ab](https://github.com/bluelovers/novel-opds-now/commit/14510aba975e8ee8e85f866f81b336925bf2d088))
+* 連接到已經存在的 ipfs 伺服器時，不執行 stop 指令 ([14fdf4a](https://github.com/bluelovers/novel-opds-now/commit/14fdf4adcd0dd3bc208891c0654eb8b5d95c52d9))
+
+
+### 📦　Code Refactoring
+
+* move ([891c9c9](https://github.com/bluelovers/novel-opds-now/commit/891c9c94876e455442ecc4013f5c5e860a52e5e7))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([63b1b0c](https://github.com/bluelovers/novel-opds-now/commit/63b1b0cdeac32432a7fa055f31095f4fda781df4))
+* **cache:** update cache ([e5687ec](https://github.com/bluelovers/novel-opds-now/commit/e5687ec663a9c1d9f6f93ecf54d546e5b7280b8b))
+
+
+### ♻️　Chores
+
+* update deps ([116e9d7](https://github.com/bluelovers/novel-opds-now/commit/116e9d7fa6160a0dab403dc0a5ca88c32712b3c2))
+* update deps ([3a4f09d](https://github.com/bluelovers/novel-opds-now/commit/3a4f09d7ca416832a59d57a3af0d17632420c2d2))
+
+
+### 🔖　Miscellaneous
+
+* . ([5b541a6](https://github.com/bluelovers/novel-opds-now/commit/5b541a6ca6e525f6000988aa2f6c1b7696bb69c6))
+
+
+### TODO
+
+* 修改為直接先判斷是否過期，如果過期則同時下載緩存以及從原始網站打包
+
+
+
+
+
 ## [3.0.8](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.7...novel-opds-now@3.0.8) (2021-07-07)
 
 
