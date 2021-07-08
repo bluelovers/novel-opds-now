@@ -93,7 +93,7 @@ export async function pubsubSubscribe(ipfs: IUseIPFSApi)
 		.pubsub
 		.subscribe(EPUB_TOPIC, pubsubHandler)
 		.then(r => console.debug(`[IPFS]`, `subscribed to ${EPUB_TOPIC}`))
-		.catch(e => console.warn(`[IPFS]`, `[pubsub.subscribe]`, e))
+		.catch(e => console.warn(`[IPFS]`, `[pubsub.subscribe]`, String(e)))
 		;
 }
 
@@ -101,7 +101,7 @@ export async function pubsubUnSubscribe(ipfs: IUseIPFSApi)
 {
 	return ipfs.pubsub.unsubscribe(EPUB_TOPIC, pubsubHandler)
 		.then(r => console.debug(`[IPFS]`, `unsubscribed from ${EPUB_TOPIC}`))
-		.catch(e => console.warn(`[IPFS]`, `[pubsub.unsubscribe]`, e))
+		.catch(e => console.warn(`[IPFS]`, `[pubsub.unsubscribe]`, String(e)))
 		;
 }
 
@@ -156,7 +156,7 @@ export async function pubsubPublish<T>(ipfs: IUseIPFSApi, data: T)
 			.pubsub
 			.publish(EPUB_TOPIC, Buffer.from(JSON.stringify(data)))
 	})
-		.catch(e => console.error(`[IPFS]`, `[pubsubPublish]`, e))
+		.catch(e => console.warn(`[IPFS]`, `[pubsubPublish]`, String(e)))
 }
 
 export async function getPeers(ipfs: IUseIPFSApi): Promise<string[]>
@@ -164,7 +164,7 @@ export async function getPeers(ipfs: IUseIPFSApi): Promise<string[]>
 	return ipfs.pubsub.peers(EPUB_TOPIC)
 		.catch(e =>
 		{
-			console.warn(`[IPFS]`, `[pubsub.peers]`, e)
+			console.warn(`[IPFS]`, `[pubsub.peers]`, String(e))
 			return [] as string[]
 		})
 }
@@ -209,7 +209,7 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDRes
 		})
 		.catch(e =>
 		{
-			console.error(`[IPFS]`, `[connectPeers]`, String(e))
+			console.warn(`[IPFS]`, `[connectPeers]`, String(e))
 		})
 		;
 }
