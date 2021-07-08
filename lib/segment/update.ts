@@ -9,11 +9,13 @@ import { file } from './const';
 
 const url = `https://github.com/bluelovers/ws-segment/raw/cache/packages/novel-segment/test/temp/cache.common.synonym.db`;
 
-export function updateSegmentCache(force?: boolean): Bluebird<IRecordCachedJSONRow>
+export function updateSegmentCache(force: boolean): Bluebird<IRecordCachedJSONRow>
 {
 	return getLocalOrRebuild(file, {
 
 		console,
+
+		force,
 
 		makeFns: [
 			() => fetch(url).then(res => res.json()),
