@@ -11,6 +11,31 @@ import { readJSON } from 'fs-extra';
 
 let CACHED_SEGMENT: Segment;
 
+export function existsSegment()
+{
+	return !!CACHED_SEGMENT
+}
+
+export async function replaceSegmentDict()
+{
+	if (existsSegment())
+	{
+		const DICT = await readJSON(file)
+			.catch(e => void 0)
+		;
+
+		if (Object.keys(DICT).length > 2)
+		{
+			await useModules(CACHED_SEGMENT as any, getDefaultModList(CACHED_SEGMENT.options.all_mod));
+
+			CACHED_SEGMENT.DICT = DICT;
+			CACHED_SEGMENT.inited = true;
+		}
+
+		return true
+	}
+}
+
 export async function getSegment()
 {
 	if (CACHED_SEGMENT)
@@ -18,19 +43,9 @@ export async function getSegment()
 		return CACHED_SEGMENT;
 	}
 
-	const DICT = await readJSON(file)
-		.catch(e => void 0)
-	;
-
 	CACHED_SEGMENT = createSegment();
 
-	if (Object.keys(DICT).length > 2)
-	{
-		useModules(CACHED_SEGMENT as any, getDefaultModList(CACHED_SEGMENT.options.all_mod));
-
-		CACHED_SEGMENT.DICT = DICT;
-		CACHED_SEGMENT.inited = true;
-	}
+	await replaceSegmentDict();
 
 	return CACHED_SEGMENT
 }

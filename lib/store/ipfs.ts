@@ -3,7 +3,7 @@ import { getEpubFileInfo, putEpubFileInfo } from '../ipfs/index';
 import Bluebird, { TimeoutError } from 'bluebird';
 import checkGunData from '../util/checkData';
 import fetchIPFS from 'fetch-ipfs';
-import { getIPFS } from '../ipfs/use';
+import { getIPFS, useIPFS } from '../ipfs/use';
 import { IGunEpubData, IGunEpubNode } from '../types';
 import console from 'debug-color2/logger';
 import { pathToCid, toLink } from 'to-ipfs-url';
@@ -129,7 +129,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 	let content = Buffer.from(base64, 'base64');
 
-	let ipfs = await getIPFS().catch(e => null as null);
+	let { ipfs, path } = await useIPFS().catch(e => ({} as null));
 
 	if (!ipfs)
 	{
@@ -142,6 +142,8 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 		let cid: string;
 
 		console.debug(`[IPFS]`, `add to IPFS`, inspect(data));
+
+		const timeout = 30 * 60 * 1000;
 
 		/**
 		 * 試圖推送至其他 IPFS 伺服器來增加檔案存活率與分流
@@ -156,7 +158,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 			addOptions: {
 				pin: false,
 			},
-			timeout: 10 * 60 * 1000,
+			timeout,
 		})
 			.each((settledResult, index) =>
 			{
@@ -206,6 +208,20 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 				}
 
 			})
+			.finally(() => {
+				publishToIPFSAll({
+					path: data.filename,
+					content,
+				}, [
+					ipfs as any,
+					...filterList('API'),
+				], {
+					addOptions: {
+						pin: false,
+					},
+					timeout,
+				}).catch(e => null)
+			})
 		;
 
 		/*
@@ -223,7 +239,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 		if (!cid)
 		{
-			console.warn(`[IPFS]`, `publishToIPFSAll fail`, `無法將檔案推送至 IPFS，如果發生多次，請檢查 ~/.ipfs , ~/.jsipfs 資料夾`);
+			console.warn(`[IPFS]`, `publishToIPFSAll fail`, `無法將檔案推送至 IPFS，如果發生多次，請檢查 ~/.ipfs , ~/.jsipfs, ${path} 資料夾`);
 			return null
 		}
 
