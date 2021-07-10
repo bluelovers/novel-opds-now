@@ -101,7 +101,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 			}
 			catch (e2)
 			{
-				console.error(e);
+				console.error(`getEpubFileInfo`, e);
 			}
 
 			return null as null

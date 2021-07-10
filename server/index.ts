@@ -25,7 +25,7 @@ import opdsHandler from './opds';
 import searchHandler from "./search";
 import { mw } from 'request-ip';
 import { Request } from 'express-serve-static-core';
-import useragent, { Details } from 'express-useragent';
+import { Details, express as useragent } from 'express-useragent';
 import { showClient } from './util/showClient';
 import { getIPFS, useIPFS } from '../lib/ipfs/use';
 import { isLocalNetwork, notAllowCors } from '../lib/ip';
@@ -40,7 +40,7 @@ const app = express();
 //app.use('/gun', gunHttp);
 app.use(favicon(join(__root, 'static', 'favicon.png')));
 app.use(mw())
-app.use(useragent.express())
+app.use(useragent())
 
 app.use('/file', fileHandler());
 app.use('/opds', opdsHandler());

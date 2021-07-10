@@ -20,6 +20,7 @@ import contentDisposition from '@lazy-http/content-disposition';
 import { showClient } from './util/showClient';
 import { getIPFSEpubFile, putIPFSEpubFile } from '../lib/store/ipfs';
 import { mimeFromBuffer } from '../lib/util/mimeFromBuffer';
+import { doPackEpubFromSource } from '../lib/doPackEpubFromSource';
 
 export type IRouter = Router;
 
@@ -134,22 +135,7 @@ function fileHandler()
 							return gunData
 						}
 
-						/**
-						 * @todo 在打包結束前只執行一次任務，不多次執行
-						 */
-						console.log(`從原始來源網站抓取打包小說中...`);
-						let cp = await crossSpawn('node', [
-							'--experimental-worker',
-							join(__root, `./cli/cli.js`),
-							'--mod',
-							'all',
-							'--siteID',
-							siteID,
-							'--novel_id',
-							novel_id,
-						], {
-							stdio: 'inherit',
-						});
+						let cp = await doPackEpubFromSource(siteID, novel_id);
 
 						// @ts-ignore
 						if (cp.error)
@@ -159,7 +145,7 @@ function fileHandler()
 						}
 
 						let map: ICacheMap = await readJSON(map_file)
-							.catch(e => console.error(e))
+							.catch(e => console.error(`readJSON`, map_file, e))
 						;
 
 						if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id]))
@@ -204,8 +190,7 @@ function fileHandler()
 
 						await writeJSON(map_file, map, { spaces: 2 }).catch(e =>
 						{
-							console.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`);
-							console.error(e)
+							console.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`, String(e));
 						});
 
 						return _data
@@ -215,7 +200,7 @@ function fileHandler()
 
 						if (gunData && gunData.exists)
 						{
-							console.warn(`檔案建立失敗，使用P2P緩存代替`);
+							console.warn(`檔案建立失敗，使用P2P緩存代替`, siteID, novel_id);
 
 							gunData.isGun = true;
 
@@ -228,7 +213,7 @@ function fileHandler()
 			})
 			.then(async (data) =>
 			{
-				console.success(`成功取得檔案...`);
+				console.success(`成功取得檔案...`, siteID, novel_id);
 
 				let fileContents: Buffer;
 				let isFromBuffer: boolean;
@@ -257,7 +242,7 @@ function fileHandler()
 				// @ts-ignore
 				if (!data.isGun || true)
 				{
-					console.debug(`將檔案儲存到P2P緩存`);
+					console.debug(`將檔案儲存到P2P緩存`, siteID, novel_id);
 
 					let gunData: IGunEpubNode = {
 						timestamp: isFromBuffer && data.timestamp ? data.timestamp : Date.now(),
@@ -286,7 +271,7 @@ function fileHandler()
 
 				if (res.connection?.destroyed)
 				{
-					console.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`);
+					console.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`, siteID, novel_id);
 					res.end();
 				}
 				else
@@ -339,9 +324,9 @@ function fileHandler()
 
 				res.status(404).json(data);
 
-				console.warn(data);
+				console.warn(data, siteID, novel_id);
 
-				console.debug(`以下錯誤訊息為除錯用，並非每個都會對程式造成影響 =>`, e)
+				console.debug(`以下錯誤訊息為除錯用，並非每個都會對程式造成影響 =>`, e, siteID, novel_id)
 
 			})
 	});
@@ -356,18 +341,25 @@ export function removeTempOutputDir(query: {
 	removeCallback?(): any
 })
 {
-	if (query.debug)
-	{
-		console.debug(`忽略刪除下載暫存 ${data.outputDir}`);
-	}
-	else if (typeof data.removeCallback === 'function')
-	{
-		return data.removeCallback();
-	}
-	else if (data.outputDir)
-	{
-		return remove(data.outputDir)
-	}
+	return Promise.resolve()
+		.then(() => {
+			if (query.debug)
+			{
+				console.debug(`忽略刪除下載暫存 ${data.outputDir}`);
+			}
+			else if (typeof data.removeCallback === 'function')
+			{
+				return data.removeCallback();
+			}
+			else if (data.outputDir)
+			{
+				return remove(data.outputDir)
+			}
+		})
+		.catch(e => {
+			console.warn(`removeTempOutputDir`, e)
+		})
+	;
 }
 
 export default fileHandler

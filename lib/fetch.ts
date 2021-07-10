@@ -1,7 +1,6 @@
 import _fetch from 'cross-fetch';
 import getProxy from './util/getProxy';
 import HttpProxyAgent from 'http-proxy-agent';
-import AbortController from 'abort-controller';
 import { RequestInit, RequestInfo, Response } from 'node-fetch';
 import Bluebird from 'bluebird';
 import isErrorCode from 'is-error-code';

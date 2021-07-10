@@ -6,5 +6,5 @@ export declare function removeTempOutputDir(query: {
 }, data: {
     outputDir: string;
     removeCallback?(): any;
-}): any;
+}): Promise<any>;
 export default fileHandler;

@@ -9,15 +9,14 @@ const const_2 = require("../lib/const");
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const stream_1 = require("stream");
-const __root_1 = (0, tslib_1.__importDefault)(require("../lib/__root"));
 const util_1 = require("novel-downloader/src/all/util");
 const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
-const cross_spawn_extra_1 = require("cross-spawn-extra");
 const store_1 = require("../lib/store");
 const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
 const showClient_1 = require("./util/showClient");
 const ipfs_1 = require("../lib/store/ipfs");
 const mimeFromBuffer_1 = require("../lib/util/mimeFromBuffer");
+const doPackEpubFromSource_1 = require("../lib/doPackEpubFromSource");
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:siteID/:novelID', (req, res) => {
@@ -86,24 +85,12 @@ function fileHandler() {
                 if (gunData && gunData.isGun) {
                     return gunData;
                 }
-                logger_1.default.log(`從原始來源網站抓取打包小說中...`);
-                let cp = await (0, cross_spawn_extra_1.async)('node', [
-                    '--experimental-worker',
-                    (0, path_1.join)(__root_1.default, `./cli/cli.js`),
-                    '--mod',
-                    'all',
-                    '--siteID',
-                    siteID,
-                    '--novel_id',
-                    novel_id,
-                ], {
-                    stdio: 'inherit',
-                });
+                let cp = await (0, doPackEpubFromSource_1.doPackEpubFromSource)(siteID, novel_id);
                 if (cp.error) {
                     return Promise.reject(cp.error);
                 }
                 let map = await (0, fs_extra_1.readJSON)(map_file)
-                    .catch(e => logger_1.default.error(e));
+                    .catch(e => logger_1.default.error(`readJSON`, map_file, e));
                 if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id])) {
                     gunData = await (0, store_1.getGunEpubFile2)([
                         IDKEY,
@@ -130,14 +117,13 @@ function fileHandler() {
                 delete map[IDKEY][_data.novel_id2];
                 delete map[IDKEY][_data.novel_id];
                 await (0, fs_extra_1.writeJSON)(map_file, map, { spaces: 2 }).catch(e => {
-                    logger_1.default.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`);
-                    logger_1.default.error(e);
+                    logger_1.default.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`, String(e));
                 });
                 return _data;
             })
                 .catch(e => {
                 if (gunData && gunData.exists) {
-                    logger_1.default.warn(`檔案建立失敗，使用P2P緩存代替`);
+                    logger_1.default.warn(`檔案建立失敗，使用P2P緩存代替`, siteID, novel_id);
                     gunData.isGun = true;
                     return gunData;
                 }
@@ -146,7 +132,7 @@ function fileHandler() {
         })
             .then(async (data) => {
             var _a;
-            logger_1.default.success(`成功取得檔案...`);
+            logger_1.default.success(`成功取得檔案...`, siteID, novel_id);
             let fileContents;
             let isFromBuffer;
             if (data.base64) {
@@ -162,7 +148,7 @@ function fileHandler() {
             removeTempOutputDir(query, data);
             let filename = data.filename || IDKEY + '_' + (0, path_1.basename)(data.epub);
             if (!data.isGun || true) {
-                logger_1.default.debug(`將檔案儲存到P2P緩存`);
+                logger_1.default.debug(`將檔案儲存到P2P緩存`, siteID, novel_id);
                 let gunData = {
                     timestamp: isFromBuffer && data.timestamp ? data.timestamp : Date.now(),
                     exists: true,
@@ -180,7 +166,7 @@ function fileHandler() {
                 ], gunData, {});
             }
             if ((_a = res.connection) === null || _a === void 0 ? void 0 : _a.destroyed) {
-                logger_1.default.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`);
+                logger_1.default.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`, siteID, novel_id);
                 res.end();
             }
             else {
@@ -209,22 +195,28 @@ function fileHandler() {
                 timestamp: Date.now(),
             };
             res.status(404).json(data);
-            logger_1.default.warn(data);
-            logger_1.default.debug(`以下錯誤訊息為除錯用，並非每個都會對程式造成影響 =>`, e);
+            logger_1.default.warn(data, siteID, novel_id);
+            logger_1.default.debug(`以下錯誤訊息為除錯用，並非每個都會對程式造成影響 =>`, e, siteID, novel_id);
         });
     });
     return router;
 }
 function removeTempOutputDir(query, data) {
-    if (query.debug) {
-        logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
-    }
-    else if (typeof data.removeCallback === 'function') {
-        return data.removeCallback();
-    }
-    else if (data.outputDir) {
-        return (0, fs_extra_1.remove)(data.outputDir);
-    }
+    return Promise.resolve()
+        .then(() => {
+        if (query.debug) {
+            logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);
+        }
+        else if (typeof data.removeCallback === 'function') {
+            return data.removeCallback();
+        }
+        else if (data.outputDir) {
+            return (0, fs_extra_1.remove)(data.outputDir);
+        }
+    })
+        .catch(e => {
+        logger_1.default.warn(`removeTempOutputDir`, e);
+    });
 }
 exports.removeTempOutputDir = removeTempOutputDir;
 exports.default = fileHandler;
