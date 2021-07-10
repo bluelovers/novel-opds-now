@@ -21,7 +21,7 @@ import {
 } from 'fs-extra';
 import { OUTPUT_DIR, __cacheMapFile } from '../const';
 import Bluebird from 'bluebird';
-import tmpDir from '../tmpDir';
+import tmpDir from '../util/tmpDir';
 import { ICacheMap, ICacheMapRow, IDownloadInfo, EnumCacheMapRowStatus } from '../types';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';

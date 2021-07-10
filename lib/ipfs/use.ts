@@ -19,13 +19,14 @@ import ipfsEnv from 'ipfs-env';
 import configApiCors from 'ipfs-util-lib/lib/ipfs/config/cors';
 import { multiaddrToURL } from 'multiaddr-to-url';
 import { repoExists } from './repoExists';
-import tmpDir, { tmpPath } from '../tmpDir';
+import tmpDir from '../util/tmpDir';
 import { unlinkIPFSApi } from 'fix-ipfs/lib/ipfsd-ctl/unlinkIPFSApi';
 import re from '../re';
 import fs, { remove, removeSync, ensureDir } from 'fs-extra';
 import { sync as rimrafSync } from 'rimraf';
 import { join } from 'path';
 import { envBool } from 'env-bool';
+import { tmpPath } from '../util/tmpPath';
 
 let _cache: ITSUnpackedPromiseLike<ReturnType<typeof _useIPFS>>;
 let _waiting: ReturnType<typeof _useIPFS>;

@@ -3,13 +3,7 @@
  */
 
 import { DirOptions, dirSync } from 'tmp';
-import { join, resolve } from "path";
-import __root from './__root';
-
-export function tmpPath()
-{
-	return resolve(process.env.YARN_CACHE_FOLDER || process.env.TEMP || __root, 'tmp')
-}
+import { tmpPath } from './tmpPath';
 
 export function tmpDir(outputDir?: string, options?: DirOptions)
 {
