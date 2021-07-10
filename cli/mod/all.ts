@@ -46,22 +46,22 @@ Bluebird
 				novel,
 				...arr
 			} = await download()
-			.tapCatch(e =>
-			{
-				console.error(`下載來源時發生錯誤`, e)
-			})
+				.tapCatch(e =>
+				{
+					console.error(`[epub]`, IDKEY, novel_id, `下載來源時發生錯誤`, e)
+				})
 		;
 
-		console.log(`來源下載完成，開始處理排版`, outputDir);
+		console.log(`[epub]`, IDKEY, novel_id, `來源下載完成，開始處理排版`, outputDir);
 
 		await handleAsync(argv.novel_id, IDKEY, outputDir)
 			.tapCatch(e =>
 			{
-				console.error(`處理排版時發生錯誤`, e)
+				console.error(`[epub]`, IDKEY, novel_id, `處理排版時發生錯誤`, e)
 			})
 		;
 
-		console.log(`排版結束，開始打包 epub`);
+		console.log(`[epub]`, IDKEY, novel_id, `排版結束，開始打包 epub`);
 
 		let epub = await novelEpub({
 				inputPath: cwd,
@@ -72,20 +72,21 @@ Bluebird
 				downloadRemoteFile: true,
 				epubContextDate: true,
 			})
-			.tapCatch(e =>
-			{
-				console.error(`打包 epub 時發生錯誤`, e)
-			})
+				.tapCatch(e =>
+				{
+					console.error(`[epub]`, IDKEY, novel_id, `打包 epub 時發生錯誤`, e)
+				})
 		;
 
-		console.log(`打包 epub 結束`)
+		console.log(`[epub]`, IDKEY, novel_id, `打包 epub 結束`)
 
 		//console.dir(epub.file);
 
 		let map_file = __cacheMapFile;
 
 		let map: ICacheMap = await readJSON(map_file)
-			.catch(e => {
+			.catch(e =>
+			{
 				//console.error(`讀取 cacheMapFile 時發生錯誤`, e);
 				return {}
 			})
@@ -116,5 +117,5 @@ Bluebird
 		})
 
 	})
-	.tapCatch(e => console.error(e))
+	.tapCatch(e => console.error(`[epub]`, e))
 ;

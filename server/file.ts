@@ -66,8 +66,6 @@ function fileHandler()
 			IDKEY = 'masiro' as any
 		}
 
-		let map_file = __cacheMapFile;
-
 		return Bluebird
 			.resolve(IDKEY)
 			.tap(IDKEY =>
@@ -144,8 +142,8 @@ function fileHandler()
 							return Promise.reject(cp.error)
 						}
 
-						let map: ICacheMap = await readJSON(map_file)
-							.catch(e => console.error(`readJSON`, map_file, e))
+						let map: ICacheMap = await readJSON(__cacheMapFile)
+							.catch(e => console.error(`readJSON`, __cacheMapFile, e))
 						;
 
 						if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id]))
@@ -188,9 +186,9 @@ function fileHandler()
 						delete map[IDKEY][_data.novel_id2];
 						delete map[IDKEY][_data.novel_id];
 
-						await writeJSON(map_file, map, { spaces: 2 }).catch(e =>
+						await writeJSON(__cacheMapFile, map, { spaces: 2 }).catch(e =>
 						{
-							console.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`, String(e));
+							console.error(`發生錯誤，無法寫入緩存檔案 ${__cacheMapFile}`, String(e));
 						});
 
 						return _data

@@ -40,7 +40,6 @@ function fileHandler() {
         if (siteID === 'masiro') {
             IDKEY = 'masiro';
         }
-        let map_file = const_2.__cacheMapFile;
         return bluebird_1.default
             .resolve(IDKEY)
             .tap(IDKEY => {
@@ -89,8 +88,8 @@ function fileHandler() {
                 if (cp.error) {
                     return Promise.reject(cp.error);
                 }
-                let map = await (0, fs_extra_1.readJSON)(map_file)
-                    .catch(e => logger_1.default.error(`readJSON`, map_file, e));
+                let map = await (0, fs_extra_1.readJSON)(const_2.__cacheMapFile)
+                    .catch(e => logger_1.default.error(`readJSON`, const_2.__cacheMapFile, e));
                 if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id])) {
                     gunData = await (0, store_1.getGunEpubFile2)([
                         IDKEY,
@@ -116,8 +115,8 @@ function fileHandler() {
                 let _data = map[IDKEY][novel_id];
                 delete map[IDKEY][_data.novel_id2];
                 delete map[IDKEY][_data.novel_id];
-                await (0, fs_extra_1.writeJSON)(map_file, map, { spaces: 2 }).catch(e => {
-                    logger_1.default.error(`發生錯誤，無法寫入緩存檔案 ${map_file}`, String(e));
+                await (0, fs_extra_1.writeJSON)(const_2.__cacheMapFile, map, { spaces: 2 }).catch(e => {
+                    logger_1.default.error(`發生錯誤，無法寫入緩存檔案 ${const_2.__cacheMapFile}`, String(e));
                 });
                 return _data;
             })
