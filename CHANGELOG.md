@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.10](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.9...novel-opds-now@3.0.10) (2021-07-11)
+
+
+### 🐛　Bug Fixes
+
+* **install:** fix postinstall ([16fb535](https://github.com/bluelovers/novel-opds-now/commit/16fb535f42f270911300f2012f1578e824dae79b))
+
+
+### ✨　Features
+
+* 增加顯示書名 ([213958d](https://github.com/bluelovers/novel-opds-now/commit/213958d0e3aa6938abf635f0519a4af16eb9d037))
+* 同一本小說在打包結束前只執行一次任務，不多次執行 ([4b1e467](https://github.com/bluelovers/novel-opds-now/commit/4b1e467ca63c42ab32046b4628d0951d30cff15f))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([e52481a](https://github.com/bluelovers/novel-opds-now/commit/e52481ae07af963324a475dba83f3707e460a64d))
+
+
+### 🔖　Miscellaneous
+
+* . ([926409a](https://github.com/bluelovers/novel-opds-now/commit/926409a208941e6b6b8bdd0f3a2f4f795783f0bd))
+* . ([5a5daca](https://github.com/bluelovers/novel-opds-now/commit/5a5daca8473008bd1ae10a276e3641759b39d3d0))
+* **install:** add `postinstall` for check ipfs is downloaded ([1a1edbc](https://github.com/bluelovers/novel-opds-now/commit/1a1edbc9545f91eb0184475d81a553d6ee89af3d))
+
+
+
+
+
 ## [3.0.9](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.8...novel-opds-now@3.0.9) (2021-07-08)
 
 
