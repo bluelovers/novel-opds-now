@@ -21,6 +21,7 @@ import { showClient } from './util/showClient';
 import { getIPFSEpubFile, putIPFSEpubFile } from '../lib/store/ipfs';
 import { mimeFromBuffer } from '../lib/util/mimeFromBuffer';
 import { doPackEpubFromSource } from '../lib/doPackEpubFromSource';
+import { getNovelData } from '../lib/site/cached-data/getNovelData';
 
 export type IRouter = Router;
 
@@ -82,7 +83,7 @@ function fileHandler()
 			})
 			.then(async () =>
 			{
-				console.info(`檢查是否存在緩存...`);
+				console.info(`檢查是否存在緩存...`, siteID, novel_id);
 
 				/**
 				 * @todo 修改為直接先判斷是否過期，如果過期則同時下載緩存以及從原始網站打包
@@ -112,11 +113,11 @@ function fileHandler()
 								msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`
 							}
 
-							console.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp));
+							console.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id);
 						}
 						else
 						{
-							console.info(`沒有發現緩存，或緩存已損毀...`);
+							console.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id);
 						}
 
 					})
@@ -211,7 +212,9 @@ function fileHandler()
 			})
 			.then(async (data) =>
 			{
-				console.success(`成功取得檔案...`, siteID, novel_id);
+				const novelData = await getNovelData(siteID, novel_id);
+
+				console.success(`成功取得檔案...`, siteID, novel_id, novelData?.title);
 
 				let fileContents: Buffer;
 				let isFromBuffer: boolean;
@@ -240,7 +243,7 @@ function fileHandler()
 				// @ts-ignore
 				if (!data.isGun || true)
 				{
-					console.debug(`將檔案儲存到P2P緩存`, siteID, novel_id);
+					console.debug(`將檔案儲存到P2P緩存`, siteID, novel_id, novelData?.title);
 
 					let gunData: IGunEpubNode = {
 						timestamp: isFromBuffer && data.timestamp ? data.timestamp : Date.now(),
@@ -269,7 +272,7 @@ function fileHandler()
 
 				if (res.connection?.destroyed)
 				{
-					console.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`, siteID, novel_id);
+					console.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`, siteID, novel_id, novelData?.title);
 					res.end();
 				}
 				else
@@ -300,7 +303,7 @@ function fileHandler()
 					res.set('Content-disposition', attachment);
 					res.set('Content-Type', mime);
 
-					console.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '');
+					console.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '', novelData?.title);
 					readStream.pipe(res);
 				}
 

@@ -9,6 +9,8 @@ import { allSettled } from 'bluebird-allsettled';
 import ipfsSubdomain from '@lazy-ipfs/ipfs-subdomain';
 import console from 'debug-color2/logger';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
+import { parsePath } from '@lazy-ipfs/parse-ipfs-path';
+import { EnumParsePathResultNs } from '@lazy-ipfs/parse-ipfs-path/lib/parsePath';
 
 export function notAllowedAddress(url: URL | string)
 {
@@ -31,14 +33,16 @@ export async function getIpfsGatewayList(ipfs)
 	const ipfsGatewayList: string[] = [];
 
 	await ipfsGatewayAddressesLink(ipfs)
-		.then(gateway => {
+		.then(gateway =>
+		{
 			ipfsGatewayList.push(ipfsGatewayMain = gateway);
 		})
 		.catch(e => null)
 	;
 
 	filterList('Gateway')
-		.forEach(gateway => {
+		.forEach(gateway =>
+		{
 			ipfsGatewayList.push(gateway);
 		})
 	;
@@ -62,17 +66,20 @@ export function pokeAll(cid: string, ipfs, options?: {
 {
 	const cid_str = cid.toString();
 
-	return Bluebird.resolve()
-		.then(() => {
+	return Bluebird.resolve(ipfs)
+		.then((ipfs) =>
+		{
 
 			if (cachePoke.has(cid_str))
 			{
+				console.gray.debug(`poke`, `skip`, cid_str)
 				return null
 			}
 
 			return Bluebird
 				.resolve(options)
-				.then(async (options) => {
+				.then(async (options) =>
+				{
 
 					cachePoke.add(cid_str);
 
@@ -80,8 +87,10 @@ export function pokeAll(cid: string, ipfs, options?: {
 
 					let list = await getIpfsGatewayList(ipfs)
 						.then(v => v.ipfsGatewayList)
-						.then(list => {
-							return list.map(gateway => {
+						.then(list =>
+						{
+							return list.map(gateway =>
+							{
 								return toIpfsLink(cid, {
 									prefix: {
 										ipfs: gateway,
@@ -89,16 +98,44 @@ export function pokeAll(cid: string, ipfs, options?: {
 								});
 							})
 						})
-						.then(list => {
+						.then(list =>
+						{
+							let data: {
+								ns: string,
+								hash: string,
+								path: string
+							}
+
+							try
+							{
+								data = parsePath(cid)
+							}
+							catch (e)
+							{
+								data = {
+									ns: EnumParsePathResultNs.ipfs,
+									hash: cid,
+									path: '',
+								}
+							}
+
 							//const ipfs_url = ipfsProtocol(cid);
-							const ipfs_share_url = `https://share.ipfs.io/#/${cid}`;
+							const ipfs_share_url = `https://share.ipfs.io/#/${data.hash}${data.path}`;
 
 							list.unshift(ipfs_share_url);
 							//list.unshift(ipfs_url);
 
 							filterList('GatewayDomain')
-								.forEach((gateway) => {
-									list.push(ipfsSubdomain(cid, gateway));
+								.forEach((gateway) =>
+								{
+									try
+									{
+										list.push(ipfsSubdomain(data.hash, gateway) + data.path);
+									}
+									catch (e)
+									{
+
+									}
 								})
 							;
 
@@ -109,9 +146,11 @@ export function pokeAll(cid: string, ipfs, options?: {
 					list = array_unique_overwrite(list).filter(href => !notAllowedAddress(href));
 
 					console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename);
+					//console.debug(`[IPFS]`, `pokeAll:start`, list);
 
 					return allSettled(list
-						.map((href) => {
+						.map((href) =>
+						{
 
 							if (filename?.length)
 							{
@@ -123,7 +162,8 @@ export function pokeAll(cid: string, ipfs, options?: {
 							return pokeURL(href, {
 								//cors: true,
 								timeout: 10 * 60 * 1000,
-							}).then(data => {
+							}).then(data =>
+							{
 								return {
 									...data,
 									href,
@@ -133,7 +173,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 				}).finally(() => cachePoke.delete(cid_str))
 
 		})
-	;
+		;
 }
 
 export function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>)
@@ -141,29 +181,34 @@ export function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike
 	return settledResult.filter(v => !v.value.error && v.value.value !== false && v.value.value?.length)
 }
 
-export function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any)
+export function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>,
+	...msg: any
+)
 {
 	return Bluebird.resolve(settledResult).tap(settledResult =>
-{
-	if (settledResult?.length)
 	{
-		let list = filterPokeAllSettledResult(settledResult)
-			.map(m => {
-
-				// @ts-ignore
-				if (m.value?.value?.length)
+		if (settledResult?.length)
+		{
+			let list = filterPokeAllSettledResult(settledResult)
+				.map(m =>
 				{
-					return m.value.href
-				}
 
-				return m
-			})
-		;
+					// @ts-ignore
+					if (m.value?.value?.length)
+					{
+						return m.value.href
+					}
 
-		console.debug(`[IPFS]`, `pokeAll:done`, list)
-		console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, ...msg)
-	}
-})
+					return m
+				})
+			;
+
+			console.debug(`[IPFS]`, `pokeAll:done`, list)
+			console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, ...msg)
+
+			return list
+		}
+	})
 }
 
 export default pokeAll

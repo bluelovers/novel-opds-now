@@ -52,7 +52,7 @@ bluebird_1.default
         .tapCatch(e => {
         logger_1.default.error(`[epub]`, IDKEY, novel_id, `打包 epub 時發生錯誤`, e);
     });
-    logger_1.default.log(`[epub]`, IDKEY, novel_id, `打包 epub 結束`);
+    logger_1.default.success(`[epub]`, IDKEY, novel_id, `打包 epub 結束`);
     let map_file = const_1.__cacheMapFile;
     let map = await (0, fs_extra_1.readJSON)(map_file)
         .catch(e => {

@@ -19,6 +19,7 @@ const ip_1 = require("../lib/ip");
 const os_1 = require("os");
 const url_1 = require("url");
 const address2_1 = (0, tslib_1.__importDefault)(require("address2"));
+const poke_1 = (0, tslib_1.__importDefault)(require("./router/poke"));
 const app = (0, express_1.default)();
 app.use((0, serve_favicon_1.default)((0, path_1.join)(__root_1.default, 'static', 'favicon.png')));
 app.use((0, request_ip_1.mw)());
@@ -26,6 +27,7 @@ app.use((0, express_useragent_1.express)());
 app.use('/file', (0, file_1.default)());
 app.use('/opds', (0, opds_1.default)());
 app.use('/search', (0, search_1.default)());
+app.use('/poke', (0, poke_1.default)());
 app.use('/*', (req, res, next) => {
     logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
     (0, showClient_1.showClient)(req, res, next);

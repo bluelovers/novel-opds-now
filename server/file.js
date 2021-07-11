@@ -17,6 +17,7 @@ const showClient_1 = require("./util/showClient");
 const ipfs_1 = require("../lib/store/ipfs");
 const mimeFromBuffer_1 = require("../lib/util/mimeFromBuffer");
 const doPackEpubFromSource_1 = require("../lib/doPackEpubFromSource");
+const getNovelData_1 = require("../lib/site/cached-data/getNovelData");
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:siteID/:novelID', (req, res) => {
@@ -51,7 +52,7 @@ function fileHandler() {
             }
         })
             .then(async () => {
-            logger_1.default.info(`檢查是否存在緩存...`);
+            logger_1.default.info(`檢查是否存在緩存...`, siteID, novel_id);
             return (0, ipfs_1.getIPFSEpubFile)(IDKEY, [
                 req.params.novelID,
                 novel_id,
@@ -71,10 +72,10 @@ function fileHandler() {
                     else if (!gunData.isGun) {
                         msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`;
                     }
-                    logger_1.default.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp));
+                    logger_1.default.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id);
                 }
                 else {
-                    logger_1.default.info(`沒有發現緩存，或緩存已損毀...`);
+                    logger_1.default.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id);
                 }
             });
         })
@@ -131,7 +132,8 @@ function fileHandler() {
         })
             .then(async (data) => {
             var _a;
-            logger_1.default.success(`成功取得檔案...`, siteID, novel_id);
+            const novelData = await (0, getNovelData_1.getNovelData)(siteID, novel_id);
+            logger_1.default.success(`成功取得檔案...`, siteID, novel_id, novelData === null || novelData === void 0 ? void 0 : novelData.title);
             let fileContents;
             let isFromBuffer;
             if (data.base64) {
@@ -147,7 +149,7 @@ function fileHandler() {
             removeTempOutputDir(query, data);
             let filename = data.filename || IDKEY + '_' + (0, path_1.basename)(data.epub);
             if (!data.isGun || true) {
-                logger_1.default.debug(`將檔案儲存到P2P緩存`, siteID, novel_id);
+                logger_1.default.debug(`將檔案儲存到P2P緩存`, siteID, novel_id, novelData === null || novelData === void 0 ? void 0 : novelData.title);
                 let gunData = {
                     timestamp: isFromBuffer && data.timestamp ? data.timestamp : Date.now(),
                     exists: true,
@@ -165,7 +167,7 @@ function fileHandler() {
                 ], gunData, {});
             }
             if ((_a = res.connection) === null || _a === void 0 ? void 0 : _a.destroyed) {
-                logger_1.default.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`, siteID, novel_id);
+                logger_1.default.info(`客戶端 ( ${req.clientIp} )  已斷線，停止傳送檔案`, siteID, novel_id, novelData === null || novelData === void 0 ? void 0 : novelData.title);
                 res.end();
             }
             else {
@@ -179,7 +181,7 @@ function fileHandler() {
                 let attachment = (0, content_disposition_1.default)(http_filename);
                 res.set('Content-disposition', attachment);
                 res.set('Content-Type', mime);
-                logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '');
+                logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '', novelData === null || novelData === void 0 ? void 0 : novelData.title);
                 readStream.pipe(res);
             }
         })

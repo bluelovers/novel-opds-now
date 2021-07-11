@@ -33,6 +33,7 @@ import { networkInterfaces } from 'os';
 import { format as urlFormat } from 'url';
 import terminalLink from 'terminal-link';
 import searchIPAddress from 'address2';
+import routerPokeHandler from './router/poke';
 
 const app = express();
 
@@ -45,6 +46,8 @@ app.use(useragent())
 app.use('/file', fileHandler());
 app.use('/opds', opdsHandler());
 app.use('/search', searchHandler());
+
+app.use('/poke', routerPokeHandler());
 
 app.use('/*', (req, res, next) => {
 	console.log(req.method, req.baseUrl, req.url, req.params, req.query);

@@ -12,6 +12,7 @@ import { join } from 'path';
 import __root from './__root';
 import { newFileURL } from '@demonovel/db-api/lib/util';
 import Bluebird from 'bluebird';
+import { getNovelData } from './site/cached-data/getNovelData';
 
 const _catch = new Map<string, ReturnType<typeof _doPackEpubFromSource>>();
 
@@ -19,38 +20,40 @@ export function doPackEpubFromSource(siteID: string | EnumNovelSiteList, novelID
 {
 	let key = newFileURL(siteID, novelID).pathname;
 
-	return Bluebird.resolve()
-		.then(async () =>
-		{
-
-			if (_catch.has(key))
+	return Bluebird.resolve(getNovelData(siteID,  novelID))
+		.then(novelData => {
+			return Bluebird.resolve().then(async () =>
 			{
-				let p = _catch.get(key);
 
-				if (p.isPending())
+				if (_catch.has(key))
 				{
-					console.warn(`此小說的打包任務仍在執行中，請稍後再請求檔案...`, siteID, novelID);
-					return p
+					let p = _catch.get(key);
+
+					if (p.isPending())
+					{
+						console.warn(`此小說的打包任務仍在執行中，請稍後再請求檔案...`, siteID, novelID, novelData?.title);
+						return p
+					}
+					else if (p.isFulfilled())
+					{
+						return p
+					}
+
+					await p.catch(e => console.warn(`上次的打包任務失敗...`, siteID, novelID, novelData?.title, e));
 				}
-				else if (p.isFulfilled())
+
+				let p = _doPackEpubFromSource(siteID as EnumNovelSiteList, novelID);
+
+				_catch.set(key, p);
+
+				return p
+			})
+				.tapCatch(e =>
 				{
-					return p
-				}
-
-				await p.catch(e => console.warn(`上次的打包任務失敗...`, siteID, novelID, e));
-			}
-
-			let p = _doPackEpubFromSource(siteID as EnumNovelSiteList, novelID);
-
-			_catch.set(key, p);
-
-			return p
+					console.error(`打包時發生錯誤...`, siteID, novelID, novelData?.title, e);
+				})
+				.finally(() => _catch.delete(key))
 		})
-		.tapCatch(e =>
-		{
-			console.error(`打包時發生錯誤...`, siteID, novelID, e);
-		})
-		.finally(() => _catch.delete(key))
 		;
 }
 

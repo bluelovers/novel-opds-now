@@ -78,7 +78,7 @@ Bluebird
 				})
 		;
 
-		console.log(`[epub]`, IDKEY, novel_id, `打包 epub 結束`)
+		console.success(`[epub]`, IDKEY, novel_id, `打包 epub 結束`)
 
 		//console.dir(epub.file);
 

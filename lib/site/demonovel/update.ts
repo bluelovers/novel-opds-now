@@ -36,7 +36,6 @@ export async function updateCache(force: boolean)
 
 			console.debug(`嘗試更新 demonovel`);
 			return fetchCache()
-				.tap(v => console.debug(`更新完成`))
 		})
 		.catch<INovelStatCache>(e => {
 			console.warn(e.message || e);
@@ -44,6 +43,7 @@ export async function updateCache(force: boolean)
 		})
 		.tap(data => outputJSON(localFile, data, { spaces: 2 }))
 		.tap(v => buildCache())
+		.tap(v => console.success(`[demonovel]`, `更新完成`))
 		;
 }
 

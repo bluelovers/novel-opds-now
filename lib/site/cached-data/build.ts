@@ -5,6 +5,7 @@ import { getLocalOrRebuild } from '@demonovel/local-or-rebuild-file';
 import { getCacheFilename } from '../../util/index';
 import console from 'debug-color2/logger';
 import fetch from '../../fetch';
+import { outputJSON } from 'fs-extra';
 
 export function updateCache(siteID: ISiteIDs, force: boolean): Bluebird<IRecordCachedJSONRow>
 {
@@ -36,13 +37,23 @@ export function buildCache(siteID: ISiteIDs, force: boolean)
 				.map(novel =>
 				{
 
-					let { title, id, cover, content, updated } = novel;
+					let {
+						title,
+						id,
+						authors,
+						cover,
+						content,
+						updated,
+						uuid ,
+					} = novel;
 
 					content = content?.replace?.(/\u001f/g, '');
 
 					return {
+						uuid,
 						id,
 						title,
+						authors,
 						cover,
 						updated,
 						content,
@@ -50,5 +61,15 @@ export function buildCache(siteID: ISiteIDs, force: boolean)
 
 				})
 				;
+		})
+		.tap(list => {
+			return outputJSON(getCacheFilename(`${siteID}/map.json`), list.reduce((a, b) => {
+
+				a[b.id] = b;
+
+				return a
+			}, {}), {
+				spaces: 2,
+			})
 		})
 }
