@@ -2,7 +2,7 @@ import { Router } from 'express';
 import console from 'debug-color2/logger';
 import { showClient } from '../util/showClient';
 import { updateAllCacheTask } from '../../lib/task/update-cache';
-import pokeAll from '../../lib/ipfs/pokeAll';
+import pokeAll, { reportPokeAllSettledResult } from '../../lib/ipfs/pokeAll';
 import { getIPFS } from '../../lib/ipfs/use';
 import LazyURL from 'lazy-url';
 import { parsePath } from '@lazy-ipfs/parse-ipfs-path';
@@ -55,9 +55,7 @@ function routerPokeHandler()
 		if (cid.length)
 		{
 			let list = await pokeAll(cid, getIPFS().catch(e => null as null))
-				.tap(e => {
-					console.success(`poke`, e)
-				})
+				.tap(reportPokeAllSettledResult)
 				.tapCatch(e => console.error(`poke`, e))
 				.catch(e => null as null)
 			;

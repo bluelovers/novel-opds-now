@@ -20,34 +20,35 @@ export function doPackEpubFromSource(siteID: string | EnumNovelSiteList, novelID
 {
 	let key = newFileURL(siteID, novelID).pathname;
 
-	return Bluebird.resolve(getNovelData(siteID,  novelID))
-		.then(novelData => {
+	return Bluebird.resolve(getNovelData(siteID, novelID))
+		.then(novelData =>
+		{
 			return Bluebird.resolve().then(async () =>
-			{
-
-				if (_catch.has(key))
 				{
-					let p = _catch.get(key);
 
-					if (p.isPending())
+					if (_catch.has(key))
 					{
-						console.warn(`此小說的打包任務仍在執行中，請稍後再請求檔案...`, siteID, novelID, novelData?.title);
-						return p
+						let p = _catch.get(key);
+
+						if (p.isPending())
+						{
+							console.warn(`此小說的打包任務仍在執行中，請稍後再請求檔案...`, siteID, novelID, novelData?.title);
+							return p
+						}
+						else if (p.isFulfilled())
+						{
+							return p
+						}
+
+						await p.catch(e => console.warn(`上次的打包任務失敗...`, siteID, novelID, novelData?.title, e));
 					}
-					else if (p.isFulfilled())
-					{
-						return p
-					}
 
-					await p.catch(e => console.warn(`上次的打包任務失敗...`, siteID, novelID, novelData?.title, e));
-				}
+					let p = _doPackEpubFromSource(siteID as EnumNovelSiteList, novelID);
 
-				let p = _doPackEpubFromSource(siteID as EnumNovelSiteList, novelID);
+					_catch.set(key, p);
 
-				_catch.set(key, p);
-
-				return p
-			})
+					return p
+				})
 				.tapCatch(e =>
 				{
 					console.error(`打包時發生錯誤...`, siteID, novelID, novelData?.title, e);
@@ -59,8 +60,12 @@ export function doPackEpubFromSource(siteID: string | EnumNovelSiteList, novelID
 
 export function _doPackEpubFromSource(siteID: EnumNovelSiteList, novelID: string | number)
 {
-	console.yellow.info(`從原始來源網站抓取打包小說中...`, siteID, novelID);
-	return Bluebird.resolve(crossSpawn('node', [
+	return Bluebird.resolve(getNovelData(siteID, novelID))
+		.tap(novelData =>
+		{
+			console.yellow.info(`從原始來源網站抓取打包小說中...`, siteID, novelID, novelData?.title);
+		})
+		.thenReturn(crossSpawn('node', [
 			'--experimental-worker',
 			join(__root, `./cli/cli.js`),
 			'--mod',

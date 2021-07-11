@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const express_1 = require("express");
 const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 const showClient_1 = require("../util/showClient");
-const pokeAll_1 = (0, tslib_1.__importDefault)(require("../../lib/ipfs/pokeAll"));
+const pokeAll_1 = (0, tslib_1.__importStar)(require("../../lib/ipfs/pokeAll"));
 const use_1 = require("../../lib/ipfs/use");
 const lazy_url_1 = (0, tslib_1.__importDefault)(require("lazy-url"));
 const parse_ipfs_path_1 = require("@lazy-ipfs/parse-ipfs-path");
@@ -44,9 +44,7 @@ function routerPokeHandler() {
         }
         if (cid.length) {
             let list = await (0, pokeAll_1.default)(cid, (0, use_1.getIPFS)().catch(e => null))
-                .tap(e => {
-                logger_1.default.success(`poke`, e);
-            })
+                .tap(pokeAll_1.reportPokeAllSettledResult)
                 .tapCatch(e => logger_1.default.error(`poke`, e))
                 .catch(e => null);
             return res.json({
