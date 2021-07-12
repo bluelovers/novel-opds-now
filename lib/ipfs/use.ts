@@ -23,7 +23,7 @@ import { join } from 'path';
 import { envBool } from 'env-bool';
 import { tmpPath } from '../util/tmpPath';
 import { findFreeAddresses } from './use/port';
-import { connectPeers } from './peer';
+import { connectPeers, peerAbortController } from './peer';
 import { inspect } from 'util';
 import { pubsubSubscribe, pubsubUnSubscribe } from './pubsub/index';
 import { allSettled } from 'bluebird-allsettled';
@@ -128,8 +128,9 @@ export function useIPFS(options?: {
 				{
 					return pubsubSubscribe(ipfs)
 						//.then(e => connectPeersAll(ipfs as any))
-						.tap(async () => {
-							const me  = await ipfs.id({ timeout: 3000, }).catch(e => null);
+						.tap(async () =>
+						{
+							const me = await ipfs.id({ timeout: 3000 }).catch(e => null);
 
 							allSettled([
 								connectPeers(ipfs, `12D3KooWEJeVsMMPWdnxHFMaU5uqggtULrF3gHxu15uW5scP8DTJ`, me, 30 * 60 * 1000),
@@ -148,7 +149,7 @@ export function useIPFS(options?: {
 							console.error(e)
 						})
 				})
-			;
+				;
 		})
 		.catch(e =>
 		{
@@ -460,6 +461,15 @@ function _useIPFS(options?: {
 			const stop = (done) =>
 			{
 				console.info(`[IPFS]`, `useIPFS:stop`)
+
+				try
+				{
+					peerAbortController.abort();
+				}
+				catch (e)
+				{
+				}
+
 				// @ts-ignore
 				return Promise.all([
 					_stop?.({

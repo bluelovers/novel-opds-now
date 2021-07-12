@@ -4,8 +4,12 @@ import console from 'debug-color2/logger';
 import Bluebird from 'bluebird';
 import { getPubsubPeers } from './pubsub';
 import { multiaddr } from 'multiaddr';
+import AbortControllerTimer from 'abort-controller-timer';
+import { AbortOptions } from 'ipfs-core-types/src/utils';
 
 const connectPeersCache = new Set<string>()
+
+export const peerAbortController = new AbortControllerTimer();
 
 export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDResult, timeout?: number, extra?: {
 	hidden?: boolean,
@@ -27,7 +31,7 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDRes
 
 	if (connectPeersCache.has(peer_id))
 	{
-		console.debug(`[IPFS]`, `[connectPeers]:skip`, peerID)
+		//console.debug(`[IPFS]`, `[connectPeers]:skip`, peerID)
 		return
 	}
 
@@ -41,8 +45,9 @@ export async function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDRes
 				return
 			}
 
-			let options = {
+			let options: AbortOptions = {
 				timeout: timeout || 3 * 60 * 1000,
+				signal: peerAbortController.signal,
 			};
 
 			!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:start`, peerID)
