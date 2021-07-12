@@ -464,6 +464,7 @@ function _useIPFS(options?: {
 				try
 				{
 					peerAbortController.abort();
+					peerAbortController.clear();
 				}
 				catch (e)
 				{

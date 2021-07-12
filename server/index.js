@@ -20,6 +20,7 @@ const os_1 = require("os");
 const url_1 = require("url");
 const address2_1 = (0, tslib_1.__importDefault)(require("address2"));
 const poke_1 = (0, tslib_1.__importDefault)(require("./router/poke"));
+const index_1 = require("../lib/ipfs/pubsub/index");
 const app = (0, express_1.default)();
 app.use((0, serve_favicon_1.default)((0, path_1.join)(__root_1.default, 'static', 'favicon.png')));
 app.use((0, request_ip_1.mw)());
@@ -98,6 +99,7 @@ app.use('/.status', async (req, res, next) => {
                 timeout: 3000,
             }).catch(e => null),
             address: isLocal && bluebird_1.default.resolve(_cache.address()).timeout(3000).catch(e => null),
+            pubsub: (0, index_1.getPubsubPeers)(_cache.ipfs),
         });
     }).catch(e => null);
     return res.json({

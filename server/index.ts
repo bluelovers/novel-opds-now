@@ -34,6 +34,7 @@ import { format as urlFormat } from 'url';
 import terminalLink from 'terminal-link';
 import searchIPAddress from 'address2';
 import routerPokeHandler from './router/poke';
+import { getPubsubPeers } from '../lib/ipfs/pubsub/index';
 
 const app = express();
 
@@ -150,6 +151,8 @@ app.use('/.status', async (req, res, next) => {
 				timeout: 3000,
 			}).catch(e => null as null),
 			address: isLocal && Bluebird.resolve(_cache.address()).timeout(3000).catch(e => null as null),
+
+			pubsub: getPubsubPeers(_cache.ipfs),
 		})
 	}).catch(e => null as null);
 

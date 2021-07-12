@@ -14,6 +14,8 @@ const connectPeersCache = new Set<string>()
 
 export const peerAbortController = new AbortControllerTimer();
 
+peerAbortController.on('abort', () => console.debug(`[IPFS]`, `[connectPeers]`, `abort`)) ;
+
 export function getPeerCacheKey(peerID: string)
 {
 	let peer_id: string = peerID;
@@ -66,11 +68,15 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 {
 	const { peer_id, _not_multiaddr, peer_addr } = getPeerCacheKey(peerID)
 
+	connectPeersCache.add(peer_id);
+
 	return Promise.resolve(me)
 		.then(async (me) =>
 		{
 			let id = me.id;
 			let id2 = peer_addr?.getPeerId?.();
+
+			connectPeersCache.add(peer_id);
 
 			if (id === peerID || id2 === id || peer_id.includes(id) || peerID.includes(id))
 			{
@@ -80,13 +86,11 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 			const subAbortController = new AbortControllerTimer(timeout || 3 * 60 * 1000);
 
 			let options: AbortOptions = {
-				timeout: timeout || 3 * 60 * 1000,
+				//timeout: timeout || 3 * 60 * 1000,
 				signal: subAbortController.signal,
 			};
 
 			!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:start`, peerID)
-
-			connectPeersCache.add(peer_id)
 
 			const fn = () =>
 			{
@@ -101,40 +105,42 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 
 			peerAbortController.on('abort', fn);
 
+			let list = array_unique_overwrite([
+				/*
+				ipfs.swarm.connect(`/dns4/ws-star-signal-1.servep2p.com/tcp/443/wss/p2p-websocket-star/ipfs/${peerID}`)
+					.catch(e => {
+
+						if (String(e).includes('unknown protocol wss'))
+						{
+							return;
+						}
+
+						console.warn(`[connectPeers]`, e)
+					}),
+				 */
+				//ipfs.swarm.connect(`/p2p-circuit/ipfs/${peerID}`).catch(e => console.warn(`[IPFS]`, `[connectPeers]`, e)),
+				//_not_multiaddr && `/ip4/104.131.131.82/tcp/4001/p2p/${peerID}`,
+				_not_multiaddr && `/p2p/${peerID}`,
+
+				//!_not_multiaddr && `/ip4/0.0.0.0/tcp/${peerID}`,
+
+				_not_multiaddr && `/ip4/0.0.0.0/tcp/4001/p2p/${peerID}`,
+				_not_multiaddr && `/ip4/0.0.0.0/tcp/4002/p2p/${peerID}`,
+
+				//!_not_multiaddr && `/ip4/0.0.0.0/tcp/4001/${peerID}`,
+				//!_not_multiaddr && `/ip4/0.0.0.0/tcp/4002/${peerID}`,
+
+				!_not_multiaddr && peerID,
+
+				//ipfs.swarm.connect(`/ipfs/${me.id}/p2p/${peerID}`, options),
+				//ipfs.swarm.connect(`/ipfs/${me.id}/ipfs/${peerID}`, options),
+
+				//ipfs.swarm.connect(`/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ/p2p-circuit/ipfs/${peerID}`, options),
+
+			].filter(Boolean)).map(peerID => ipfs.swarm.connect(peerID, options))
+
 			return Bluebird
-				.any([
-					/*
-					ipfs.swarm.connect(`/dns4/ws-star-signal-1.servep2p.com/tcp/443/wss/p2p-websocket-star/ipfs/${peerID}`)
-						.catch(e => {
-
-							if (String(e).includes('unknown protocol wss'))
-							{
-								return;
-							}
-
-							console.warn(`[connectPeers]`, e)
-						}),
-					 */
-					//ipfs.swarm.connect(`/p2p-circuit/ipfs/${peerID}`).catch(e => console.warn(`[IPFS]`, `[connectPeers]`, e)),
-					_not_multiaddr && ipfs.swarm.connect(`/ip4/104.131.131.82/tcp/4001/p2p/${peerID}`, options),
-					_not_multiaddr && ipfs.swarm.connect(`/p2p/${peerID}`, options),
-
-					!_not_multiaddr && ipfs.swarm.connect(`/ip4/0.0.0.0/tcp/${peerID}`, options),
-
-					ipfs.swarm.connect(`/ip4/0.0.0.0/tcp/4001/p2p/${peerID}`, options),
-					ipfs.swarm.connect(`/ip4/0.0.0.0/tcp/4002/p2p/${peerID}`, options),
-
-					!_not_multiaddr && ipfs.swarm.connect(`/ip4/0.0.0.0/tcp/4001/${peerID}`, options),
-					!_not_multiaddr && ipfs.swarm.connect(`/ip4/0.0.0.0/tcp/4002/${peerID}`, options),
-
-					ipfs.swarm.connect(peerID, options),
-
-					//ipfs.swarm.connect(`/ipfs/${me.id}/p2p/${peerID}`, options),
-					//ipfs.swarm.connect(`/ipfs/${me.id}/ipfs/${peerID}`, options),
-
-					//ipfs.swarm.connect(`/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ/p2p-circuit/ipfs/${peerID}`, options),
-
-				].filter(Boolean))
+				.any(list)
 				.tap(e =>
 				{
 					!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:end`, peerID, String(e))
@@ -144,12 +150,12 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 					fn();
 					peerAbortController.off('abort', fn);
 
-					connectPeersCache.delete(peer_id)
+					//connectPeersCache.delete(peer_id)
 				})
 		})
 		.catch(e =>
 		{
-			//!extra?.hidden && console.warn(`[IPFS]`, `[connectPeers]`, peerID, String(e))
+			!extra?.hidden && console.warn(`[IPFS]`, `[connectPeers]`, peerID, String(e))
 		})
 		;
 }
@@ -159,6 +165,8 @@ export function connectPeersAll(ipfs: IUseIPFSApi, peers: ITSResolvable<string[]
 	timeout?: number,
 })
 {
+	//console.log(`connectPeersAll`)
+
 	return Bluebird
 		.props({
 			me: ipfs.id(),
@@ -175,37 +183,42 @@ export function connectPeersAll(ipfs: IUseIPFSApi, peers: ITSResolvable<string[]
 
 			if (!peers?.length)
 			{
+				//console.log(`connectPeersAll:empty`)
 				return;
 			}
 
 			peers = array_unique_overwrite(peers.map(String).filter(peerID =>
 			{
 				const { peer_id, peer_addr } = getPeerCacheKey(peerID);
+				const id2 = peer_addr?.getPeerId?.();
 
 				if (myPeers.includes(peer_id) || myPeers.includes(peerID))
 				{
 					return false;
 				}
-				else if (peer_addr?.getPeerId?.() === id || peer_id.includes(id) || peerID.includes(id))
+				else if (id2 === id || peer_id.includes(id) || peerID.includes(id))
 				{
 					return false;
 				}
 
 				connectPeersCache.add(peer_id);
+				//connectPeersCache.add(peerID);
 
 				return true;
 			}));
 
 			if (!peers?.length)
 			{
+				//console.log(`connectPeersAll:empty`)
 				return;
 			}
 
-			return Bluebird.map(peers, async (peerID) =>
+			//console.log(`connectPeersAll:do`, peers.length, connectPeersCache.size)
+
+			return Bluebird.mapSeries(peers, (peerID) =>
 			{
+				//console.debug(`[IPFS]`, `[connectPeers]:each:start`, peerID)
 				return _connectPeers(ipfs, peerID, me, extra?.timeout, extra)
-			}, {
-				concurrency: 3,
 			})
 		})
 
