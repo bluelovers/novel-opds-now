@@ -45,10 +45,10 @@ export async function pubsubHandler(msg: Message)
 				{
 					console.yellow.info(`[IPFS]`, `peer:online`, me.id === msg.from ? 'You!' : json.peerID, msg.topicIDs, `${EnumPubSubHello[json.type]}:${json.type}`, json.peers?.length);
 
-					peerIDs.push(json.peerID);
-
 					if (me.id !== msg.from)
 					{
+						peerIDs.push(json.peerID);
+
 						if (json.type !== EnumPubSubHello.HELLO_REPLY && EnumPubSubHello[json.type])
 						{
 							let peers: ITSResolvable<string[]> = getMixinPeers(ipfs);
@@ -97,12 +97,12 @@ export async function pubsubHandler(msg: Message)
 				}
 			}
 
-			if (Array.isArray(json.peers) && json.peers.length)
+			if (me.id !== msg.from && Array.isArray(json.peers) && json.peers.length)
 			{
 				peerIDs.push(...json.peers);
 			}
 
-			if (peerIDs.length)
+			if (me.id !== msg.from && peerIDs.length)
 			{
 				await Bluebird.resolve(array_unique_overwrite(peerIDs.map(String)))
 					.each(peerID => connectPeers(ipfs as any, peerID, me, null, {
