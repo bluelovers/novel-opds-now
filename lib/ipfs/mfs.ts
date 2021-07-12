@@ -1,11 +1,9 @@
-import { IGunEpubNode } from '../types';
 import { useIPFS } from './use';
-import CID from 'cids';
 import { toCID } from '@lazy-ipfs/to-cid';
 import { DAGLink } from 'ipld-dag-pb'
 import console from 'debug-color2/logger';
 import { StatResult } from 'ipfs-core-types/src/files';
-import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from './pokeAll';
+import { pokeAll, reportPokeAllSettledResult } from './pokeAll';
 import { IPubSubEpub } from './types';
 
 export function addMutableFileSystem(options: IPubSubEpub)
@@ -15,7 +13,7 @@ export function addMutableFileSystem(options: IPubSubEpub)
 		let dir_path = `/novel-opds-now/${options.siteID}/${options.novelID}`;
 		let file_path = `${dir_path}/${options.data.path}`;
 
-		console.debug(`[IPFS]`, `addMutableFileSystem`, dir_path, options)
+		//console.debug(`[IPFS]`, `addMutableFileSystem`, dir_path, options)
 
 		let dir_stat: StatResult = await ipfs.files.stat(dir_path).catch(e => null);
 		let file_cid = toCID(options.data.cid);
@@ -56,15 +54,15 @@ export function addMutableFileSystem(options: IPubSubEpub)
 		let root_cid = root_stat.cid;
 		root_stat = void 0;
 
-		console.debug(`[IPFS]`, `addMutableFileSystem:root`, `poke`, root_cid)
-		pokeAll(root_cid as any, ipfs)
+		//console.debug(`[IPFS]`, `addMutableFileSystem:root`, `poke`, root_cid)
+		pokeAll(`/ipfs/${root_cid}/${options.siteID}/${options.novelID}`, ipfs)
 			.tap(settledResult =>
 			{
 				return reportPokeAllSettledResult(settledResult, root_cid)
 			})
 		;
 
-		console.debug(`[IPFS]`, `addMutableFileSystem:done`, dir_path, dir_stat)
+		//console.debug(`[IPFS]`, `addMutableFileSystem:done`, dir_path, dir_stat)
 
 		//return stop();
 	}).catch(e =>
