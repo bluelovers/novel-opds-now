@@ -127,7 +127,6 @@ export function useIPFS(options?: {
 				}) =>
 				{
 					return pubsubSubscribe(ipfs)
-						//.then(e => connectPeersAll(ipfs as any))
 						.tap(async () =>
 						{
 							const me = await ipfs.id({ timeout: 3000 }).catch(e => null);

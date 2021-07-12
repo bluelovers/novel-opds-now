@@ -7,7 +7,7 @@ import { pokeAll, reportPokeAllSettledResult } from '../pokeAll';
 import { addMutableFileSystem } from '../mfs';
 import Bluebird from 'bluebird';
 import { array_unique_overwrite } from 'array-hyper-unique';
-import { connectPeers } from '../peer';
+import { connectPeers, connectPeersAll } from '../peer';
 import { pubsubPublishHello } from './hello';
 import { ITSResolvable } from 'ts-type';
 import { getMixinPeers } from '../util/getMixinPeers';
@@ -104,11 +104,9 @@ export async function pubsubHandler(msg: Message)
 
 			if (me.id !== msg.from && peerIDs.length)
 			{
-				await Bluebird.resolve(array_unique_overwrite(peerIDs.map(String)))
-					.each(peerID => connectPeers(ipfs as any, peerID, me, null, {
-						hidden: true,
-					}))
-				;
+				await connectPeersAll(ipfs, peerIDs, {
+					hidden: true,
+				});
 			}
 
 		}
