@@ -18,7 +18,7 @@ export function pubsubPublishHello(ipfs: IUseIPFSApi, helloType?: EnumPubSubHell
 		{
 			helloType ??= EnumPubSubHello.HELLO;
 
-			console.yellow.info(`[IPFS]`, `peer:hello`, `${EnumPubSubHello[helloType]}:${helloType}`, pubsubPeers?.length);
+			console.debug(`[IPFS]`, `peer:hello`, `${EnumPubSubHello[helloType]}:${helloType}`, pubsubPeers?.length);
 
 			return pubsubPublish<IPubSubHello>(ipfs, {
 				peerID: me.id,

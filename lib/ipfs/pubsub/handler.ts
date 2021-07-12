@@ -43,7 +43,7 @@ export async function pubsubHandler(msg: Message)
 			{
 				if (typeof json.peerID !== 'undefined' && json.type && msg.from.toString() === json.peerID.toString())
 				{
-					console.info(`[IPFS]`, `peer:online`, me.id === msg.from ? 'You!' : json.peerID, msg.topicIDs, `${EnumPubSubHello[json.type]}:${json.type}`, json.peers?.length);
+					console.yellow.info(`[IPFS]`, `peer:online`, me.id === msg.from ? 'You!' : json.peerID, msg.topicIDs, `${EnumPubSubHello[json.type]}:${json.type}`, json.peers?.length);
 
 					peerIDs.push(json.peerID);
 
