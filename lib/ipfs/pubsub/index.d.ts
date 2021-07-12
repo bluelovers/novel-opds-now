@@ -1,0 +1,10 @@
+import { IUseIPFSApi } from '../../types';
+import { IPubSubBase, IPubSubEpub } from '../types';
+import { ITSResolvable } from 'ts-type';
+import Bluebird from 'bluebird';
+export declare const EPUB_TOPIC = "novel-opds-now";
+export declare function pubsubUnSubscribe(ipfs: IUseIPFSApi): Promise<void>;
+export declare function pubsubPublishEpub<T extends IPubSubEpub>(ipfs: IUseIPFSApi, { siteID, novelID, ...data }: T, peers?: ITSResolvable<string[]>): Promise<void>;
+export declare function pubsubPublish<T extends IPubSubBase>(ipfs: IUseIPFSApi, data: T, peers?: ITSResolvable<string[]>): Promise<void>;
+export declare function pubsubSubscribe(ipfs: IUseIPFSApi): Bluebird<void>;
+export declare function getPubsubPeers(ipfs: IUseIPFSApi): Promise<string[]>;

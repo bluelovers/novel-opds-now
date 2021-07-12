@@ -13,7 +13,7 @@ import { lazyRaceServerList } from 'fetch-ipfs/util';
 import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import { inspect } from 'util';
-import { pubsubPublish, pubsubPublishEpub } from '../ipfs/pubsub';
+import { EPUB_TOPIC, getPubsubPeers, pubsubPublish, pubsubPublishEpub } from '../ipfs/pubsub';
 import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from '../ipfs/pokeAll';
 import { addMutableFileSystem } from '../ipfs/mfs';
 import { fromBuffer } from 'file-type';
@@ -191,7 +191,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 								siteID,
 								novelID,
 								data: result,
-							});
+							}, getPubsubPeers(ipfs));
 
 							ipfs && addMutableFileSystem({
 								siteID,

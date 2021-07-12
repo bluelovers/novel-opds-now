@@ -6,16 +6,9 @@ import { DAGLink } from 'ipld-dag-pb'
 import console from 'debug-color2/logger';
 import { StatResult } from 'ipfs-core-types/src/files';
 import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from './pokeAll';
+import { IPubSubEpub } from './types';
 
-export function addMutableFileSystem(options: {
-	siteID: string,
-	novelID: string | number,
-	data: {
-		path: string,
-		cid: string | CID,
-		size: number,
-	},
-})
+export function addMutableFileSystem(options: IPubSubEpub)
 {
 	return useIPFS().then(async ({ ipfs, stop }) =>
 	{
@@ -69,7 +62,8 @@ export function addMutableFileSystem(options: {
 		console.debug(`[IPFS]`, `addMutableFileSystem:done`, dir_path, dir_stat)
 
 		//return stop();
-	}).catch(e => {
+	}).catch(e =>
+	{
 		console.debug(`[IPFS]`, `addMutableFileSystem:error`, options)
 		console.error(e)
 	})

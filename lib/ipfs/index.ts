@@ -65,7 +65,7 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 
 	})
 		.timeout(timeout + 5 * 1000)
-	;
+		;
 }
 
 export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubNode)
@@ -76,7 +76,8 @@ export function putEpubFileInfo(siteID: string, novelID: string, data: IGunEpubN
 		// @ts-ignore
 		data,
 	})
-		.tapCatch(e => {
+		.tapCatch(e =>
+		{
 			console.error(`putEpubFileInfo`, `上傳資料時發生錯誤`, e);
 		})
 }
