@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.13](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.12...novel-opds-now@3.0.13) (2021-07-12)
+
+
+### 🐛　Bug Fixes
+
+* update task for demonovel ([257f1d0](https://github.com/bluelovers/novel-opds-now/commit/257f1d0e7d2a2fef338e6c3ad2661ac04402177e))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([3cdc230](https://github.com/bluelovers/novel-opds-now/commit/3cdc2302ed8bd427e9b88aad39f170f600c1a4f6))
+* **cache:** update cache ([c9a7b5d](https://github.com/bluelovers/novel-opds-now/commit/c9a7b5d9029f050329a6e2fc8a4255324d0d1424))
+
+
+
+
+
 ## [3.0.12](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.11...novel-opds-now@3.0.12) (2021-07-12)
 
 
