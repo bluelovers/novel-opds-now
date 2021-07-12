@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.12](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.11...novel-opds-now@3.0.12) (2021-07-12)
+
+
+### 🐛　Bug Fixes
+
+* 防止自己推送給自己 ([bbc5faf](https://github.com/bluelovers/novel-opds-now/commit/bbc5faf123d694162bd73b134897643a4c29a2a5))
+* 當檔案存在並且 cid 相同時就忽略複製 ([1234b7f](https://github.com/bluelovers/novel-opds-now/commit/1234b7fc98fc97f4a3eff6dc34e55b96dd42c797))
+
+
+### ✨　Features
+
+* poke 定位到 子路徑 ([a1562a0](https://github.com/bluelovers/novel-opds-now/commit/a1562a03f23924dd8769b3742b424476b7255d91))
+* 防止 stop 時 connect peers 仍然在執行導致沒有關閉 ([5faa603](https://github.com/bluelovers/novel-opds-now/commit/5faa6034323778181ecd1e87aa92173804573a4e))
+* 增強 pubsub 節點之間的連通性 ([12a5b52](https://github.com/bluelovers/novel-opds-now/commit/12a5b525e636eec52ca6f582e510687e1e976982))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([5621c70](https://github.com/bluelovers/novel-opds-now/commit/5621c703c21eeb6ca083b79b2675c43dbee834db))
+
+
+### 🔖　Miscellaneous
+
+* . ([266e767](https://github.com/bluelovers/novel-opds-now/commit/266e7673a9dc557ff18649eed4c14fabbd485673))
+
+
+
+
+
 ## [3.0.11](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.10...novel-opds-now@3.0.11) (2021-07-11)
 
 
