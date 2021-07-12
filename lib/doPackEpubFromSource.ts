@@ -66,6 +66,8 @@ export function _doPackEpubFromSource(siteID: EnumNovelSiteList, novelID: string
 			console.yellow.info(`從原始來源網站抓取打包小說中...`, siteID, novelID, novelData?.title);
 		})
 		.thenReturn(crossSpawn('node', [
+			'-r',
+			'source-map-support/register',
 			'--experimental-worker',
 			join(__root, `./cli/cli.js`),
 			'--mod',

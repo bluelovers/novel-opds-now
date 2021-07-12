@@ -1442,6 +1442,13 @@
     "@types/node" "*"
     "@types/socket.io-parser" "*"
 
+"@types/source-map-support@^0.5.4":
+  version "0.5.4"
+  resolved "https://registry.npmjs.org/@types/source-map-support/-/source-map-support-0.5.4.tgz#574ff6a8636bc0ebae78a8014136f749b3177d58"
+  integrity sha512-9zGujX1sOPg32XLyfgEB/0G9ZnrjthL/Iv1ZfuAjj8LEilHZEpQSQs1scpRXPhHzGYgWiLz9ldF1cI8JhL+yMw==
+  dependencies:
+    source-map "^0.6.0"
+
 "@types/tmp@^0.2.1":
   version "0.2.1"
   resolved "https://registry.npmjs.org/@types/tmp/-/tmp-0.2.1.tgz#83ecf4ec22a8c218c71db25f316619fe5b986011"
@@ -6512,10 +6519,10 @@ normalize-url@^6.0.1:
   resolved "https://registry.npmjs.org/normalize-url/-/normalize-url-6.1.0.tgz#40d0885b535deffe3f3147bec877d05fe4c5668a"
   integrity sha512-DlL+XwOy3NxAQ8xuC0okPgK46iuVNAK01YN7RueYBqqFeGsBjV9XmCAzAdgt+667bCl5kPh9EqKKDwnaPG1I7A==
 
-novel-downloader-cli@^1.0.59:
-  version "1.0.59"
-  resolved "https://registry.npmjs.org/novel-downloader-cli/-/novel-downloader-cli-1.0.59.tgz#2f1128de51003bab100019199bc49bf6ce257537"
-  integrity sha512-7IeqXl5ABA+kVY7+iFL6syxMzPzuxNDhvB5UWZ+kr2FfIdcADke8vFLtJxk9wiSkYU/J2c1YyC4+R/0fCsXD3A==
+novel-downloader-cli@^1.0.60:
+  version "1.0.60"
+  resolved "https://registry.npmjs.org/novel-downloader-cli/-/novel-downloader-cli-1.0.60.tgz#64280f43b843fd0fecacc592c74eb629a1dec3ad"
+  integrity sha512-gNO7Wbso/oWBWI6V7RaZOzkLAr8q1yva73sm82ja4t304vQ0J47JLkI6Ns4Mv38gTclJ8t3XHLh4N7cyTc/Q2w==
   dependencies:
     "@yarn-tool/is-npx" "^1.0.7"
     "@yarn-tool/update-notifier" "^1.0.20"
@@ -6527,15 +6534,15 @@ novel-downloader-cli@^1.0.59:
     moment "^2.29.1"
     node-alias "^1.0.4"
     node-novel-info "^3.0.14"
-    novel-downloader "^2.0.30"
+    novel-downloader "^2.0.31"
     ts-type "^1.2.35"
     tslib "^2.3.0"
     yargs "^17.0.1"
 
-novel-downloader@^2.0.30:
-  version "2.0.30"
-  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-2.0.30.tgz#b945c1074820b5454ac0ad3e706327391646b8c3"
-  integrity sha512-/miDE5ZBoa05XR9PNnbpOGJXbozvKaWoVHFpsyl+tH1aoPJLGBMpZ7BIuK56Dk2dissJcU3jz3iXAWxdalyHHg==
+novel-downloader@^2.0.31:
+  version "2.0.31"
+  resolved "https://registry.npmjs.org/novel-downloader/-/novel-downloader-2.0.31.tgz#8ffcbfe0c2aab5a07867f3f50c2136fe8154ec25"
+  integrity sha512-gWD7+pKCE1hOmugrd6d9YRjDQ94nQyMTkA0lBGBrtpqV0vGywCO7FAxMtKp3X8iNKFX2SL6pIzPGmxGY+CfjWw==
   dependencies:
     "@bluelovers/request-promise" "^4.2.5"
     "@node-novel/layout" "^2.0.17"
@@ -8342,6 +8349,14 @@ source-map-js@^0.6.2:
   version "0.6.2"
   resolved "https://registry.npmjs.org/source-map-js/-/source-map-js-0.6.2.tgz#0bb5de631b41cfbda6cfba8bd05a80efdfd2385e"
   integrity sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug==
+
+source-map-support@^0.5.19:
+  version "0.5.19"
+  resolved "https://registry.npmjs.org/source-map-support/-/source-map-support-0.5.19.tgz#a98b62f86dcaf4f67399648c085291ab9e8fed61"
+  integrity sha512-Wonm7zOCIJzBGQdB+thsPar0kYuCIzYvxZwlBa87yi/Mdjv7Tip2cyVbLj5o0cFPN4EVkuTwb3GDDyUx2DGnGw==
+  dependencies:
+    buffer-from "^1.0.0"
+    source-map "^0.6.0"
 
 source-map@^0.5.6:
   version "0.5.7"

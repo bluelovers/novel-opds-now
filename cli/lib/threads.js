@@ -11,6 +11,7 @@ const cn2tw_min_1 = require("../../lib/cn2tw_min");
 const array_hyper_unique_1 = require("array-hyper-unique");
 const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 const fix_zh_harmony_1 = (0, tslib_1.__importDefault)(require("fix-zh-harmony"));
+const util_1 = require("util");
 const handleAsync = function handleAsync(id, IDKEY, outputDir = const_1.OUTPUT_DIR) {
     return null;
 };
@@ -53,11 +54,11 @@ if (worker_threads_1.isMainThread) {
         }))
             .tap(list => {
             if (list.length === 0) {
-                return Promise.reject(`can't found any file, ${{
+                return Promise.reject(`can't found any file, ${(0, util_1.inspect)({
                     siteID: IDKEY,
                     id,
                     cwd,
-                }}`);
+                })}`);
             }
             logger_1.default.debug(`本次將處理 ${list.length} 個檔案`);
         });

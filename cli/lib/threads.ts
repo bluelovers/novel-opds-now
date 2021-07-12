@@ -15,6 +15,7 @@ import { cn2tw_min } from '../../lib/cn2tw_min';
 import { array_unique } from 'array-hyper-unique';
 import console from 'debug-color2/logger';
 import fixZhHarmony from 'fix-zh-harmony';
+import { inspect } from 'util';
 
 const handleAsync = function handleAsync(id: string | number, IDKEY: string, outputDir = OUTPUT_DIR): Bluebird<boolean>
 {
@@ -82,11 +83,11 @@ if (isMainThread)
 			{
 				if (list.length === 0)
 				{
-					return Promise.reject(`can't found any file, ${{
+					return Promise.reject(`can't found any file, ${inspect({
 						siteID: IDKEY,
 						id,
 						cwd,
-					}}`)
+					})}`)
 				}
 
 				console.debug(`本次將處理 ${list.length} 個檔案`)
