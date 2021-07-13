@@ -1,6 +1,6 @@
 /// <reference types="node" />
-import { IIPFSControllerDaemon } from '../use';
 import { ListenOptions } from 'net';
+import { IIPFSControllerDaemon } from '../types';
 export declare function getPort2(options: {
     port: number;
 }): Promise<number>;

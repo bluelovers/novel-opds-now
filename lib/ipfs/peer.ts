@@ -137,10 +137,12 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 
 				//ipfs.swarm.connect(`/p2p/QmaCpDMGvV2BGHeYERUEnRQAwe3N8SzbUtfsmvsqQLuvuJ/p2p-circuit/ipfs/${peerID}`, options),
 
-			].filter(Boolean)).map(peerID => ipfs.swarm.connect(peerID, options))
+			].filter(Boolean))
+
+			//console.dir(list);
 
 			return Bluebird
-				.any(list)
+				.any(list.map(peerID => ipfs.swarm.connect(peerID, options)))
 				.tap(e =>
 				{
 					!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:end`, peerID, String(e))

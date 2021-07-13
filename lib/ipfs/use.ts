@@ -1,4 +1,3 @@
-import { createFactory } from 'ipfsd-ctl';
 import processExit from '../util/processExit';
 import { assertCheckIPFS, checkIPFS, ipfsAddresses } from 'ipfs-util-lib';
 import cloneDeep from 'lodash/cloneDeep';
@@ -12,26 +11,22 @@ import terminalLink from 'terminal-link';
 import { IUseIPFSApi } from '../types';
 import { findIpfsClient } from '@bluelovers/ipfs-http-client';
 import { getDefaultServerList } from '@bluelovers/ipfs-http-client/util';
-import ipfsEnv, { IIPFSEnv } from 'ipfs-env';
 import configApiCors from 'ipfs-util-lib/lib/ipfs/config/cors';
 import { multiaddrToURL } from 'multiaddr-to-url';
-import tmpDir from '../util/tmpDir';
 import { unlinkIPFSApi } from 'fix-ipfs/lib/ipfsd-ctl/unlinkIPFSApi';
-import { ensureDir, outputJSON, pathExists, readJSON } from 'fs-extra';
+import { ensureDir, pathExists } from 'fs-extra';
 import { sync as rimrafSync } from 'rimraf';
 import { join } from 'path';
-import { envBool } from 'env-bool';
-import { tmpPath } from '../util/tmpPath';
 import { findFreeAddresses } from './use/port';
-import { connectPeers, peerAbortController } from './peer';
+import { peerAbortController } from './peer';
 import { inspect } from 'util';
 import { pubsubSubscribe, pubsubUnSubscribe } from './pubsub/index';
-import { allSettled } from 'bluebird-allsettled';
-import { pubsubPublishHello } from './pubsub/hello';
-import { EnumPubSubHello } from './types';
 import { repoExists } from './repoExists';
 import { __root } from '../const';
 import { backupIdentity, restoreIdentity } from './util/back-up-identity';
+import { connectBuildInPeers } from './util/connect-build-in-peers';
+import { daemonFactory } from './util/daemonFactory';
+import { envDisposable } from './util/envDisposable';
 
 inspect.defaultOptions ??= {};
 inspect.defaultOptions.colors = console.enabledColor;
@@ -40,14 +35,6 @@ let _cache: ITSUnpackedPromiseLike<ReturnType<typeof _useIPFS>>;
 let _waiting: ReturnType<typeof _useIPFS>;
 
 let _timeout;
-
-declare module 'ipfs-env'
-{
-	interface IIPFSEnv
-	{
-		IPFS_DISPOSABLE?: boolean;
-	}
-}
 
 export function useIPFS(options?: {
 	disposable?: boolean
@@ -132,18 +119,9 @@ export function useIPFS(options?: {
 					return pubsubSubscribe(ipfs)
 						.tap(async () =>
 						{
-							const me = await ipfs.id({ timeout: 3000 }).catch(e => null);
 
-							allSettled([
-								connectPeers(ipfs, `12D3KooWEJeVsMMPWdnxHFMaU5uqggtULrF3gHxu15uW5scP8DTJ`, me, 30 * 60 * 1000),
+							connectBuildInPeers(ipfs);
 
-								connectPeers(ipfs, `12D3KooWQzajFygNXqrpFDdEc3WCVLAYh29LNWW9LYupefuye2LJ`, me, 30 * 60 * 1000),
-							])
-								.tap(() => pubsubPublishHello(ipfs))
-								.delay(30 * 60 * 1000)
-								.then(() => getIPFS())
-								.then((ipfs) => ipfs && pubsubPublishHello(ipfs, EnumPubSubHello.HELLO_AGAIN))
-							;
 						})
 						.catch(e =>
 						{
@@ -239,55 +217,13 @@ export async function searchIpfs()
 	}
 }
 
-export interface IIPFSControllerDaemon
-{
-
-	started: boolean,
-	path: string,
-
-	api: IUseIPFSApi,
-
-	env: IIPFSEnv,
-
-	opts: {
-		type?: 'go' | 'js' | 'proc',
-		disposable: boolean,
-		ipfsOptions?: {
-			init?: boolean,
-			config?: {
-				Addresses?: {
-					Swarm?: string[];
-					API?: string;
-					Gateway?: string;
-				}
-			}
-		}
-		ipfsBin?: string,
-		endpoint?: string,
-	},
-
-	disposable: boolean,
-
-	init(options?: any): Promise<IIPFSControllerDaemon>
-
-	cleanup(): Promise<IIPFSControllerDaemon>
-
-	start(): Promise<IIPFSControllerDaemon>
-
-	stop(): Promise<IIPFSControllerDaemon>
-
-	version(): Promise<string>
-
-	pid(): Promise<string>
-}
-
 function _useIPFS(options?: {
 	disposable?: boolean,
 })
 {
 	console.info(`[IPFS]`, `嘗試啟動或連接至 IPFS ...`);
 
-	const disposable = !!envBool(options?.disposable ?? process.env.IPFS_DISPOSABLE ?? false, true);
+	const disposable = envDisposable(options?.disposable);
 
 	let _temp;
 
@@ -298,40 +234,7 @@ function _useIPFS(options?: {
 		{
 			console.info(`[IPFS]`, `嘗試啟動 IPFS 伺服器...`, `可使用 IPFS_GO_EXEC 指定執行檔路徑`, `IPFS_PATH 指定 repo 路徑`);
 
-			if (disposable || 1 && !process.env.IPFS_PATH)
-			{
-				let base = join(tmpPath(), 'novel-opds-now');
-
-				if (disposable)
-				{
-					process.env.IPFS_PATH = tmpDir(base).name;
-				}
-				else
-				{
-					process.env.IPFS_PATH = join(base, '.ipfs');
-				}
-			}
-
-			const myFactory: {
-				opts: IIPFSControllerDaemon["opts"],
-				spawn(): IIPFSControllerDaemon,
-			} = createFactory({
-				ipfsHttpModule: await import('ipfs-http-client'),
-				ipfsBin: ipfsEnv().IPFS_GO_EXEC || await import('go-ipfs').then(m => m.path()),
-				ipfsOptions: {
-					EXPERIMENTAL: {
-						ipnsPubsub: true,
-						repoAutoMigrate: true,
-					},
-					//init: true,
-					start: false,
-				},
-				...options,
-				disposable: false,
-				//test: disposable,
-			});
-
-			const ipfsd = await myFactory.spawn() as IIPFSControllerDaemon
+			const { ipfsd } = await daemonFactory(disposable, options);
 
 			if (disposable)
 			{
@@ -373,37 +276,19 @@ function _useIPFS(options?: {
 				console.debug(`[IPFS]`, `ipfsd`, `init`)
 				await ipfsd.init(ipfsd.opts.ipfsOptions?.init);
 
-				if (!oldExists && !disposable && await repoExists(ipfsd.path))
+				if (!disposable && await repoExists(ipfsd.path))
 				{
-					if (await pathExists(join(__root, 'test', '.identity.json')))
+					let bool = await pathExists(join(__root, 'test', '.identity.json'));
+
+					if (!oldExists && bool)
 					{
 						await restoreIdentity(ipfsd)
 					}
-					else
+					else if (!bool)
 					{
 						await backupIdentity(ipfsd);
 					}
 				}
-
-//				if (disposable)
-//				{
-//					await crossSpawn('node', [
-//						'--experimental-worker',
-//						join(__root, `./cli/cli.js`),
-//						'--mod',
-//						'all',
-//						'--siteID',
-//						siteID,
-//						'--novel_id',
-//						novelID,
-//					], {
-//						stdio: 'inherit',
-//						env: {
-//
-//							IPFS_PATH
-//						}
-//					})
-//				}
 			}
 
 			if (!ipfsd.started)

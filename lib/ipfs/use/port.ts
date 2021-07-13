@@ -1,9 +1,9 @@
 import findFreePortSync from 'find-free-port-sync-fixed';
 import { options } from 'yargs';
 import createDefaultAddresses, { getDefaultAddressesPorts, IPort } from 'ipfs-defaults/addresses';
-import { IIPFSControllerDaemon } from '../use';
 import { createServer, ListenOptions } from 'net';
 import { execSync } from 'child_process';
+import { IIPFSControllerDaemon } from '../types';
 
 const usedPort = new Set<number>(getUsedPorts());
 const blacklistPort = new Set<number>([

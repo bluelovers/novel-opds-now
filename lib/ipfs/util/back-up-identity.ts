@@ -3,7 +3,7 @@ import { join } from 'path';
 import Bluebird from 'bluebird';
 import { outputJSON, readJSON } from 'fs-extra';
 import { __root } from '../../const';
-import { IIPFSControllerDaemon } from '../use';
+import { IIPFSControllerDaemon } from '../types';
 
 export async function backupIdentity(ipfsd: IIPFSControllerDaemon)
 {
@@ -31,6 +31,8 @@ export function restoreIdentity(ipfsd: IIPFSControllerDaemon)
 		Identity,
 		config,
 	}) => {
+		Identity.PeerID.length && Identity.PrivKey.length;
+
 		config["Identity"] = Identity;
 
 		return outputJSON(join(ipfsd.path, 'config'), config, {
