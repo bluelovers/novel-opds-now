@@ -5,6 +5,8 @@ import console from 'debug-color2/logger';
 import { StatResult } from 'ipfs-core-types/src/files';
 import { pokeAll, reportPokeAllSettledResult } from './pokeAll';
 import { IPubSubEpub } from './types';
+import { getNovelData } from '../site/cached-data/getNovelData';
+import UString from 'uni-string';
 
 export function addMutableFileSystem(options: IPubSubEpub)
 {
@@ -47,6 +49,24 @@ export function addMutableFileSystem(options: IPubSubEpub)
 
 		}
 
+		let novel = await getNovelData(options.siteID, options.novelID);
+
+		if (novel?.title)
+		{
+			let title = UString.slice(novel.title.replace(/[.]+/g, ''), 0, 15).replace(/\//g, '／');
+
+			if (title.length)
+			{
+				let file_path2 = `${dir_path}/${title}`;
+				let file_stat2: StatResult = await ipfs.files.stat(file_path).catch(e => null);
+
+				if (!file_stat2)
+				{
+					await ipfs.files.write(file_path2, '').catch(e => null);
+				}
+			}
+		}
+
 		let root_stat: StatResult = await ipfs.files.stat(`/novel-opds-now/`, {
 			hash: true,
 		});
@@ -56,9 +76,9 @@ export function addMutableFileSystem(options: IPubSubEpub)
 
 		//console.debug(`[IPFS]`, `addMutableFileSystem:root`, `poke`, root_cid)
 		pokeAll(`/ipfs/${root_cid}/${options.siteID}/${options.novelID}`, ipfs)
-			.tap(settledResult =>
+			.tap(async (settledResult) =>
 			{
-				return reportPokeAllSettledResult(settledResult, root_cid)
+				return reportPokeAllSettledResult(settledResult, root_cid, novel?.title)
 			})
 		;
 

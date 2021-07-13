@@ -6,11 +6,14 @@ import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
 import findPort, { makeRange } from 'get-port';
 import { _info, useIPFS } from './lib/ipfs/use';
+import { envCalibrePath, ICalibreEnv } from 'calibre-env';
+import { sep } from 'path';
 
 export async function startServer(options: {
 	port?: number | string,
 	proxy?: string,
 	disposable?: boolean,
+	calibrePaths?: string[],
 } = {})
 {
 	options = options || {};
@@ -22,6 +25,12 @@ export async function startServer(options: {
 	}
 
 	process.env.IPFS_DISPOSABLE = options.disposable ?? process.env.IPFS_DISPOSABLE;
+
+	if (typeof options.calibrePaths !== 'undefined')
+	{
+		// @ts-ignore
+		process.env.CALIBRE_PATH = options.calibrePaths;
+	}
 
 	const web = await _createServer(micro(await import('./server/index').then(m => m.default)));
 

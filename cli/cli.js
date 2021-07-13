@@ -34,6 +34,8 @@ switch (argv.mod) {
             throw new Error();
         }
         (0, child_process_1.spawnSync)('node', [
+            '-r',
+            'source-map-support/register',
             '--experimental-worker',
             (0, path_1.resolve)(__dirname, `./mod/${argv.mod}`),
             '--IDKEY',
@@ -52,6 +54,8 @@ switch (argv.mod) {
             throw new Error();
         }
         (0, child_process_1.spawnSync)('node', [
+            '-r',
+            'source-map-support/register',
             (0, path_1.resolve)(__dirname, `./mod/${argv.mod}`),
             '--siteID',
             argv.siteID,

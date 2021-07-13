@@ -17,6 +17,9 @@ async function startServer(options = {}) {
         process.env.HTTP_PROXY = process.env.HTTPS_PROXY = options.proxy;
     }
     process.env.IPFS_DISPOSABLE = (_a = options.disposable) !== null && _a !== void 0 ? _a : process.env.IPFS_DISPOSABLE;
+    if (typeof options.calibrePaths !== 'undefined') {
+        process.env.CALIBRE_PATH = options.calibrePaths;
+    }
     const web = await (0, http_1.createServer)((0, micro_1.default)(await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('./server/index'))).then(m => m.default)));
     port = port || (0, getPort_1.default)((0, getPort_1.getPortEnv)());
     process.env.PORT = port = await (0, get_port_1.default)({

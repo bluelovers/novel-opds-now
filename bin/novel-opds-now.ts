@@ -21,6 +21,11 @@ let argv = yargs
 		desc: `啟用 disposable 模式來執行拋棄式 IPFS 伺服器`,
 		default: process.env.IPFS_DISPOSABLE,
 	})
+	.option('calibrePaths', {
+		desc: `CALIBRE_PATH=${process.env.CALIBRE_PATH}`,
+		array: true,
+		string: true,
+	})
 	.parseSync()
 ;
 

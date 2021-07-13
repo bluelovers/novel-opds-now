@@ -35,14 +35,19 @@ import terminalLink from 'terminal-link';
 import searchIPAddress from 'address2';
 import routerPokeHandler from './router/poke';
 import { getPubsubPeers } from '../lib/ipfs/pubsub/index';
+import helmet from 'helmet';
+import calibreHandler from './router/calibre/index';
 
 const app = express();
 
 //app.use(gunServe);
 //app.use('/gun', gunHttp);
+app.use(helmet());
 app.use(favicon(join(__root, 'static', 'favicon.png')));
 app.use(mw())
 app.use(useragent())
+
+app.use(calibreHandler);
 
 app.use('/file', fileHandler());
 app.use('/opds', opdsHandler());

@@ -48,7 +48,7 @@ export function makeOPDSSite(siteID: ISiteIDs)
 		{
 			feed.books = feed.books || [];
 
-			await loadCache(siteID)
+			await loadCache(siteID, null)
 				.each(({
 					id,
 					title,
@@ -171,6 +171,18 @@ export function makeOPDSPortal()
 
 				})
 			;
+
+			// @ts-ignore
+			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({
+				title: `模組：Calibre`,
+				links: [
+					{
+						href: `/opds/calibre.xml`,
+						title: EnumLinkRel.ALTERNATE,
+						type: EnumMIME.OPDS_CATALOG_FEED_DOCUMENT,
+					} as Link,
+				],
+			}));
 
 			// @ts-ignore
 			feed.books.push(OPDSV1.Entry.deserialize<OPDSV1.Entry>({

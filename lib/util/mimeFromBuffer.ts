@@ -1,8 +1,13 @@
-import { fromBuffer } from 'file-type';
+import { fromBuffer, FileTypeResult } from 'file-type';
 
-export async function mimeFromBuffer(buffer: Buffer)
+export async function fixFileTypeResult(result: FileTypeResult)
 {
-	let { mime, ext } = await fromBuffer(buffer);
+	if (!result)
+	{
+		return result
+	}
+
+	let { mime, ext } = result;
 
 	if (mime === 'application/zip')
 	{
@@ -18,7 +23,13 @@ export async function mimeFromBuffer(buffer: Buffer)
 	}
 
 	return {
+		...result,
 		mime,
 		ext,
 	}
+}
+
+export async function mimeFromBuffer(buffer: Buffer)
+{
+	return fromBuffer(buffer).then(fixFileTypeResult)
 }

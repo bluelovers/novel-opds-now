@@ -67,7 +67,10 @@ export async function pubsubHandler(msg: Message)
 					// @ts-ignore
 					const cid = json.cid || json.data?.cid as any;
 
-					pokeAll(cid, ipfs)
+					pokeAll(cid, ipfs, {
+						// @ts-ignore
+						filename: json.data?.path
+					})
 						.tap(settledResult =>
 						{
 							return reportPokeAllSettledResult(settledResult, cid, (json.data as any)?.path)
