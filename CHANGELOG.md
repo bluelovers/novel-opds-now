@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.17](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.16...novel-opds-now@3.0.17) (2021-07-13)
+
+
+### ✨　Features
+
+* 整合 `calibre-server` 現在可透過 `/opds/calibre` 來瀏覽 calibre 內的書庫 ([7968b3d](https://github.com/bluelovers/novel-opds-now/commit/7968b3d942c9950ddc0f051acb4929f7fb6a33bf))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([7fa98f9](https://github.com/bluelovers/novel-opds-now/commit/7fa98f9ac91b95744c2b646762febb00def7fa75))
+
+
+
+
+
 ## [3.0.16](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.15...novel-opds-now@3.0.16) (2021-07-12)
 
 
