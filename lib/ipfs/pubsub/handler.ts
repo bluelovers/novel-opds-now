@@ -5,9 +5,7 @@ import console from 'debug-color2/logger';
 import { EPUB_TOPIC, getPubsubPeers } from './index';
 import { pokeAll, reportPokeAllSettledResult } from '../pokeAll';
 import { addMutableFileSystem } from '../mfs';
-import Bluebird from 'bluebird';
-import { array_unique_overwrite } from 'array-hyper-unique';
-import { connectPeers, connectPeersAll } from '../peer';
+import { connectPeersAll } from '../peer';
 import { pubsubPublishHello } from './hello';
 import { ITSResolvable } from 'ts-type';
 import { getMixinPeers } from '../util/getMixinPeers';
@@ -51,7 +49,16 @@ export async function pubsubHandler(msg: Message)
 
 						if (json.type !== EnumPubSubHello.HELLO_REPLY && EnumPubSubHello[json.type])
 						{
-							let peers: ITSResolvable<string[]> = getMixinPeers(ipfs);
+							let peers: ITSResolvable<string[]>;
+
+							if (json.type === EnumPubSubHello.HELLO_AGAIN)
+							{
+								peers = getMixinPeers(ipfs)
+							}
+							else
+							{
+								peers = getPubsubPeers(ipfs)
+							}
 
 							pubsubPublishHello(ipfs, EnumPubSubHello.HELLO_REPLY, peers)
 						}
