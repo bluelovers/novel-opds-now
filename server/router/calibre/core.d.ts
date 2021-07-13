@@ -1,2 +1,3 @@
-declare const _default: Promise<((req: any, res: any, next: any) => void) | import("express-serve-static-core").Router>;
+import { Router } from 'express';
+declare const _default: Promise<Router>;
 export default _default;

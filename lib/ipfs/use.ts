@@ -17,7 +17,7 @@ import configApiCors from 'ipfs-util-lib/lib/ipfs/config/cors';
 import { multiaddrToURL } from 'multiaddr-to-url';
 import tmpDir from '../util/tmpDir';
 import { unlinkIPFSApi } from 'fix-ipfs/lib/ipfsd-ctl/unlinkIPFSApi';
-import { ensureDir } from 'fs-extra';
+import { ensureDir, outputJSON, pathExists, readJSON } from 'fs-extra';
 import { sync as rimrafSync } from 'rimraf';
 import { join } from 'path';
 import { envBool } from 'env-bool';
@@ -29,6 +29,9 @@ import { pubsubSubscribe, pubsubUnSubscribe } from './pubsub/index';
 import { allSettled } from 'bluebird-allsettled';
 import { pubsubPublishHello } from './pubsub/hello';
 import { EnumPubSubHello } from './types';
+import { repoExists } from './repoExists';
+import { __root } from '../const';
+import { backupIdentity, restoreIdentity } from './util/back-up-identity';
 
 inspect.defaultOptions ??= {};
 inspect.defaultOptions.colors = console.enabledColor;
@@ -365,8 +368,22 @@ function _useIPFS(options?: {
 
 			if (!ipfsd.started)
 			{
+				let oldExists = await repoExists(ipfsd.path);
+
 				console.debug(`[IPFS]`, `ipfsd`, `init`)
 				await ipfsd.init(ipfsd.opts.ipfsOptions?.init);
+
+				if (!oldExists && !disposable && await repoExists(ipfsd.path))
+				{
+					if (await pathExists(join(__root, 'test', '.identity.json')))
+					{
+						await restoreIdentity(ipfsd)
+					}
+					else
+					{
+						await backupIdentity(ipfsd);
+					}
+				}
 
 //				if (disposable)
 //				{
@@ -457,7 +474,7 @@ function _useIPFS(options?: {
 			// @ts-ignore
 			const path: string = ipfsd?.path;
 
-			const stop = (done) =>
+			const stop = (done?) =>
 			{
 				console.info(`[IPFS]`, `useIPFS:stop`)
 
@@ -476,7 +493,7 @@ function _useIPFS(options?: {
 						timeout: 2000,
 					}),
 					pubsubUnSubscribe(ipfs as any),
-				]).then(done) as void
+				]).then(done ?? (() => null)) as void
 			}
 
 			const ret = {

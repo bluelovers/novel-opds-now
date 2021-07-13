@@ -15,7 +15,7 @@ import { PassThrough } from 'stream';
 import { delimiter } from 'path';
 import { envCalibrePath } from 'calibre-env';
 
-async function calibreHandlerCore()
+async function calibreHandlerCore(): Promise<Router>
 {
 	//process.env.CALIBRE_PATH = `D:\\Program Files (Portable)\\Calibre Portable`;
 
@@ -37,6 +37,7 @@ async function calibreHandlerCore()
 
 	if (!calibrePaths.length)
 	{
+		// @ts-ignore
 		return (req, res, next) => {
 			res.setHeader('Content-Type', 'text/html; charset=utf-8');
 			res.charset = 'utf-8';

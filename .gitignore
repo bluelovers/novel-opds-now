@@ -118,3 +118,5 @@ radata-*.tmp
 /.cache/cached/wenku8/wenku8.json
 /.cache/cached/wenku8/wenku8.json.stat
 /tmp
+/test/.identity.json
+.identity.json

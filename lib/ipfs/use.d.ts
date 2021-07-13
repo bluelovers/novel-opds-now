@@ -14,7 +14,7 @@ export declare function useIPFS(options?: {
     path: string;
     readonly ipfs: IUseIPFSApi;
     address(): Promise<IIPFSAddresses>;
-    stop: (done: any) => void;
+    stop: (done?: any) => void;
     stopAsync(): Bluebird<void>;
 }>;
 export declare function searchIpfs(): Promise<{

@@ -86,3 +86,5 @@ radata-*.tmp
 /docs
 yarn.lock
 npm-shrinkwrap.json
+/test/.identity.json
+.identity.json
