@@ -113,11 +113,11 @@ function fileHandler()
 								msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`
 							}
 
-							console.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id);
+							console.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id);
 						}
 						else
 						{
-							console.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id);
+							console.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id);
 						}
 
 					})

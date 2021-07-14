@@ -18,6 +18,7 @@ import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from 
 import { addMutableFileSystem } from '../ipfs/mfs';
 import { fromBuffer } from 'file-type';
 import { downloadEpubRace } from './downloadEpubRace';
+import { updateCachePubSubPeers } from '../ipfs/pubsub/cache';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -198,6 +199,8 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 								novelID,
 								data: result,
 							});
+
+							ipfs && updateCachePubSubPeers(ipfs);
 
 						}
 					})

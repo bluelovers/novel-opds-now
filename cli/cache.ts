@@ -3,6 +3,7 @@
 import yargs from 'yargs';
 import console from 'debug-color2/logger';
 import { updateAllCacheTask } from '../lib/task/update-cache';
+import { getCachePeers } from '../lib/ipfs/util/connect-build-in-peers';
 
 let argv = yargs
 	.option('force', {
@@ -12,4 +13,7 @@ let argv = yargs
 	.parseSync()
 ;
 
-updateAllCacheTask(argv.force);
+Promise.all([
+	getCachePeers(),
+	updateAllCacheTask(argv.force),
+])

@@ -27,6 +27,9 @@ import { backupIdentity, restoreIdentity } from './util/back-up-identity';
 import { connectBuildInPeers } from './util/connect-build-in-peers';
 import { daemonFactory } from './util/daemonFactory';
 import { envDisposable } from './util/envDisposable';
+import { initHello } from './use/initHello';
+import { initMutableFileSystem } from './mfs/initMutableFileSystem';
+import { initHelloCheck } from './use/initHelloCheck';
 
 inspect.defaultOptions ??= {};
 inspect.defaultOptions.colors = console.enabledColor;
@@ -112,16 +115,15 @@ export function useIPFS(options?: {
 			;
 
 			return _waiting
-				.tap(({
+				.tap(async ({
 					ipfs,
 				}) =>
 				{
 					return pubsubSubscribe(ipfs)
 						.tap(async () =>
 						{
-
-							connectBuildInPeers(ipfs);
-
+							initHello(ipfs);
+							initHelloCheck(ipfs);
 						})
 						.catch(e =>
 						{

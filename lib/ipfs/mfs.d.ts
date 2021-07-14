@@ -1,3 +1,3 @@
-/// <reference types="bluebird" />
 import { IPubSubEpub } from './types';
-export declare function addMutableFileSystem(options: IPubSubEpub): import("bluebird")<void>;
+import Bluebird from 'bluebird';
+export declare function addMutableFileSystem(options: IPubSubEpub): Bluebird<void>;

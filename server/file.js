@@ -72,10 +72,10 @@ function fileHandler() {
                     else if (!gunData.isGun) {
                         msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`;
                     }
-                    logger_1.default.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id);
+                    logger_1.default.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id);
                 }
                 else {
-                    logger_1.default.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id);
+                    logger_1.default.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id);
                 }
             });
         })

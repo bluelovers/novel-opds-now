@@ -1,4 +1,4 @@
-import { useIPFS } from './use';
+import { getIPFS, useIPFS } from './use';
 import { toCID } from '@lazy-ipfs/to-cid';
 import { DAGLink } from 'ipld-dag-pb'
 import console from 'debug-color2/logger';
@@ -7,10 +7,12 @@ import { pokeAll, reportPokeAllSettledResult } from './pokeAll';
 import { IPubSubEpub } from './types';
 import { getNovelData } from '../site/cached-data/getNovelData';
 import UString from 'uni-string';
+import Bluebird from 'bluebird';
+import { pokeMutableFileSystem } from './mfs/pokeMutableFileSystem';
 
 export function addMutableFileSystem(options: IPubSubEpub)
 {
-	return useIPFS().then(async ({ ipfs, stop }) =>
+	return getIPFS().then(async (ipfs) =>
 	{
 		let dir_path = `/novel-opds-now/${options.siteID}/${options.novelID}`;
 		let file_path = `${dir_path}/${options.data.path}`;
@@ -57,34 +59,23 @@ export function addMutableFileSystem(options: IPubSubEpub)
 
 			if (title.length)
 			{
-				let file_path2 = `${dir_path}/${title}`;
-				let file_stat2: StatResult = await ipfs.files.stat(file_path).catch(e => null);
+				let file_path2 = `${dir_path}/${title}.txt`;
+				let file_stat2: StatResult = await ipfs.files.stat(file_path2).catch(e => null);
 
 				if (!file_stat2)
 				{
-					await ipfs.files.write(file_path2, '').catch(e => null);
+					await ipfs.files.write(file_path2, novel.title, {
+						create: true,
+					});
 				}
 			}
 		}
 
-		let root_stat: StatResult = await ipfs.files.stat(`/novel-opds-now/`, {
-			hash: true,
-		});
-
-		let root_cid = root_stat.cid;
-		root_stat = void 0;
-
 		//console.debug(`[IPFS]`, `addMutableFileSystem:root`, `poke`, root_cid)
-		pokeAll(`/ipfs/${root_cid}/${options.siteID}/${options.novelID}`, ipfs)
-			.tap(async (settledResult) =>
-			{
-				return reportPokeAllSettledResult(settledResult, root_cid, novel?.title)
-			})
-		;
+
+		pokeMutableFileSystem(options, novel?.title);
 
 		//console.debug(`[IPFS]`, `addMutableFileSystem:done`, dir_path, dir_stat)
-
-		//return stop();
 	}).catch(e =>
 	{
 		console.debug(`[IPFS]`, `addMutableFileSystem:error`, options)

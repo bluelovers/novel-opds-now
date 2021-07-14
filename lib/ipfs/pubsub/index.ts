@@ -37,14 +37,14 @@ export async function pubsubPublishEpub<T extends IPubSubEpub>(ipfs: IUseIPFSApi
 
 export async function pubsubPublish<T extends IPubSubBase>(ipfs: IUseIPFSApi, data: T, peers?: ITSResolvable<string[]>)
 {
-	// @ts-ignore
-	if (data && !(data.peerID && data.type))
-	{
-		console.debug(`[IPFS]`, `[pubsubPublish]`, data)
-	}
-
-	return Promise.resolve(peers).then(() =>
+	return Promise.resolve(peers).then((peers) =>
 		{
+			// @ts-ignore
+			if (data && !(data.peerID && data.type))
+			{
+				console.debug(`[IPFS]`, `[pubsubPublish]`, data, peers?.length)
+			}
+
 			return ipfs
 				.pubsub
 				.publish(EPUB_TOPIC, Buffer.from(JSON.stringify({

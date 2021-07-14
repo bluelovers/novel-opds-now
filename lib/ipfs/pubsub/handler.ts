@@ -9,6 +9,7 @@ import { connectPeersAll } from '../peer';
 import { pubsubPublishHello } from './hello';
 import { ITSResolvable } from 'ts-type';
 import { getMixinPeers } from '../util/getMixinPeers';
+import { updateCachePubSubPeers } from './cache';
 
 export async function pubsubHandler(msg: Message)
 {
@@ -62,6 +63,8 @@ export async function pubsubHandler(msg: Message)
 
 							pubsubPublishHello(ipfs, EnumPubSubHello.HELLO_REPLY, peers)
 						}
+
+						updateCachePubSubPeers(ipfs, msg.from);
 					}
 				}
 			}
