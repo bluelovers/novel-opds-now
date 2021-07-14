@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.18](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.17...novel-opds-now@3.0.18) (2021-07-14)
+
+
+### 🐛　Bug Fixes
+
+* share.ipfs.io not support path ([744ab79](https://github.com/bluelovers/novel-opds-now/commit/744ab79753d98d1b8d6331f815cb272896263a3e))
+
+
+### ✨　Features
+
+* 啟動時抓取 `Hello from novel-opds-now Checker` 來試圖搜尋擁有此檔案的節點 ([d5f5de2](https://github.com/bluelovers/novel-opds-now/commit/d5f5de204c22a76823291811434f5efbef86d815))
+* 自動備份 peer id ([feac720](https://github.com/bluelovers/novel-opds-now/commit/feac720921e401847c5bcbd8ac5cfa95c6e2d131))
+* 只有當 HELLO_AGAIN 時才傳遞 getMixinPeers ([bb337b1](https://github.com/bluelovers/novel-opds-now/commit/bb337b1b24e52a2c9d21ad6f381124e5480f9d0d))
+
+
+### 📦　Code Refactoring
+
+* code splitting ([8b95459](https://github.com/bluelovers/novel-opds-now/commit/8b9545967c929a564ea418ce6e4070b3381f29ad))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([6b4dfb1](https://github.com/bluelovers/novel-opds-now/commit/6b4dfb1697155805ec874190531466039e219cd7))
+
+
+
+
+
 ## [3.0.17](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.16...novel-opds-now@3.0.17) (2021-07-13)
 
 
