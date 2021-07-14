@@ -61,7 +61,8 @@ export async function getIpfsGatewayList(ipfs)
 let cachePoke = new Set<string>();
 
 export function pokeAll(cid: string, ipfs, options?: {
-	filename?: string
+	filename?: string,
+	hidden?: boolean,
 })
 {
 	const cid_str = cid.toString();
@@ -72,7 +73,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 
 			if (cachePoke.has(cid_str))
 			{
-				console.gray.debug(`poke`, `skip`, cid_str)
+				!options?.hidden && console.gray.debug(`poke`, `skip`, cid_str)
 				return null
 			}
 
@@ -120,7 +121,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 							}
 
 							//const ipfs_url = ipfsProtocol(cid);
-							const ipfs_share_url = `https://share.ipfs.io/#/${data.hash}${data.path}`;
+							const ipfs_share_url = `https://share.ipfs.io/#/${data.hash}`;
 
 							list.unshift(ipfs_share_url);
 							//list.unshift(ipfs_url);
@@ -145,7 +146,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 
 					list = array_unique_overwrite(list).filter(href => !notAllowedAddress(href));
 
-					console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename);
+					!options?.hidden && console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename);
 					//console.debug(`[IPFS]`, `pokeAll:start`, list);
 
 					return allSettled(list
