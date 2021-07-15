@@ -8,12 +8,13 @@ const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
 const showClient_1 = require("../../util/showClient");
 const express_1 = require("express");
 const path_1 = require("path");
-const fs_1 = require("fs");
 const mimeFromBuffer_1 = require("../../../lib/util/mimeFromBuffer");
-const file_type_1 = require("file-type");
 const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
 const path_2 = require("path");
 const calibre_env_1 = require("calibre-env");
+const fs_extra_1 = require("fs-extra");
+const http_response_stream_1 = require("http-response-stream");
+const publishAndPoke_1 = require("../../../lib/ipfs/publish/publishAndPoke");
 async function calibreHandlerCore() {
     let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
     if (typeof calibrePaths === 'string') {
@@ -59,14 +60,18 @@ async function calibreHandlerCore() {
                 logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
                 (0, showClient_1.showClient)(req, res, next);
                 let local_path = (0, path_1.join)(db === null || db === void 0 ? void 0 : db._fulldir, file);
-                let result = await (0, file_type_1.fromStream)((0, fs_1.createReadStream)(local_path)).then(mimeFromBuffer_1.fixFileTypeResult);
+                let content = await (0, fs_extra_1.readFile)(local_path);
+                let result = await (0, mimeFromBuffer_1.mimeFromBuffer)(content);
                 let filename = (0, path_1.basename)(file);
                 let http_filename = filename;
                 if ((_a = req.query.filename) === null || _a === void 0 ? void 0 : _a.length) {
-                    http_filename = String(req.query.filename);
+                    http_filename = (0, path_1.basename)(String(req.query.filename));
                 }
                 let attachment = (0, content_disposition_1.default)(http_filename);
-                res.set('Content-disposition', attachment);
+                try {
+                    res.set('Content-disposition', attachment);
+                }
+                catch (e) { }
                 (result === null || result === void 0 ? void 0 : result.mime) && res.set('Content-Type', result.mime);
                 logger_1.default.debug(`[Calibre]`, {
                     dbID,
@@ -76,7 +81,12 @@ async function calibreHandlerCore() {
                     http_filename,
                     result,
                 });
-                return (0, fs_1.createReadStream)(local_path).pipe(res);
+                if (ext === '.epub') {
+                    (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
+                        filename: http_filename,
+                    });
+                }
+                return (0, http_response_stream_1.responseStream)(res, content);
             }
         }
         res.setHeader('Content-Type', 'text/html; charset=utf-8');

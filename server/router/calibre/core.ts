@@ -9,11 +9,19 @@ import { Router } from 'express';
 import { basename, extname, join } from 'path';
 import { createReadStream } from 'fs';
 import { fixFileTypeResult, mimeFromBuffer } from '../../../lib/util/mimeFromBuffer';
-import { fromStream } from 'file-type';
+import { fromBuffer, fromStream } from 'file-type';
 import contentDisposition from '@lazy-http/content-disposition';
 import { PassThrough } from 'stream';
 import { delimiter } from 'path';
 import { envCalibrePath } from 'calibre-env';
+import { publishToIPFSAll } from 'fetch-ipfs/put';
+import { filterList } from 'ipfs-server-list';
+import { readFile } from 'fs-extra';
+import { responseStream } from 'http-response-stream';
+import { getIPFS } from '../../../lib/ipfs/use';
+import { pokeAll, reportPokeAllSettledResult } from '../../../lib/ipfs/pokeAll';
+import { IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
+import { publishAndPokeIPFS } from '../../../lib/ipfs/publish/publishAndPoke';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -85,19 +93,27 @@ async function calibreHandlerCore(): Promise<Router>
 
 				let local_path = join(db?._fulldir, file);
 
-				let result = await fromStream(createReadStream(local_path)).then(fixFileTypeResult);
+				let content = await readFile(local_path);
+
+				let result = await mimeFromBuffer(content);
 
 				let filename = basename(file)
+
 				let http_filename = filename;
 
 				if (req.query.filename?.length)
 				{
-					http_filename = String(req.query.filename)
+					http_filename = basename(String(req.query.filename))
 				}
 
 				let attachment = contentDisposition(http_filename);
 
-				res.set('Content-disposition', attachment);
+				try
+				{
+					res.set('Content-disposition', attachment);
+				}
+				catch (e) {}
+
 				result?.mime && res.set('Content-Type', result.mime);
 
 				console.debug(`[Calibre]`, {
@@ -109,7 +125,14 @@ async function calibreHandlerCore(): Promise<Router>
 					result,
 				})
 
-				return createReadStream(local_path).pipe(res);
+				if (ext === '.epub')
+				{
+					publishAndPokeIPFS(content, {
+						filename: http_filename,
+					})
+				}
+
+				return responseStream(res, content);
 			}
 		}
 
