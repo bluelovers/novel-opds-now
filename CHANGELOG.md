@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.19](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.18...novel-opds-now@3.0.19) (2021-07-15)
+
+
+### ✨　Features
+
+* better calibre name ([2f665fe](https://github.com/bluelovers/novel-opds-now/commit/2f665feee24cfe4e492bbbb2b1e8000ba29b9092))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([df4d906](https://github.com/bluelovers/novel-opds-now/commit/df4d906562679791535c4cfdc213694cb0e918a0))
+
+
+
+
+
 ## [3.0.18](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.17...novel-opds-now@3.0.18) (2021-07-14)
 
 
