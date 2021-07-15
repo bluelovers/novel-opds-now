@@ -6,43 +6,43 @@ export declare function pokeMutableFileSystem(options: IPubSubEpub, title: strin
     href: string;
     error?: Error;
     status?: number;
-    headers?: Headers;
     statusText?: string;
+    headers?: Headers;
     value: string;
 } | {
     href: string;
     error?: Error;
     status?: number;
-    headers?: Headers;
     statusText?: string;
+    headers?: Headers;
     value: false;
 } | {
     href: string;
     value?: never;
     status?: number;
-    headers?: Headers;
     statusText?: string;
+    headers?: Headers;
     error: Error;
 }, any>[][][]>;
 export declare function _pokeMutableFileSystem(ipfs: IUseIPFSApi, path: string, title?: string): Bluebird<ITSPromiseSettledResult<{
     href: string;
     error?: Error;
     status?: number;
-    headers?: Headers;
     statusText?: string;
+    headers?: Headers;
     value: string;
 } | {
     href: string;
     error?: Error;
     status?: number;
-    headers?: Headers;
     statusText?: string;
+    headers?: Headers;
     value: false;
 } | {
     href: string;
     value?: never;
     status?: number;
-    headers?: Headers;
     statusText?: string;
+    headers?: Headers;
     error: Error;
 }, any>[][]>;
