@@ -58,7 +58,9 @@ export function addMutableFileSystem(options: IPubSubEpub)
 
 						let patched = await ipfs.object.patch.addLink(dir_stat.cid, link)
 
-						await ipfs.files.rm(dir_path);
+						await ipfs.files.rm(dir_path, {
+							recursive: true,
+						});
 						await ipfs.files.cp(`/ipfs/${patched}`, dir_path);
 
 					}
