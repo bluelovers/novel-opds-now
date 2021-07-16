@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.21](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.20...novel-opds-now@3.0.21) (2021-07-16)
+
+
+### 🐛　Bug Fixes
+
+* **ipfs:** promise is not work for async iterator ([4c34fbd](https://github.com/bluelovers/novel-opds-now/commit/4c34fbd94cc669fada8e582b1ee3ae0a300674d5))
+
+
+### ✨　Features
+
+* update initMutableFileSystem ([c013412](https://github.com/bluelovers/novel-opds-now/commit/c013412e46c6d70661f70a3eb7a43a2d3bf24031))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([88abd1e](https://github.com/bluelovers/novel-opds-now/commit/88abd1e464772f4b87b48e8b673d5348b4e414de))
+* **cache:** update cache ([cf1efa8](https://github.com/bluelovers/novel-opds-now/commit/cf1efa8380ca35ccd13b10bdec97fa529b22af45))
+
+
+
+
+
 ## [3.0.20](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.19...novel-opds-now@3.0.20) (2021-07-15)
 
 
