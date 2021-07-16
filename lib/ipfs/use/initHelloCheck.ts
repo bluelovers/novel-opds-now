@@ -7,20 +7,41 @@ import { join } from 'path';
 import { __root } from '../../const';
 import { handleCachePeersFile } from '../../util/handleCachePeersFile';
 import console from 'debug-color2/logger';
+import { toCID } from '@lazy-ipfs/to-cid';
+import CID from 'cids';
+import itAll from 'it-all';
 
 export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>)
 {
 	return Bluebird.resolve(ipfs)
-		.then(async (ipfs) => {
-
+		.then(async (ipfs) =>
+		{
 			let ls = await readFile(join(__root, 'lib/static/build-in-cids.txt'))
 				.then(handleCachePeersFile);
 
 			console.debug(`[IPFS]`, `initHelloCheck`, ls)
 
-			await Bluebird.any(ls.map(cid => ipfs.get(cid, {
-					preload: true,
-				})))
+			await Bluebird.any(ls.map(async (cid: string | CID) =>
+				{
+					const timeout = 5000;
+
+					cid = toCID(cid);
+
+					await ipfs.pin.rm(cid, {
+						timeout,
+					}).catch(e => null);
+
+					await itAll(ipfs.block.rm(cid as any, {
+						force: true,
+						quiet: true,
+						timeout,
+					})).catch(e => null);
+
+					return itAll(ipfs.get(cid, {
+						preload: true,
+						timeout: 10 * 60 * 1000,
+					}))
+				}))
 				.catch(e =>
 				{
 					console.warn(`[IPFS]`, `initHelloCheck`, e)
