@@ -36,9 +36,13 @@ export function addMutableFileSystem(options: IPubSubEpub)
 					{
 						let file_stat: StatResult = await ipfs.files.stat(file_path).catch(e => null);
 
-						if (file_stat.cid != file_cid)
+						if (file_stat && file_stat.cid != file_cid)
 						{
 							await ipfs.files.rm(file_path).catch(e => null);
+						}
+
+						if (file_stat?.cid != file_cid)
+						{
 							await ipfs.files.cp(`/ipfs/${file_cid}`, file_path);
 						}
 					}
