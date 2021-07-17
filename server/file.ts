@@ -22,6 +22,7 @@ import { getIPFSEpubFile, putIPFSEpubFile } from '../lib/store/ipfs';
 import { mimeFromBuffer } from '../lib/util/mimeFromBuffer';
 import { doPackEpubFromSource } from '../lib/doPackEpubFromSource';
 import { getNovelData } from '../lib/site/cached-data/getNovelData';
+import { siteNeverExpired } from '../lib/site/siteNeverExpired';
 
 export type IRouter = Router;
 
@@ -99,7 +100,7 @@ function fileHandler()
 						if (gunData?.exists)
 						{
 							let msg = '';
-							if (query.debug || query.force)
+							if (!siteNeverExpired(siteID) && (query.debug || query.force))
 							{
 								let mod = ` FORCE 模式`
 								if (query.debug)
@@ -129,7 +130,7 @@ function fileHandler()
 					.then(async () =>
 					{
 
-						if (gunData && gunData.isGun)
+						if (gunData?.isGun || siteNeverExpired(siteID))
 						{
 							return gunData
 						}

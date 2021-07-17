@@ -19,6 +19,7 @@ import { addMutableFileSystem } from '../ipfs/mfs';
 import { fromBuffer } from 'file-type';
 import { downloadEpubRace } from './downloadEpubRace';
 import { updateCachePubSubPeers } from '../ipfs/pubsub/cache';
+import { siteNeverExpired } from '../site/siteNeverExpired';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -62,8 +63,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 
 					let isGun = false;
 
-					// @ts-ignore
-					if (siteID === 'masiro')
+					if (siteNeverExpired(siteID))
 					{
 						isGun = true;
 					}

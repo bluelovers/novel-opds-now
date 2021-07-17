@@ -18,6 +18,7 @@ const ipfs_1 = require("../lib/store/ipfs");
 const mimeFromBuffer_1 = require("../lib/util/mimeFromBuffer");
 const doPackEpubFromSource_1 = require("../lib/doPackEpubFromSource");
 const getNovelData_1 = require("../lib/site/cached-data/getNovelData");
+const siteNeverExpired_1 = require("../lib/site/siteNeverExpired");
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:siteID/:novelID', (req, res) => {
@@ -62,7 +63,7 @@ function fileHandler() {
                 .tap(gunData => {
                 if (gunData === null || gunData === void 0 ? void 0 : gunData.exists) {
                     let msg = '';
-                    if (query.debug || query.force) {
+                    if (!(0, siteNeverExpired_1.siteNeverExpired)(siteID) && (query.debug || query.force)) {
                         let mod = ` FORCE 模式`;
                         if (query.debug) {
                             mod = ` DEBUG 模式`;
@@ -82,7 +83,7 @@ function fileHandler() {
             .then(async (gunData) => {
             return Promise.resolve()
                 .then(async () => {
-                if (gunData && gunData.isGun) {
+                if ((gunData === null || gunData === void 0 ? void 0 : gunData.isGun) || (0, siteNeverExpired_1.siteNeverExpired)(siteID)) {
                     return gunData;
                 }
                 let cp = await (0, doPackEpubFromSource_1.doPackEpubFromSource)(siteID, novel_id);
