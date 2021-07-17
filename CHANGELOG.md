@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.23](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.22...novel-opds-now@3.0.23) (2021-07-17)
+
+
+### 🐛　Bug Fixes
+
+* **server:** 禁用 `contentSecurityPolicy: false` 才能正常顯示 QR ([c701908](https://github.com/bluelovers/novel-opds-now/commit/c7019086f349a50d649bd3eeafe19833f9417698))
+
+
+### ✨　Features
+
+* **server:** no-referrer ([7f21043](https://github.com/bluelovers/novel-opds-now/commit/7f21043293a6c459b862170d76f6f88bb88d09d4))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([e9a0fd4](https://github.com/bluelovers/novel-opds-now/commit/e9a0fd44e2a38dd1bd5511315b4486b7cea9f681))
+
+
+
+
+
 ## [3.0.22](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.21...novel-opds-now@3.0.22) (2021-07-17)
 
 

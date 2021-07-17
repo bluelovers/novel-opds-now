@@ -10,68 +10,68 @@ export declare function pokeAll(cid: string, ipfs: any, options?: {
     hidden?: boolean;
 }): Bluebird<import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: string;
 } | {
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: false;
 } | {
     href: string;
     value?: never;
     status?: number;
-    statusText?: string;
     headers?: Headers;
+    statusText?: string;
     error: Error;
 }, any>[]>;
 export declare function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>): import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: string;
 } | {
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: false;
 } | {
     href: string;
     value?: never;
     status?: number;
-    statusText?: string;
     headers?: Headers;
+    statusText?: string;
     error: Error;
 }, any>[];
 export declare function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any): Bluebird<import("ts-type").ITSPromiseSettledResult<{
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: string;
 } | {
     href: string;
-    status?: number;
-    statusText?: string;
     error?: Error;
+    status?: number;
     headers?: Headers;
+    statusText?: string;
     value: false;
 } | {
     href: string;
     value?: never;
     status?: number;
-    statusText?: string;
     headers?: Headers;
+    statusText?: string;
     error: Error;
 }, any>[]>;
 export default pokeAll;
