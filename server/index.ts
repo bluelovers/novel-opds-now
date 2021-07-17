@@ -42,7 +42,10 @@ const app = express();
 
 //app.use(gunServe);
 //app.use('/gun', gunHttp);
-app.use(helmet());
+app.use(helmet({
+	// 禁用之後才能正常顯示 QR
+	contentSecurityPolicy: false,
+}));
 app.use(favicon(join(__root, 'static', 'favicon.png')));
 app.use(mw())
 app.use(useragent())

@@ -24,7 +24,9 @@ const index_1 = require("../lib/ipfs/pubsub/index");
 const helmet_1 = (0, tslib_1.__importDefault)(require("helmet"));
 const index_2 = (0, tslib_1.__importDefault)(require("./router/calibre/index"));
 const app = (0, express_1.default)();
-app.use((0, helmet_1.default)());
+app.use((0, helmet_1.default)({
+    contentSecurityPolicy: false,
+}));
 app.use((0, serve_favicon_1.default)((0, path_1.join)(__root_1.default, 'static', 'favicon.png')));
 app.use((0, request_ip_1.mw)());
 app.use((0, express_useragent_1.express)());
