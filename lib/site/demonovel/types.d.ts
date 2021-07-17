@@ -8,4 +8,7 @@ export interface IOutputFile {
 export interface IFilterNovelDataPlus extends IFilterNovelData {
     title: string;
     authors: string[];
+    uuid: string;
+    id: string;
 }
+export declare const siteID = "demonovel";

@@ -2,7 +2,7 @@ import { buildSync, initMain } from 'calibre-opds/lib';
 import { OPDSV1 } from 'opds-extra';
 import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
 import { Link, Entry } from 'opds-extra/lib/v1/core';
-import loadCache, { siteID } from './load';
+import loadCache from './load';
 import { createFromJSON, IFilterNovelData, createMoment } from '@node-novel/cache-loader';
 import dotValues2 from 'dot-values2'
 import NodeNovelInfo from 'node-novel-info/class';
@@ -10,7 +10,7 @@ import { moment } from 'novel-downloader/src/site';
 import MIMETypes from "mime-types";
 import addCover from '../../opds/addCover';
 import { makeOPDSShared } from '../../opds/index';
-import { IFilterNovelDataPlus } from './types';
+import { IFilterNovelDataPlus, siteID } from './types';
 import { addOpenSearch } from '../../opds/search';
 import { ISiteIDs } from '../types';
 

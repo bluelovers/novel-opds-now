@@ -1,7 +1,7 @@
 import { OPDSV1 } from 'opds-extra';
 import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
 import { Link } from 'opds-extra/lib/v1/core';
-import { ISiteIDs, builded_map } from '../site/types';
+import { ISiteIDs } from '../site/types';
 import { buildAsync, initMain } from 'calibre-opds/lib';
 import { makeOPDSShared } from './index';
 import { addOpenSearch } from './search';

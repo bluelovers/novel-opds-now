@@ -1,14 +1,17 @@
 /**
  * Created by user on 2020/2/3.
  */
-import loadCache, { getLocalFilename } from './load';
+import loadCache, { getLocalFilename} from './load';
 import { NodeNovelInfo } from 'node-novel-info/class';
 import { INovelStatCache, createFromJSON, IFilterNovelData, createMoment } from '@node-novel/cache-loader';
 import { removeZeroWidth } from 'zero-width/lib';
 import { toHalfWidth } from 'str-util';
-import { IOutputFile, IFilterNovelDataPlus } from './types';
+import { IOutputFile, IFilterNovelDataPlus, siteID } from './types';
 import dotValues2 from 'dot-values2'
 import { writeJSON } from 'fs-extra';
+import newNovelUUID from '@demonovel/uuid';
+import { _buildMap } from '../cached-data/build-map';
+import { getDemoUUID, _getDemoID } from './getDemoID';
 
 export function buildCache()
 {
@@ -30,6 +33,9 @@ export function buildCache()
 					novel.title = info.title();
 
 					novel.authors = info.authors();
+
+					novel.uuid = getDemoUUID(novel);
+					novel.id = _getDemoID(novel);
 
 					return novel
 				})
@@ -56,6 +62,7 @@ export function buildCache()
 				writeJSON(getLocalFilename('array.json'), list, {
 					spaces: 2,
 				}),
+				_buildMap(siteID, list, 'uuid')
 			])
 		})
 		;

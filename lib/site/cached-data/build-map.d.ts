@@ -1,3 +1,3 @@
-import { ISiteIDs } from '../types';
-import { INovelDataSimple } from './types';
-export declare function _buildMap(siteID: ISiteIDs, list: INovelDataSimple[]): Promise<void>;
+import { ISiteIDsPlus } from '../types';
+import { ITSKeyOfRecordExtractToKey } from 'ts-type/lib/helper/record';
+export declare function _buildMap<T extends Record<string, any>>(siteID: ISiteIDsPlus, list: T[], key?: ITSKeyOfRecordExtractToKey<T, string>): Promise<void>;

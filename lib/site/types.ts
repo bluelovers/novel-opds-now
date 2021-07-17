@@ -1,7 +1,9 @@
 import { join, basename } from "path";
 import __root from '../__root';
+import type { siteID as siteIDOfDemoNovel } from './demonovel/types';
 
 export type ISiteIDs = keyof typeof builded_map;
+export type ISiteIDsPlus = ISiteIDs | typeof siteIDOfDemoNovel;
 
 /*
 export const id_titles_map = {
