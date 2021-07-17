@@ -7,16 +7,25 @@ import { pokeAll, reportPokeAllSettledResult } from '../pokeAll';
 import Bluebird from 'bluebird';
 import { ITSPromiseSettledResult } from 'ts-type';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
+import { array_unique } from 'array-hyper-unique';
 
 export function pokeMutableFileSystem(options: IPubSubEpub, title: string)
 {
+	return pokeMutableFileSystemCore(title, [
+		`${options.siteID}/${options.novelID}/`,
+		`${options.siteID}/`,
+	]);
+}
+
+export function pokeMutableFileSystemCore(title: string, paths: string[])
+{
 	return getIPFS().then((ipfs) =>
 	{
-		return Bluebird.mapSeries([
-			`${options.siteID}/${options.novelID}/`,
-			`${options.siteID}/`,
+		return Bluebird.mapSeries(array_unique([
+			...paths,
 			`/`,
-		], (path, index) => {
+		]), (path, index) =>
+		{
 
 			//console.debug(`[pokeMutableFileSystem]`, path, title)
 

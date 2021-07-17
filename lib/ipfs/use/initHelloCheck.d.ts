@@ -1,4 +1,5 @@
 import { ITSResolvable } from 'ts-type/lib/generic';
 import { IUseIPFSApi } from '../../types';
 import Bluebird from 'bluebird';
-export declare function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>): Bluebird<void>;
+import { IIPFSControllerDaemon } from '../types';
+export declare function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon): Bluebird<void>;

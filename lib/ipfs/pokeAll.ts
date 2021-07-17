@@ -10,7 +10,7 @@ import ipfsSubdomain from '@lazy-ipfs/ipfs-subdomain';
 import console from 'debug-color2/logger';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { parsePath } from '@lazy-ipfs/parse-ipfs-path';
-import { EnumParsePathResultNs } from '@lazy-ipfs/parse-ipfs-path/lib/parsePath';
+import { EnumParsePathResultNs, IParsePathResult, resultToPath } from '@lazy-ipfs/parse-ipfs-path/lib/parsePath';
 
 export function notAllowedAddress(url: URL | string)
 {
@@ -101,11 +101,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 						})
 						.then(list =>
 						{
-							let data: {
-								ns: string,
-								hash: string,
-								path: string
-							}
+							let data: IParsePathResult
 
 							try
 							{
@@ -131,7 +127,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 								{
 									try
 									{
-										list.push(ipfsSubdomain(data.hash, gateway) + data.path);
+										list.push(ipfsSubdomain(resultToPath(data), gateway));
 									}
 									catch (e)
 									{

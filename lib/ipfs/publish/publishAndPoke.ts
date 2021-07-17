@@ -13,6 +13,10 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 	timeout?: number,
 	filename?: string,
 	hidden?: boolean,
+	cb?(cid: string, ipfs: IUseIPFSApi, data: {
+		filename: string,
+	}): ITSResolvable<any>,
+	noPoke?: boolean,
 }, ...msg: any)
 {
 	return Bluebird.props({
@@ -42,7 +46,7 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 				},
 				timeout,
 			})
-				.tap((ret) =>
+				.tap(async (ret) =>
 				{
 
 					let cid: string;
@@ -71,7 +75,9 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 						filename,
 					}
 
-					return pokeAll(cid, ipfs, data)
+					await options?.cb?.(cid, ipfs, data);
+
+					return !options.noPoke && pokeAll(cid, ipfs, data)
 						.tap(settledResult =>
 						{
 							return reportPokeAllSettledResult(settledResult, cid, data.filename, ...msg)

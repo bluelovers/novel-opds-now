@@ -120,3 +120,4 @@ radata-*.tmp
 /tmp
 /test/.identity.json
 .identity.json
+/test/.mfs.roots.json

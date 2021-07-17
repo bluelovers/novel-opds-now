@@ -15,6 +15,10 @@ const calibre_env_1 = require("calibre-env");
 const fs_extra_1 = require("fs-extra");
 const http_response_stream_1 = require("http-response-stream");
 const publishAndPoke_1 = require("../../../lib/ipfs/publish/publishAndPoke");
+const _addMutableFileSystem_1 = require("../../../lib/ipfs/mfs/_addMutableFileSystem");
+const sanitize_filename_1 = require("@lazy-node/sanitize-filename");
+const pokeMutableFileSystem_1 = require("../../../lib/ipfs/mfs/pokeMutableFileSystem");
+const saveMutableFileSystemRoots_1 = require("../../../lib/ipfs/mfs/saveMutableFileSystemRoots");
 async function calibreHandlerCore() {
     let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
     if (typeof calibrePaths === 'string') {
@@ -84,6 +88,32 @@ async function calibreHandlerCore() {
                 if (ext === '.epub') {
                     (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
                         filename: http_filename,
+                        cb(cid, ipfs, data) {
+                            var _a;
+                            let author = (0, sanitize_filename_1.sanitizeFilename)(((_a = req.query) === null || _a === void 0 ? void 0 : _a.author) || 'unknown', {
+                                replaceToFullWidth: true,
+                            }) || 'unknown';
+                            (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/calibre/${dbID}/${author}`, {
+                                path: (0, sanitize_filename_1.sanitizeFilename)(http_filename, {
+                                    replaceToFullWidth: true,
+                                }) || (0, sanitize_filename_1.sanitizeFilename)(filename, {
+                                    replaceToFullWidth: true,
+                                }),
+                                cid,
+                            }, {
+                                ipfs,
+                                async done(file_path) {
+                                    await (0, saveMutableFileSystemRoots_1.saveMutableFileSystemRoots)(ipfs);
+                                    _addMutableFileSystem_1.waitingCache.delete(file_path);
+                                    logger_1.default.debug(`_addMutableFileSystem:done`, file_path);
+                                    return (0, pokeMutableFileSystem_1.pokeMutableFileSystemCore)(http_filename, [
+                                        `calibre/${dbID}/${author}/`,
+                                        `calibre/${dbID}/`,
+                                        `calibre/`,
+                                    ]);
+                                },
+                            });
+                        },
                     });
                 }
                 return (0, http_response_stream_1.responseStream)(res, content);

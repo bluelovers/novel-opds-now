@@ -620,6 +620,14 @@
     ipfs-types "^1.0.33"
     tslib "^2.3.0"
 
+"@lazy-ipfs/is-same-cid@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/is-same-cid/-/is-same-cid-1.0.1.tgz#561219a2fdf8f733712fd62f23421fef749e4959"
+  integrity sha512-zFS0nkGZ0u2MX8iaFyvg9N3SdM58RQ258HcHt8AR3IfXKlbZYnA63cp5oUsKKESHcFj1StospD6T2wVgLaMUaA==
+  dependencies:
+    "@lazy-ipfs/to-cid" "^1.0.14"
+    tslib "^2.3.0"
+
 "@lazy-ipfs/parse-ipfs-path@^1.0.4":
   version "1.0.4"
   resolved "https://registry.npmjs.org/@lazy-ipfs/parse-ipfs-path/-/parse-ipfs-path-1.0.4.tgz#20d639c053781898e8f106b999433060344f0b1b"
@@ -641,6 +649,23 @@
   version "1.0.6"
   resolved "https://registry.npmjs.org/@lazy-node/is-writeable-path/-/is-writeable-path-1.0.6.tgz#27b2065a5ca947b599e097de00bc21d6e7600db0"
   integrity sha512-TwtE0JeVzJy+w6dI32zq+wVwi6OSAUTmeUE4DzpmZzMVI11OgMJPAuMFUG9QFeX9qPqZNVzU0VlW7ge7JvfsxQ==
+  dependencies:
+    tslib "^2.3.0"
+
+"@lazy-node/sanitize-filename@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-node/sanitize-filename/-/sanitize-filename-1.0.1.tgz#91a2b3ceca517a030f9aa198e0e9a346696f34f8"
+  integrity sha512-sYhZasVpcWRt+xmWqBD68J65GA++2n5HZGE1oYOfuVKX7BCHTYidXHCNSMglH1Q9bfhlk0hPhb8XyfpWpAM/wQ==
+  dependencies:
+    "@lazy-node/windows-unsafe-filename" "^1.0.1"
+    filenamify "<5 >=4"
+    tslib "^2.3.0"
+    zero-width "^1.0.16"
+
+"@lazy-node/windows-unsafe-filename@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-node/windows-unsafe-filename/-/windows-unsafe-filename-1.0.1.tgz#9196ddc70e585e76c5775eb9291117f4d1001a9d"
+  integrity sha512-jm+BAhgLfStgJHT4RxZhF9TeR8Z25URVLUZtpvlSjcYApdPGLppupsVmpl5st0mG6k4Ere1wUCNeXjiSfwZoUQ==
   dependencies:
     tslib "^2.3.0"
 
@@ -1331,10 +1356,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@>=13.7.0", "@types/node@^16.3.2":
-  version "16.3.2"
-  resolved "https://registry.npmjs.org/@types/node/-/node-16.3.2.tgz#655432817f83b51ac869c2d51dd8305fb8342e16"
-  integrity sha512-jJs9ErFLP403I+hMLGnqDRWT0RYKSvArxuBVh2veudHV7ifEC1WAmjJADacZ7mRbA2nWgHtn8xyECMAot0SkAw==
+"@types/node@*", "@types/node@>=13.7.0", "@types/node@^16.3.3":
+  version "16.3.3"
+  resolved "https://registry.npmjs.org/@types/node/-/node-16.3.3.tgz#0c30adff37bbbc7a50eb9b58fae2a504d0d88038"
+  integrity sha512-8h7k1YgQKxKXWckzFCMfsIwn0Y61UK6tlD6y2lOb3hTOIMlK3t9/QwHOhc81TwU+RMf0As5fj7NPjroERCnejQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -3776,6 +3801,15 @@ filename-reserved-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/filename-reserved-regex/-/filename-reserved-regex-2.0.0.tgz#abf73dfab735d045440abfea2d91f389ebbfa229"
   integrity sha1-q/c9+rc10EVECr/qLZHzieu/oik=
+
+"filenamify@<5 >=4":
+  version "4.3.0"
+  resolved "https://registry.npmjs.org/filenamify/-/filenamify-4.3.0.tgz#62391cb58f02b09971c9d4f9d63b3cf9aba03106"
+  integrity sha512-hcFKyUG57yWGAzu1CMt/dPzYZuv+jAJUT85bL8mrXvNe6hWj6yEHEc4EdcgiA6Z3oi1/9wXJdZPXF2dZNgwgOg==
+  dependencies:
+    filename-reserved-regex "^2.0.0"
+    strip-outer "^1.0.1"
+    trim-repeated "^1.0.0"
 
 filenamify@^2.0.0:
   version "2.1.0"
@@ -8920,7 +8954,7 @@ strip-json-comments@~2.0.1:
   resolved "https://registry.npmjs.org/strip-json-comments/-/strip-json-comments-2.0.1.tgz#3c531942e908c2697c0ec344858c286c7ca0a60a"
   integrity sha1-PFMZQukIwml8DsNEhYwobHygpgo=
 
-strip-outer@^1.0.0:
+strip-outer@^1.0.0, strip-outer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/strip-outer/-/strip-outer-1.0.1.tgz#b2fd2abf6604b9d1e6013057195df836b8a9d631"
   integrity sha512-k55yxKHwaXnpYGsOzg4Vl8+tDrWylxDEpknGjhTiZB8dFRU5rTo9CAzeycivxV3s+zlTKwrs6WxMxR95n26kwg==

@@ -7,4 +7,8 @@ export declare function publishAndPokeIPFS(content: ITSResolvable<Buffer>, optio
     timeout?: number;
     filename?: string;
     hidden?: boolean;
+    cb?(cid: string, ipfs: IUseIPFSApi, data: {
+        filename: string;
+    }): ITSResolvable<any>;
+    noPoke?: boolean;
 }, ...msg: any): Bluebird<import("fetch-ipfs/lib/put/types").IPublishToIPFSReturn>;

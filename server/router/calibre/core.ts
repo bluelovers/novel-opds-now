@@ -22,6 +22,11 @@ import { getIPFS } from '../../../lib/ipfs/use';
 import { pokeAll, reportPokeAllSettledResult } from '../../../lib/ipfs/pokeAll';
 import { IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import { publishAndPokeIPFS } from '../../../lib/ipfs/publish/publishAndPoke';
+import { IUseIPFSApi } from '../../../lib/types';
+import { _addMutableFileSystem, waitingCache } from '../../../lib/ipfs/mfs/_addMutableFileSystem';
+import { sanitizeFilename } from '@lazy-node/sanitize-filename';
+import { pokeMutableFileSystemCore } from '../../../lib/ipfs/mfs/pokeMutableFileSystem';
+import { saveMutableFileSystemRoots } from '../../../lib/ipfs/mfs/saveMutableFileSystemRoots';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -46,7 +51,8 @@ async function calibreHandlerCore(): Promise<Router>
 	if (!calibrePaths.length)
 	{
 		// @ts-ignore
-		return (req, res, next) => {
+		return (req, res, next) =>
+		{
 			res.setHeader('Content-Type', 'text/html; charset=utf-8');
 			res.charset = 'utf-8';
 			console.error(`[Calibre]`, `請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`);
@@ -112,7 +118,8 @@ async function calibreHandlerCore(): Promise<Router>
 				{
 					res.set('Content-disposition', attachment);
 				}
-				catch (e) {}
+				catch (e)
+				{}
 
 				result?.mime && res.set('Content-Type', result.mime);
 
@@ -129,6 +136,37 @@ async function calibreHandlerCore(): Promise<Router>
 				{
 					publishAndPokeIPFS(content, {
 						filename: http_filename,
+						//noPoke: true,
+						cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string })
+						{
+							let author = sanitizeFilename(req.query?.author as string || 'unknown', {
+								replaceToFullWidth: true,
+							}) || 'unknown';
+
+							_addMutableFileSystem(`/novel-opds-now/calibre/${dbID}/${author}`, {
+								path: sanitizeFilename(http_filename, {
+									replaceToFullWidth: true,
+								}) || sanitizeFilename(filename, {
+									replaceToFullWidth: true,
+								}),
+								cid,
+							}, {
+								ipfs,
+								async done(file_path)
+								{
+									await saveMutableFileSystemRoots(ipfs);
+
+									waitingCache.delete(file_path)
+									console.debug(`_addMutableFileSystem:done`, file_path)
+
+									return pokeMutableFileSystemCore(http_filename, [
+										`calibre/${dbID}/${author}/`,
+										`calibre/${dbID}/`,
+										`calibre/`,
+									]);
+								},
+							})
+						},
 					})
 				}
 

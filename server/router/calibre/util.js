@@ -14,14 +14,15 @@ function pathWithPrefix(a = '', ...input) {
             prefix = '/file/calibre';
             if ((_a = this === null || this === void 0 ? void 0 : this.book_title) === null || _a === void 0 ? void 0 : _a.length) {
                 let name = (0, path_1.basename)(last);
+                let p = new URLSearchParams();
+                p.set('book_id', `${this.book_id}`);
+                p.set('author', `${this.authors[0].author_name}`);
                 if (ext === '.jpg') {
-                    let p = new URLSearchParams();
                     p.set('filename', `${this.book_title} ${name}`);
                     query = '?' + p.toString();
                 }
                 else if (ext === '.epub') {
-                    let p = new URLSearchParams();
-                    p.set('filename', `${this.book_title} ${this.authors[0].author_name}${ext}`);
+                    p.set('filename', `${this.book_title} - ${this.authors[0].author_name}${ext}`);
                     query = '?' + p.toString();
                 }
             }

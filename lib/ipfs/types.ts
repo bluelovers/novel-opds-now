@@ -86,4 +86,6 @@ export interface IIPFSControllerDaemon
 	version(): Promise<string>
 
 	pid(): Promise<string>
+
+	isNewRepo?: boolean,
 }

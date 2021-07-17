@@ -14,7 +14,7 @@ import { getDefaultServerList } from '@bluelovers/ipfs-http-client/util';
 import configApiCors from 'ipfs-util-lib/lib/ipfs/config/cors';
 import { multiaddrToURL } from 'multiaddr-to-url';
 import { unlinkIPFSApi } from 'fix-ipfs/lib/ipfsd-ctl/unlinkIPFSApi';
-import { ensureDir, pathExists } from 'fs-extra';
+import { ensureDir, pathExists, readJSON, writeJSON } from 'fs-extra';
 import { sync as rimrafSync } from 'rimraf';
 import { join } from 'path';
 import { findFreeAddresses } from './use/port';
@@ -30,6 +30,7 @@ import { envDisposable } from './util/envDisposable';
 import { initHello } from './use/initHello';
 import { initMutableFileSystem } from './mfs/initMutableFileSystem';
 import { initHelloCheck } from './use/initHelloCheck';
+import { saveMutableFileSystemRoots } from './mfs/saveMutableFileSystemRoots';
 
 inspect.defaultOptions ??= {};
 inspect.defaultOptions.colors = console.enabledColor;
@@ -117,13 +118,14 @@ export function useIPFS(options?: {
 			return _waiting
 				.tap(async ({
 					ipfs,
+					ipfsd,
 				}) =>
 				{
 					return pubsubSubscribe(ipfs)
 						.tap(async () =>
 						{
 							initHello(ipfs);
-							initHelloCheck(ipfs);
+							initHelloCheck(ipfs, ipfsd);
 						})
 						.catch(e =>
 						{
@@ -284,7 +286,50 @@ function _useIPFS(options?: {
 
 					if (!oldExists && bool)
 					{
+						// @ts-ignore
+						ipfsd.isNewRepo = true;
+
 						await restoreIdentity(ipfsd)
+
+						await readJSON(join(ipfsd.path, 'config'))
+							.then(config => {
+
+								config["API"] = {
+									"HTTPHeaders": {
+										"Access-Control-Allow-Credentials": [
+											"true"
+										],
+											"Access-Control-Allow-Headers": [
+											"Authorization"
+										],
+											"Access-Control-Allow-Methods": [
+											"HEAD",
+											"PUT",
+											"GET",
+											"POST",
+											"OPTIONS"
+										],
+											"Access-Control-Allow-Origin": [
+											"*",
+											"http://webui.ipfs.io.ipns.localhost:8080",
+											"http://webui.ipfs.io.ipns.localhost:9090",
+											"http://localhost:3000",
+											"http://127.0.0.1:5001",
+											"http://127.0.0.1:5002",
+											"https://webui.ipfs.io",
+											"https://dev.webui.ipfs.io"
+										],
+											"Access-Control-Expose-Headers": [
+											"Location"
+										]
+									}
+								};
+
+								return writeJSON(join(ipfsd.path, 'config'), config, {
+									spaces: 2,
+								})
+							})
+						;
 					}
 					else if (!bool)
 					{
@@ -314,9 +359,14 @@ function _useIPFS(options?: {
 
 			const ipfs = ipfsd.api;
 
-			const stop = (...argv) =>
+			const stop = async (...argv) =>
 			{
 				console.debug(`[IPFS]`, `ipfsd`, `stop`);
+
+				if (!ipfsd.disposable)
+				{
+					await saveMutableFileSystemRoots(ipfs).catch(e => null)
+				}
 
 				// @ts-ignore
 				let ls = [ipfsd.stop(...argv)];

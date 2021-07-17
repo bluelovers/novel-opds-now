@@ -10,11 +10,18 @@ import console from 'debug-color2/logger';
 import { toCID } from '@lazy-ipfs/to-cid';
 import CID from 'cids';
 import itAll from 'it-all';
+import { IIPFSControllerDaemon } from '../types';
 
-export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>)
+export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
-	return Bluebird.resolve(ipfs)
-		.then(async (ipfs) =>
+	return Bluebird.props({
+			ipfs,
+			ipfsd,
+		})
+		.then(async ({
+			ipfs,
+			ipfsd,
+		}) =>
 		{
 			let ls = await readFile(join(__root, 'lib/static/build-in-cids.txt'))
 				.then(handleCachePeersFile);
@@ -48,6 +55,6 @@ export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>)
 				})
 			;
 
-			await initMutableFileSystem(ipfs);
+			await initMutableFileSystem(ipfs, ipfsd);
 		})
 }
