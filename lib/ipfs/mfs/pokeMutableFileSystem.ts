@@ -9,15 +9,15 @@ import { ITSPromiseSettledResult } from 'ts-type';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { array_unique } from 'array-hyper-unique';
 
-export function pokeMutableFileSystem(options: IPubSubEpub, title: string)
+export function pokeMutableFileSystem(options: IPubSubEpub, title: string, ...msg: any[])
 {
 	return pokeMutableFileSystemCore(title, [
 		`${options.siteID}/${options.novelID}/`,
 		`${options.siteID}/`,
-	]);
+	], ...msg);
 }
 
-export function pokeMutableFileSystemCore(title: string, paths: string[])
+export function pokeMutableFileSystemCore(title: string, paths: string[], ...msg: any[])
 {
 	return getIPFS().then((ipfs) =>
 	{
@@ -34,7 +34,7 @@ export function pokeMutableFileSystemCore(title: string, paths: string[])
 				{
 					if (index === 0 && arr.length)
 					{
-						return reportPokeAllSettledResult(arr[arr.length - 1], title)
+						return reportPokeAllSettledResult(arr[arr.length - 1], title, ...msg)
 					}
 				})
 		})

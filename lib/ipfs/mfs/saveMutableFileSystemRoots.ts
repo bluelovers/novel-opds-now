@@ -4,8 +4,9 @@ import { outputJSONSync } from 'fs-extra';
 import { join } from 'path';
 import { __root } from '../../const';
 import console from 'debug-color2/logger';
+import throttle from 'lodash/throttle';
 
-export async function saveMutableFileSystemRoots(ipfs: IUseIPFSApi)
+export const saveMutableFileSystemRoots = throttle(async function (ipfs: IUseIPFSApi)
 {
 	let record: Record<string, string> = {};
 	let length = 0;
@@ -20,4 +21,4 @@ export async function saveMutableFileSystemRoots(ipfs: IUseIPFSApi)
 		spaces: 2,
 	});
 	console.debug(`[IPFS]`, `saveMutableFileSystemRoots`, length);
-}
+}, 60 * 1000)

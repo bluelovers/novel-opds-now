@@ -11,7 +11,7 @@ import { saveMutableFileSystemRoots } from './mfs/saveMutableFileSystemRoots';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import { _addMutableFileSystem, waitingCache } from './mfs/_addMutableFileSystem';
 
-export function addMutableFileSystem(options: IPubSubEpub)
+export function addMutableFileSystem(options: IPubSubEpub, ...msg: any[])
 {
 	return Bluebird.resolve()
 		.then(() =>
@@ -99,7 +99,7 @@ export function addMutableFileSystem(options: IPubSubEpub)
 
 					await saveMutableFileSystemRoots(ipfs);
 
-					pokeMutableFileSystem(options, novel?.title);
+					pokeMutableFileSystem(options, novel?.title, ...msg);
 
 					//console.debug(`[IPFS]`, `addMutableFileSystem:done`, dir_path, dir_stat)
 				})

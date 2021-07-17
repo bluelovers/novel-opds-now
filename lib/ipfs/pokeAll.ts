@@ -63,7 +63,7 @@ let cachePoke = new Set<string>();
 export function pokeAll(cid: string, ipfs, options?: {
 	filename?: string,
 	hidden?: boolean,
-})
+}, ...msg: any[])
 {
 	const cid_str = cid.toString();
 
@@ -142,7 +142,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 
 					list = array_unique_overwrite(list).filter(href => !notAllowedAddress(href));
 
-					!options?.hidden && console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename);
+					!options?.hidden && console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename, ...msg);
 					//console.debug(`[IPFS]`, `pokeAll:start`, list);
 
 					return allSettled(list

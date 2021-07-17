@@ -80,10 +80,10 @@ export async function pubsubHandler(msg: Message)
 					pokeAll(cid, ipfs, {
 						// @ts-ignore
 						filename: json.data?.path
-					})
+					}, `by`, msg.from)
 						.tap(settledResult =>
 						{
-							return reportPokeAllSettledResult(settledResult, cid, (json.data as any)?.path)
+							return reportPokeAllSettledResult(settledResult, cid, (json.data as any)?.path, `by`, msg.from)
 						})
 					;
 
@@ -101,7 +101,7 @@ export async function pubsubHandler(msg: Message)
 								path: json.data.path,
 								size: json.data.size,
 							},
-						})
+						}, `by`, msg.from)
 					}
 
 					peerIDs.push(msg.from);

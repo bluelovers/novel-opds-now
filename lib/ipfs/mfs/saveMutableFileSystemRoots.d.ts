@@ -1,2 +1,3 @@
+/// <reference types="lodash" />
 import { IUseIPFSApi } from '../../types';
-export declare function saveMutableFileSystemRoots(ipfs: IUseIPFSApi): Promise<void>;
+export declare const saveMutableFileSystemRoots: import("lodash").DebouncedFunc<(ipfs: IUseIPFSApi) => Promise<void>>;
