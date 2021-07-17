@@ -3,6 +3,29 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.22](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.21...novel-opds-now@3.0.22) (2021-07-17)
+
+
+### 🐛　Bug Fixes
+
+* HTTPError: /novel-opds-now/dmzj/2640 is a directory, use -r to remove directories ([44054a2](https://github.com/bluelovers/novel-opds-now/commit/44054a289e77b35327b540291b32ac124cd2b525))
+* TypeError: Cannot read property 'cid' of null ([caa20e8](https://github.com/bluelovers/novel-opds-now/commit/caa20e82445ad824d96384377da1f1c259dd7e2c))
+* avoid same `addMutableFileSystem` run multiple times ([8b2c946](https://github.com/bluelovers/novel-opds-now/commit/8b2c946245542d8aefce5076870d390b86b1d051))
+
+
+### ✨　Features
+
+* 雜七雜八的切割 與 每次從 calibre 取得書籍時 也一併推送到 IPFS ([d963e7d](https://github.com/bluelovers/novel-opds-now/commit/d963e7d51b7fd3e55ce57a1364891cb7f2619d9b))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([93a66f4](https://github.com/bluelovers/novel-opds-now/commit/93a66f49ba687364b2ec6ee89c818cc571708a47))
+
+
+
+
+
 ## [3.0.21](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.20...novel-opds-now@3.0.21) (2021-07-16)
 
 

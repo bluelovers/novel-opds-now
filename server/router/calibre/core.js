@@ -112,9 +112,11 @@ async function calibreHandlerCore() {
                                         `calibre/`,
                                     ]);
                                 },
-                            });
+                            })
+                                .catch(e => logger_1.default.error(`_addMutableFileSystem`, http_filename, e));
                         },
-                    });
+                    })
+                        .catch(e => logger_1.default.error(`publishAndPokeIPFS`, http_filename, e));
                 }
                 return (0, http_response_stream_1.responseStream)(res, content);
             }

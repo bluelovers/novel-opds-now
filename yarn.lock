@@ -29,9 +29,9 @@
     js-tokens "^4.0.0"
 
 "@bluelovers/array-buffer-to-string@^1.0.18":
-  version "1.0.18"
-  resolved "https://registry.npmjs.org/@bluelovers/array-buffer-to-string/-/array-buffer-to-string-1.0.18.tgz#22f132c57384ce6a9ecde75c5fedcc4f1621cd60"
-  integrity sha512-Ovn/uEY0r74EgBLq04Y9D9d5g3VTG4LQGsM286Wxtq5vKV9++Eq5h1o3/4KRkxonb2b6/S+F5UqB5vzyZFI1TQ==
+  version "1.0.20"
+  resolved "https://registry.npmjs.org/@bluelovers/array-buffer-to-string/-/array-buffer-to-string-1.0.20.tgz#984d9f184814df171b05bb9d0168fcd05396906f"
+  integrity sha512-esEiZVzVGAgRMyq3GfJ5o1JQObh0CeCIOswfQmyDMyEC73v1m2JULadPxv7O4E3iWO6Q38yuVT9OTq+Vz2qP0A==
   dependencies:
     iconv-jschardet "^2.0.17"
     tslib "^2.3.0"
@@ -670,9 +670,9 @@
     tslib "^2.3.0"
 
 "@leichtgewicht/ip-codec@^2.0.1":
-  version "2.0.2"
-  resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.2.tgz#862a66b3e0197109c11ddf2082a8db4c66ba6bd2"
-  integrity sha512-PjsLKLzJ0jWM1iM4xdYkrMyonAHP4kHGiXm81FRNfcnjToQA9UOknwZE28bxq0AGmEAMVBPSuuHurzla2wyYyA==
+  version "2.0.3"
+  resolved "https://registry.npmjs.org/@leichtgewicht/ip-codec/-/ip-codec-2.0.3.tgz#0300943770e04231041a51bd39f0439b5c7ab4f0"
+  integrity sha512-nkalE/f1RvRGChwBnEIoBfSEYOXnCRdleKuv6+lePbMDrMZXeDQnqak5XDOeBgrPPyPfAdcCu/B5z+v3VhplGg==
 
 "@multiformats/base-x@^4.0.1":
   version "4.0.1"
@@ -3257,9 +3257,9 @@ electron-fetch@^1.7.2:
     encoding "^0.1.13"
 
 electron-to-chromium@^1.3.723:
-  version "1.3.778"
-  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.778.tgz#bf01048736c95b78f2988e88005e0ebb385942a4"
-  integrity sha512-Lw04qJaPtWdq0d7qKHJTgkam+FhFi3hm/scf1EyqJWdjO3ZIGUJhNmZJRXWb7yb/bRYXQyVGSpa9RqVpjjWMQw==
+  version "1.3.779"
+  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.3.779.tgz#de55492a756deec63424f89fbe62aec9776f0e6d"
+  integrity sha512-nreave0y/1Qhmo8XtO6C/LpawNyC6U26+q7d814/e+tIqUK073pM+4xW7WUXyqCRa5K4wdxHmNMBAi8ap9nEew==
 
 emoji-regex@^7.0.1:
   version "7.0.3"
@@ -3996,15 +3996,15 @@ fs-extra@^9, fs-extra@^9.0.0, fs-extra@^9.0.1:
     universalify "^2.0.0"
 
 fs-iconv@^3, fs-iconv@^3.0.16:
-  version "3.0.16"
-  resolved "https://registry.npmjs.org/fs-iconv/-/fs-iconv-3.0.16.tgz#852242114faeb96a9ae526a60e4b62380a4ef5e6"
-  integrity sha512-X1KFaQMKb6dsHYbDQW8vTNC9zUdx78adpL6oAXP8AK8qQrcWgj8FAQpYzic87V+Wla9TEyBx3gxzOoCNZjgpPA==
+  version "3.1.1"
+  resolved "https://registry.npmjs.org/fs-iconv/-/fs-iconv-3.1.1.tgz#65819dc54472c3e93380715c86a651f55be4c421"
+  integrity sha512-Gsu49nT7C14ToCFIBck9H7+CPcGCMXo3PH69mFzKOyh2vPdc4fMA4pFVyf8w3+WtzM4y8gc0gv8s3GI5l2Re0w==
   dependencies:
+    "@lazy-node/sanitize-filename" "^1.0.1"
     bluebird "^3.7.2"
     fs-extra "^10.0.0"
     iconv-jschardet "^2.0.17"
     lodash "^4.17.21"
-    sanitize-filename "^1.6.3"
     ts-type "^1.2.35"
     tslib "^2.3.0"
 
@@ -7410,10 +7410,10 @@ pathval@^1.1.1:
   resolved "https://registry.npmjs.org/pathval/-/pathval-1.1.1.tgz#8534e77a77ce7ac5a2512ea21e0fdb8fcf6c3d8d"
   integrity sha512-Dp6zGqpTdETdR63lehJYPeIOqpiNBNtc7BpWSLrOje7UaIsE5aY92r/AunQA7rsXvet3lrJ3JnZX29UPTKXyKQ==
 
-peek-readable@^3.1.4:
-  version "3.1.4"
-  resolved "https://registry.npmjs.org/peek-readable/-/peek-readable-3.1.4.tgz#f5c3b41a4eeb63a1322c4131f0b5bac7105b892e"
-  integrity sha512-DX7ec7frSMtCWw+zMd27f66hcxIz/w9LQTY2RflB4WNHCVPAye1pJiP2t3gvaaOhu7IOhtPbHw8MemMj+F5lrg==
+peek-readable@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.npmjs.org/peek-readable/-/peek-readable-4.0.0.tgz#b024ef391c86136eba0ae9df3ff4f966a09e9a7e"
+  integrity sha512-kLbU4cz6h86poGVBKgAVMpFmD47nX04fPPQNKnv9fuj+IJZYkEBjsYAVu5nDbZWx0ZsWwWlMzeG90zQa5KLBaA==
 
 peek-stream@^1.1.0:
   version "1.1.3"
@@ -8379,13 +8379,6 @@ safe-buffer@5.1.2, safe-buffer@~5.1.0, safe-buffer@~5.1.1:
   resolved "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz#44fa161b0187b9549dd84bb91802f9bd8385cd6a"
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
-sanitize-filename@^1.6.3:
-  version "1.6.3"
-  resolved "https://registry.npmjs.org/sanitize-filename/-/sanitize-filename-1.6.3.tgz#755ebd752045931977e30b2025d340d7c9090378"
-  integrity sha512-y/52Mcy7aw3gRm7IrcGDFx/bCk4AhRh2eI9luHOQM86nZsqwiRkkq2GekHXBBD+SmPidc8i2PqtYZl+pWJ8Oeg==
-  dependencies:
-    truncate-utf8-bytes "^1.0.0"
-
 sax@^1.2.4:
   version "1.2.4"
   resolved "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
@@ -8962,12 +8955,11 @@ strip-outer@^1.0.0, strip-outer@^1.0.1:
     escape-string-regexp "^1.0.2"
 
 strtok3@^6.0.3:
-  version "6.1.3"
-  resolved "https://registry.npmjs.org/strtok3/-/strtok3-6.1.3.tgz#488fe8ca91664cf93432c94752ba9e5c785bd9dd"
-  integrity sha512-ssWSKFOeUTurMSucgyUf+a6Z9mVTYrsYiyEK5RLnh8BM6sFrKSljVlnjZXIDxMguYfdQI+mUPFHo88FYTxq1XA==
+  version "6.2.0"
+  resolved "https://registry.npmjs.org/strtok3/-/strtok3-6.2.0.tgz#7c24e74a9a24c7f2b976e4469654d459e6795d91"
+  integrity sha512-hBbPN4+f9fypbfTs0NImALgzYcb6k/blFr2mJVX6bUOmJCbXe/trDHdIC+Ir5XUXRMGFvq487ecwLitDoHVoew==
   dependencies:
-    "@tokenizer/token" "^0.1.1"
-    peek-readable "^3.1.4"
+    peek-readable "^4.0.0"
 
 subjects-utils@0.0.2:
   version "0.0.2"
@@ -9276,13 +9268,6 @@ trim-repeated@^1.0.0:
   integrity sha1-42RqLqTokTEr9+rObPsFOAvAHCE=
   dependencies:
     escape-string-regexp "^1.0.2"
-
-truncate-utf8-bytes@^1.0.0:
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/truncate-utf8-bytes/-/truncate-utf8-bytes-1.0.2.tgz#405923909592d56f78a5818434b0b78489ca5f2b"
-  integrity sha1-QFkjkJWS1W94pYGENLC3hInKXys=
-  dependencies:
-    utf8-byte-length "^1.0.1"
 
 ts-enum-util@4.0.2, ts-enum-util@^4.0.2:
   version "4.0.2"
@@ -9612,11 +9597,6 @@ uslug@^1.0.4:
   integrity sha1-uaIvCRTgqGFAYz2swwLl9PpFBnc=
   dependencies:
     unorm ">= 1.0.0"
-
-utf8-byte-length@^1.0.1:
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/utf8-byte-length/-/utf8-byte-length-1.0.4.tgz#f45f150c4c66eee968186505ab93fcbb8ad6bf61"
-  integrity sha1-9F8VDExm7uloGGUFq5P8u4rWv2E=
 
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"

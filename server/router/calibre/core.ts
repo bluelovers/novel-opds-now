@@ -166,8 +166,10 @@ async function calibreHandlerCore(): Promise<Router>
 									]);
 								},
 							})
+								.catch(e => console.error(`_addMutableFileSystem`, http_filename, e))
 						},
 					})
+						.catch(e => console.error(`publishAndPokeIPFS`, http_filename, e))
 				}
 
 				return responseStream(res, content);
