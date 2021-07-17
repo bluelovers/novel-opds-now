@@ -26,6 +26,7 @@ const index_2 = (0, tslib_1.__importDefault)(require("./router/calibre/index"));
 const app = (0, express_1.default)();
 app.use((0, helmet_1.default)({
     contentSecurityPolicy: false,
+    referrerPolicy: { policy: "no-referrer" },
 }));
 app.use((0, serve_favicon_1.default)((0, path_1.join)(__root_1.default, 'static', 'favicon.png')));
 app.use((0, request_ip_1.mw)());
@@ -98,7 +99,7 @@ app.use('/.status', async (req, res, next) => {
             }).then(v => {
                 let { id, agentVersion, protocolVersion } = v;
                 return {
-                    id, agentVersion, protocolVersion
+                    id, agentVersion, protocolVersion,
                 };
             }).catch(e => null),
             version: _cache.ipfs.version({

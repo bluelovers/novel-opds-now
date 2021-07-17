@@ -45,6 +45,8 @@ const app = express();
 app.use(helmet({
 	// 禁用之後才能正常顯示 QR
 	contentSecurityPolicy: false,
+
+	referrerPolicy: { policy: "no-referrer" },
 }));
 app.use(favicon(join(__root, 'static', 'favicon.png')));
 app.use(mw())
@@ -58,13 +60,15 @@ app.use('/search', searchHandler());
 
 app.use('/poke', routerPokeHandler());
 
-app.use('/*', (req, res, next) => {
+app.use('/*', (req, res, next) =>
+{
 	console.log(req.method, req.baseUrl, req.url, req.params, req.query);
 	showClient(req, res, next);
 	next();
 });
 
-app.use('/.status', async (req, res, next) => {
+app.use('/.status', async (req, res, next) =>
+{
 
 	console.log(req.headers)
 
@@ -74,7 +78,9 @@ app.use('/.status', async (req, res, next) => {
 	{
 		url = new URL('/opds', req.headers.host).href;
 	}
-	catch (e) {};
+	catch (e)
+	{}
+	;
 
 	if (!url)
 	{
@@ -83,7 +89,8 @@ app.use('/.status', async (req, res, next) => {
 
 	let isLocal = await Promise.resolve().then(() => isLocalNetwork(req.clientIp)).catch(e => null as null);
 
-	let interfaces = isLocal && Promise.resolve().then(() => {
+	let interfaces = isLocal && Promise.resolve().then(() =>
+	{
 		let ip = searchIPAddress();
 		let interfaceName = ip;
 		let port = process.env.PORT;
@@ -136,23 +143,25 @@ app.use('/.status', async (req, res, next) => {
 							pathname: '/opds',
 						});
 					})
-				;
+					;
 			})
 		;
 
 		return interfaces;
 	}).catch(e => null as null)
 
-	let ipfs = await useIPFS().timeout(3000).then(_cache => {
+	let ipfs = await useIPFS().timeout(3000).then(_cache =>
+	{
 		return Bluebird.props({
 			//ipfs: _cache.ipfs,
 			id: _cache.ipfs.id({
 				timeout: 3000,
-			}).then(v => {
+			}).then(v =>
+			{
 				let { id, agentVersion, protocolVersion } = v;
 
 				return {
-					id, agentVersion, protocolVersion
+					id, agentVersion, protocolVersion,
 				}
 			}).catch(e => null as null),
 			version: _cache.ipfs.version({
@@ -184,9 +193,10 @@ app.use('/.status', async (req, res, next) => {
 
 });
 
-app.use('/*', (req, res) => {
+app.use('/*', (req, res) =>
+{
 
-	res.writeHead(200, {'Content-Type': 'text/html; charset=utf-8'});
+	res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
 	res.charset = 'utf-8';
 
 	//let html = `<meta charset="utf-8"/><script src="/gun.js"><script src="/gun/lib/webrtc.js"></script><script>var gun = Gun(["https://gunjs.herokuapp.com/gun","http://nmr.io:8765/gun",window.location.origin + '/gun']);</script>`;
