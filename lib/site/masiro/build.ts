@@ -5,6 +5,10 @@ import { updateCache2 } from './update';
 import Bluebird from 'bluebird';
 import newNovelUUID from '@demonovel/uuid';
 import { updateCache } from '../cached-data/build';
+import { outputJSON } from 'fs-extra';
+import { getCacheFilename } from '../../util/index';
+import { _buildMap } from '../cached-data/build-map';
+import { INovelDataSimple } from '../cached-data/types';
 
 export function buildCache(force: boolean)
 {
@@ -14,7 +18,7 @@ export function buildCache(force: boolean)
 			table: updateCache(siteID, force),
 			table_update: updateCache2(force),
 		})
-		.then(({
+		.then<INovelDataSimple[]>(({
 			table,
 			table_update,
 		}) =>
@@ -31,8 +35,10 @@ export function buildCache(force: boolean)
 					if (row.title)
 					{
 						a.push({
+							uuid,
 							id,
 							title: row.title,
+							authors: void 0,
 							cover: row.cover,
 							updated: row.updated,
 							content: row.content,
@@ -40,15 +46,13 @@ export function buildCache(force: boolean)
 					}
 
 					return a
-				}, [] as {
-					id: string;
-					title: string;
-					cover: string;
-					updated: number;
-					content: string;
-				}[])
+				}, [] as INovelDataSimple[])
 				;
 
+		})
+		.tap(list =>
+		{
+			return _buildMap(siteID, list)
 		})
 		;
 }

@@ -1,8 +1,3 @@
 import Bluebird from 'bluebird';
-export declare function buildCache(force: boolean): Bluebird<{
-    id: string;
-    title: string;
-    cover: string;
-    updated: number;
-    content: string;
-}[]>;
+import { INovelDataSimple } from '../cached-data/types';
+export declare function buildCache(force: boolean): Bluebird<INovelDataSimple[]>;

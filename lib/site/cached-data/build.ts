@@ -6,6 +6,8 @@ import { getCacheFilename } from '../../util/index';
 import console from 'debug-color2/logger';
 import fetch from '../../fetch';
 import { outputJSON } from 'fs-extra';
+import { _buildMap } from './build-map';
+import { INovelDataSimple } from './types';
 
 export function updateCache(siteID: ISiteIDs, force: boolean): Bluebird<IRecordCachedJSONRow>
 {
@@ -34,7 +36,7 @@ export function buildCache(siteID: ISiteIDs, force: boolean)
 		{
 			return Object.values(table)
 				.sort((a, b) => b.updated - a.updated)
-				.map(novel =>
+				.map<INovelDataSimple>(novel =>
 				{
 
 					let {
@@ -63,13 +65,6 @@ export function buildCache(siteID: ISiteIDs, force: boolean)
 				;
 		})
 		.tap(list => {
-			return outputJSON(getCacheFilename(`${siteID}/map.json`), list.reduce((a, b) => {
-
-				a[b.id] = b;
-
-				return a
-			}, {}), {
-				spaces: 2,
-			})
+			return _buildMap(siteID, list)
 		})
 }
