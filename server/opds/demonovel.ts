@@ -5,7 +5,7 @@ function opdsDemoNovelHandler()
 {
 	const router = Router();
 
-	router.use(`${prefix}/:type.xml`, async (req, res) =>
+	router.use(`${prefix}/:type(.xml)?`, async (req, res) =>
 	{
 		let feed = await makeOPDSType(req.params.type);
 		res.setHeader('Content-Type', 'application/xml');
@@ -14,7 +14,7 @@ function opdsDemoNovelHandler()
 		res.send(xml)
 	});
 
-	router.use(`${prefix}.xml`, async (req, res) =>
+	router.use(`${prefix}(.xml)?`, async (req, res) =>
 	{
 		let feed = await makeOPDSPortal();
 		res.setHeader('Content-Type', 'application/xml');
