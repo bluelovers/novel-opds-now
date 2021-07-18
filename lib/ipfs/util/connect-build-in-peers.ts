@@ -18,7 +18,7 @@ export function getBuildInPeers()
 		.then(buf => handleCachePeersFile(buf)))
 }
 
-export function getCachePeers()
+export function getCachePeers(force?: boolean)
 {
 	return Bluebird.props({
 			c1: readFile(join(tmpPath(), '.novel-opds-now.peers.txt')).catch(e => null) as Promise<string>,
@@ -35,6 +35,12 @@ export function getCachePeers()
 			return handleCachePeersFile(c1 + '\n' + c2);
 		})
 		.tap(peers => {
+
+			if (!force && !peers.filter(peer => !cachePubSubPeers.has(peer)).length)
+			{
+				return
+			}
+
 			let content = `\n${peers.join('\n')}\n`;
 
 			return Promise.all([
@@ -72,5 +78,7 @@ export function connectCachePeers(ipfs: ITSResolvable<IUseIPFSApi>)
 
 export function connectBuildInPeers(ipfs: ITSResolvable<IUseIPFSApi>)
 {
-	return _connectPeers(ipfs, getBuildInPeers())
+	return _connectPeers(ipfs, getBuildInPeers(), {
+		hidden: true,
+	})
 }

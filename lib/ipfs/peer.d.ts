@@ -15,8 +15,8 @@ export declare function connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: IDR
 }): Promise<void>;
 export declare function _connectPeers(ipfs: IUseIPFSApi, peerID: string, me?: ITSResolvable<IDResult>, timeout?: number, extra?: {
     hidden?: boolean;
-}): Promise<void>;
+}, ...msg: any[]): Promise<void>;
 export declare function connectPeersAll(ipfs: IUseIPFSApi, peers: ITSResolvable<string[]>, extra?: {
     hidden?: boolean;
     timeout?: number;
-}): Bluebird<void[]>;
+}, ...msg: any[]): Bluebird<void[]>;

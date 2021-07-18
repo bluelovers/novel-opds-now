@@ -64,6 +64,7 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 	extra?: {
 		hidden?: boolean,
 	},
+	...msg: any[]
 )
 {
 	const { peer_id, _not_multiaddr, peer_addr } = getPeerCacheKey(peerID)
@@ -90,7 +91,7 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 				signal: subAbortController.signal,
 			};
 
-			!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:start`, peerID)
+			!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:start`, peerID, ...msg)
 
 			const fn = () =>
 			{
@@ -145,7 +146,7 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 				.any(list.map(peerID => ipfs.swarm.connect(peerID, options)))
 				.tap(e =>
 				{
-					!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:end`, peerID, String(e))
+					!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:end`, peerID, String(e), ...msg)
 				})
 				.finally(() =>
 				{
@@ -157,7 +158,7 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 		})
 		.catch(e =>
 		{
-			!extra?.hidden && console.warn(`[IPFS]`, `[connectPeers]`, peerID, String(e))
+			!extra?.hidden && console.warn(`[IPFS]`, `[connectPeers]`, peerID, String(e), ...msg)
 		})
 		;
 }
@@ -165,7 +166,7 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 export function connectPeersAll(ipfs: IUseIPFSApi, peers: ITSResolvable<string[]>, extra?: {
 	hidden?: boolean,
 	timeout?: number,
-})
+}, ...msg: any[])
 {
 	//console.log(`connectPeersAll`)
 
@@ -173,7 +174,7 @@ export function connectPeersAll(ipfs: IUseIPFSApi, peers: ITSResolvable<string[]
 		.props({
 			me: ipfs.id(),
 			peers,
-			myPeers: getMixinPeers(ipfs),
+			myPeers: getPubsubPeers(ipfs),
 		})
 		.then(({
 			me,
@@ -217,10 +218,10 @@ export function connectPeersAll(ipfs: IUseIPFSApi, peers: ITSResolvable<string[]
 
 			//console.log(`connectPeersAll:do`, peers.length, connectPeersCache.size)
 
-			return Bluebird.mapSeries(peers, (peerID) =>
+			return Bluebird.mapSeries(peers, (peerID, index, length) =>
 			{
 				//console.debug(`[IPFS]`, `[connectPeers]:each:start`, peerID)
-				return _connectPeers(ipfs, peerID, me, extra?.timeout, extra)
+				return _connectPeers(ipfs, peerID, me, extra?.timeout, extra, `[${index}／${length}]`, ...msg)
 			})
 		})
 

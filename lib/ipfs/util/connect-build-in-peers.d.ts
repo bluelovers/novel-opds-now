@@ -2,7 +2,7 @@ import Bluebird from 'bluebird';
 import { IUseIPFSApi } from '../../types';
 import { ITSResolvable } from 'ts-type/lib/generic';
 export declare function getBuildInPeers(): Bluebird<string[]>;
-export declare function getCachePeers(): Bluebird<string[]>;
+export declare function getCachePeers(force?: boolean): Bluebird<string[]>;
 export declare function _connectPeers(ipfs: ITSResolvable<IUseIPFSApi>, ls: ITSResolvable<string[]>, extra?: {
     hidden?: boolean;
 }): Bluebird<void[]>;
