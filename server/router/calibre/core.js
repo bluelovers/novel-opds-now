@@ -20,6 +20,7 @@ const sanitize_filename_1 = require("@lazy-node/sanitize-filename");
 const pokeMutableFileSystem_1 = require("../../../lib/ipfs/mfs/pokeMutableFileSystem");
 const saveMutableFileSystemRoots_1 = require("../../../lib/ipfs/mfs/saveMutableFileSystemRoots");
 const index_1 = require("../../../lib/ipfs/pubsub/index");
+const isBookFile_1 = require("calibre-server/lib/util/isBookFile");
 async function calibreHandlerCore() {
     let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
     if (typeof calibrePaths === 'string') {
@@ -61,12 +62,12 @@ async function calibreHandlerCore() {
         }
         if (file === null || file === void 0 ? void 0 : file.length) {
             let ext = (0, path_1.extname)(file).toLowerCase();
-            if (['.epub', '.jpg'].includes(ext)) {
+            if (['.epub', '.jpg'].includes(ext) || (0, isBookFile_1.isBookFile)(ext.replace(/^\./, ''))) {
                 logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
                 (0, showClient_1.showClient)(req, res, next);
                 let local_path = (0, path_1.join)(db === null || db === void 0 ? void 0 : db._fulldir, file);
                 let content = await (0, fs_extra_1.readFile)(local_path);
-                let result = await (0, mimeFromBuffer_1.mimeFromBuffer)(content);
+                let result = await (0, mimeFromBuffer_1.mimeFromBuffer)(content, ext);
                 let filename = (0, path_1.basename)(file);
                 let http_filename = filename;
                 if ((_a = req.query.filename) === null || _a === void 0 ? void 0 : _a.length) {
@@ -86,7 +87,7 @@ async function calibreHandlerCore() {
                     http_filename,
                     result,
                 });
-                if (ext === '.epub') {
+                if (ext === '.epub' || (0, isBookFile_1.isBookFile)(result.ext)) {
                     const siteID = 'calibre';
                     (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
                         filename: http_filename,

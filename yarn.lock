@@ -2293,10 +2293,10 @@ cachedir@^2.3.0:
   resolved "https://registry.npmjs.org/cachedir/-/cachedir-2.3.0.tgz#0c75892a052198f0b21c7c1804d8331edfcae0e8"
   integrity sha512-A+Fezp4zxnit6FanDmv9EqXNAi3vt9DWp51/71UEhXukb7QUuvtv9344h91dyAxuTLoSYJFU299qzR3tzwPAhw==
 
-calibre-db@^1.0.5:
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/calibre-db/-/calibre-db-1.0.5.tgz#2f742639a52fb3a6fe7fe795c7d50dd3b745f515"
-  integrity sha512-c/5X06KY2cxv5IVRAMgmVgdlPp2R7JP0kO9QsxFXKWeufjzNI/jXqHGMnemIPBblGoJ1OOB9x62pqSTCYEfQUg==
+calibre-db@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/calibre-db/-/calibre-db-1.0.6.tgz#b0c7a3e1d3f87b5c55ae8420a2630fbd8cb5d101"
+  integrity sha512-lNZ+s2r9LkRBcqRnpOwKgMWUOJG7IJ7QtREsLL2qYyXGjsVrrWRRs2DmcO5jqREtRPrT7Gf/5iBZmKqSGHWzTg==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     bluebird "^3.7.2"
@@ -2304,7 +2304,7 @@ calibre-db@^1.0.5:
     fs-extra "^10.0.0"
     sqlite3 "^5.0.2"
     squel "^5.13.0"
-    ts-type "^1.2.35"
+    ts-type "^1.2.36"
     tslib "^2.3.0"
     upath2 "^3.1.9"
 
@@ -2315,28 +2315,28 @@ calibre-env@^1.0.1:
   dependencies:
     tslib "^2.3.0"
 
-calibre-opds@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/calibre-opds/-/calibre-opds-1.0.7.tgz#376ed9dc88a723e586f697453b73720292fe6f2e"
-  integrity sha512-Otq+k3sQfWNPIWPhP+HP6QtZlHXB6U0ZPHGL2bjklJj7o//lMKCR30MOsOd5cOyWYI4mE5Kjh5l1h9bQ670qOQ==
+calibre-opds@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/calibre-opds/-/calibre-opds-1.0.8.tgz#6a341cf973abd3d36b406cda97a159575a59fe29"
+  integrity sha512-WvgHzB9obvTPweDJcAjLUAKJDlJf6qMKuEfz5GLVeFBWIBleMxYRdwJLiKyemjymoZwTZdJEIIkh96Bk1CWxqw==
   dependencies:
     bluebird "^3.7.2"
     opds-extra "^3.0.9"
     ta-json-x "^2.5.3"
-    ts-type "^1.2.35"
+    ts-type "^1.2.36"
     tslib "^2.3.0"
 
-calibre-server@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.16.tgz#ad1d5c1fd05b2cc72050261b98f807f0d2fdca2f"
-  integrity sha512-vFSnJsBNnmp5ywet9Lpv04qbmrznjOyOYkBDT7W9+Nh7dm6hLURjX4UjJT+BrWFORav9PN8CEou61ffxgxpZ7A==
+calibre-server@^1.0.17:
+  version "1.0.17"
+  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.17.tgz#a42382234e253e53747d1167c951bae3c78ba106"
+  integrity sha512-xwPthKBwrKIz8GPXHscmkqq4j++RBHaGdyA9iev0WkGDKk2cpxCddOXeBQxPf03bTm4O843KQOuYlPc4A9hmWg==
   dependencies:
     address2 "^1.0.4"
     array-hyper-unique "^1.1.10"
     bluebird "^3.7.2"
-    calibre-db "^1.0.5"
+    calibre-db "^1.0.6"
     calibre-env "^1.0.1"
-    calibre-opds "^1.0.7"
+    calibre-opds "^1.0.8"
     debug-color2 "^1.2.5"
     express "^4.17.1"
     express-cache-headers "^0.1.4"
@@ -2350,7 +2350,7 @@ calibre-server@^1.0.16:
     qrcode-terminal "^0.12.0"
     router-uri-convert "^1.0.24"
     serve-favicon "^2.5.0"
-    ts-type "^1.2.35"
+    ts-type "^1.2.36"
     tslib "^2.3.0"
     upath2 "^3.1.9"
     yargs "^17.0.1"

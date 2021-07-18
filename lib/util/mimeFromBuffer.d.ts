@@ -1,4 +1,5 @@
 /// <reference types="node" />
 import { FileTypeResult } from 'file-type';
-export declare function fixFileTypeResult(result: FileTypeResult): Promise<import("file-type/core").FileTypeResult>;
-export declare function mimeFromBuffer(buffer: Buffer): Promise<import("file-type/core").FileTypeResult>;
+import { FileExtension } from 'file-type/core';
+export declare function fixFileTypeResult(result: FileTypeResult, fileExt?: string | FileExtension): Promise<import("file-type/core").FileTypeResult>;
+export declare function mimeFromBuffer(buffer: Buffer, ext?: string | FileExtension): Promise<import("file-type/core").FileTypeResult>;

@@ -28,6 +28,7 @@ import { sanitizeFilename } from '@lazy-node/sanitize-filename';
 import { pokeMutableFileSystemCore } from '../../../lib/ipfs/mfs/pokeMutableFileSystem';
 import { saveMutableFileSystemRoots } from '../../../lib/ipfs/mfs/saveMutableFileSystemRoots';
 import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/index';
+import { isBookFile } from 'calibre-server/lib/util/isBookFile';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -93,7 +94,7 @@ async function calibreHandlerCore(): Promise<Router>
 		{
 			let ext = extname(file).toLowerCase();
 
-			if (['.epub', '.jpg'].includes(ext))
+			if (['.epub', '.jpg'].includes(ext) || isBookFile(ext.replace(/^\./, '')))
 			{
 				console.log(req.method, req.baseUrl, req.url, req.params, req.query);
 				showClient(req, res, next);
@@ -102,7 +103,7 @@ async function calibreHandlerCore(): Promise<Router>
 
 				let content = await readFile(local_path);
 
-				let result = await mimeFromBuffer(content);
+				let result = await mimeFromBuffer(content, ext);
 
 				let filename = basename(file)
 
@@ -133,7 +134,7 @@ async function calibreHandlerCore(): Promise<Router>
 					result,
 				})
 
-				if (ext === '.epub')
+				if (ext === '.epub' || isBookFile(result.ext))
 				{
 					const siteID = 'calibre' as const;
 
