@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import 'source-map-support/register'
 import yargs from 'yargs';
 import { spawnSync } from 'child_process';
 import { OUTPUT_DIR } from '../lib/const';
@@ -39,8 +40,6 @@ switch (argv.mod as 'handle' | 'download')
 		}
 
 		spawnSync('node', [
-			'-r',
-			'source-map-support/register',
 			'--experimental-worker',
 			resolve(__dirname, `./mod/${argv.mod}`),
 			'--IDKEY',
@@ -62,8 +61,6 @@ switch (argv.mod as 'handle' | 'download')
 		}
 
 		spawnSync('node', [
-			'-r',
-			'source-map-support/register',
 			resolve(__dirname, `./mod/${argv.mod}`),
 			'--siteID',
 			argv.siteID,

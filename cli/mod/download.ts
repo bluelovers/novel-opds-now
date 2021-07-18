@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import 'source-map-support/register'
 import yargs from 'yargs';
 import downloadNovel from '../../lib/epub/download';
 

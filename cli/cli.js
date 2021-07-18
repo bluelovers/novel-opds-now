@@ -2,6 +2,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
+require("source-map-support/register");
 const yargs_1 = (0, tslib_1.__importDefault)(require("yargs"));
 const child_process_1 = require("child_process");
 const const_1 = require("../lib/const");
@@ -34,8 +35,6 @@ switch (argv.mod) {
             throw new Error();
         }
         (0, child_process_1.spawnSync)('node', [
-            '-r',
-            'source-map-support/register',
             '--experimental-worker',
             (0, path_1.resolve)(__dirname, `./mod/${argv.mod}`),
             '--IDKEY',
@@ -54,8 +53,6 @@ switch (argv.mod) {
             throw new Error();
         }
         (0, child_process_1.spawnSync)('node', [
-            '-r',
-            'source-map-support/register',
             (0, path_1.resolve)(__dirname, `./mod/${argv.mod}`),
             '--siteID',
             argv.siteID,

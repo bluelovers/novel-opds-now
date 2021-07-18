@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import 'source-map-support/register'
 import yargs from 'yargs';
 import console from 'debug-color2/logger';
 import { updateAllCacheTask } from '../lib/task/update-cache';
@@ -14,6 +15,6 @@ let argv = yargs
 ;
 
 Promise.all([
-	getCachePeers(),
+	getCachePeers(true),
 	updateAllCacheTask(argv.force),
 ])

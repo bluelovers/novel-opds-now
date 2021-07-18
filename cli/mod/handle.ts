@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import 'source-map-support/register'
 import yargs from 'yargs';
 import handleAsync from '../lib/threads';
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
