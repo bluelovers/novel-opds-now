@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.28](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.27...novel-opds-now@3.0.28) (2021-07-18)
+
+
+### ✨　Features
+
+* calibre 支援 漫畫書檔案 ([2ee3108](https://github.com/bluelovers/novel-opds-now/commit/2ee3108d0b3f70b3632c45892de843074ef99a64))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([8c95cfd](https://github.com/bluelovers/novel-opds-now/commit/8c95cfd1e77f84248e12ca59be2c8cff7b3200e2))
+
+
+
+
+
 ## [3.0.27](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.26...novel-opds-now@3.0.27) (2021-07-18)
 
 
