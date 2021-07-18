@@ -19,8 +19,10 @@ const mimeFromBuffer_1 = require("../lib/util/mimeFromBuffer");
 const doPackEpubFromSource_1 = require("../lib/doPackEpubFromSource");
 const getNovelData_1 = require("../lib/site/cached-data/getNovelData");
 const siteNeverExpired_1 = require("../lib/site/siteNeverExpired");
+const demonovel_1 = require("./router/file/demonovel");
 function fileHandler() {
     const router = (0, express_1.Router)();
+    router.use('/demo(novel)?', (0, demonovel_1.demoNovelFileHandler)());
     router.use('/:siteID/:novelID', (req, res) => {
         let query = {
             ...req.params,
@@ -182,7 +184,9 @@ function fileHandler() {
                 let attachment = (0, content_disposition_1.default)(http_filename);
                 res.set('Content-disposition', attachment);
                 res.set('Content-Type', mime);
-                logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '', novelData === null || novelData === void 0 ? void 0 : novelData.title);
+                logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename)
+                    ? `=> ${http_filename}`
+                    : '', novelData === null || novelData === void 0 ? void 0 : novelData.title);
                 readStream.pipe(res);
             }
         })

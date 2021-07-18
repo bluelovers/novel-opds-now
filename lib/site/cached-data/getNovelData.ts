@@ -7,8 +7,8 @@ import type { siteID as siteIDOfDemoNovel } from '../demonovel/types';
 import { IFilterNovelDataPlus } from '../demonovel/types';
 
 export function getNovelData(siteID: typeof siteIDOfDemoNovel, novelID: string | number): Bluebird<IFilterNovelDataPlus>
-export function getNovelData(siteID: ISiteIDs | EnumNovelSiteList, novelID: string | number): Bluebird<INovelDataSimple>
-export function getNovelData<T extends Record<string, any>>(siteID: ISiteIDsPlus | EnumNovelSiteList, novelID: string | number)
+export function getNovelData(siteID: string | ISiteIDs | EnumNovelSiteList, novelID: string | number): Bluebird<INovelDataSimple>
+export function getNovelData<T extends Record<string, any>>(siteID: string | ISiteIDsPlus | EnumNovelSiteList, novelID: string | number)
 {
 	return Bluebird.resolve(import(getCacheFilename(`${siteID}/map.json`)))
 		.then(data => {

@@ -23,12 +23,15 @@ import { mimeFromBuffer } from '../lib/util/mimeFromBuffer';
 import { doPackEpubFromSource } from '../lib/doPackEpubFromSource';
 import { getNovelData } from '../lib/site/cached-data/getNovelData';
 import { siteNeverExpired } from '../lib/site/siteNeverExpired';
+import { demoNovelFileHandler } from './router/file/demonovel';
 
 export type IRouter = Router;
 
 function fileHandler()
 {
 	const router: IRouter = Router();
+
+	router.use('/demo(novel)?', demoNovelFileHandler());
 
 	router.use('/:siteID/:novelID', (req, res) =>
 	{
@@ -95,7 +98,8 @@ function fileHandler()
 				], {
 					query,
 				})
-					.tap(gunData => {
+					.tap(gunData =>
+					{
 
 						if (gunData?.exists)
 						{
@@ -122,7 +126,7 @@ function fileHandler()
 						}
 
 					})
-				;
+					;
 			})
 			.then(async (gunData) =>
 			{
@@ -265,9 +269,7 @@ function fileHandler()
 						// @ts-ignore
 						data.novel_id2,
 						novel_id,
-					], gunData, {
-
-					});
+					], gunData, {});
 
 				}
 
@@ -304,7 +306,9 @@ function fileHandler()
 					res.set('Content-disposition', attachment);
 					res.set('Content-Type', mime);
 
-					console.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename) ? `=> ${http_filename}` : '', novelData?.title);
+					console.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename)
+						? `=> ${http_filename}`
+						: '', novelData?.title);
 					readStream.pipe(res);
 				}
 
@@ -344,7 +348,8 @@ export function removeTempOutputDir(query: {
 })
 {
 	return Promise.resolve()
-		.then(() => {
+		.then(() =>
+		{
 			if (query.debug)
 			{
 				console.debug(`忽略刪除下載暫存 ${data.outputDir}`);
@@ -358,10 +363,11 @@ export function removeTempOutputDir(query: {
 				return remove(data.outputDir)
 			}
 		})
-		.catch(e => {
+		.catch(e =>
+		{
 			console.warn(`removeTempOutputDir`, e)
 		})
-	;
+		;
 }
 
 export default fileHandler

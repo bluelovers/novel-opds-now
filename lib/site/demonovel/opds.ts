@@ -13,7 +13,7 @@ import { makeOPDSShared } from '../../opds/index';
 import { IFilterNovelDataPlus, rawUrl, siteID } from './types';
 import { addOpenSearch } from '../../opds/search';
 import { ISiteIDs } from '../types';
-import { getDemoEpubUrl } from './getDemoEpubUrl';
+import { getDemoEpubRouterUrl, getDemoEpubUrl } from './getDemoEpubUrl';
 
 export let prefix = `/demo`;
 export let prefixRoot = `/opds` + prefix;
@@ -39,7 +39,8 @@ export async function makeOPDSType(type: string)
 						return;
 					}
 
-					let href = getDemoEpubUrl(novel);
+					let href = getDemoEpubRouterUrl(novel);
+					2
 
 					let links = [
 						{
