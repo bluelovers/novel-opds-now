@@ -7,7 +7,7 @@ import { multiaddr, Multiaddr } from 'multiaddr';
 import AbortControllerTimer from 'abort-controller-timer';
 import { AbortOptions } from 'ipfs-core-types/src/utils';
 import { ITSResolvable } from 'ts-type';
-import { getMixinPeers } from './util/getMixinPeers';
+import { getMixinPeers, saveMixinPeers } from './util/getMixinPeers';
 import { array_unique_overwrite } from 'array-hyper-unique';
 
 const connectPeersCache = new Set<string>()
@@ -223,6 +223,7 @@ export function connectPeersAll(ipfs: IUseIPFSApi, peers: ITSResolvable<string[]
 				//console.debug(`[IPFS]`, `[connectPeers]:each:start`, peerID)
 				return _connectPeers(ipfs, peerID, me, extra?.timeout, extra, `[${index}／${length}]`, ...msg)
 			})
+				.finally(saveMixinPeers)
 		})
 
 }

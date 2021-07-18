@@ -1,9 +1,31 @@
 import Bluebird from 'bluebird';
 import { getPubsubPeers } from '../pubsub/index';
-import { array_unique_overwrite } from 'array-hyper-unique';
+import { array_unique, array_unique_overwrite } from 'array-hyper-unique';
 import { ITSResolvable } from 'ts-type';
 import { IUseIPFSApi } from '../../types';
 import { getIPFS } from '../use';
+import throttle from 'lodash/throttle';
+import { outputFile, appendFile, readFile } from 'fs-extra';
+import { join } from 'path';
+import { __root } from '../../const';
+import debounce from 'lodash/debounce';
+
+export const cachePeersMixinFile = join(__root, 'test', '.peers.mixin.txt');
+
+export const saveMixinPeers = debounce(throttle(() => {
+	return getIPFS()
+		.then(ipfs => ipfs && ipfs.swarm.peers()
+			.then(peers => appendFile(cachePeersMixinFile, `\n${peers.map(v => v.peer).join('\n')}\n`)))
+		.catch(e => null as null)
+		.finally(saveMixinPeersReduce)
+}, 30 * 60 * 1000), 60 * 1000);
+
+export const saveMixinPeersReduce = debounce(() => {
+	return readFile(join(__root, 'test', '.peers.mixin.txt'))
+		.then(buf => array_unique(buf.toString().split(/\s+/)).filter(Boolean))
+		.then(peers => outputFile(cachePeersMixinFile, `\n${peers.join('\n')}\n`))
+		.catch(e => null as null)
+}, 60 * 1000);
 
 export function getMixinPeers(ipfs?: ITSResolvable<IUseIPFSApi>)
 {
@@ -27,7 +49,7 @@ export function getMixinPeers(ipfs?: ITSResolvable<IUseIPFSApi>)
 					return value.peer
 				}) as any;
 
-				return array_unique_overwrite([...data.pubsub, ...data.swarm, ...arr].filter(Boolean).map(String))
+				return array_unique_overwrite([...data.pubsub, ...data.swarm, data.addrs, ...arr].filter(Boolean).map(String))
 			})
 		})
 }

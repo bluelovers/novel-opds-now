@@ -21,6 +21,7 @@ const pokeMutableFileSystem_1 = require("../../../lib/ipfs/mfs/pokeMutableFileSy
 const saveMutableFileSystemRoots_1 = require("../../../lib/ipfs/mfs/saveMutableFileSystemRoots");
 const index_1 = require("../../../lib/ipfs/pubsub/index");
 const isBookFile_1 = require("calibre-server/lib/util/isBookFile");
+const util_2 = require("util");
 async function calibreHandlerCore() {
     let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
     if (typeof calibrePaths === 'string') {
@@ -89,7 +90,7 @@ async function calibreHandlerCore() {
                     }
                     catch (e) { }
                     (result === null || result === void 0 ? void 0 : result.mime) && res.set('Content-Type', result.mime);
-                    logger_1.default.debug(`[Calibre]`, {
+                    logger_1.default.debug(`[Calibre]`, (0, util_2.inspect)({
                         dbID,
                         book_id,
                         book,
@@ -99,8 +100,8 @@ async function calibreHandlerCore() {
                         http_filename,
                         result,
                     }, {
-                        depths: 5,
-                    });
+                        depth: 5,
+                    }));
                     if (true) {
                         const siteID = 'calibre';
                         let author = (_c = (_b = book.authors) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.author_name;

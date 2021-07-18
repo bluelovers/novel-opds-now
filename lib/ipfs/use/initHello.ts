@@ -9,10 +9,11 @@ import { allSettled } from 'bluebird-allsettled';
 import { connectPeers, connectPeersAll } from '../peer';
 import { pubsubPublishHello } from '../pubsub/hello';
 import { EnumPubSubHello } from '../types';
-import { connectBuildInPeers, connectCachePeers } from '../util/connect-build-in-peers';
+import { _connectPeers, connectBuildInPeers, connectCachePeers, getBuildInPeers } from '../util/connect-build-in-peers';
 import { getPubsubPeers, pubsubSubscribe } from '../pubsub/index';
 import console from 'debug-color2/logger';
-import { getMixinPeers } from '../util/getMixinPeers';
+import { cachePeersMixinFile, getMixinPeers } from '../util/getMixinPeers';
+import { array_unique } from 'array-hyper-unique';
 
 export function initHello(ipfs: ITSResolvable<IUseIPFSApi>)
 {
@@ -22,6 +23,9 @@ export function initHello(ipfs: ITSResolvable<IUseIPFSApi>)
 			return Bluebird.any([
 					connectBuildInPeers(ipfs),
 					connectCachePeers(ipfs),
+					_connectPeers(ipfs, readFile(cachePeersMixinFile).then(buf => array_unique(buf.toString().split(/\s+/)).filter(Boolean)).catch(e => [] as null), {
+						hidden: true,
+					}),
 				])
 				.catch(e => null)
 				.delay(60 * 1000)

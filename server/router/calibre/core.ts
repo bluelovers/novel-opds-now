@@ -30,6 +30,7 @@ import { saveMutableFileSystemRoots } from '../../../lib/ipfs/mfs/saveMutableFil
 import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/index';
 import { isBookFile } from 'calibre-server/lib/util/isBookFile';
 import { updateAllCacheTask } from '../../../lib/task/update-cache';
+import { inspect } from 'util';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -142,7 +143,7 @@ async function calibreHandlerCore(): Promise<Router>
 
 						result?.mime && res.set('Content-Type', result.mime);
 
-						console.debug(`[Calibre]`, {
+						console.debug(`[Calibre]`, inspect({
 							dbID,
 							book_id,
 							book,
@@ -152,8 +153,8 @@ async function calibreHandlerCore(): Promise<Router>
 							http_filename,
 							result,
 						}, {
-							depths: 5,
-						})
+							depth: 5,
+						}))
 
 						if (true)
 						{

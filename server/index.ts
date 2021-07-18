@@ -37,6 +37,7 @@ import routerPokeHandler from './router/poke';
 import { getPubsubPeers } from '../lib/ipfs/pubsub/index';
 import helmet from 'helmet';
 import calibreHandler from './router/calibre/index';
+import { saveMixinPeers } from '../lib/ipfs/util/getMixinPeers';
 
 const app = express();
 
@@ -51,6 +52,12 @@ app.use(helmet({
 app.use(favicon(join(__root, 'static', 'favicon.png')));
 app.use(mw())
 app.use(useragent())
+
+app.use('/*', (req, res, next) =>
+{
+	saveMixinPeers();
+	next();
+});
 
 app.use(calibreHandler);
 
