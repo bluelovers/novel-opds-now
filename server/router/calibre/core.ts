@@ -28,7 +28,6 @@ import { sanitizeFilename } from '@lazy-node/sanitize-filename';
 import { pokeMutableFileSystemCore } from '../../../lib/ipfs/mfs/pokeMutableFileSystem';
 import { saveMutableFileSystemRoots } from '../../../lib/ipfs/mfs/saveMutableFileSystemRoots';
 import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/index';
-import { siteID } from '../../../lib/site/demonovel/types';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -136,6 +135,8 @@ async function calibreHandlerCore(): Promise<Router>
 
 				if (ext === '.epub')
 				{
+					const siteID = 'calibre' as const;
+
 					publishAndPokeIPFS(content, {
 						filename: http_filename,
 						//noPoke: true,
@@ -155,7 +156,7 @@ async function calibreHandlerCore(): Promise<Router>
 								},
 							}, getPubsubPeers(ipfs));
 
-							ipfs && _addMutableFileSystem(`/novel-opds-now/calibre/${dbID}/${author}`, {
+							ipfs && _addMutableFileSystem(`/novel-opds-now/${siteID}/${dbID}/${author}`, {
 								path: sanitizeFilename(http_filename, {
 									replaceToFullWidth: true,
 								}) || sanitizeFilename(filename, {
@@ -172,9 +173,9 @@ async function calibreHandlerCore(): Promise<Router>
 									console.debug(`_addMutableFileSystem:done`, file_path)
 
 									return pokeMutableFileSystemCore(http_filename, [
-										`calibre/${dbID}/${author}/`,
-										`calibre/${dbID}/`,
-										`calibre/`,
+										`${siteID}/${dbID}/${author}/`,
+										`${siteID}/${dbID}/`,
+										`${siteID}/`,
 									]);
 								},
 							})

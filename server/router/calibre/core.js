@@ -20,7 +20,6 @@ const sanitize_filename_1 = require("@lazy-node/sanitize-filename");
 const pokeMutableFileSystem_1 = require("../../../lib/ipfs/mfs/pokeMutableFileSystem");
 const saveMutableFileSystemRoots_1 = require("../../../lib/ipfs/mfs/saveMutableFileSystemRoots");
 const index_1 = require("../../../lib/ipfs/pubsub/index");
-const types_1 = require("../../../lib/site/demonovel/types");
 async function calibreHandlerCore() {
     let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
     if (typeof calibrePaths === 'string') {
@@ -88,6 +87,7 @@ async function calibreHandlerCore() {
                     result,
                 });
                 if (ext === '.epub') {
+                    const siteID = 'calibre';
                     (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
                         filename: http_filename,
                         cb(cid, ipfs, data, result) {
@@ -96,7 +96,7 @@ async function calibreHandlerCore() {
                                 replaceToFullWidth: true,
                             }) || 'unknown';
                             ipfs && (0, index_1.pubsubPublishEpub)(ipfs, {
-                                siteID: types_1.siteID,
+                                siteID,
                                 novelID: `${dbID}/${author}`,
                                 data: {
                                     path: result.path,
@@ -104,7 +104,7 @@ async function calibreHandlerCore() {
                                     size: result.size,
                                 },
                             }, (0, index_1.getPubsubPeers)(ipfs));
-                            ipfs && (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/calibre/${dbID}/${author}`, {
+                            ipfs && (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/${siteID}/${dbID}/${author}`, {
                                 path: (0, sanitize_filename_1.sanitizeFilename)(http_filename, {
                                     replaceToFullWidth: true,
                                 }) || (0, sanitize_filename_1.sanitizeFilename)(filename, {
@@ -118,9 +118,9 @@ async function calibreHandlerCore() {
                                     _addMutableFileSystem_1.waitingCache.delete(file_path);
                                     logger_1.default.debug(`_addMutableFileSystem:done`, file_path);
                                     return (0, pokeMutableFileSystem_1.pokeMutableFileSystemCore)(http_filename, [
-                                        `calibre/${dbID}/${author}/`,
-                                        `calibre/${dbID}/`,
-                                        `calibre/`,
+                                        `${siteID}/${dbID}/${author}/`,
+                                        `${siteID}/${dbID}/`,
+                                        `${siteID}/`,
                                     ]);
                                 },
                             })
