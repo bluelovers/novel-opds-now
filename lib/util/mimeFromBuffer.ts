@@ -12,7 +12,7 @@ export async function fixFileTypeResult(result: FileTypeResult, fileExt?: string
 
 	let { mime, ext } = result;
 
-	fileExt = fileExt.replace(/^\./, '') as FileExtension;
+	fileExt = fileExt?.replace?.(/^\./, '') as FileExtension;
 
 	if (fileExt?.length && isBookFile(fileExt))
 	{
