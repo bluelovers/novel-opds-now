@@ -27,6 +27,8 @@ import { _addMutableFileSystem, waitingCache } from '../../../lib/ipfs/mfs/_addM
 import { sanitizeFilename } from '@lazy-node/sanitize-filename';
 import { pokeMutableFileSystemCore } from '../../../lib/ipfs/mfs/pokeMutableFileSystem';
 import { saveMutableFileSystemRoots } from '../../../lib/ipfs/mfs/saveMutableFileSystemRoots';
+import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/index';
+import { siteID } from '../../../lib/site/demonovel/types';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -137,13 +139,23 @@ async function calibreHandlerCore(): Promise<Router>
 					publishAndPokeIPFS(content, {
 						filename: http_filename,
 						//noPoke: true,
-						cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string })
+						cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string }, result)
 						{
 							let author = sanitizeFilename(req.query?.author as string || 'unknown', {
 								replaceToFullWidth: true,
 							}) || 'unknown';
 
-							_addMutableFileSystem(`/novel-opds-now/calibre/${dbID}/${author}`, {
+							ipfs && pubsubPublishEpub(ipfs, {
+								siteID,
+								novelID: `${dbID}/${author}`,
+								data: {
+									path: result.path,
+									cid,
+									size: result.size,
+								},
+							}, getPubsubPeers(ipfs));
+
+							ipfs && _addMutableFileSystem(`/novel-opds-now/calibre/${dbID}/${author}`, {
 								path: sanitizeFilename(http_filename, {
 									replaceToFullWidth: true,
 								}) || sanitizeFilename(filename, {

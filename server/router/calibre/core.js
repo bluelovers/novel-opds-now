@@ -19,6 +19,8 @@ const _addMutableFileSystem_1 = require("../../../lib/ipfs/mfs/_addMutableFileSy
 const sanitize_filename_1 = require("@lazy-node/sanitize-filename");
 const pokeMutableFileSystem_1 = require("../../../lib/ipfs/mfs/pokeMutableFileSystem");
 const saveMutableFileSystemRoots_1 = require("../../../lib/ipfs/mfs/saveMutableFileSystemRoots");
+const index_1 = require("../../../lib/ipfs/pubsub/index");
+const types_1 = require("../../../lib/site/demonovel/types");
 async function calibreHandlerCore() {
     let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
     if (typeof calibrePaths === 'string') {
@@ -88,12 +90,21 @@ async function calibreHandlerCore() {
                 if (ext === '.epub') {
                     (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
                         filename: http_filename,
-                        cb(cid, ipfs, data) {
+                        cb(cid, ipfs, data, result) {
                             var _a;
                             let author = (0, sanitize_filename_1.sanitizeFilename)(((_a = req.query) === null || _a === void 0 ? void 0 : _a.author) || 'unknown', {
                                 replaceToFullWidth: true,
                             }) || 'unknown';
-                            (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/calibre/${dbID}/${author}`, {
+                            ipfs && (0, index_1.pubsubPublishEpub)(ipfs, {
+                                siteID: types_1.siteID,
+                                novelID: `${dbID}/${author}`,
+                                data: {
+                                    path: result.path,
+                                    cid,
+                                    size: result.size,
+                                },
+                            }, (0, index_1.getPubsubPeers)(ipfs));
+                            ipfs && (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/calibre/${dbID}/${author}`, {
                                 path: (0, sanitize_filename_1.sanitizeFilename)(http_filename, {
                                     replaceToFullWidth: true,
                                 }) || (0, sanitize_filename_1.sanitizeFilename)(filename, {

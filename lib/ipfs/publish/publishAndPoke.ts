@@ -15,7 +15,7 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 	hidden?: boolean,
 	cb?(cid: string, ipfs: IUseIPFSApi, data: {
 		filename: string,
-	}): ITSResolvable<any>,
+	}, result: IIPFSFileApiAddReturnEntry): ITSResolvable<any>,
 	noPoke?: boolean,
 }, ...msg: any)
 {
@@ -48,6 +48,7 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 			})
 				.tap(async (ret) =>
 				{
+					let result: IIPFSFileApiAddReturnEntry;
 
 					let cid: string;
 
@@ -58,7 +59,8 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 
 						if (value?.length)
 						{
-							const resultCID = value[0].cid.toString();
+							result = value[0];
+							const resultCID = result.cid.toString();
 
 							if (resultCID.length)
 							{
@@ -75,7 +77,7 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 						filename,
 					}
 
-					await options?.cb?.(cid, ipfs, data);
+					await options?.cb?.(cid, ipfs, data, result);
 
 					return !options.noPoke && pokeAll(cid, ipfs, data)
 						.tap(settledResult =>

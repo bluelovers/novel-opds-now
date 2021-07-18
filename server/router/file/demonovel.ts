@@ -20,6 +20,8 @@ import { pokeMutableFileSystemCore } from '../../../lib/ipfs/mfs/pokeMutableFile
 import { responseStream } from 'http-response-stream';
 import { putEpubFileInfo } from '../../../lib/ipfs/index';
 import { toLink } from 'to-ipfs-url';
+import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/index';
+import CID from 'cids';
 
 export function demoNovelFileHandler()
 {
@@ -97,7 +99,7 @@ export function demoNovelFileHandler()
 				publishAndPokeIPFS(content, {
 					filename: http_filename,
 					//noPoke: true,
-					cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string })
+					cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string }, result)
 					{
 						gunData.href = toLink(cid, data.filename);
 
@@ -105,7 +107,17 @@ export function demoNovelFileHandler()
 							.tap(json => console.debug(`putEpubFileInfo:return`, json))
 						;
 
-						_addMutableFileSystem(`/novel-opds-now/${siteID}/${novel.pathMain_base}/${novel.novelID}`, {
+						ipfs && pubsubPublishEpub(ipfs, {
+							siteID,
+							novelID: novel.id,
+							data: {
+								path: result.path,
+								cid,
+								size: result.size,
+							},
+						}, getPubsubPeers(ipfs));
+
+						ipfs && _addMutableFileSystem(`/novel-opds-now/${siteID}/${novel.pathMain_base}/${novel.novelID}`, {
 							path: sanitizeFilename(http_filename, {
 								replaceToFullWidth: true,
 							}) || sanitizeFilename(filename, {

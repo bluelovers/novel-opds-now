@@ -21,6 +21,7 @@ const pokeMutableFileSystem_1 = require("../../../lib/ipfs/mfs/pokeMutableFileSy
 const http_response_stream_1 = require("http-response-stream");
 const index_1 = require("../../../lib/ipfs/index");
 const to_ipfs_url_1 = require("to-ipfs-url");
+const index_2 = require("../../../lib/ipfs/pubsub/index");
 function demoNovelFileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:uuid/*', (req, res) => {
@@ -71,11 +72,20 @@ function demoNovelFileHandler() {
             delete gunData.isGun;
             (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
                 filename: http_filename,
-                cb(cid, ipfs, data) {
+                cb(cid, ipfs, data, result) {
                     gunData.href = (0, to_ipfs_url_1.toLink)(cid, data.filename);
                     (0, index_1.putEpubFileInfo)(types_1.siteID, novel.id, gunData)
                         .tap(json => logger_1.default.debug(`putEpubFileInfo:return`, json));
-                    (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/${types_1.siteID}/${novel.pathMain_base}/${novel.novelID}`, {
+                    ipfs && (0, index_2.pubsubPublishEpub)(ipfs, {
+                        siteID: types_1.siteID,
+                        novelID: novel.id,
+                        data: {
+                            path: result.path,
+                            cid,
+                            size: result.size,
+                        },
+                    }, (0, index_2.getPubsubPeers)(ipfs));
+                    ipfs && (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/${types_1.siteID}/${novel.pathMain_base}/${novel.novelID}`, {
                         path: (0, sanitize_filename_1.sanitizeFilename)(http_filename, {
                             replaceToFullWidth: true,
                         }) || (0, sanitize_filename_1.sanitizeFilename)(filename, {
