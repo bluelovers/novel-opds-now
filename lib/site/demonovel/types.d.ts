@@ -12,3 +12,4 @@ export interface IFilterNovelDataPlus extends IFilterNovelData {
     id: string;
 }
 export declare const siteID = "demonovel";
+export declare const rawUrl = "https://gitlab.com/demonovel/epub-txt/raw/master/";

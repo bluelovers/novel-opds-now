@@ -20,3 +20,5 @@ export interface IFilterNovelDataPlus extends IFilterNovelData
 }
 
 export const siteID = `demonovel`;
+
+export const rawUrl = 'https://gitlab.com/demonovel/epub-txt/raw/master/';

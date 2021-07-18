@@ -10,9 +10,10 @@ import { moment } from 'novel-downloader/src/site';
 import MIMETypes from "mime-types";
 import addCover from '../../opds/addCover';
 import { makeOPDSShared } from '../../opds/index';
-import { IFilterNovelDataPlus, siteID } from './types';
+import { IFilterNovelDataPlus, rawUrl, siteID } from './types';
 import { addOpenSearch } from '../../opds/search';
 import { ISiteIDs } from '../types';
+import { getDemoEpubUrl } from './getDemoEpubUrl';
 
 export let prefix = `/demo`;
 export let prefixRoot = `/opds` + prefix;
@@ -23,7 +24,6 @@ export async function makeOPDSType(type: string)
 	let feed = await makeOPDSPortal();
 
 	//let mainCache = await loadCache();
-	let rawUrl = 'https://gitlab.com/demonovel/epub-txt/raw/master/';
 
 	let last_updated: number;
 
@@ -39,10 +39,7 @@ export async function makeOPDSType(type: string)
 						return;
 					}
 
-					let href = new URL([
-						novel.pathMain_base,
-						novel.cache.epub_basename,
-					].join('/'), rawUrl);
+					let href = getDemoEpubUrl(novel);
 
 					let links = [
 						{
@@ -61,7 +58,7 @@ export async function makeOPDSType(type: string)
 						// @ts-ignore
 						title: novel.title,
 						links,
-						identifier: `book${id}`,
+						identifier: novel.uuid,
 					});
 
 					if (novel.cache.epub_date)
