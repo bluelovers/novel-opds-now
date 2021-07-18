@@ -12,19 +12,19 @@ export function getMixinPeers(ipfs?: ITSResolvable<IUseIPFSApi>)
 			return Bluebird.props({
 				pubsub: getPubsubPeers(ipfs).then(ret => ret || [] as null),
 				swarm: ipfs.swarm.peers().catch(e => [] as null),
-				//addrs: ipfs.swarm.addrs().catch(e => [] as null),
+				addrs: ipfs.swarm.addrs().catch(e => [] as null),
 			}).then(data => {
 
 				let arr: any[] = []
 
-//				data.addrs = data.addrs.map(value => {
-//					arr.push(value.addrs[0].encapsulate('/p2p/' + value.id).toString());
-//					return value.id
-//				}) as any;
+				data.addrs = data.addrs.map(value => {
+					return value.id
+				}) as any;
 				data.swarm = data.swarm.map(value => {
 					//console.log(0, value.addr.toString())
 					//arr.push(value.peer);
-					return value.addr.encapsulate('/p2p/' + value.peer)
+					//return value.addr.encapsulate('/p2p/' + value.peer)
+					return value.peer
 				}) as any;
 
 				return array_unique_overwrite([...data.pubsub, ...data.swarm, ...arr].filter(Boolean).map(String))

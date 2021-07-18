@@ -6,13 +6,15 @@ import { readFile } from 'fs-extra';
 import { join } from 'path';
 import { __root } from '../../const';
 import { allSettled } from 'bluebird-allsettled';
-import { connectPeers } from '../peer';
+import { connectPeers, connectPeersAll } from '../peer';
 import { pubsubPublishHello } from '../pubsub/hello';
 import { EnumPubSubHello } from '../types';
 import { connectBuildInPeers, connectCachePeers } from '../util/connect-build-in-peers';
-import { pubsubSubscribe } from '../pubsub/index';
+import { getPubsubPeers, pubsubSubscribe } from '../pubsub/index';
+import console from 'debug-color2/logger';
+import { getMixinPeers } from '../util/getMixinPeers';
 
-export function initHello(ipfs?: ITSResolvable<IUseIPFSApi>)
+export function initHello(ipfs: ITSResolvable<IUseIPFSApi>)
 {
 	return Bluebird.resolve(ipfs)
 		.then(async (ipfs) =>
@@ -21,13 +23,29 @@ export function initHello(ipfs?: ITSResolvable<IUseIPFSApi>)
 					connectBuildInPeers(ipfs),
 					connectCachePeers(ipfs),
 				])
-				//.tap(r => console.debug(`initHello`, r.flat()))
 				.catch(e => null)
-				.then(() => getIPFS())
-				.tap((ipfs) => pubsubPublishHello(ipfs))
+				.delay(60 * 1000)
+				.tap(async () => console.debug(`initHello:peer`, await getPubsubPeers(ipfs)))
+				.then(() => ipfs ?? getIPFS())
+				.tap((ipfs) => {
+					return Bluebird.any([
+						pubsubPublishHello(ipfs),
+						connectPeersAll(ipfs, getMixinPeers(ipfs), {
+							hidden: true,
+						}),
+					] as any[])
+				})
 				.delay(30 * 60 * 1000)
 				.then(() => getIPFS())
-				.then((ipfs) => ipfs && pubsubPublishHello(ipfs, EnumPubSubHello.HELLO_AGAIN))
+				.tap(async (ipfs) => {
+					if (ipfs)
+					{
+						return Bluebird.allSettled([
+							pubsubPublishHello(ipfs, EnumPubSubHello.HELLO_AGAIN, getMixinPeers(ipfs)),
+							console.debug(`initHello:again`, await getPubsubPeers(ipfs)),
+						])
+					}
+				})
 		})
 		;
 }
