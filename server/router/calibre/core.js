@@ -87,7 +87,7 @@ async function calibreHandlerCore() {
                     http_filename,
                     result,
                 });
-                if (ext === '.epub' || (0, isBookFile_1.isBookFile)(result.ext)) {
+                if (['.epub', '.jpg'].includes(ext) || (0, isBookFile_1.isBookFile)(result.ext)) {
                     const siteID = 'calibre';
                     (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
                         filename: http_filename,

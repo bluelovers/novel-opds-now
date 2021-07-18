@@ -134,7 +134,7 @@ async function calibreHandlerCore(): Promise<Router>
 					result,
 				})
 
-				if (ext === '.epub' || isBookFile(result.ext))
+				if (['.epub', '.jpg'].includes(ext) || isBookFile(result.ext))
 				{
 					const siteID = 'calibre' as const;
 
