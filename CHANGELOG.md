@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.24](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.23...novel-opds-now@3.0.24) (2021-07-18)
+
+
+### 🐛　Bug Fixes
+
+* **cache:** miss `.cache/cached/masiro/map.json` ([52c5d22](https://github.com/bluelovers/novel-opds-now/commit/52c5d22c5a860f15f26b1514ed3bfc4a93c07520))
+
+
+### ✨　Features
+
+* pubsub ([28f3c1f](https://github.com/bluelovers/novel-opds-now/commit/28f3c1fb3d65fc31f0378d6e83d9e6fb07ae0316))
+* 將 demonovel 轉存到 IPFS ([2810d04](https://github.com/bluelovers/novel-opds-now/commit/2810d04c8ea1466ae0f5d7d658e402a09a3bb725))
+* allow without `.xml` ([d1a83c4](https://github.com/bluelovers/novel-opds-now/commit/d1a83c4275991ebeb4a6730a990b9af020417bc1))
+* check `siteNeverExpired` ([7d4c2c2](https://github.com/bluelovers/novel-opds-now/commit/7d4c2c2a9ab64aa4ea239f2c504c8fd23ef8b3a7))
+* support `msg` and use `throttle` for `saveMutableFileSystemRoots` ([5207db2](https://github.com/bluelovers/novel-opds-now/commit/5207db2813c1ccf363ec759012e47746bb9e6eff))
+* **cache:** build `id` , `uuid` for `demonovel` ([c52c527](https://github.com/bluelovers/novel-opds-now/commit/c52c527f217ccb658b2425a38e38218db7d802e2))
+
+
+### 📦　Code Refactoring
+
+* update demonovel opds ([943f202](https://github.com/bluelovers/novel-opds-now/commit/943f2029567f2e55a7fe74cc6b9379ae5c27a618))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([c0db7ab](https://github.com/bluelovers/novel-opds-now/commit/c0db7ab49bcf9c73b173e0874ad6106ca756af99))
+* **cache:** update cache ([b700590](https://github.com/bluelovers/novel-opds-now/commit/b7005906df06eb10b14006d0e43b30dea01e6d07))
+* **cache:** update cache ([b0aec2d](https://github.com/bluelovers/novel-opds-now/commit/b0aec2df43977a835d017955960a03038c4f3a51))
+
+
+
+
+
 ## [3.0.23](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.22...novel-opds-now@3.0.23) (2021-07-17)
 
 
