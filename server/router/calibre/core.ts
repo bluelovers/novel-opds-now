@@ -90,110 +90,119 @@ async function calibreHandlerCore(): Promise<Router>
 			return res.status(500).end(`${dbID} not exists`)
 		}
 
-		if (file?.length)
-		{
-			let ext = extname(file).toLowerCase();
-
-			if (['.epub', '.jpg'].includes(ext) || isBookFile(ext.replace(/^\./, '')))
-			{
-				console.log(req.method, req.baseUrl, req.url, req.params, req.query);
-				showClient(req, res, next);
-
-				let local_path = join(db?._fulldir, file);
-
-				let content = await readFile(local_path);
-
-				let result = await mimeFromBuffer(content, ext);
-
-				let filename = basename(file)
-
-				let http_filename = filename;
-
-				if (req.query.filename?.length)
+		return Promise.resolve()
+			.then(async () => {
+				if (file.length)
 				{
-					http_filename = basename(String(req.query.filename))
-				}
+					let ext = extname(file).toLowerCase();
 
-				let attachment = contentDisposition(http_filename);
+					if (['.epub', '.jpg'].includes(ext) || isBookFile(ext.replace(/^\./, '')))
+					{
+						console.log(req.method, req.baseUrl, req.url, req.params, req.query);
+						showClient(req, res, next);
 
-				try
-				{
-					res.set('Content-disposition', attachment);
-				}
-				catch (e)
-				{}
+						let local_path = join(db._fulldir, file);
 
-				result?.mime && res.set('Content-Type', result.mime);
+						let content = await readFile(local_path)
+							.catch(e => Promise.reject(new Error(`'${file}' not exists`)))
+						;
 
-				console.debug(`[Calibre]`, {
-					dbID,
-					file,
-					local_path,
-					filename,
-					http_filename,
-					result,
-				})
+						let result = await mimeFromBuffer(content, ext);
 
-				if (['.epub', '.jpg'].includes(ext) || isBookFile(result.ext))
-				{
-					const siteID = 'calibre' as const;
+						let filename = basename(file)
 
-					publishAndPokeIPFS(content, {
-						filename: http_filename,
-						//noPoke: true,
-						cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string }, result)
+						let http_filename = filename;
+
+						if (req.query.filename?.length)
 						{
-							let author = sanitizeFilename(req.query?.author as string || 'unknown', {
-								replaceToFullWidth: true,
-							}) || 'unknown';
+							http_filename = basename(String(req.query.filename))
+						}
 
-							ipfs && pubsubPublishEpub(ipfs, {
-								siteID,
-								novelID: `${dbID}/${author}`,
-								data: {
-									path: result.path,
-									cid,
-									size: result.size,
-								},
-							}, getPubsubPeers(ipfs));
+						let attachment = contentDisposition(http_filename);
 
-							ipfs && _addMutableFileSystem(`/novel-opds-now/${siteID}/${dbID}/${author}`, {
-								path: sanitizeFilename(http_filename, {
-									replaceToFullWidth: true,
-								}) || sanitizeFilename(filename, {
-									replaceToFullWidth: true,
-								}),
-								cid,
-							}, {
-								ipfs,
-								async done(file_path)
+						try
+						{
+							res.set('Content-disposition', attachment);
+						}
+						catch (e)
+						{}
+
+						result?.mime && res.set('Content-Type', result.mime);
+
+						console.debug(`[Calibre]`, {
+							dbID,
+							file,
+							local_path,
+							filename,
+							http_filename,
+							result,
+						})
+
+						if (['.epub', '.jpg'].includes(ext) || isBookFile(result.ext))
+						{
+							const siteID = 'calibre' as const;
+
+							publishAndPokeIPFS(content, {
+								filename: http_filename,
+								//noPoke: true,
+								cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string }, result)
 								{
-									await saveMutableFileSystemRoots(ipfs);
+									let author = sanitizeFilename(req.query?.author as string || 'unknown', {
+										replaceToFullWidth: true,
+									}) || 'unknown';
 
-									waitingCache.delete(file_path)
-									console.debug(`_addMutableFileSystem:done`, file_path)
+									ipfs && pubsubPublishEpub(ipfs, {
+										siteID,
+										novelID: `${dbID}/${author}`,
+										data: {
+											path: result.path,
+											cid,
+											size: result.size,
+										},
+									}, getPubsubPeers(ipfs));
 
-									return pokeMutableFileSystemCore(http_filename, [
-										`${siteID}/${dbID}/${author}/`,
-										`${siteID}/${dbID}/`,
-										`${siteID}/`,
-									]);
+									ipfs && _addMutableFileSystem(`/novel-opds-now/${siteID}/${dbID}/${author}`, {
+										path: sanitizeFilename(http_filename, {
+											replaceToFullWidth: true,
+										}) || sanitizeFilename(filename, {
+											replaceToFullWidth: true,
+										}),
+										cid,
+									}, {
+										ipfs,
+										async done(file_path)
+										{
+											await saveMutableFileSystemRoots(ipfs);
+
+											waitingCache.delete(file_path)
+											console.debug(`_addMutableFileSystem:done`, file_path)
+
+											return pokeMutableFileSystemCore(http_filename, [
+												`${siteID}/${dbID}/${author}/`,
+												`${siteID}/${dbID}/`,
+												`${siteID}/`,
+											]);
+										},
+									})
+										.catch(e => console.error(`_addMutableFileSystem`, http_filename, e))
 								},
 							})
-								.catch(e => console.error(`_addMutableFileSystem`, http_filename, e))
-						},
-					})
-						.catch(e => console.error(`publishAndPokeIPFS`, http_filename, e))
+								.catch(e => console.error(`publishAndPokeIPFS`, http_filename, e))
+						}
+
+						return responseStream(res, content);
+					}
 				}
 
-				return responseStream(res, content);
-			}
-		}
-
-		res.setHeader('Content-Type', 'text/html; charset=utf-8');
-		res.charset = 'utf-8';
-		console.error(`[Calibre]`, dbID, file);
-		res.status(404).end([dbID, file].join('/'))
+				return Promise.reject()
+			})
+			.catch(e => {
+				res.setHeader('Content-Type', 'text/html; charset=utf-8');
+				res.charset = 'utf-8';
+				console.error(`[Calibre]`, dbID, file, e);
+				res.status(404).end([dbID, file].join('/'))
+			})
+		;
 	})
 
 	return router
