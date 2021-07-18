@@ -3,6 +3,37 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.31](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.30...novel-opds-now@3.0.31) (2021-07-18)
+
+
+### 🐛　Bug Fixes
+
+* can't replace from undefined ([e20824b](https://github.com/bluelovers/novel-opds-now/commit/e20824b4882abe8868df2179981651922f3cd1ec))
+
+
+### ✨　Features
+
+* save peer ([bf24309](https://github.com/bluelovers/novel-opds-now/commit/bf243099b68528bba2a46113466fe10aedb225e2))
+
+
+### 📦　Code Refactoring
+
+* **calibre:** update calibre router ([57cfda2](https://github.com/bluelovers/novel-opds-now/commit/57cfda2962b7f5136101b85fe4e664b6da1c2c13))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([8820d78](https://github.com/bluelovers/novel-opds-now/commit/8820d78b94f95115d388856fe48d2d427219dd47))
+
+
+### BREAKING CHANGE
+
+* **calibre:** old path will not work
+
+
+
+
+
 ## [3.0.30](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.29...novel-opds-now@3.0.30) (2021-07-18)
 
 
