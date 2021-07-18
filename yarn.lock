@@ -2293,10 +2293,10 @@ cachedir@^2.3.0:
   resolved "https://registry.npmjs.org/cachedir/-/cachedir-2.3.0.tgz#0c75892a052198f0b21c7c1804d8331edfcae0e8"
   integrity sha512-A+Fezp4zxnit6FanDmv9EqXNAi3vt9DWp51/71UEhXukb7QUuvtv9344h91dyAxuTLoSYJFU299qzR3tzwPAhw==
 
-calibre-db@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/calibre-db/-/calibre-db-1.0.6.tgz#b0c7a3e1d3f87b5c55ae8420a2630fbd8cb5d101"
-  integrity sha512-lNZ+s2r9LkRBcqRnpOwKgMWUOJG7IJ7QtREsLL2qYyXGjsVrrWRRs2DmcO5jqREtRPrT7Gf/5iBZmKqSGHWzTg==
+calibre-db@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/calibre-db/-/calibre-db-1.0.7.tgz#37bfaa09360ed8888e6947f887c85ca9aeedaf95"
+  integrity sha512-110ff80HRGHZ4JfTqkQ8Xp32betCMFnTti5kX3tRM7Ubmc5EsahGTssjACnslL4Y+1rMKWyRScSKcYeieDubEA==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     bluebird "^3.7.2"
@@ -2326,15 +2326,15 @@ calibre-opds@^1.0.8:
     ts-type "^1.2.36"
     tslib "^2.3.0"
 
-calibre-server@^1.0.17:
-  version "1.0.17"
-  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.17.tgz#a42382234e253e53747d1167c951bae3c78ba106"
-  integrity sha512-xwPthKBwrKIz8GPXHscmkqq4j++RBHaGdyA9iev0WkGDKk2cpxCddOXeBQxPf03bTm4O843KQOuYlPc4A9hmWg==
+calibre-server@^1.0.18:
+  version "1.0.18"
+  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.18.tgz#ff0fc1713af66a5d6fa4661d981a6e0e19230047"
+  integrity sha512-TmXM/6YwLdxQcdsmBKlCPiN5uEaiA+Cv7QfK3SvB1EMBVhAsLHRmYY/stA/OwK+Ovv41hgNzL68S+W72b8COkA==
   dependencies:
     address2 "^1.0.4"
     array-hyper-unique "^1.1.10"
     bluebird "^3.7.2"
-    calibre-db "^1.0.6"
+    calibre-db "^1.0.7"
     calibre-env "^1.0.1"
     calibre-opds "^1.0.8"
     debug-color2 "^1.2.5"
@@ -5821,6 +5821,11 @@ latest-version@^5.1.0:
   integrity sha512-weT+r0kTkRQdCdYCNtkMwWXQTMEswKrFBkm4ckQOMVhhqhIMI1UT2hMj+1iigIhgSZm5gTmrRXBNoGUgaTY1xA==
   dependencies:
     package-json "^6.3.0"
+
+layerr@^0.1.2:
+  version "0.1.2"
+  resolved "https://registry.npmjs.org/layerr/-/layerr-0.1.2.tgz#16c8e7fb042d3595ab15492bdad088f31d7afd15"
+  integrity sha512-ob5kTd9H3S4GOG2nVXyQhOu9O8nBgP555XxWPkJI0tR0JeRilfyTp8WtPdIJHLXBmHMSdEq5+KMxiYABeScsIQ==
 
 lazy-cacache@^2.0.4:
   version "2.0.4"

@@ -51,17 +51,24 @@ async function calibreHandlerCore() {
         pathWithPrefix: util_1.pathWithPrefix,
         siteTitle: `Calibre 書庫`,
     });
+    router.use('/opds/calibre(\.xml)?', async (req, res, next) => {
+        logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
+        (0, showClient_1.showClient)(req, res, next);
+        next();
+    });
     router.use('/opds/calibre(\.xml)?', routerOPDS);
-    router.use('/file/calibre/+:dbID/*', async (req, res, next) => {
-        const { dbID } = req.params;
+    router.use('/file/calibre/+:dbID/+:book_id/*', async (req, res, next) => {
+        logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
+        (0, showClient_1.showClient)(req, res, next);
+        const { dbID, book_id } = req.params;
         let file = req.params[0];
         let db = dbList[dbID];
         if (!db) {
-            return res.status(500).end(`${dbID} not exists`);
+            return res.status(404).end(`calibre '${dbID}' not exists`);
         }
-        return Promise.resolve()
-            .then(async () => {
-            var _a;
+        return Promise.resolve(db.lazyload().then(db => db.getBook(book_id)))
+            .then(async (book) => {
+            var _a, _b, _c;
             if (file.length) {
                 let ext = (0, path_1.extname)(file).toLowerCase();
                 if (['.epub', '.jpg'].includes(ext) || (0, isBookFile_1.isBookFile)(ext.replace(/^\./, ''))) {
@@ -84,21 +91,32 @@ async function calibreHandlerCore() {
                     (result === null || result === void 0 ? void 0 : result.mime) && res.set('Content-Type', result.mime);
                     logger_1.default.debug(`[Calibre]`, {
                         dbID,
+                        book_id,
+                        book,
                         file,
                         local_path,
                         filename,
                         http_filename,
                         result,
+                    }, {
+                        depths: 5,
                     });
-                    if (['.epub', '.jpg'].includes(ext) || (0, isBookFile_1.isBookFile)(result.ext)) {
+                    if (true) {
                         const siteID = 'calibre';
+                        let author = (_c = (_b = book.authors) === null || _b === void 0 ? void 0 : _b[0]) === null || _c === void 0 ? void 0 : _c.author_name;
+                        author = (0, sanitize_filename_1.sanitizeFilename)(author || 'unknown', {
+                            replaceToFullWidth: true,
+                        }) || 'unknown';
+                        let filename = `${book.book_title} - ${author}${ext}`;
+                        if (ext === '.jpg') {
+                            filename = `${book.book_title} - ${author} - cover${ext}`;
+                        }
+                        filename = (0, sanitize_filename_1.sanitizeFilename)(filename, {
+                            replaceToFullWidth: true,
+                        });
                         (0, publishAndPoke_1.publishAndPokeIPFS)(content, {
-                            filename: http_filename,
+                            filename,
                             cb(cid, ipfs, data, result) {
-                                var _a;
-                                let author = (0, sanitize_filename_1.sanitizeFilename)(((_a = req.query) === null || _a === void 0 ? void 0 : _a.author) || 'unknown', {
-                                    replaceToFullWidth: true,
-                                }) || 'unknown';
                                 ipfs && (0, index_1.pubsubPublishEpub)(ipfs, {
                                     siteID,
                                     novelID: `${dbID}/${author}`,
@@ -109,11 +127,7 @@ async function calibreHandlerCore() {
                                     },
                                 }, (0, index_1.getPubsubPeers)(ipfs));
                                 ipfs && (0, _addMutableFileSystem_1._addMutableFileSystem)(`/novel-opds-now/${siteID}/${dbID}/${author}`, {
-                                    path: (0, sanitize_filename_1.sanitizeFilename)(http_filename, {
-                                        replaceToFullWidth: true,
-                                    }) || (0, sanitize_filename_1.sanitizeFilename)(filename, {
-                                        replaceToFullWidth: true,
-                                    }),
+                                    path: filename,
                                     cid,
                                 }, {
                                     ipfs,
@@ -121,7 +135,7 @@ async function calibreHandlerCore() {
                                         await (0, saveMutableFileSystemRoots_1.saveMutableFileSystemRoots)(ipfs);
                                         _addMutableFileSystem_1.waitingCache.delete(file_path);
                                         logger_1.default.debug(`_addMutableFileSystem:done`, file_path);
-                                        return (0, pokeMutableFileSystem_1.pokeMutableFileSystemCore)(http_filename, [
+                                        return (0, pokeMutableFileSystem_1.pokeMutableFileSystemCore)(filename, [
                                             `${siteID}/${dbID}/${author}/`,
                                             `${siteID}/${dbID}/`,
                                             `${siteID}/`,

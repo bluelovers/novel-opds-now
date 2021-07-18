@@ -1,5 +1,6 @@
 import { basename, extname } from "path";
 import { IBook } from 'calibre-db/lib/types';
+import { isBookFile } from 'calibre-server/lib/util/isBookFile';
 
 export function pathWithPrefix(this: IBook, a = '', ...input)
 {
@@ -18,20 +19,21 @@ export function pathWithPrefix(this: IBook, a = '', ...input)
 
 			if (this?.book_title?.length)
 			{
+				input.unshift(this.book_id)
+
 				let name = basename(last);
+				let author = this.authors?.[0]?.author_name ?? 'unknown';
 
 				let p = new URLSearchParams();
-				p.set('book_id', `${this.book_id}`);
-				p.set('author', `${this.authors[0].author_name}`);
 
 				if (ext === '.jpg')
 				{
-					p.set('filename', `${this.book_title} ${name}`);
+					p.set('filename', `${this.book_title} - ${author} - ${name}`);
 					query = '?' + p.toString()
 				}
-				else if (ext === '.epub')
+				else if (ext === '.epub' || isBookFile(ext.replace(/^\./, '')))
 				{
-					p.set('filename', `${this.book_title} - ${this.authors[0].author_name}${ext}`);
+					p.set('filename', `${this.book_title} - ${author}${ext}`);
 					query = '?' + p.toString()
 				}
 			}

@@ -29,6 +29,7 @@ import { pokeMutableFileSystemCore } from '../../../lib/ipfs/mfs/pokeMutableFile
 import { saveMutableFileSystemRoots } from '../../../lib/ipfs/mfs/saveMutableFileSystemRoots';
 import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/index';
 import { isBookFile } from 'calibre-server/lib/util/isBookFile';
+import { updateAllCacheTask } from '../../../lib/task/update-cache';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -76,22 +77,34 @@ async function calibreHandlerCore(): Promise<Router>
 		siteTitle: `Calibre 書庫`,
 	});
 
+	router.use('/opds/calibre(\.xml)?', async (req, res, next) =>
+	{
+		console.log(req.method, req.baseUrl, req.url, req.params, req.query);
+		showClient(req, res, next);
+
+		next();
+	});
+
 	router.use('/opds/calibre(\.xml)?', routerOPDS)
 
-	router.use('/file/calibre/+:dbID/*', async (req, res, next) =>
+	router.use('/file/calibre/+:dbID/+:book_id/*', async (req, res, next) =>
 	{
-		const { dbID } = req.params;
+		console.log(req.method, req.baseUrl, req.url, req.params, req.query);
+		showClient(req, res, next);
+
+		const { dbID, book_id } = req.params;
 
 		let file: string = req.params[0];
 		let db = dbList[dbID];
 
 		if (!db)
 		{
-			return res.status(500).end(`${dbID} not exists`)
+			return res.status(404).end(`calibre '${dbID}' not exists`)
 		}
 
-		return Promise.resolve()
-			.then(async () => {
+		return Promise.resolve(db.lazyload().then(db => db.getBook(book_id)))
+			.then(async (book) =>
+			{
 				if (file.length)
 				{
 					let ext = extname(file).toLowerCase();
@@ -131,26 +144,43 @@ async function calibreHandlerCore(): Promise<Router>
 
 						console.debug(`[Calibre]`, {
 							dbID,
+							book_id,
+							book,
 							file,
 							local_path,
 							filename,
 							http_filename,
 							result,
+						}, {
+							depths: 5,
 						})
 
-						if (['.epub', '.jpg'].includes(ext) || isBookFile(result.ext))
+						if (true)
 						{
 							const siteID = 'calibre' as const;
 
+							let author = book.authors?.[0]?.author_name;
+
+							author = sanitizeFilename(author || 'unknown', {
+								replaceToFullWidth: true,
+							}) || 'unknown';
+
+							let filename = `${book.book_title} - ${author}${ext}`;
+
+							if (ext === '.jpg')
+							{
+								filename = `${book.book_title} - ${author} - cover${ext}`;
+							}
+
+							filename = sanitizeFilename(filename, {
+								replaceToFullWidth: true,
+							});
+
 							publishAndPokeIPFS(content, {
-								filename: http_filename,
+								filename,
 								//noPoke: true,
 								cb(cid: string, ipfs: IUseIPFSApi, data: { filename: string }, result)
 								{
-									let author = sanitizeFilename(req.query?.author as string || 'unknown', {
-										replaceToFullWidth: true,
-									}) || 'unknown';
-
 									ipfs && pubsubPublishEpub(ipfs, {
 										siteID,
 										novelID: `${dbID}/${author}`,
@@ -162,11 +192,7 @@ async function calibreHandlerCore(): Promise<Router>
 									}, getPubsubPeers(ipfs));
 
 									ipfs && _addMutableFileSystem(`/novel-opds-now/${siteID}/${dbID}/${author}`, {
-										path: sanitizeFilename(http_filename, {
-											replaceToFullWidth: true,
-										}) || sanitizeFilename(filename, {
-											replaceToFullWidth: true,
-										}),
+										path: filename,
 										cid,
 									}, {
 										ipfs,
@@ -177,7 +203,7 @@ async function calibreHandlerCore(): Promise<Router>
 											waitingCache.delete(file_path)
 											console.debug(`_addMutableFileSystem:done`, file_path)
 
-											return pokeMutableFileSystemCore(http_filename, [
+											return pokeMutableFileSystemCore(filename, [
 												`${siteID}/${dbID}/${author}/`,
 												`${siteID}/${dbID}/`,
 												`${siteID}/`,
@@ -196,13 +222,14 @@ async function calibreHandlerCore(): Promise<Router>
 
 				return Promise.reject()
 			})
-			.catch(e => {
+			.catch(e =>
+			{
 				res.setHeader('Content-Type', 'text/html; charset=utf-8');
 				res.charset = 'utf-8';
 				console.error(`[Calibre]`, dbID, file, e);
 				res.status(404).end([dbID, file].join('/'))
 			})
-		;
+			;
 	})
 
 	return router
