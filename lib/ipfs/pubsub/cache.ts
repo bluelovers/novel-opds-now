@@ -7,6 +7,7 @@ import { tmpPath } from '../../util/tmpPath';
 import { appendFile } from 'fs-extra';
 import { __root } from '../../const';
 import { array_unique_overwrite } from 'array-hyper-unique';
+import { saveMixinPeers } from '../util/getMixinPeers';
 
 export const cachePubSubPeers = new Set<string>();
 
@@ -51,5 +52,6 @@ export function updateCachePubSubPeers(ipfs?: ITSResolvable<IUseIPFSApi>, plusPe
 			console.error(`updateCachePubSubPeers`, e);
 			return null as null
 		})
+		.tap(saveMixinPeers)
 	;
 }

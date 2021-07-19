@@ -18,14 +18,24 @@ export const saveMixinPeers = debounce(throttle(() => {
 			.then(peers => appendFile(cachePeersMixinFile, `\n${peers.map(v => v.peer).join('\n')}\n`)))
 		.catch(e => null as null)
 		.finally(saveMixinPeersReduce)
-}, 30 * 60 * 1000), 60 * 1000);
+}, 60 * 60 * 1000), 60 * 1000);
 
 export const saveMixinPeersReduce = debounce(() => {
 	return readFile(join(__root, 'test', '.peers.mixin.txt'))
-		.then(buf => array_unique(buf.toString().split(/\s+/)).filter(Boolean))
-		.then(peers => outputFile(cachePeersMixinFile, `\n${peers.join('\n')}\n`))
+		.then(buf => {
+			let peers = buf.toString().split(/\s+/).filter(Boolean)
+
+			let old = peers.length;
+
+			array_unique_overwrite(peers);
+
+			if (peers.length != old)
+			{
+				return outputFile(cachePeersMixinFile, `\n${peers.join('\n')}\n`)
+			}
+		})
 		.catch(e => null as null)
-}, 60 * 1000);
+}, 5 * 60 * 1000);
 
 export function getMixinPeers(ipfs?: ITSResolvable<IUseIPFSApi>)
 {
@@ -52,4 +62,5 @@ export function getMixinPeers(ipfs?: ITSResolvable<IUseIPFSApi>)
 				return array_unique_overwrite([...data.pubsub, ...data.swarm, data.addrs, ...arr].filter(Boolean).map(String))
 			})
 		})
+		.tap(saveMixinPeers)
 }

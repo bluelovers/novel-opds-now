@@ -12,7 +12,7 @@ import { EnumPubSubHello } from '../types';
 import { _connectPeers, connectBuildInPeers, connectCachePeers, getBuildInPeers } from '../util/connect-build-in-peers';
 import { getPubsubPeers, pubsubSubscribe } from '../pubsub/index';
 import console from 'debug-color2/logger';
-import { cachePeersMixinFile, getMixinPeers } from '../util/getMixinPeers';
+import { cachePeersMixinFile, getMixinPeers, saveMixinPeersReduce } from '../util/getMixinPeers';
 import { array_unique } from 'array-hyper-unique';
 
 export function initHello(ipfs: ITSResolvable<IUseIPFSApi>)
@@ -39,6 +39,7 @@ export function initHello(ipfs: ITSResolvable<IUseIPFSApi>)
 						}),
 					] as any[])
 				})
+				.tap(saveMixinPeersReduce)
 				.delay(30 * 60 * 1000)
 				.then(() => getIPFS())
 				.tap(async (ipfs) => {
