@@ -81,6 +81,8 @@ export function demoNovelFileHandler()
 					{
 						gunData.href = toLink(cid, data.filename);
 
+						console.debug(`將檔案儲存到P2P緩存`, siteID, novel.id, novel.cache.epub_basename);
+
 						putEpubFileInfo(siteID, novel.id, gunData)
 							.tap(json => console.debug(`putEpubFileInfo:return`, json))
 						;
@@ -125,11 +127,15 @@ export function demoNovelFileHandler()
 					.catch(e => console.error(`publishAndPokeIPFS`, http_filename, e))
 				;
 
+				console.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename)
+					? `=> ${http_filename}`
+					: '');
+
 				return responseStream(res, content);
 			})
 			.catch(e =>
 			{
-				let message = e.message ?? e;
+				let message = e.message;
 				if (e.code === 'ENOENT')
 				{
 					message = `id 不存在 或 伺服器離線`
@@ -141,7 +147,7 @@ export function demoNovelFileHandler()
 					timestamp: Date.now(),
 				};
 
-				console.error(`[${siteID}]`, data, (e as Error).stack);
+				console.error(`[${siteID}]`, data, e);
 
 				res.status(404).json(data);
 			})

@@ -344,7 +344,7 @@ function _useIPFS(options?: {
 				await ipfsd.start()
 					.catch(async (e) =>
 					{
-						e && console.warn(String(e));
+						e && console.warn(`[IPFS]`, `ipfsd`, `start`, String(e));
 						console.debug(`[IPFS]`, `ipfsd`, `start`, `retry`);
 
 						/**

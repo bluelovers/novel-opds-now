@@ -58,6 +58,7 @@ function demoNovelFileHandler() {
                 filename: http_filename,
                 cb(cid, ipfs, data, result) {
                     gunData.href = (0, to_ipfs_url_1.toLink)(cid, data.filename);
+                    logger_1.default.debug(`將檔案儲存到P2P緩存`, types_1.siteID, novel.id, novel.cache.epub_basename);
                     (0, index_1.putEpubFileInfo)(types_1.siteID, novel.id, gunData)
                         .tap(json => logger_1.default.debug(`putEpubFileInfo:return`, json));
                     ipfs && (0, index_2.pubsubPublishEpub)(ipfs, {
@@ -93,11 +94,13 @@ function demoNovelFileHandler() {
                 },
             })
                 .catch(e => logger_1.default.error(`publishAndPokeIPFS`, http_filename, e));
+            logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename)
+                ? `=> ${http_filename}`
+                : '');
             return (0, http_response_stream_1.responseStream)(res, content);
         })
             .catch(e => {
-            var _a;
-            let message = (_a = e.message) !== null && _a !== void 0 ? _a : e;
+            let message = e.message;
             if (e.code === 'ENOENT') {
                 message = `id 不存在 或 伺服器離線`;
             }
@@ -106,7 +109,7 @@ function demoNovelFileHandler() {
                 params: req.params,
                 timestamp: Date.now(),
             };
-            logger_1.default.error(`[${types_1.siteID}]`, data, e.stack);
+            logger_1.default.error(`[${types_1.siteID}]`, data, e);
             res.status(404).json(data);
         });
     });
