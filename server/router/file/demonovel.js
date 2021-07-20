@@ -8,8 +8,6 @@ const types_1 = require("../../../lib/site/demonovel/types");
 const getDemoEpubUrl_1 = require("../../../lib/site/demonovel/getDemoEpubUrl");
 const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
-const ipfs_1 = require("../../../lib/store/ipfs");
-const fetchEpub_1 = require("../../../lib/store/fetch/fetchEpub");
 const mimeFromBuffer_1 = require("../../../lib/util/mimeFromBuffer");
 const path_1 = require("path");
 const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
@@ -22,6 +20,7 @@ const http_response_stream_1 = require("http-response-stream");
 const index_1 = require("../../../lib/ipfs/index");
 const to_ipfs_url_1 = require("to-ipfs-url");
 const index_2 = require("../../../lib/ipfs/pubsub/index");
+const getIPFSEpubFileBoth_1 = require("../../../lib/store/fetch/getIPFSEpubFileBoth");
 function demoNovelFileHandler() {
     const router = (0, express_1.Router)();
     router.use('/:uuid/*', (req, res) => {
@@ -34,28 +33,13 @@ function demoNovelFileHandler() {
                 throw new Error(`${uuid} not exists`);
             }
             const url = (0, getDemoEpubUrl_1.getDemoEpubUrl)(novel);
-            logger_1.default.info(`檢查是否存在緩存...`, types_1.siteID, novel.id, url.href);
-            const gunData = await (0, ipfs_1.getIPFSEpubFile)(types_1.siteID, novel.id, {
+            const gunData = await (0, getIPFSEpubFileBoth_1.getIPFSEpubFileBoth)(types_1.siteID, novel.id, {
                 query: req.query,
-            })
-                .then(async (gunData) => {
-                if (!(gunData === null || gunData === void 0 ? void 0 : gunData.exists)) {
-                    gunData = {
-                        filename: novel.cache.epub_basename,
-                        exists: true,
-                        timestamp: novel.cache.epub_date,
-                        href: url.href,
-                        isGun: true,
-                        base64: void 0,
-                    };
-                }
-                return gunData;
-            })
-                .tap(async (gunData) => {
-                let buf = await (0, fetchEpub_1.fetchEpub)(gunData.href, 5 * 60 * 1000);
-                gunData.base64 = buf;
+                filename: novel.cache.epub_basename,
+                timestamp: novel.cache.epub_date,
+                href: url.href,
             });
-            const content = gunData.base64;
+            const content = Buffer.from(gunData.base64);
             let result = await (0, mimeFromBuffer_1.mimeFromBuffer)(content);
             let filename = novel.cache.epub_basename;
             let http_filename = filename;
@@ -112,7 +96,8 @@ function demoNovelFileHandler() {
             return (0, http_response_stream_1.responseStream)(res, content);
         })
             .catch(e => {
-            let { message } = e;
+            var _a;
+            let message = (_a = e.message) !== null && _a !== void 0 ? _a : e;
             if (e.code === 'ENOENT') {
                 message = `id 不存在 或 伺服器離線`;
             }
@@ -121,7 +106,7 @@ function demoNovelFileHandler() {
                 params: req.params,
                 timestamp: Date.now(),
             };
-            logger_1.default.error(`[${types_1.siteID}]`, data);
+            logger_1.default.error(`[${types_1.siteID}]`, data, e.stack);
             res.status(404).json(data);
         });
     });

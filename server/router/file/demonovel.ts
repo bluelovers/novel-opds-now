@@ -12,7 +12,7 @@ import { mimeFromBuffer } from '../../../lib/util/mimeFromBuffer';
 import { basename } from 'path';
 import contentDisposition from '@lazy-http/content-disposition';
 import { publishAndPokeIPFS } from '../../../lib/ipfs/publish/publishAndPoke';
-import { IUseIPFSApi } from '../../../lib/types';
+import { IGunEpubData, IGunEpubNode, IUseIPFSApi } from '../../../lib/types';
 import { sanitizeFilename } from '@lazy-node/sanitize-filename';
 import { _addMutableFileSystem, waitingCache } from '../../../lib/ipfs/mfs/_addMutableFileSystem';
 import { saveMutableFileSystemRoots } from '../../../lib/ipfs/mfs/saveMutableFileSystemRoots';
@@ -22,6 +22,7 @@ import { putEpubFileInfo } from '../../../lib/ipfs/index';
 import { toLink } from 'to-ipfs-url';
 import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/index';
 import CID from 'cids';
+import { getIPFSEpubFileBoth } from '../../../lib/store/fetch/getIPFSEpubFileBoth';
 
 export function demoNovelFileHandler()
 {
@@ -42,37 +43,14 @@ export function demoNovelFileHandler()
 
 				const url = getDemoEpubUrl(novel);
 
-				console.info(`檢查是否存在緩存...`, siteID, novel.id, url.href);
+				const gunData: IGunEpubData = await getIPFSEpubFileBoth(siteID, novel.id, {
+					query: req.query,
+					filename: novel.cache.epub_basename,
+					timestamp: novel.cache.epub_date,
+					href: url.href,
+				});
 
-				const gunData = await getIPFSEpubFile(siteID, novel.id, {
-						query: req.query,
-					})
-						.then(async (gunData) =>
-						{
-							if (!gunData?.exists)
-							{
-								gunData = {
-									filename: novel.cache.epub_basename,
-									exists: true,
-									timestamp: novel.cache.epub_date,
-									href: url.href,
-									isGun: true,
-									base64: void 0,
-								};
-							}
-
-							return gunData
-						})
-						.tap(async (gunData) =>
-						{
-							let buf = await fetchEpub(gunData.href, 5 * 60 * 1000);
-
-							// @ts-ignore
-							gunData.base64 = buf;
-						})
-				;
-
-				const content: Buffer = gunData.base64 as any;
+				const content: Buffer = Buffer.from(gunData.base64);
 
 				let result = await mimeFromBuffer(content);
 
@@ -151,8 +129,7 @@ export function demoNovelFileHandler()
 			})
 			.catch(e =>
 			{
-
-				let { message } = e;
+				let message = e.message ?? e;
 				if (e.code === 'ENOENT')
 				{
 					message = `id 不存在 或 伺服器離線`
@@ -164,7 +141,7 @@ export function demoNovelFileHandler()
 					timestamp: Date.now(),
 				};
 
-				console.error(`[${siteID}]`, data);
+				console.error(`[${siteID}]`, data, (e as Error).stack);
 
 				res.status(404).json(data);
 			})
