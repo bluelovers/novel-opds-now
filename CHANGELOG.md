@@ -3,6 +3,38 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.34](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.33...novel-opds-now@3.0.34) (2021-07-20)
+
+
+### ✨　Features
+
+* 防止 `./test/.peers.mixin.txt` 無限增加 ([6bc68cd](https://github.com/bluelovers/novel-opds-now/commit/6bc68cdb777f2144eb5becbb04a539c5bbaa9eac))
+
+
+### 📦　Code Refactoring
+
+* 將過時的 gun 時期的 `base64` 類型由 `string` 改為 `Buffer` 但保持名稱不變 ([12addec](https://github.com/bluelovers/novel-opds-now/commit/12addec73355b495d18841bd09107c9637259b57))
+* 優化下載 ([152110d](https://github.com/bluelovers/novel-opds-now/commit/152110d8456cb0d5bdb46c9a66a6ed47a429e583))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([3f73027](https://github.com/bluelovers/novel-opds-now/commit/3f73027dcd87297bfd36bfb6836be7ef3299287e))
+
+
+### 🔖　Miscellaneous
+
+* . ([46f9173](https://github.com/bluelovers/novel-opds-now/commit/46f91734c3bca8350f94de7e9454ee78e0eae331))
+
+
+### BREAKING CHANGE
+
+* `base64` 現在是 `Buffer` 而非 `string`
+
+
+
+
+
 ## [3.0.33](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.32...novel-opds-now@3.0.33) (2021-07-20)
 
 
