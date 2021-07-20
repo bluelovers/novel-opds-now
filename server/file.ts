@@ -226,7 +226,7 @@ function fileHandler()
 
 				if (data.base64)
 				{
-					let buf = Buffer.from(data.base64, 'base64');
+					let buf = Buffer.from(data.base64);
 
 					if (buf.length)
 					{
@@ -254,7 +254,7 @@ function fileHandler()
 						timestamp: isFromBuffer && data.timestamp ? data.timestamp : Date.now(),
 						exists: true,
 						filename,
-						base64: isFromBuffer ? data.base64 : fileContents.toString('base64'),
+						base64: isFromBuffer ? data.base64 : fileContents,
 					};
 
 					putIPFSEpubFile([

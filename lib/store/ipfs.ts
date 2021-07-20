@@ -57,7 +57,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 				{
 					console.debug(`分析緩存檔案...`, data.href)
 
-					data.base64 = buf.toString('base64');
+					data.base64 = Buffer.from(buf);
 
 					let { base64, filename, exists, timestamp, href } = data;
 
@@ -128,7 +128,7 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 
 	let { base64, ...data } = gunData;
 
-	let content = Buffer.from(base64, 'base64');
+	let content = Buffer.from(base64);
 
 	let { ipfs, path } = await useIPFS().catch(e => ({} as null));
 

@@ -60,7 +60,10 @@ export type IGunEpubNode = {
 	exists: true,
 
 	filename: string,
-	base64: string,
+	/**
+	 * 懶得改掉名字
+	 */
+	base64: Buffer,
 
 	href?: string,
 }

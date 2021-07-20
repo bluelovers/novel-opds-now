@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { EndpointConfig } from 'ipfs-http-client';
 import { IPFS } from 'ipfs-core-types';
@@ -40,7 +41,7 @@ export declare type IGunEpubNode = {
     timestamp: number;
     exists: true;
     filename: string;
-    base64: string;
+    base64: Buffer;
     href?: string;
 };
 export interface IGunEpubData extends Exclude<IGunEpubNode, {
