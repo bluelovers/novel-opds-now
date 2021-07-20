@@ -13,7 +13,7 @@ import { findIpfsClient } from '@bluelovers/ipfs-http-client';
 import { getDefaultServerList } from '@bluelovers/ipfs-http-client/util';
 import configApiCors from 'ipfs-util-lib/lib/ipfs/config/cors';
 import { multiaddrToURL } from 'multiaddr-to-url';
-import { unlinkIPFSApi } from 'fix-ipfs/lib/ipfsd-ctl/unlinkIPFSApi';
+import { unlinkIPFSApi, unlinkIPFSApiAsync } from 'fix-ipfs/lib/ipfsd-ctl/unlinkIPFSApi';
 import { ensureDir, pathExists, readJSON, writeJSON } from 'fs-extra';
 import { sync as rimrafSync } from 'rimraf';
 import { join } from 'path';
@@ -350,7 +350,7 @@ function _useIPFS(options?: {
 						/**
 						 * `ipfsd-ctl` 這個智障BUG依然沒修
 						 */
-						await unlinkIPFSApi(ipfsd.path)
+						await unlinkIPFSApiAsync(ipfsd.path).catch(e => null);
 
 						return ipfsd.start()
 					})
