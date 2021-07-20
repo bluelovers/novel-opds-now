@@ -27,10 +27,20 @@ export const saveMixinPeersReduce = debounce(() => {
 
 			let old = peers.length;
 
-			array_unique_overwrite(peers);
+			array_unique_overwrite(peers, {
+				removeFromFirst: true,
+			});
 
 			if (peers.length != old)
 			{
+				if (peers.length > 6000)
+				{
+					/**
+					 * 防止無限增加
+					 */
+					peers = peers.slice(peers.length - 3000);
+				}
+
 				return outputFile(cachePeersMixinFile, `\n${peers.join('\n')}\n`)
 			}
 		})
