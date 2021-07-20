@@ -11,6 +11,7 @@ import { IIPFSControllerDaemon } from '../types';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import pokeAll from '../pokeAll';
 import { pokeRoot } from './pokeRoot';
+import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 
 export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
@@ -52,7 +53,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 
 								console.debug(`[IPFS]`, `restore mfs`, `/ipfs/${cid}`, `/${path}`)
 
-								const p = ipfs.files.cp(`/ipfs/${cid}`, `/${path}`, {
+								const p = ipfsFilesCopy(ipfs, `/ipfs/${cid}`, `/${path}`, {
 										parents: true,
 									})
 									.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
@@ -94,7 +95,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 				 */
 
 				await ipfs.files.rm(file_path).catch(e => null);
-				await ipfs.files.cp(`/ipfs/${file_cid}`, file_path, {
+				await ipfsFilesCopy(ipfs, `/ipfs/${file_cid}`, file_path, {
 					// @ts-ignore
 					pin: false,
 					parents: true,

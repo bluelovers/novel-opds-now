@@ -6,6 +6,7 @@ import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import { IUseIPFSApi } from '../../types';
 import { ITSResolvable } from 'ts-type/lib/generic';
 import CID from 'cids';
+import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 
 export const waitingCache = new Set<string>()
 
@@ -32,18 +33,17 @@ export function _addMutableFileSystem(dir_path: string, data: {
 				{
 					let file_cid = toCID(data.cid);
 
-					let file_stat: StatResult = await ipfs.files.stat(file_path).catch(e => null);
+					let file_stat: StatResult = await ipfs.files.stat(file_path, {
+						hash: true,
+					}).catch(e => null);
 
 					if (!file_stat || !isSameCID(file_stat.cid, file_cid))
 					{
-						await ipfs.files.mkdir(dir_path, {
-							parents: true,
-						}).catch(e => null);
 						await ipfs.files.rm(file_path).catch(e => null);
 
-						await ipfs.files.cp(`/ipfs/${file_cid}`, file_path, {
+						await ipfsFilesCopy(ipfs, `/ipfs/${file_cid}`, file_path, {
 							parents: true,
-						});
+						})
 					}
 
 					return {
