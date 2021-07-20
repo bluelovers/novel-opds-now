@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.33](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.32...novel-opds-now@3.0.33) (2021-07-20)
+
+
+### ✨　Features
+
+* use `unlinkIPFSApiAsync` ([05e2da3](https://github.com/bluelovers/novel-opds-now/commit/05e2da31df7c378f96fe52d1bf025cc1e7f693a7))
+* add `pokeRoot` ([f350e3d](https://github.com/bluelovers/novel-opds-now/commit/f350e3dd718e10b52b9ccbd5baa715b4877bc4a6))
+
+
+### 📦　Code Refactoring
+
+* use `import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';` ([14f8e28](https://github.com/bluelovers/novel-opds-now/commit/14f8e28fe90094e78a54a8cf665a1061f13bc3c3))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([a5214af](https://github.com/bluelovers/novel-opds-now/commit/a5214af70e3e0bb5b9af489e1eaf7891d14d6ed0))
+
+
+
+
+
 ## [3.0.32](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.31...novel-opds-now@3.0.32) (2021-07-19)
 
 
