@@ -9,6 +9,8 @@ import { __root } from '../../const';
 import itAll from 'it-all';
 import { IIPFSControllerDaemon } from '../types';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
+import pokeAll from '../pokeAll';
+import { pokeRoot } from './pokeRoot';
 
 export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
@@ -34,24 +36,44 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 				await readJSON(join(__root, 'test', '.mfs.roots.json'))
 					.then(async (record: Record<string, string>) =>
 					{
+						let pa = [[]] as Promise<any>[][];
+
+						Object.entries(record)
+							.map(async ([path, cid]) =>
+							{
+								let stat = await ipfs.files.stat(`/${path}`, {
+									hash: true,
+								}).catch(e => null as null);
+
+								if (isSameCID(cid, stat.cid))
+								{
+									return;
+								}
+
+								console.debug(`[IPFS]`, `restore mfs`, `/ipfs/${cid}`, `/${path}`)
+
+								const p = ipfs.files.cp(`/ipfs/${cid}`, `/${path}`, {
+										parents: true,
+									})
+									.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
+									.catch(e => null)
+								;
+
+								if (path.includes('novel-opds-now'))
+								{
+									pa[0].push(p)
+								}
+								else
+								{
+									pa[1].push(p)
+								}
+							})
+						;
 
 						//await itAll(ipfs.files.ls('/')).then(console.debug)
 						//console.dir(record);
 
-						return Bluebird.all(Object.entries(record)
-								.map(([path, cid]) =>
-								{
-									return ipfs.files.cp(`/ipfs/${cid}`, `/${path}`, {
-											parents: true,
-										})
-										//.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
-										.catch(e => null)
-								}))
-							.then((ret) =>
-							{
-								//console.debug(`[IPFS]`, `restore mfs`, ret.length, record)
-							})
-							;
+						return pa[0]
 					})
 					.catch(e => null)
 				;
@@ -79,9 +101,12 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 				});
 			}
 
+			pokeRoot(ipfs);
+
 			//console.debug(`[IPFS]`, `initMutableFileSystem`, ret)
 
 		})
+		.tap(() => console.success(`[IPFS]`, `initMutableFileSystem`))
 		.catch(e =>
 		{
 			console.warn(`[IPFS]`, `initMutableFileSystem`, e)

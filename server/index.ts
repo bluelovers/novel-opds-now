@@ -38,6 +38,7 @@ import { getPubsubPeers } from '../lib/ipfs/pubsub/index';
 import helmet from 'helmet';
 import calibreHandler from './router/calibre/index';
 import { saveMixinPeers } from '../lib/ipfs/util/getMixinPeers';
+import { pokeRoot } from '../lib/ipfs/mfs/pokeRoot';
 
 const app = express();
 
@@ -56,6 +57,7 @@ app.use(useragent())
 app.use('/*', (req, res, next) =>
 {
 	saveMixinPeers();
+	pokeRoot();
 	next();
 });
 

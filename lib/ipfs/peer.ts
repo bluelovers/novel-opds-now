@@ -14,7 +14,7 @@ const connectPeersCache = new Set<string>()
 
 export const peerAbortController = new AbortControllerTimer();
 
-peerAbortController.on('abort', () => console.debug(`[IPFS]`, `[connectPeers]`, `abort`)) ;
+peerAbortController.on('abort', () => console.debug(`[IPFS]`, `[connectPeers]`, `aborted`)) ;
 
 export function getPeerCacheKey(peerID: string)
 {
@@ -84,7 +84,7 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 				return
 			}
 
-			const subAbortController = new AbortControllerTimer(timeout || 3 * 60 * 1000);
+			const subAbortController = peerAbortController.child(timeout || 3 * 60 * 1000);
 
 			let options: AbortOptions = {
 				//timeout: timeout || 3 * 60 * 1000,
@@ -92,19 +92,6 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 			};
 
 			!extra?.hidden && console.debug(`[IPFS]`, `[connectPeers]:start`, peerID, ...msg)
-
-			const fn = () =>
-			{
-				try
-				{
-					subAbortController.abort()
-				}
-				catch (e)
-				{}
-				subAbortController.clear();
-			}
-
-			peerAbortController.on('abort', fn);
 
 			let list = array_unique_overwrite([
 				/*
@@ -150,8 +137,7 @@ export async function _connectPeers(ipfs: IUseIPFSApi,
 				})
 				.finally(() =>
 				{
-					fn();
-					peerAbortController.off('abort', fn);
+					subAbortController.abort();
 
 					//connectPeersCache.delete(peer_id)
 				})

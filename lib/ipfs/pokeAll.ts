@@ -11,6 +11,7 @@ import console from 'debug-color2/logger';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { parsePath } from '@lazy-ipfs/parse-ipfs-path';
 import { EnumParsePathResultNs, IParsePathResult, resultToPath } from '@lazy-ipfs/parse-ipfs-path/lib/parsePath';
+import CID from 'cids';
 
 export function notAllowedAddress(url: URL | string)
 {

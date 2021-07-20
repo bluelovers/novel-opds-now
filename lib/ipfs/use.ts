@@ -415,14 +415,7 @@ function _useIPFS(options?: {
 			{
 				console.info(`[IPFS]`, `useIPFS:stop`)
 
-				try
-				{
-					peerAbortController.abort();
-					peerAbortController.clear();
-				}
-				catch (e)
-				{
-				}
+				peerAbortController.abort();
 
 				// @ts-ignore
 				return Promise.all([

@@ -24,6 +24,7 @@ const index_1 = require("../lib/ipfs/pubsub/index");
 const helmet_1 = (0, tslib_1.__importDefault)(require("helmet"));
 const index_2 = (0, tslib_1.__importDefault)(require("./router/calibre/index"));
 const getMixinPeers_1 = require("../lib/ipfs/util/getMixinPeers");
+const pokeRoot_1 = require("../lib/ipfs/mfs/pokeRoot");
 const app = (0, express_1.default)();
 app.use((0, helmet_1.default)({
     contentSecurityPolicy: false,
@@ -34,6 +35,7 @@ app.use((0, request_ip_1.mw)());
 app.use((0, express_useragent_1.express)());
 app.use('/*', (req, res, next) => {
     (0, getMixinPeers_1.saveMixinPeers)();
+    (0, pokeRoot_1.pokeRoot)();
     next();
 });
 app.use(index_2.default);
