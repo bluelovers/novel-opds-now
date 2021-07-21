@@ -2,7 +2,7 @@ import { ITSResolvable } from 'ts-type/lib/generic';
 import { IUseIPFSApi } from '../../types';
 import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
-import { StatResult } from 'ipfs-core-types/src/files';
+import { MFSEntry, StatResult } from 'ipfs-core-types/src/files';
 import { pathExists, readJSON } from 'fs-extra';
 import { join } from 'path';
 import { __root } from '../../const';
@@ -28,11 +28,10 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 				ipfsd,
 			}) =>
 			{
+				const hello_txt_name = `Hello from novel-opds-now Checker.txt` as const
 
 				if (true || ipfsd?.isNewRepo)
 				{
-					await ipfs.files.rm(`/novel-opds-now/Hello from novel-opds-now Checker.txt`).catch(e => null);
-
 					await readJSON(join(__root, 'test', '.mfs.roots.json'))
 						.then(async (record: Record<string, string>) =>
 						{
@@ -63,6 +62,37 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 									else if (isSameCID('QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn', stat?.cid))
 									{
 										await ipfs.files.rm(target_path).catch(e => null)
+									}
+									else if (stat?.cid && path === `novel-opds-now`)
+									{
+										console.warn(`[IPFS]`, `'${target_path}'`, `already exists`, stat.cid)
+
+										await itAll<MFSEntry>(ipfs.files.ls(target_path))
+											.then(async (ls) => {
+
+												if (ls?.length === 1)
+												{
+													for (const entry of ls)
+													{
+														if (entry.type === 'file' && entry.name === hello_txt_name)
+														{
+															await ipfs.files.rm(`${target_path}/${entry.name}`).catch(e => null)
+															break;
+														}
+													}
+												}
+
+												if (ls?.length === 0)
+												{
+													await ipfs.files.rm(target_path).catch(e => null)
+
+													return false;
+												}
+
+												return true;
+											})
+											.catch(e => true)
+										;
 									}
 									else if (stat?.cid)
 									{
@@ -98,7 +128,9 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 					;
 				}
 
-				console.debug(`[IPFS]`, `mfs`, `create`, `/novel-opds-now/Hello from novel-opds-now Checker.txt`)
+				await ipfs.files.rm(`/novel-opds-now/${hello_txt_name}`).catch(e => null);
+
+				//console.debug(`[IPFS]`, `mfs`, `create`, `/novel-opds-now/${hello_txt_name}`)
 
 				let ret = await ipfs.add(`Hello from novel-opds-now Checker`, {
 					pin: false,
@@ -107,7 +139,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 
 				let file_cid = ret.cid;
 
-				let file_path = `/novel-opds-now/Hello from novel-opds-now Checker.txt`;
+				let file_path = `/novel-opds-now/${hello_txt_name}`;
 
 				let file_stat: StatResult = await ipfs.files.stat(file_path, {
 					hash: true,

@@ -28,8 +28,6 @@ export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSCon
 
 			console.debug(`[IPFS]`, `initHelloCheck`, ls)
 
-			await ipfs.files.rm(`/novel-opds-now/Hello from novel-opds-now Checker.txt`).catch(e => null);
-
 			await Bluebird.any(ls.map(async (cid: string | CID) =>
 				{
 					const timeout = 5000;
