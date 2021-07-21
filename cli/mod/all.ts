@@ -54,18 +54,19 @@ Bluebird
 				})
 		;
 
-		let _info = await getNovelData(arr.siteID, novel_id);
+		const _info = await getNovelData(IDKEY, novel_id);
+		const title = _info?.title;
 
-		console.success(`[epub]`, IDKEY, novel_id, _info?.title, `來源下載完成，開始處理排版`, outputDir);
+		console.success(`[epub]`, IDKEY, novel_id, title, `來源下載完成，開始處理排版`, outputDir);
 
 		await handleAsync(argv.novel_id, IDKEY, outputDir)
 			.tapCatch(e =>
 			{
-				console.error(`[epub]`, IDKEY, novel_id, _info?.title, `處理排版時發生錯誤`, e)
+				console.error(`[epub]`, IDKEY, novel_id, title, `處理排版時發生錯誤`, e)
 			})
 		;
 
-		console.success(`[epub]`, IDKEY, novel_id, _info?.title, `排版結束，開始打包 epub`);
+		console.success(`[epub]`, IDKEY, novel_id, title, `排版結束，開始打包 epub`);
 
 		let epub = await novelEpub({
 				inputPath: cwd,
@@ -78,17 +79,17 @@ Bluebird
 
 			beforeMakeEpub()
 			{
-				console.debug(`[epub]`, IDKEY, novel_id, _info?.title, `結構分析完成，開始打包 epub`);
+				console.debug(`[epub]`, IDKEY, novel_id, title, `結構分析完成，開始打包 epub`);
 			},
 
 			})
 				.tapCatch(e =>
 				{
-					console.error(`[epub]`, IDKEY, novel_id, _info?.title, `打包 epub 時發生錯誤`, e)
+					console.error(`[epub]`, IDKEY, novel_id, title, `打包 epub 時發生錯誤`, e)
 				})
 		;
 
-		console.success(`[epub]`, IDKEY, novel_id, _info?.title, `打包 epub 結束`)
+		console.success(`[epub]`, IDKEY, novel_id, title, `打包 epub 結束`)
 
 		//console.dir(epub.file);
 
