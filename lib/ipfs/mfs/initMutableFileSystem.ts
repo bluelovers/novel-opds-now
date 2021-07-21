@@ -15,7 +15,6 @@ import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 import { dirname } from 'path/posix';
 import { globalWaiting, newWaitingPromise } from '../../util/globalWaiting';
-import ip from '../../ip';
 
 export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
@@ -53,13 +52,21 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 										hash: true,
 									}).catch(e => null as null);
 
+									//console.yellow.debug(`[IPFS]`, isSameCID(cid, stat?.cid), cid, stat?.cid)
+
 									if (isSameCID(cid, stat?.cid))
 									{
+										//console.gray.debug(`[IPFS]`, `skip restore mfs`, `${cid}`, target_path)
+
 										return;
 									}
 									else if (isSameCID('QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn', stat?.cid))
 									{
 										await ipfs.files.rm(target_path).catch(e => null)
+									}
+									else if (stat?.cid)
+									{
+										console.warn(`[IPFS]`, `'${target_path}'`, `already exists`, stat.cid)
 									}
 
 									console.debug(`[IPFS]`, `restore mfs`, `${cid}`, target_path)
@@ -90,6 +97,8 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 						.catch(e => null)
 					;
 				}
+
+				console.debug(`[IPFS]`, `mfs`, `create`, `/novel-opds-now/Hello from novel-opds-now Checker.txt`)
 
 				let ret = await ipfs.add(`Hello from novel-opds-now Checker`, {
 					pin: false,

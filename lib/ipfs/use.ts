@@ -503,3 +503,13 @@ export function getIPFS()
 {
 	return useIPFS().then<IUseIPFSApi>(m => m.ipfs).catch(e => null as IUseIPFSApi)
 }
+
+export function useIPFSFromCache()
+{
+	return Bluebird.resolve(_cache)
+}
+
+export function getIPFSFromCache()
+{
+	return useIPFSFromCache().then<IUseIPFSApi>(m => m.ipfs).catch(e => null as IUseIPFSApi)
+}

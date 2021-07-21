@@ -25,6 +25,8 @@ const helmet_1 = (0, tslib_1.__importDefault)(require("helmet"));
 const index_2 = (0, tslib_1.__importDefault)(require("./router/calibre/index"));
 const getMixinPeers_1 = require("../lib/ipfs/util/getMixinPeers");
 const pokeRoot_1 = require("../lib/ipfs/mfs/pokeRoot");
+const processExit_1 = (0, tslib_1.__importDefault)(require("../lib/util/processExit"));
+const saveMutableFileSystemRoots_1 = require("../lib/ipfs/mfs/saveMutableFileSystemRoots");
 const app = (0, express_1.default)();
 app.use((0, helmet_1.default)({
     contentSecurityPolicy: false,
@@ -38,6 +40,7 @@ app.use('/*', (req, res, next) => {
     (0, pokeRoot_1.pokeRoot)();
     next();
 });
+(0, processExit_1.default)(() => (0, use_1.getIPFSFromCache)().then(saveMutableFileSystemRoots_1.saveMutableFileSystemRoots).catchReturn(null));
 app.use(index_2.default);
 app.use('/file', (0, file_1.default)());
 app.use('/opds', (0, opds_1.default)());

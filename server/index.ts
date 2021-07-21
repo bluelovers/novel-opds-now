@@ -27,7 +27,7 @@ import { mw } from 'request-ip';
 import { Request } from 'express-serve-static-core';
 import { Details, express as useragent } from 'express-useragent';
 import { showClient } from './util/showClient';
-import { getIPFS, useIPFS } from '../lib/ipfs/use';
+import { getIPFS, getIPFSFromCache, useIPFS } from '../lib/ipfs/use';
 import { isLocalNetwork, notAllowCors } from '../lib/ip';
 import { networkInterfaces } from 'os';
 import { format as urlFormat } from 'url';
@@ -39,6 +39,8 @@ import helmet from 'helmet';
 import calibreHandler from './router/calibre/index';
 import { saveMixinPeers } from '../lib/ipfs/util/getMixinPeers';
 import { pokeRoot } from '../lib/ipfs/mfs/pokeRoot';
+import processExit from '../lib/util/processExit';
+import { saveMutableFileSystemRoots } from '../lib/ipfs/mfs/saveMutableFileSystemRoots';
 
 const app = express();
 
@@ -60,6 +62,8 @@ app.use('/*', (req, res, next) =>
 	pokeRoot();
 	next();
 });
+
+processExit(() => getIPFSFromCache().then(saveMutableFileSystemRoots).catchReturn(null as null));
 
 app.use(calibreHandler);
 

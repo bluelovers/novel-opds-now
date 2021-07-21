@@ -6,19 +6,23 @@ import { __root } from '../../const';
 import console from 'debug-color2/logger';
 import throttle from 'lodash/throttle';
 
-export const saveMutableFileSystemRoots = throttle(async function (ipfs: IUseIPFSApi)
+export const saveMutableFileSystemRoots = throttle(function (ipfs: IUseIPFSApi)
 {
-	let record: Record<string, string> = {};
-	let length = 0;
+	return Promise.resolve(ipfs).then(async () => {
 
-	for await (const ret of ipfs.files.ls('/'))
-	{
-		record[ret.name] = ret.cid.toString()
-		length++;
-	}
+		let record: Record<string, string> = {};
+		let length = 0;
 
-	outputJSONSync(join(__root, 'test', '.mfs.roots.json'), record, {
-		spaces: 2,
-	});
-	console.debug(`[IPFS]`, `saveMutableFileSystemRoots`, length);
-}, 60 * 1000)
+		for await (const ret of ipfs.files.ls('/'))
+		{
+			record[ret.name] = ret.cid.toString()
+			length++;
+		}
+
+		outputJSONSync(join(__root, 'test', '.mfs.roots.json'), record, {
+			spaces: 2,
+		});
+
+		console.debug(`[IPFS]`, `saveMutableFileSystemRoots`, length);
+	}).catch(e => void 0)
+}, 60 * 1000);
