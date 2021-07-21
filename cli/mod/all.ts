@@ -11,6 +11,7 @@ import Bluebird from 'bluebird';
 import { ICacheMapRow, ICacheMap, EnumCacheMapRowStatus } from '../../lib/types';
 import { __cacheMapFile } from '../../lib/const';
 import console from 'debug-color2/logger';
+import { getNovelData } from '../../lib/site/cached-data/getNovelData';
 
 let argv = yargs
 	.option('siteID', {
@@ -53,16 +54,18 @@ Bluebird
 				})
 		;
 
-		console.log(`[epub]`, IDKEY, novel_id, `來源下載完成，開始處理排版`, outputDir);
+		let _info = await getNovelData(arr.siteID, novel_id);
+
+		console.success(`[epub]`, IDKEY, novel_id, _info?.title, `來源下載完成，開始處理排版`, outputDir);
 
 		await handleAsync(argv.novel_id, IDKEY, outputDir)
 			.tapCatch(e =>
 			{
-				console.error(`[epub]`, IDKEY, novel_id, `處理排版時發生錯誤`, e)
+				console.error(`[epub]`, IDKEY, novel_id, _info?.title, `處理排版時發生錯誤`, e)
 			})
 		;
 
-		console.log(`[epub]`, IDKEY, novel_id, `排版結束，開始打包 epub`);
+		console.success(`[epub]`, IDKEY, novel_id, _info?.title, `排版結束，開始打包 epub`);
 
 		let epub = await novelEpub({
 				inputPath: cwd,
@@ -72,14 +75,20 @@ Bluebird
 				//noLog: true,
 				downloadRemoteFile: true,
 				epubContextDate: true,
+
+			beforeMakeEpub()
+			{
+				console.debug(`[epub]`, IDKEY, novel_id, _info?.title, `結構分析完成，開始打包 epub`);
+			},
+
 			})
 				.tapCatch(e =>
 				{
-					console.error(`[epub]`, IDKEY, novel_id, `打包 epub 時發生錯誤`, e)
+					console.error(`[epub]`, IDKEY, novel_id, _info?.title, `打包 epub 時發生錯誤`, e)
 				})
 		;
 
-		console.success(`[epub]`, IDKEY, novel_id, `打包 epub 結束`)
+		console.success(`[epub]`, IDKEY, novel_id, _info?.title, `打包 epub 結束`)
 
 		//console.dir(epub.file);
 
