@@ -1,10 +1,11 @@
 import { getLocalOrRebuild } from '@demonovel/local-or-rebuild-file';
 import { getCacheFilename } from '../../util/index';
 import console from 'debug-color2/logger';
+import { INovelDataSimple } from '../cached-data/types';
 
 export function loadCache(force: boolean)
 {
-	return getLocalOrRebuild(getCacheFilename('masiro/builded.json'), {
+	return getLocalOrRebuild<INovelDataSimple[]>(getCacheFilename('masiro/builded.json'), {
 
 		console,
 

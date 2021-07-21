@@ -12,105 +12,124 @@ import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import pokeAll from '../pokeAll';
 import { pokeRoot } from './pokeRoot';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
+import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
+import { dirname } from 'path/posix';
+import { globalWaiting, newWaitingPromise } from '../../util/globalWaiting';
+import ip from '../../ip';
 
 export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
-	return Bluebird.props({
-			ipfs,
-			ipfsd,
-		})
-		.then(async ({
-			ipfs,
-			ipfsd,
-		}) =>
-		{
-
-			let ret = await ipfs.add(`Hello from novel-opds-now Checker`, {
-				pin: false,
-				preload: true,
-			});
-
-			let file_cid = ret.cid;
-
-			if (true || ipfsd?.isNewRepo)
+	return newWaitingPromise('initMutableFileSystem', () => {
+		return Bluebird.props({
+				ipfs,
+				ipfsd,
+			})
+			.then(async ({
+				ipfs,
+				ipfsd,
+			}) =>
 			{
-				await readJSON(join(__root, 'test', '.mfs.roots.json'))
-					.then(async (record: Record<string, string>) =>
-					{
-						let pa = [[]] as Promise<any>[][];
 
-						Object.entries(record)
-							.map(async ([path, cid]) =>
-							{
-								let stat = await ipfs.files.stat(`/${path}`, {
-									hash: true,
-								}).catch(e => null as null);
+				if (true || ipfsd?.isNewRepo)
+				{
+					await ipfs.files.rm(`/novel-opds-now/Hello from novel-opds-now Checker.txt`).catch(e => null);
 
-								if (isSameCID(cid, stat.cid))
+					await readJSON(join(__root, 'test', '.mfs.roots.json'))
+						.then(async (record: Record<string, string>) =>
+						{
+							let pa = [[]] as Promise<any>[][];
+
+							Object.entries(record)
+								.map(async ([path, cid]) =>
 								{
-									return;
-								}
+									if (!path?.length || !cid?.length || path === '/')
+									{
+										return;
+									}
 
-								console.debug(`[IPFS]`, `restore mfs`, `/ipfs/${cid}`, `/${path}`)
+									const target_path = `/${path}`;
 
-								const p = ipfsFilesCopy(ipfs, `/ipfs/${cid}`, `/${path}`, {
-										parents: true,
-									})
-									.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
-									.catch(e => null)
-								;
+									let stat = await ipfs.files.stat(target_path, {
+										hash: true,
+									}).catch(e => null as null);
 
-								if (path.includes('novel-opds-now'))
-								{
-									pa[0].push(p)
-								}
-								else
-								{
-									pa[1].push(p)
-								}
-							})
-						;
+									if (isSameCID(cid, stat?.cid))
+									{
+										return;
+									}
+									else if (isSameCID('QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn', stat?.cid))
+									{
+										await ipfs.files.rm(target_path).catch(e => null)
+									}
 
-						//await itAll(ipfs.files.ls('/')).then(console.debug)
-						//console.dir(record);
+									console.debug(`[IPFS]`, `restore mfs`, `${cid}`, target_path)
 
-						return pa[0]
-					})
-					.catch(e => null)
-				;
-			}
+									const p = _ipfsFilesCopyCID(ipfs, cid, target_path, {
+											parents: true,
+										})
+											.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
+											.catch(e => null)
+									;
 
-			let file_path = `/novel-opds-now/Hello from novel-opds-now Checker.txt`;
+									if (path.includes('novel-opds-now'))
+									{
+										pa[0].push(p)
+									}
+									else
+									{
+										pa[1].push(p)
+									}
+								})
+							;
 
-			let file_stat: StatResult = await ipfs.files.stat(file_path, {
-				hash: true,
-			}).catch(e => null);
+							//await itAll(ipfs.files.ls('/')).then(console.debug)
+							//console.dir(record);
 
-			if (!isSameCID(file_stat?.cid, file_cid))
-			{
-				/*
-				await ipfs.files.mkdir(`/novel-opds-now/`, {
-					parents: true,
-				}).catch(e => null);
-				 */
+							return Promise.all(pa[0])
+						})
+						.catch(e => null)
+					;
+				}
 
-				await ipfs.files.rm(file_path).catch(e => null);
-				await ipfsFilesCopy(ipfs, `/ipfs/${file_cid}`, file_path, {
-					// @ts-ignore
+				let ret = await ipfs.add(`Hello from novel-opds-now Checker`, {
 					pin: false,
-					parents: true,
+					preload: true,
 				});
-			}
 
-			pokeRoot(ipfs);
+				let file_cid = ret.cid;
 
-			//console.debug(`[IPFS]`, `initMutableFileSystem`, ret)
+				let file_path = `/novel-opds-now/Hello from novel-opds-now Checker.txt`;
 
-		})
-		.tap(() => console.success(`[IPFS]`, `initMutableFileSystem`))
-		.catch(e =>
-		{
-			console.warn(`[IPFS]`, `initMutableFileSystem`, e)
-		})
-		;
+				let file_stat: StatResult = await ipfs.files.stat(file_path, {
+					hash: true,
+				}).catch(e => null);
+
+				if (!isSameCID(file_stat?.cid, file_cid))
+				{
+					/*
+					await ipfs.files.mkdir(`/novel-opds-now/`, {
+						parents: true,
+					}).catch(e => null);
+					 */
+
+					await ipfs.files.rm(file_path).catch(e => null);
+					await _ipfsFilesCopyCID(ipfs, file_cid, file_path, {
+						// @ts-ignore
+						pin: false,
+						parents: true,
+					});
+				}
+
+				pokeRoot(ipfs);
+
+				//console.debug(`[IPFS]`, `initMutableFileSystem`, ret)
+
+			})
+			.tap(() => console.success(`[IPFS]`, `initMutableFileSystem`))
+			.catch(e =>
+			{
+				console.warn(`[IPFS]`, `initMutableFileSystem`, e)
+			})
+			;
+	})
 }

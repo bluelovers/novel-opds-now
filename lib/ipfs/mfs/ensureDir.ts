@@ -4,6 +4,7 @@ import { CpOptions, MkdirOptions, StatResult } from 'ipfs-core-types/src/files';
 import CID from 'cids';
 import Bluebird from 'bluebird';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
+import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 
 export function ensureDir(ipfs: ITSResolvable<IUseIPFSApi>, dir_path: string, options?: CpOptions & MkdirOptions & {
 	fromCID?: string | CID,
@@ -54,7 +55,7 @@ export function ensureDir(ipfs: ITSResolvable<IUseIPFSApi>, dir_path: string, op
 			{
 				if (options.fromCID)
 				{
-					await ipfsFilesCopy(ipfs, `/ipfs/${options.fromCID}`, dir_path, opts);
+					await _ipfsFilesCopyCID(ipfs, options.fromCID, dir_path, opts);
 				}
 				else
 				{

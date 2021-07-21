@@ -7,6 +7,7 @@ import { IUseIPFSApi } from '../../types';
 import { ITSResolvable } from 'ts-type/lib/generic';
 import CID from 'cids';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
+import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 
 export const waitingCache = new Set<string>()
 
@@ -41,7 +42,7 @@ export function _addMutableFileSystem(dir_path: string, data: {
 					{
 						await ipfs.files.rm(file_path).catch(e => null);
 
-						await ipfsFilesCopy(ipfs, `/ipfs/${file_cid}`, file_path, {
+						await _ipfsFilesCopyCID(ipfs, file_cid, file_path, {
 							parents: true,
 						})
 					}

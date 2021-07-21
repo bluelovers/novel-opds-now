@@ -10,10 +10,11 @@ import { pokeMutableFileSystem } from './mfs/pokeMutableFileSystem';
 import { saveMutableFileSystemRoots } from './mfs/saveMutableFileSystemRoots';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import { _addMutableFileSystem, waitingCache } from './mfs/_addMutableFileSystem';
+import { resolveWaiting } from '../util/globalWaiting';
 
 export function addMutableFileSystem(options: IPubSubEpub, ...msg: any[])
 {
-	return Bluebird.resolve()
+	return Bluebird.resolve(resolveWaiting('initMutableFileSystem').catchReturn(null as null))
 		.then(() =>
 		{
 			const dir_path = `/novel-opds-now/${options.siteID}/${options.novelID}`;
@@ -105,7 +106,7 @@ export function addMutableFileSystem(options: IPubSubEpub, ...msg: any[])
 				})
 				.catch(e =>
 				{
-					console.debug(`[IPFS]`, `addMutableFileSystem:error`, options)
+					console.warn(`[IPFS]`, `addMutableFileSystem:error`, options)
 					console.trace(e)
 				})
 				.finally(() => waitingCache.delete(file_path))
