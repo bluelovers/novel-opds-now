@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.35](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.34...novel-opds-now@3.0.35) (2021-07-21)
+
+
+### ✨　Features
+
+* add get ipfs from cache , avoid restart ipfs after it stop ([97741fe](https://github.com/bluelovers/novel-opds-now/commit/97741fe7ea2e09821e549f83b5fb9db6c575b826))
+* add globalWaiting ([5511a77](https://github.com/bluelovers/novel-opds-now/commit/5511a77ce0b44f8fbaae6b1190c80ad65b4cf12d))
+
+
+### 📦　Code Refactoring
+
+* use `globalWaiting` ([e410cae](https://github.com/bluelovers/novel-opds-now/commit/e410cae50216821b4e237644a40b48d572969af6))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([1c3fc0c](https://github.com/bluelovers/novel-opds-now/commit/1c3fc0c8147429731f36b06673cc1265592c8567))
+* **cache:** update cache ([31b380a](https://github.com/bluelovers/novel-opds-now/commit/31b380ac9a3547262fede25a1b047ce963d03a4d))
+
+
+### ♻️　Chores
+
+* 改善訊息顯示 ([147e1f3](https://github.com/bluelovers/novel-opds-now/commit/147e1f30c1081bae1feee77bcbb5c88dacced1a7))
+* **deps:** update deps ([d6f8bf7](https://github.com/bluelovers/novel-opds-now/commit/d6f8bf71bcdbe810ca23fd51882d70e8e430d909))
+
+
+
+
+
 ## [3.0.34](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.33...novel-opds-now@3.0.34) (2021-07-20)
 
 
