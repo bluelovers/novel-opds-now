@@ -91,7 +91,7 @@ export async function pubsubHandler(msg: Message)
 
 				if (typeof json.data !== 'undefined' && json.data.cid)
 				{
-					if (typeof json.siteID === 'string' && typeof json.novelID === 'string' && json.data.path && json.data.size)
+					if (typeof json.siteID === 'string' && typeof json.novelID === 'string' && json.siteID.length && json.novelID.length && json.data.path && json.data.size)
 					{
 						addMutableFileSystem({
 							siteID: json.siteID,

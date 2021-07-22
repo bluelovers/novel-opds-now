@@ -18,7 +18,17 @@ import { globalWaiting, newWaitingPromise } from '../../util/globalWaiting';
 
 export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
-	return newWaitingPromise('initMutableFileSystem', () => {
+	// @ts-ignore
+	if (initMutableFileSystem.inited)
+	{
+		return Bluebird.resolve(void 0)
+	}
+
+	// @ts-ignore
+	initMutableFileSystem.inited = true;
+
+	return newWaitingPromise('initMutableFileSystem', () =>
+	{
 		return Bluebird.props({
 				ipfs,
 				ipfsd,
@@ -37,8 +47,8 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 						{
 							let pa = [[]] as Promise<any>[][];
 
-							Object.entries(record)
-								.map(async ([path, cid]) =>
+							await Bluebird.resolve(Object.entries(record))
+								.mapSeries(async ([path, cid]) =>
 								{
 									if (!path?.length || !cid?.length || path === '/')
 									{
@@ -68,7 +78,8 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 										console.warn(`[IPFS]`, `'${target_path}'`, `already exists`, stat.cid)
 
 										await itAll<MFSEntry>(ipfs.files.ls(target_path))
-											.then(async (ls) => {
+											.then(async (ls) =>
+											{
 
 												if (ls?.length === 1)
 												{
@@ -102,7 +113,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 									console.debug(`[IPFS]`, `restore mfs`, `${cid}`, target_path)
 
 									const p = _ipfsFilesCopyCID(ipfs, cid, target_path, {
-											parents: true,
+											//parents: true,
 										})
 											.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
 											.catch(e => null)
@@ -127,8 +138,6 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 						.catch(e => null)
 					;
 				}
-
-				await ipfs.files.rm(`/novel-opds-now/${hello_txt_name}`).catch(e => null);
 
 				//console.debug(`[IPFS]`, `mfs`, `create`, `/novel-opds-now/${hello_txt_name}`)
 

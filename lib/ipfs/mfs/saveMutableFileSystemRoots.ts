@@ -25,4 +25,4 @@ export const saveMutableFileSystemRoots = throttle(function (ipfs: IUseIPFSApi)
 
 		console.debug(`[IPFS]`, `saveMutableFileSystemRoots`, length);
 	}).catch(e => void 0)
-}, 60 * 1000);
+}, 5 * 60 * 1000);
