@@ -21,7 +21,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.calibreHandler = void 0;
 let calibreHandler = (req, res, next) => {
-    if (/^\/(file|opds)\/(calibre)/.test(req.url)) {
+    if (/^\/(file|opds|search)\/(calibre)/.test(req.url)) {
         return Promise.resolve().then(() => __importStar(require('./core'))).then(m => m.default).then(m => m(req, res, next));
     }
     else {

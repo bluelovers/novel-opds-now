@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const handler_1 = (0, tslib_1.__importDefault)(require("calibre-server/lib/handler"));
 const buildList_1 = require("calibre-server/lib/db/buildList");
 const util_1 = require("./util");
 const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
@@ -22,6 +21,9 @@ const saveMutableFileSystemRoots_1 = require("../../../lib/ipfs/mfs/saveMutableF
 const index_1 = require("../../../lib/ipfs/pubsub/index");
 const isBookFile_1 = require("calibre-server/lib/util/isBookFile");
 const util_2 = require("util");
+const library_1 = require("./library");
+const search_1 = require("./search");
+const lodash_1 = require("lodash");
 async function calibreHandlerCore() {
     let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
     if (typeof calibrePaths === 'string') {
@@ -41,17 +43,26 @@ async function calibreHandlerCore() {
             res.status(404).end(`請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`);
         };
     }
-    const dbList = await (0, buildList_1.buildLibraryList)({
-        calibrePaths,
-        cwd: calibrePaths[0],
-    });
-    logger_1.default.debug(`[Calibre]`, `dbList`, dbList);
-    const router = (0, express_1.Router)();
-    const routerOPDS = (0, handler_1.default)({
-        dbList,
+    const calibreOptions = {
+        dbList: {},
         pathWithPrefix: util_1.pathWithPrefix,
         siteTitle: `Calibre 書庫`,
+    };
+    const updateLibraryList = (0, lodash_1.throttle)(() => {
+        return (0, buildList_1.buildLibraryList)({
+            calibrePaths,
+            cwd: calibrePaths[0],
+        }).then(dbList => calibreOptions.dbList = dbList);
+    }, 12 * 60 * 60 * 1000);
+    await updateLibraryList();
+    logger_1.default.debug(`[Calibre]`, `dbList`, calibreOptions.dbList);
+    const router = (0, express_1.Router)();
+    const routerOPDS = (0, library_1.createLibraryHandler)(calibreOptions);
+    router.use('/search/calibre', (req, res, next) => {
+        updateLibraryList();
+        next();
     });
+    router.use('/search/calibre', (0, search_1.calibreSearchHandler)(calibreOptions));
     router.use('/opds/calibre(\.xml)?', async (req, res, next) => {
         logger_1.default.log(req.method, req.baseUrl, req.url, req.params, req.query);
         (0, showClient_1.showClient)(req, res, next);
@@ -63,7 +74,7 @@ async function calibreHandlerCore() {
         (0, showClient_1.showClient)(req, res, next);
         const { dbID, book_id } = req.params;
         let file = req.params[0];
-        let db = dbList[dbID];
+        let db = calibreOptions.dbList[dbID];
         if (!db) {
             return res.status(404).end(`calibre '${dbID}' not exists`);
         }

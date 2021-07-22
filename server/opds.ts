@@ -7,6 +7,7 @@ import { updateAllCacheTask } from '../lib/task/update-cache';
 import { showClient } from './util/showClient';
 import console from 'debug-color2/logger';
 import etag from 'etag';
+import moment from 'moment';
 
 function opdsHandler()
 {
@@ -30,6 +31,9 @@ function opdsHandler()
 		res.setHeader('Content-Type', 'application/xml');
 
 		let xml = feed.toXML();
+
+		feed.updated ||= moment().startOf('day')
+
 		res.send(xml)
 
 	});
@@ -55,6 +59,9 @@ function opdsHandler()
 		res.setHeader('Content-Type', 'application/xml');
 
 		let xml = feed.toXML();
+
+		feed.updated ||= moment().startOf('day');
+
 		res.send(xml)
 	});
 
@@ -64,6 +71,9 @@ function opdsHandler()
 		res.setHeader('Content-Type', 'application/xml');
 
 		let xml = feed.toXML();
+
+		feed.updated ||= moment().startOf('day')
+
 		res.send(xml)
 	});
 

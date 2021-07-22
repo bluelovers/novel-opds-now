@@ -31,6 +31,10 @@ import { getPubsubPeers, pubsubPublishEpub } from '../../../lib/ipfs/pubsub/inde
 import { isBookFile } from 'calibre-server/lib/util/isBookFile';
 import { updateAllCacheTask } from '../../../lib/task/update-cache';
 import { inspect } from 'util';
+import { createLibraryHandler } from './library';
+import { calibreSearchHandler } from './search';
+import { throttle } from 'lodash';
+import { IFindLibrarysServer } from 'calibre-server/lib/types';
 
 async function calibreHandlerCore(): Promise<Router>
 {
@@ -64,19 +68,36 @@ async function calibreHandlerCore(): Promise<Router>
 		};
 	}
 
-	const dbList = await buildLibraryList({
-		calibrePaths,
-		cwd: calibrePaths[0],
-	});
-
-	console.debug(`[Calibre]`, `dbList`, dbList);
-
-	const router = Router();
-	const routerOPDS = createHandler({
-		dbList,
+	const calibreOptions = {
+		dbList: {} as Record<string, IFindLibrarysServer>,
 		pathWithPrefix,
 		siteTitle: `Calibre 書庫`,
+	};
+
+	const updateLibraryList = throttle(() => {
+		return buildLibraryList({
+			// @ts-ignore
+			calibrePaths,
+			// @ts-ignore
+			cwd: calibrePaths[0],
+		}).then(dbList => calibreOptions.dbList = dbList)
+	}, 12 * 60 * 60 * 1000);
+
+	await updateLibraryList();
+
+	console.debug(`[Calibre]`, `dbList`, calibreOptions.dbList);
+
+	const router = Router();
+	const routerOPDS = createLibraryHandler(calibreOptions);
+
+	router.use('/search/calibre', (req, res, next) => {
+
+		updateLibraryList();
+
+		next()
 	});
+
+	router.use('/search/calibre', calibreSearchHandler(calibreOptions));
 
 	router.use('/opds/calibre(\.xml)?', async (req, res, next) =>
 	{
@@ -96,7 +117,7 @@ async function calibreHandlerCore(): Promise<Router>
 		const { dbID, book_id } = req.params;
 
 		let file: string = req.params[0];
-		let db = dbList[dbID];
+		let db = calibreOptions.dbList[dbID];
 
 		if (!db)
 		{

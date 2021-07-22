@@ -2347,10 +2347,10 @@ calibre-opds@^1.0.8:
     ts-type "^1.2.36"
     tslib "^2.3.0"
 
-calibre-server@^1.0.19:
-  version "1.0.19"
-  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.19.tgz#5d172f336cbc23d9af700ee16c9e90a946c1ae69"
-  integrity sha512-4MtUtxGPEFdJVteQc60Ko3pjE8MigtEUl/9EGGtq8URL5Uw+ltJTuBusEPYL301Jecm3EJvu/FuWW7AXtsUljg==
+calibre-server@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.20.tgz#440335f84a4345a2ef60ace86d70978a76ae34e4"
+  integrity sha512-L9IGP5iKdVTYyXbASXSVOUzzBYB6A/gYxhjSguctIvjrZo/Xe9UUNRqBRri/Vm1NsVzIibW3oebqYrJSoZ1gWA==
   dependencies:
     address2 "^1.0.4"
     array-hyper-unique "^1.1.10"
@@ -4246,10 +4246,10 @@ globby@^10.0.0:
     merge2 "^1.2.3"
     slash "^3.0.0"
 
-go-ipfs@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.npmjs.org/go-ipfs/-/go-ipfs-0.9.0.tgz#abaf971312dbf5902eab421c30cae2417852d544"
-  integrity sha512-qJvQJwm6SRHnI9X3YU8l52YNmY6+EYdJxtgb8w9RB8LFyhk/Q7kxvkpogCcmZZxj/60xEfQe1y/FE9vPgNfMqw==
+go-ipfs@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.npmjs.org/go-ipfs/-/go-ipfs-0.9.1.tgz#347acbcd0c6a75c87db4c974ea6cb73dc23cd610"
+  integrity sha512-69sDGENU7xEPDNytEzE+swKTNSLr+OJEfdEYQ41m91dzNyHyxABB4Rteg4uzsj34lTizjVI1m7Gld3g5Dgf6Ag==
   dependencies:
     cachedir "^2.3.0"
     go-platform "^1.0.0"

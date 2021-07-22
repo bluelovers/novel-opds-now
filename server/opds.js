@@ -9,6 +9,7 @@ const other_1 = require("../lib/opds/other");
 const update_cache_1 = require("../lib/task/update-cache");
 const showClient_1 = require("./util/showClient");
 const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
+const moment_1 = (0, tslib_1.__importDefault)(require("moment"));
 function opdsHandler() {
     const router = (0, express_1.Router)();
     router.use('/*', async (req, res, next) => {
@@ -22,6 +23,7 @@ function opdsHandler() {
         let feed = await (0, other_1.makeOPDSOther)();
         res.setHeader('Content-Type', 'application/xml');
         let xml = feed.toXML();
+        feed.updated || (feed.updated = (0, moment_1.default)().startOf('day'));
         res.send(xml);
     });
     router.use('/:siteID.xml', async (req, res, next) => {
@@ -34,12 +36,14 @@ function opdsHandler() {
         let feed = await (0, index_1.makeOPDSSite)(siteID);
         res.setHeader('Content-Type', 'application/xml');
         let xml = feed.toXML();
+        feed.updated || (feed.updated = (0, moment_1.default)().startOf('day'));
         res.send(xml);
     });
     router.use('/*', async (req, res) => {
         let feed = await (0, index_1.default)();
         res.setHeader('Content-Type', 'application/xml');
         let xml = feed.toXML();
+        feed.updated || (feed.updated = (0, moment_1.default)().startOf('day'));
         res.send(xml);
     });
     return router;
