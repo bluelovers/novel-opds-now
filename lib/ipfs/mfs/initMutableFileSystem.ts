@@ -13,7 +13,6 @@ import pokeAll from '../pokeAll';
 import { pokeRoot } from './pokeRoot';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
-import { dirname } from 'path/posix';
 import { globalWaiting, newWaitingPromise } from '../../util/globalWaiting';
 
 export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
