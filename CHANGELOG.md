@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.37](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.36...novel-opds-now@3.0.37) (2021-07-23)
+
+
+### 🐛　Bug Fixes
+
+* update `poke-ipfs` for support rejectUnauthorized = false ([186f458](https://github.com/bluelovers/novel-opds-now/commit/186f4583a1822e1a9ccdbe31c536b004bd244d1b))
+
+
+### ✨　Features
+
+* 改善 mfs ([eacd027](https://github.com/bluelovers/novel-opds-now/commit/eacd027635570cb5ca58806dba1c98947d081822))
+* calibre 支援搜尋 , 並且讓靜讀天下將 calibre 下不同書庫的同名書 視為不同書籍 ([7a15e98](https://github.com/bluelovers/novel-opds-now/commit/7a15e98a6651778beb45334a1a009f87c2ad22b2))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([bd2bea8](https://github.com/bluelovers/novel-opds-now/commit/bd2bea82d3bfeaddffc6a44b4b9392d20e2308f5))
+
+
+### 🔖　Miscellaneous
+
+* . ([da34c16](https://github.com/bluelovers/novel-opds-now/commit/da34c16acae9b75720a7c0367233b84769438132))
+* . ([dfa94c1](https://github.com/bluelovers/novel-opds-now/commit/dfa94c13c83e0e93e103050edcc215cafa9cf23b))
+
+
+
+
+
 ## [3.0.36](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.35...novel-opds-now@3.0.36) (2021-07-21)
 
 
