@@ -85,14 +85,10 @@ export function addMutableFileSystem(options: IPubSubEpub, ...msg: any[])
 						if (title.length)
 						{
 							let file_path2 = `${dir_path}/${title}.txt`;
-							let file_stat2: StatResult = await ipfs.files.stat(file_path2).catch(e => null);
 
-							if (!file_stat2)
-							{
-								await ipfs.files.write(file_path2, novel.title, {
-									create: true,
-								});
-							}
+							await ipfs.files.write(file_path2, novel.title, {
+								create: true,
+							}).catch(e => null);
 						}
 					}
 
