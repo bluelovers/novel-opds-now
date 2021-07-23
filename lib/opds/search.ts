@@ -3,6 +3,8 @@ import { ISiteIDs } from '../site/types';
 import zhRegExp from '../re';
 import { slugify } from 'cjk-conv/lib/zh/table/list';
 import { Entry, Feed } from 'opds-extra/lib/v1/core';
+import { EnumLinkRel, EnumMIME } from 'opds-extra/lib/const';
+import console from 'debug-color2/logger';
 
 export function addOpenSearch(feed: Feed, siteID: ISiteIDs | string)
 {
@@ -27,6 +29,7 @@ export function filterOPDSBook(feed: Feed, searchTermOptions: {
 	{
 		let defaultBool = !searchTermOptions.onlyBook;
 		let searchTermsRe: RegExp;
+		let searchTermsSlugify = slugify(searchTerms);
 
 		try
 		{
@@ -37,15 +40,21 @@ export function filterOPDSBook(feed: Feed, searchTermOptions: {
 
 		}
 
+		console.dir({
+			searchTerms,
+			searchTermsRe,
+			searchTermsSlugify,
+		})
+
 		feed.books = feed.books
 			.filter(book => {
 
-				if (book.identifier && book.identifier.includes('book'))
+				if (book.identifier?.includes('book') || book.links?.[0]?.rel === EnumLinkRel.ACQUISITION || book.links?.[0]?.type === EnumMIME.epub)
 				{
 					if (
-						searchTermsRe && searchTermsRe.test(book.title)
+						searchTermsRe?.test(book.title)
 						|| book.title.includes(searchTerms)
-						|| slugify(book.title).includes(slugify(searchTerms))
+						|| slugify(book.title).includes(searchTermsSlugify)
 					)
 					{
 						return true;
