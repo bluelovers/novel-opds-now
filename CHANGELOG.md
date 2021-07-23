@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.38](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.37...novel-opds-now@3.0.38) (2021-07-23)
+
+
+### 🐛　Bug Fixes
+
+* **search:** 修正 demonovel 在修正 uuid 之後 導致無法搜尋的 bug ([8377af8](https://github.com/bluelovers/novel-opds-now/commit/8377af862c22d1ca9f7fbd424ef2ee0752bda8df))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([2f8aacd](https://github.com/bluelovers/novel-opds-now/commit/2f8aacd1943c96800dcdc3c4713a0d0e6113b184))
+
+
+
+
+
 ## [3.0.37](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.36...novel-opds-now@3.0.37) (2021-07-23)
 
 
