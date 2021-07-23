@@ -48,7 +48,8 @@ export function fetch(...argv): Bluebird<Response>
 
 	// @ts-ignore
 	return Bluebird.resolve(_fetch(...argv))
-		.tap(v => {
+		.tap(v =>
+		{
 			if (isErrorCode(v.status))
 			{
 				return Promise.reject(v)
