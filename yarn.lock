@@ -904,13 +904,13 @@
     "@novel-segment/stream-loader-core" "^1.0.12"
     tslib "^2.3.0"
 
-"@novel-segment/postag@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/@novel-segment/postag/-/postag-1.0.6.tgz#78558dbaaa4278789c4fe28312d1056669644b0e"
-  integrity sha512-juvjalFBekEHx11+d85RGwxITmgkQON49PGeONMQ4wVR8an5Wyh5MY5gHDvQxPoMym2rQwTg9cfUWcJ4mwVxWw==
+"@novel-segment/postag@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@novel-segment/postag/-/postag-1.0.7.tgz#e7b512f64738fc05886d8e0a2a15a36e977e03f5"
+  integrity sha512-0YrhYksQiw+rGx8J6Mu0zOcjZjkvEdZcw1fS9LTl8ASbsw9SxNa4p1Dh70R4Hniq1lIfuAPnIjGc7Ip7klNtrg==
   dependencies:
     ts-enum-util "^4.0.2"
-    ts-type "^1.2.35"
+    ts-type "^1.2.39"
     tslib "^2.3.0"
 
 "@novel-segment/stream-loader-core@^1.0.12":
@@ -1793,7 +1793,7 @@ array-flatten@1.1.1:
   resolved "https://registry.npmjs.org/array-flatten/-/array-flatten-1.1.1.tgz#9a5f699051b1e7073328f2a008968b64ea2955d2"
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
 
-array-hyper-unique@^1.1.10, array-hyper-unique@^1.1.2, array-hyper-unique@^1.1.9:
+array-hyper-unique@^1.1.10, array-hyper-unique@^1.1.9:
   version "1.1.10"
   resolved "https://registry.npmjs.org/array-hyper-unique/-/array-hyper-unique-1.1.10.tgz#dec43bf3d0f6c8679ec90c2729882ec84522439f"
   integrity sha512-kuqfoHcd42m00XBii0GYfPe3LYZgrTLeiWKSkmzkph7RyiW1GZr1hVWbFA8KUTGKx3nHLY1Rj+i72+xLlNuYNA==
@@ -2240,7 +2240,7 @@ cache-control-esm@1.0.0:
   resolved "https://registry.npmjs.org/cache-control-esm/-/cache-control-esm-1.0.0.tgz#417647ecf1837a5e74155f55d5a4ae32a84e2581"
   integrity sha512-Fa3UV4+eIk4EOih8FTV6EEsVKO0W5XWtNs6FC3InTfVz+EjurjPfDXY5wZDo/lxjDxg5RjNcurLyxEJBcEUx9g==
 
-cache-path@^2.0.14, cache-path@^2.0.3:
+cache-path@^2.0.16, cache-path@^2.0.3:
   version "2.0.16"
   resolved "https://registry.npmjs.org/cache-path/-/cache-path-2.0.16.tgz#7e454acdda2a6e938096efc197afea89af56040c"
   integrity sha512-SYTj4SDVMxAaAOx6aBlMFktKaNzvdVOY+hmP1H+MgR6kCzp70OX9Cbv/CkHdT6+DTRg/mdBacxzXFgmqjp2PBQ==
@@ -6926,38 +6926,38 @@ novel-epub@^2.0.10:
     uuid-by-string "^3.0.4"
     yargs "^17.0.1"
 
-novel-segment-cli@^1.1.82:
-  version "1.1.82"
-  resolved "https://registry.npmjs.org/novel-segment-cli/-/novel-segment-cli-1.1.82.tgz#b94673e634485100e616fed12dd741eb23b6bc1a"
-  integrity sha512-WIIjAtUzzlopghZAosi6KOGcQzdiFhtyTrnZvugw0/HrNAiFBk0gQIAXyIqsFmpGB2w1x23JJqt1e1K4uMfqMw==
+novel-segment-cli@^1.1.83:
+  version "1.1.83"
+  resolved "https://registry.npmjs.org/novel-segment-cli/-/novel-segment-cli-1.1.83.tgz#b12ed0a1eee6deeadafd6da83cb86d8918decc6b"
+  integrity sha512-teOfUd59BSTgi1dMGv++BGju/jq/Wma8gZ/Hc0IwMTUHMO6pu6fwUUETzvdiLVk7wgXimxgTzGz08aV1XYqeFA==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@yarn-tool/update-notifier" "^1.0.20"
     array-hyper-unique "^1.1.10"
     bluebird "^3.7.2"
-    cache-path "^2.0.14"
+    cache-path "^2.0.16"
     crlf-normalize "^1.0.6"
-    debug-color2 "^1.2.5"
+    debug-color2 "^1.2.7"
     fs-extra "^10"
-    fs-iconv "^3.0.16"
+    fs-iconv "^3.1.1"
     iconv-jschardet "^2.0.17"
     lazy-cacache "^2.0.4"
     lodash "^4.17.21"
-    novel-segment "^2.7.64"
+    novel-segment "^2.7.65"
     pkg-up "^3.1.0"
     prettyuse "^0.0.0"
     tslib "^2.3.0"
     upath2 "^3.1.9"
     yargs "^17"
 
-novel-segment@^2.7.64:
-  version "2.7.64"
-  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.7.64.tgz#19e48eb0e228b29cf553f48b49615843292e94b7"
-  integrity sha512-VJ/icQFGZWCsYsIjmb2bzuWvpAqlzQbDuFnUquV4+rqA/kkZNQ/U6SN7z/6FLOTcV08/mMo4Rjvy4mLk5SXdTw==
+novel-segment@^2.7.65:
+  version "2.7.65"
+  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.7.65.tgz#c5f5a6ecba2ac32312d48fc3e527d81695a437f8"
+  integrity sha512-2f/ivII6601b4LH214d3YRMqliZ6htoMJFa1yHZavDIvMkBBi++p+6hbQ/QJ3rTDVt+wW8TlqR6cIckCfOxilw==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@lazy-cjk/zh-table-list" "^1.0.67"
-    "@novel-segment/postag" "^1.0.6"
+    "@novel-segment/postag" "^1.0.7"
     array-hyper-unique "^1.1.10"
     bluebird "^3.7.2"
     cjk-conv "^1.2.128"
@@ -6966,11 +6966,11 @@ novel-segment@^2.7.64:
     deepmerge-plus "^2.1.3"
     lodash "^4.17.21"
     regexp-cjk "^3.3.94"
-    segment-dict "^2.3.146"
+    segment-dict "^2.3.147"
     sort-object-keys2 "^2.0.3"
     str-util "^2.3.27"
     ts-enum-util "4.0.2"
-    ts-type "^1.2.35"
+    ts-type "^1.2.39"
     tslib "^2.3.0"
     uni-string "^1.1.11"
 
@@ -7085,20 +7085,21 @@ onetime@^5.1.0, onetime@^5.1.2:
   dependencies:
     mimic-fn "^2.1.0"
 
-opds-extra@^3.0.9:
-  version "3.0.9"
-  resolved "https://registry.npmjs.org/opds-extra/-/opds-extra-3.0.9.tgz#c8a4d7b1bef6ab58c28659ff39bb6367451c1a66"
-  integrity sha512-UrXrltE32ODM3O8A2E49fnMNLD2tKatOBbkXtOWG1pahaALhacaLvkk3+mSRBq9qmcCpwTH2PdhZQdMuXft5tA==
+opds-extra@^3.0.10, opds-extra@^3.0.9:
+  version "3.0.10"
+  resolved "https://registry.npmjs.org/opds-extra/-/opds-extra-3.0.10.tgz#91421731657647d092c9387cd13435723d110bbc"
+  integrity sha512-pIwssEgEz/2aoc8jG4+Bm33G/bQPXf7drjZhmeWQBR/pRI8b9tNRwBqye0uPaXjPK+uDvbta4j7KFu6JdhNU1A==
   dependencies:
-    array-hyper-unique "^1.1.2"
-    lodash "^4.17.15"
-    r2-opds-js "^1.0.25"
+    array-hyper-unique "^1.1.10"
+    lodash "^4.17.21"
+    r2-opds-js "^1.0.35"
     reflect-metadata "^0.1.13"
     sort-object-keys2 "^2.0.3"
     subjects-utils "0.0.2"
     symbol.inspect "^1.0.1"
-    ta-json-x "^2.5.2"
-    xml-schema2 "^3.0.1"
+    ta-json-x "^2.5.3"
+    tslib "^2.3.0"
+    xml-schema2 "^3.0.2"
 
 optimist@^0.6.1:
   version "0.6.1"
@@ -7868,7 +7869,7 @@ r2-lcp-js@^1.0.30:
     tslib "^2.2.0"
     urijs "^1.19.6"
 
-r2-opds-js@^1.0.25:
+r2-opds-js@^1.0.35:
   version "1.0.35"
   resolved "https://registry.npmjs.org/r2-opds-js/-/r2-opds-js-1.0.35.tgz#147be9a204475e9a9929d73e318427944a53654c"
   integrity sha512-tsaWpDdCPR6pyB2yszpcXWprJ2gQzIbDRFOJ50M3ACf8f9ZUkPtgCZAAAINNR22DgWCqkCtVljfQxkDp33+CZA==
@@ -8489,10 +8490,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "^2.8.1"
 
-segment-dict@^2.3.146:
-  version "2.3.146"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.146.tgz#eb94ede9685b50e30e7a808fff41121d405abae7"
-  integrity sha512-8r74bjhu+/6TTebci+NUezQag083Ge53kMydkeuv3VmM5YRd3qDbqROAd90uu3xFcuAkPholDVlCzrwXojqC6Q==
+segment-dict@^2.3.147:
+  version "2.3.147"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.147.tgz#aa35edbbddfc0a383e6076823e61210705dd10ed"
+  integrity sha512-CPqESrRCCiiTNWFBFURz4TTGdzZ7crTFH4ms161U8OKK/az8Z/qogUenBgE38A2TYkZSVVUwvgTtomlb5knXeA==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/dict-loader-core" "^1.0.11"
@@ -9104,7 +9105,7 @@ symbol.inspect@^1.0.1:
   resolved "https://registry.npmjs.org/symbol.inspect/-/symbol.inspect-1.0.1.tgz#e13125b8038c4996eb0dfa1567332ad4dcd0763f"
   integrity sha512-YQSL4duoHmLhsTD1Pw8RW6TZ5MaTX5rXJnqacJottr2P2LZBF/Yvrc3ku4NUpMOm8aM0KOCqM+UAkMA5HWQCzQ==
 
-ta-json-x@^2.5.2, ta-json-x@^2.5.3:
+ta-json-x@^2.5.3:
   version "2.5.3"
   resolved "https://registry.npmjs.org/ta-json-x/-/ta-json-x-2.5.3.tgz#f70afce358efb86f292ea70aff1dd75cd903b87c"
   integrity sha512-zhn9oZJVUOj73/WmLFoLszp8+zl8RZAU995dTQWhZK/2eSvFiz2eZ3nN6Kk7B6lRg2GUWnW1v3S3IUhFNbwYQA==
@@ -9947,12 +9948,13 @@ xml-parser@1.2.1:
   dependencies:
     debug "^2.2.0"
 
-xml-schema2@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/xml-schema2/-/xml-schema2-3.0.1.tgz#f7f875d168d14d2c578ed3b8cbb0a0790988fd19"
-  integrity sha512-zOPFqhpT57nMKsRdSIIIIR7cT5vCr7TtFOj+eT9bGx2jcTOLqFMcZuJ3u4HU+yRJV9oZPN8BCt7j179bzfyjUg==
+xml-schema2@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/xml-schema2/-/xml-schema2-3.0.2.tgz#d65c2d08f88b08c1752d775f7f64790c50ad90e9"
+  integrity sha512-J4x2iRzQj6WDKom5aCM5Hg/N6YBAcBtdog3+RdHcgLE4CKrcweBeHgYNJpCK3aEHxE7hyJCROuFXWtZ+sOLj+g==
   dependencies:
-    lodash "^4.17.15"
+    lodash "^4.17.21"
+    tslib "^2.3.0"
     xml-parser "1.2.1"
     xmlbuilder "15.1.1"
 
