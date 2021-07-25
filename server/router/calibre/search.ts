@@ -107,7 +107,10 @@ export function calibreSearchFeed(options: ITSPickExtra<ISharedHandlerOptions, '
 
 					books = books.sort((a, b) => b.timestamp - a.timestamp);
 
-					feed.updated = books[0].timestamp;
+					if (books[0]?.timestamp)
+					{
+						feed.updated = books[0].timestamp;
+					}
 
 					return books
 				})

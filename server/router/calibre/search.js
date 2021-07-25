@@ -69,8 +69,11 @@ function calibreSearchFeed(options, argv) {
                 return ls;
             }, [])
                 .then(books => {
+                var _a;
                 books = books.sort((a, b) => b.timestamp - a.timestamp);
-                feed.updated = books[0].timestamp;
+                if ((_a = books[0]) === null || _a === void 0 ? void 0 : _a.timestamp) {
+                    feed.updated = books[0].timestamp;
+                }
                 return books;
             })
                 .each(book => {
