@@ -19,7 +19,7 @@ import { addMutableFileSystem } from '../ipfs/mfs';
 import { fromBuffer } from 'file-type';
 import { downloadEpubRace } from './downloadEpubRace';
 import { updateCachePubSubPeers } from '../ipfs/pubsub/cache';
-import { siteNeverExpired } from '../site/siteNeverExpired';
+import { siteNeverExpired, siteNotExpireCheck } from '../site/siteNeverExpired';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -63,15 +63,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 
 					let isGun = false;
 
-					if (siteNeverExpired(siteID))
-					{
-						isGun = true;
-					}
-					else if (query.debug || query.force)
-					{
-
-					}
-					else if ((Date.now() - data.timestamp) < 86400 * 1000 * 2)
+					if (siteNeverExpired(siteID) || !(query.debug || query.force) && siteNotExpireCheck(siteID, data.timestamp))
 					{
 						isGun = true;
 					}
