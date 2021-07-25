@@ -23,7 +23,7 @@
 > 此指令僅需於安裝或者更新時才輸入
 
 ```
-npm install -g novel-opds-now
+npm install --force -g novel-opds-now
 ```
 
 > 啟動伺服器，此指令每次要啟動伺服器時都要輸入(以下兩個指令隨便選一個)

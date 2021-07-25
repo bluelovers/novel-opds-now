@@ -11,6 +11,7 @@ import { toCID } from '@lazy-ipfs/to-cid';
 import CID from 'cids';
 import itAll from 'it-all';
 import { IIPFSControllerDaemon } from '../types';
+import { loadDeepEntryListMapFromFile } from '../mfs/deepEntryListMap';
 
 export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
@@ -23,6 +24,8 @@ export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSCon
 			ipfsd,
 		}) =>
 		{
+			await loadDeepEntryListMapFromFile();
+
 			let ls = await readFile(join(__root, 'lib/static/build-in-cids.txt'))
 				.then(handleCachePeersFile);
 

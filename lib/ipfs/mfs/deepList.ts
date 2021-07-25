@@ -1,11 +1,14 @@
 import { IUseIPFSApi } from '../../types';
+import { isMatch } from 'micromatch';
 
 export async function deepList(ipfs: IUseIPFSApi, rootStart: string, options?: {
 	debug?: boolean,
+	glob?: string | string[],
+	ignore?: string | string[],
 }, isChild?: true)
 {
 	options ??= {};
-	let map = {} as Record<string, string>
+	let map = new Map<string, string>()
 
 	if (typeof isChild === 'undefined')
 	{
@@ -21,9 +24,23 @@ export async function deepList(ipfs: IUseIPFSApi, rootStart: string, options?: {
 			hash: true,
 		});
 
-		map[rootStart + '/'] = stat.cid.toString();
+		map.set(rootStart + '/', stat.cid.toString())
 
 		options.debug && debug(map, rootStart + '/');
+
+		options.glob = [options.glob].flat().filter(v => v?.length);
+
+		if (!options.glob?.length)
+		{
+			delete options.glob
+		}
+
+		options.ignore = [options.ignore].flat().filter(v => v?.length);
+
+		if (!options.ignore?.length)
+		{
+			delete options.ignore
+		}
 	}
 
 	for await (const entry of ipfs.files.ls(rootStart, {
@@ -31,30 +48,40 @@ export async function deepList(ipfs: IUseIPFSApi, rootStart: string, options?: {
 	}))
 	{
 		let path = `${rootStart}/${entry.name}`
-		let c = '';
+		let path2 = path;
+
 		if (entry.type === 'directory')
 		{
-			c = '/';
+			path2 += '/';
+
+			let ls2 = await deepList(ipfs, path, options, true).catch(e => (null as null));
+
+			if (ls2?.size)
+			{
+				map.set(path2, entry.cid.toString());
+				options.debug && debug(map, path2);
+
+				ls2
+					.forEach((path, cid) =>
+					{
+						map.set(path, cid)
+					})
+				;
+			}
 		}
-
-		map[path + c] = entry.cid.toString();
-		options.debug && debug(map, path + c);
-
-		if (entry.type === 'directory')
+		else if (!options.glob?.length || isMatch(entry.name, options.glob, {
+			ignore: options.ignore,
+		}))
 		{
-			Object.entries(await deepList(ipfs, path, options, true).catch(e => ({} as null)))
-				.forEach(([path, cid]) =>
-				{
-					map[path] = cid;
-				})
-			;
+			map.set(path2, entry.cid.toString());
+			options.debug && debug(map, path2);
 		}
 	}
 
 	return map
 }
 
-function debug(map: Record<string, string>, path: string)
+function debug(map: Map<string, string>, path: string)
 {
-	console.debug(`deepList`, path, map[path])
+	console.debug(`deepList`, path, map.get(path))
 }

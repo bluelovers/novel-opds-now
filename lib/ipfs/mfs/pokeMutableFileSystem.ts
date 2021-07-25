@@ -8,6 +8,7 @@ import Bluebird from 'bluebird';
 import { ITSPromiseSettledResult } from 'ts-type';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { array_unique } from 'array-hyper-unique';
+import { appendDeepEntryListMap, appendDeepEntryListMapByStatResult } from './deepEntryListMap';
 
 export function pokeMutableFileSystem(options: IPubSubEpub, title: string, ...msg: any[])
 {
@@ -46,25 +47,30 @@ export function _pokeMutableFileSystem(ipfs: IUseIPFSApi, path: string, title?: 
 	return Bluebird.resolve(ipfs).then(async (ipfs) =>
 	{
 		let list: string[] = []
+		const rootPath = `/novel-opds-now`;
 
 		if (path !== '' && path !== '/')
 		{
-			let path_stat: StatResult = await ipfs.files.stat(`/novel-opds-now/${path}`, {
+			let path_stat: StatResult = await ipfs.files.stat(`${rootPath}/${path}`, {
 				hash: true,
 			});
 
 			list.push(`/ipfs/${path_stat.cid}`);
+
+			appendDeepEntryListMapByStatResult(`${rootPath}/${path}`, path_stat);
 		}
 		else
 		{
 			path = '';
 		}
 
-		let root_stat: StatResult = await ipfs.files.stat(`/novel-opds-now/`, {
+		let root_stat: StatResult = await ipfs.files.stat(`${rootPath}/`, {
 			hash: true,
 		});
 
 		list.push(`/ipfs/${root_stat.cid}/${path}`);
+
+		appendDeepEntryListMapByStatResult(`${rootPath}`, root_stat);
 
 		//console.debug(`[pokeMutableFileSystem]`, list, title);
 

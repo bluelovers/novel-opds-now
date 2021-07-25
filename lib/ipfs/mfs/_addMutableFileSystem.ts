@@ -8,6 +8,7 @@ import { ITSResolvable } from 'ts-type/lib/generic';
 import CID from 'cids';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
+import { appendDeepEntryListMapByStatResult } from './deepEntryListMap';
 
 export const waitingCache = new Set<string>()
 
@@ -45,6 +46,15 @@ export function _addMutableFileSystem(dir_path: string, data: {
 						await _ipfsFilesCopyCID(ipfs, file_cid, file_path, {
 							parents: true,
 						})
+
+						file_stat = await ipfs.files.stat(file_path, {
+							hash: true,
+						}).catch(e => null)
+					}
+
+					if (file_stat)
+					{
+						appendDeepEntryListMapByStatResult(file_path, file_stat);
 					}
 
 					return {
