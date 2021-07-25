@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.42](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.41...novel-opds-now@3.0.42) (2021-07-25)
+
+
+### ✨　Features
+
+* 延長過期時間，減少無意義的多次打包 ([89ee3f4](https://github.com/bluelovers/novel-opds-now/commit/89ee3f47199e9727487f93ce0c7868fb908992f5))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([63d4aa1](https://github.com/bluelovers/novel-opds-now/commit/63d4aa160924b21232d5bd3ef91a2ec27dd62c92))
+
+
+### ⚙️　Continuous Integration
+
+* add ci:run:poke-all-cache-cid ([4409ca4](https://github.com/bluelovers/novel-opds-now/commit/4409ca4be42a1b88ea289530942edbf2dc9857fc))
+
+
+
+
+
 ## [3.0.41](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.40...novel-opds-now@3.0.41) (2021-07-25)
 
 
