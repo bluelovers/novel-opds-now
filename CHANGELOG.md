@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.40](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.39...novel-opds-now@3.0.40) (2021-07-25)
+
+
+### 🐛　Bug Fixes
+
+* 修正 部分小說網站 沒有分析 `ruby` 標籤的問題 ([611ba25](https://github.com/bluelovers/novel-opds-now/commit/611ba25bed2537482ecfbe9a347bb9df25127169))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([a048bd4](https://github.com/bluelovers/novel-opds-now/commit/a048bd404f04901bcce5157a7cc2ce84f588805c))
+
+
+### 🔖　Miscellaneous
+
+* . ([a68f8c6](https://github.com/bluelovers/novel-opds-now/commit/a68f8c630c3788d628fd03571d0404d1a8e4a08a))
+
+
+
+
+
 ## [3.0.39](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.38...novel-opds-now@3.0.39) (2021-07-23)
 
 

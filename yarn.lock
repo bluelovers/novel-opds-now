@@ -1371,10 +1371,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@>=13.7.0", "@types/node@^16.4.1":
-  version "16.4.1"
-  resolved "https://registry.npmjs.org/@types/node/-/node-16.4.1.tgz#9fad171a5b701613ee8a6f4ece3c88b1034b1b03"
-  integrity sha512-UW7cbLqf/Wu5XH2RKKY1cHwUNLicIDRLMraYKz+HHAerJ0ZffUEk+fMnd8qU2JaS6cAy0r8tsaf7yqHASf/Y0Q==
+"@types/node@*", "@types/node@>=13.7.0", "@types/node@^16.4.2":
+  version "16.4.2"
+  resolved "https://registry.npmjs.org/@types/node/-/node-16.4.2.tgz#0a95d7fd950cb1eaca0ce11031d72e8f680b775a"
+  integrity sha512-vxyhOzFCm+jC/T5KugbVsYy1DbQM0h3NCFUrVbu0+pYa/nr+heeucpqxpa8j4pUmIGLPYzboY9zIdOF0niFAjQ==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -3956,10 +3956,10 @@ find-yarn-workspace-root2@^1.2.31:
     tslib "^2.3.0"
     upath2 "^3.1.9"
 
-fix-ipfs@^1.0.12:
-  version "1.0.12"
-  resolved "https://registry.npmjs.org/fix-ipfs/-/fix-ipfs-1.0.12.tgz#830b3018b755ea269d934148520754a087a19a71"
-  integrity sha512-3lgLvOYD44iSpG/uqW+0VY6+9u+bPOwzKcuzjXqdj3dbw2SJP5XAq9sVAMtUrxqHKPPk/kTCF8UdKMhQEBn0Ug==
+fix-ipfs@^1.0.13:
+  version "1.0.13"
+  resolved "https://registry.npmjs.org/fix-ipfs/-/fix-ipfs-1.0.13.tgz#282ad6a69cffd57cb0488b5e409688a74eb5ed7a"
+  integrity sha512-LgQqZsuR+TI4xuAtSM/YxI1gvOuSvtoy2m3xZabeYtLQYl+HBTiZnKz7BkzikX2ImsQTYXWXy/aPqcfRuYjq3A==
   dependencies:
     ipfs-types "^1.0.37"
     tslib "^2.3.0"
@@ -6962,10 +6962,10 @@ novel-epub@^2.0.10:
     uuid-by-string "^3.0.4"
     yargs "^17.0.1"
 
-novel-segment-cli@^1.1.84:
-  version "1.1.84"
-  resolved "https://registry.npmjs.org/novel-segment-cli/-/novel-segment-cli-1.1.84.tgz#f39266295dadc27320887079505619c0c36a2f08"
-  integrity sha512-T3xkYE1FO8UoQD87tI8wZj5fzPiWMJgHuPY5Qma7jU0wOMCueUyiecuY8F0cKOiISRFg/ydaSIxJ1kcEetED3w==
+novel-segment-cli@^1.1.85:
+  version "1.1.85"
+  resolved "https://registry.npmjs.org/novel-segment-cli/-/novel-segment-cli-1.1.85.tgz#cc7a66d844a81d559600eedae27cc75b658059d2"
+  integrity sha512-EkvA2c9rwiT1k2u85T64Y9Z/dy8V+4oIvfgF7KfbBPxuwmZMAVA1uzhlkNojoqMr50pv2ZYxfZuOQD4gwjF1ZQ==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@yarn-tool/update-notifier" "^1.0.20"
@@ -6979,17 +6979,17 @@ novel-segment-cli@^1.1.84:
     iconv-jschardet "^2.0.17"
     lazy-cacache "^2.0.4"
     lodash "^4.17.21"
-    novel-segment "^2.7.66"
+    novel-segment "^2.7.67"
     pkg-up "^3.1.0"
     prettyuse "^0.0.0"
     tslib "^2.3.0"
     upath2 "^3.1.9"
     yargs "^17"
 
-novel-segment@^2.7.66:
-  version "2.7.66"
-  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.7.66.tgz#46f3cd272c17ad75274fee918a18b4582e7c1ed2"
-  integrity sha512-VNq+ATiSqCcc04HeYMiPrhOg8rVynWENa6i9L94kFTGO/UuYNQKWrFON4cp7kq/0nnGM+tsKngs4JSsMVwbhtQ==
+novel-segment@^2.7.67:
+  version "2.7.67"
+  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.7.67.tgz#53d45af615124823cd8e2154ee263c9d5942f002"
+  integrity sha512-MA29JbyFs5U7enH1qsb3XLtSXbsxkJcZYX5HS9rlSK7Gsq/hHLHcfp/QKA+5tH50yaFkSiWf2jhmFn7m+MxXuQ==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@lazy-cjk/zh-table-list" "^1.0.67"
@@ -7002,7 +7002,7 @@ novel-segment@^2.7.66:
     deepmerge-plus "^2.1.3"
     lodash "^4.17.21"
     regexp-cjk "^3.3.94"
-    segment-dict "^2.3.148"
+    segment-dict "^2.3.149"
     sort-object-keys2 "^2.0.3"
     str-util "^2.3.27"
     ts-enum-util "4.0.2"
@@ -8526,10 +8526,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "^2.8.1"
 
-segment-dict@^2.3.148:
-  version "2.3.148"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.148.tgz#2326c39797a7aefadf75fdf8eaf9b59356a24148"
-  integrity sha512-PqSK+9NMbaMRnDfJzhl4bsm+rHr0KTjXRytjg1FIuVduYSZ0DNfsL3kwSMlFW6W8aA+et3uld07ODtgZHSSEtA==
+segment-dict@^2.3.149:
+  version "2.3.149"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.149.tgz#9237eabc0c60c5efc8ea2ec3436134bd846ea94f"
+  integrity sha512-PPqpAriiOIWmk9/bleZoVkAAxHG/pDQ5UTA1mRf8xv5j+c7Yl6Jz3gEho8S7seHxxi13KlVDTyQsrkrsE7WtRA==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/dict-loader-core" "^1.0.11"
