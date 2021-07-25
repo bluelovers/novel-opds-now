@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.41](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.40...novel-opds-now@3.0.41) (2021-07-25)
+
+
+### 🐛　Bug Fixes
+
+* 修正 calibre 搜尋時 沒有任何符合的結果時 會出錯的問題 ([4a727b0](https://github.com/bluelovers/novel-opds-now/commit/4a727b0aef3899df98ede54219b27c35951ff8ae))
+
+
+### ✨　Features
+
+* 將 mfs 節點內所有 id 記錄起來 方便日後製作搜尋功能 ([d1183eb](https://github.com/bluelovers/novel-opds-now/commit/d1183ebda69582a5fd56012cec7bc991e6c603ef))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([2a798b8](https://github.com/bluelovers/novel-opds-now/commit/2a798b85e69cc4f8b4eec8c112e70c2a633c895d))
+
+
+
+
+
 ## [3.0.40](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.39...novel-opds-now@3.0.40) (2021-07-25)
 
 
