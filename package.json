@@ -42,6 +42,8 @@
     "test": "echo \"Error: no test specified\"",
     "test:mocha": "npx mocha --require ts-node/register \"!(node_modules)/**/*.{test,spec}.{ts,tsx}\"",
     "postinstall": "node ./cli/check-ipfs-install & node ./cli/cache -f & echo postinstall",
+    "ci:install": "yarn --frozen-lockfile",
+    "ci:run:poke-all-cache-cid": "node ./test/script/poke-all-cache-cid",
     "npm:publish": "yarn run preversion && npm publish",
     "npm:publish:bump": "yarn run preversion && yarn-tool version && npm publish",
     "npm:publish:lerna": "ynpx --quiet lerna -- publish --yes --bump patch",

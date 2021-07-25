@@ -1,6 +1,9 @@
 import { IUseIPFSApi } from '../../types';
 import { isMatch } from 'micromatch';
 
+/**
+ * @deprecated
+ */
 export async function deepList(ipfs: IUseIPFSApi, rootStart: string, options?: {
 	debug?: boolean,
 	glob?: string | string[],

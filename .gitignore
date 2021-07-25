@@ -122,3 +122,4 @@ radata-*.tmp
 .identity.json
 /test/.mfs.roots.json
 /test/.peers.mixin.txt
+!/test/script/*.js

@@ -64,6 +64,7 @@ let cachePoke = new Set<string>();
 export function pokeAll(cid: string, ipfs, options?: {
 	filename?: string,
 	hidden?: boolean,
+	timeout?: number,
 }, ...msg: any[])
 {
 	const cid_str = cid.toString();
@@ -159,7 +160,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 
 							return pokeURL(href, {
 								//cors: true,
-								timeout: 10 * 60 * 1000,
+								timeout: (options?.timeout | 0) || 10 * 60 * 1000,
 							}).then(data =>
 							{
 								return {
