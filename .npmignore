@@ -88,3 +88,4 @@ yarn.lock
 npm-shrinkwrap.json
 /test/.identity.json
 .identity.json
+!test/data/novel-opds-now.cids.json

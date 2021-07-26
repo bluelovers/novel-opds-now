@@ -14,7 +14,7 @@ export const newEntryListMap = new Map<string, string>();
 
 let _notOK = true;
 
-const file = join(__root, 'test', 'novel-opds-now.cids.json');
+const file = join(__root, 'test', 'data', 'novel-opds-now.cids.json');
 
 export function appendDeepEntryListMapByStatResult(path: string, entry: StatResult)
 {
@@ -55,10 +55,7 @@ export function loadDeepEntryListMapFromFile()
 	return Bluebird.resolve(readJSON(file))
 		.then((map: [string, string][]) =>
 		{
-			map.forEach(([path, cid]) =>
-			{
-				deepEntryListMap.set(path, cid);
-			});
+			mergeDeepEntryListMap(map, deepEntryListMap);
 		})
 		.catchReturn(null as null)
 		.thenReturn(deepEntryListMap)
@@ -71,16 +68,13 @@ export function loadDeepEntryListMapFromServer()
 			rootKey: 'ipfs',
 			dataKey: 'deepEntryListMap',
 			fetchOptions: {
-				timeout: 10 * 1000,
+				timeout: 60 * 1000,
 			},
 		},
 	)
 		.tap((raw) =>
 		{
-			raw.data?.forEach(([path, cid]) =>
-			{
-				deepEntryListMap.set(path, cid);
-			});
+			mergeDeepEntryListMap(raw.data, deepEntryListMap);
 		})
 		.catchReturn(null as null)
 		.thenReturn(deepEntryListMap)
@@ -102,10 +96,7 @@ export function _saveDeepEntryListMapToServer()
 			{
 				_notOK = false;
 
-				newEntryListMap.forEach(([path, cid]) =>
-				{
-					deepEntryListMap.set(path, cid);
-				});
+				mergeDeepEntryListMap(newEntryListMap, deepEntryListMap);
 
 				if (!deepEntryListMap.size)
 				{
@@ -131,7 +122,7 @@ export function enableForceSave()
 	_notOK = false;
 }
 
-export async function _saveDeepEntryListMapToFile()
+export function _saveDeepEntryListMapToFile()
 {
 	if (_notOK === true && !newEntryListMap.size)
 	{
@@ -162,4 +153,17 @@ export function saveDeepEntryListMapToMixin()
 		saveDeepEntryListMapToFile,
 		saveDeepEntryListMapToServer,
 	])
+}
+
+export function mergeDeepEntryListMap(input: Map<string, string> | [string, string][], target: Map<string, string>)
+{
+	if (input)
+	{
+		for (const [path, cid] of (Array.isArray(input) ? input.values() : input.entries()))
+		{
+			target.set(path, cid);
+		}
+	}
+
+	return target;
 }

@@ -15,3 +15,4 @@ export declare function _saveDeepEntryListMapToFile(): Promise<any>;
 export declare const saveDeepEntryListMapToFile: import("lodash").DebouncedFunc<typeof _saveDeepEntryListMapToFile>;
 export declare const saveDeepEntryListMapToServer: import("lodash").DebouncedFunc<typeof _saveDeepEntryListMapToServer>;
 export declare function saveDeepEntryListMapToMixin(): Bluebird<[import("lodash").DebouncedFunc<typeof _saveDeepEntryListMapToFile>, import("lodash").DebouncedFunc<typeof _saveDeepEntryListMapToServer>]>;
+export declare function mergeDeepEntryListMap(input: Map<string, string> | [string, string][], target: Map<string, string>): Map<string, string>;
