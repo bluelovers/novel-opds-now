@@ -3,6 +3,27 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.43](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.42...novel-opds-now@3.0.43) (2021-07-26)
+
+
+### ✨　Features
+
+* 優化 deepEntryListMap ([d0f0ba4](https://github.com/bluelovers/novel-opds-now/commit/d0f0ba483ccc60c828c7e7bcefe184aaeb9e8663))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([ebd588a](https://github.com/bluelovers/novel-opds-now/commit/ebd588a422f9956822bc7926776d8af44df3d215))
+
+
+### 🔖　Miscellaneous
+
+* . ([b149cb7](https://github.com/bluelovers/novel-opds-now/commit/b149cb7f901818bfa6b298ec16081a308d6d7dea))
+
+
+
+
+
 ## [3.0.42](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.41...novel-opds-now@3.0.42) (2021-07-25)
 
 
