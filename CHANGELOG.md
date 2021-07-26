@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.45](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.43...novel-opds-now@3.0.45) (2021-07-26)
+
+
+### 🐛　Bug Fixes
+
+* check newEntryListMap.size ([d2bcc40](https://github.com/bluelovers/novel-opds-now/commit/d2bcc40d7cdb3f750e09a13a62dea5fbd470b189))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([9c12268](https://github.com/bluelovers/novel-opds-now/commit/9c12268bd824a4b3b288d7288ba506d9dd0a37a9))
+* **cache:** update cache ([e961d5b](https://github.com/bluelovers/novel-opds-now/commit/e961d5b9b8cccf2165f53c89390be0791191eec5))
+
+
+
+
+
 ## [3.0.43](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.42...novel-opds-now@3.0.43) (2021-07-26)
 
 

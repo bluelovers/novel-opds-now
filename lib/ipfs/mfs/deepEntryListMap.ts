@@ -117,7 +117,7 @@ export function _saveDeepEntryListMapToServer()
 				)
 			}
 		})
-		//.catchReturn(null)
+		.catchReturn(null)
 		.thenReturn(deepEntryListMap)
 }
 
