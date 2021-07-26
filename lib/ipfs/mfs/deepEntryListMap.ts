@@ -98,21 +98,24 @@ export function _saveDeepEntryListMapToServer()
 	return loadDeepEntryListMapFromServer()
 		.then(() =>
 		{
-			_notOK = false;
-
-			newEntryListMap.forEach(([path, cid]) =>
+			if (newEntryListMap.size)
 			{
-				deepEntryListMap.set(path, cid);
-			});
+				_notOK = false;
 
-			newEntryListMap.clear();
+				newEntryListMap.forEach(([path, cid]) =>
+				{
+					deepEntryListMap.set(path, cid);
+				});
 
-			return putRawRecord<[string, string][]>({
-					rootKey: 'ipfs',
-					dataKey: 'deepEntryListMap',
-					data: [...deepEntryListMap, ...newEntryListMap],
-				},
-			)
+				newEntryListMap.clear();
+
+				return putRawRecord<[string, string][]>({
+						rootKey: 'ipfs',
+						dataKey: 'deepEntryListMap',
+						data: [...deepEntryListMap, ...newEntryListMap],
+					},
+				)
+			}
 		})
 		//.catchReturn(null)
 		.thenReturn(deepEntryListMap)
