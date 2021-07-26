@@ -27,6 +27,7 @@ const getMixinPeers_1 = require("../lib/ipfs/util/getMixinPeers");
 const pokeRoot_1 = require("../lib/ipfs/mfs/pokeRoot");
 const processExit_1 = (0, tslib_1.__importDefault)(require("../lib/util/processExit"));
 const saveMutableFileSystemRoots_1 = require("../lib/ipfs/mfs/saveMutableFileSystemRoots");
+const deepEntryListMap_1 = require("../lib/ipfs/mfs/deepEntryListMap");
 const app = (0, express_1.default)();
 app.use((0, helmet_1.default)({
     contentSecurityPolicy: false,
@@ -41,6 +42,7 @@ app.use('/*', (req, res, next) => {
     next();
 });
 (0, processExit_1.default)(() => (0, use_1.getIPFSFromCache)().then(saveMutableFileSystemRoots_1.saveMutableFileSystemRoots).catchReturn(null));
+(0, processExit_1.default)(deepEntryListMap_1._saveDeepEntryListMapToFile);
 app.use(index_2.default);
 app.use('/file', (0, file_1.default)());
 app.use('/opds', (0, opds_1.default)());

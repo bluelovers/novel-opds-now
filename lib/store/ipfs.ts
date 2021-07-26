@@ -20,6 +20,11 @@ import { fromBuffer } from 'file-type';
 import { downloadEpubRace } from './downloadEpubRace';
 import { updateCachePubSubPeers } from '../ipfs/pubsub/cache';
 import { siteNeverExpired, siteNotExpireCheck } from '../site/siteNeverExpired';
+import {
+	saveDeepEntryListMapToFile,
+	saveDeepEntryListMapToMixin,
+	saveDeepEntryListMapToServer,
+} from '../ipfs/mfs/deepEntryListMap';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -190,7 +195,9 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 								siteID,
 								novelID,
 								data: result,
-							});
+							})
+								.tap(saveDeepEntryListMapToMixin)
+							;
 
 							ipfs && updateCachePubSubPeers(ipfs);
 

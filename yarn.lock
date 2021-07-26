@@ -125,19 +125,19 @@
     "@demonovel/cached-data-types" "^1.0.1"
     tslib "^2.3.0"
 
-"@demonovel/db-api@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@demonovel/db-api/-/db-api-1.0.7.tgz#165019cfc4a55b4de9a8a92951e9007211ded1b3"
-  integrity sha512-U/qn3ShMSh+0BkpqU9n9roLe+ABy/uvmPeVlKqCf2VPqqX3UIrLM5CzkNglSpHkIX+1WuQp81vHq1BldZ1bnGg==
+"@demonovel/db-api@^1.0.8":
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/@demonovel/db-api/-/db-api-1.0.8.tgz#e0be3ac6360e92e20585c82ed8c254a07fcb6000"
+  integrity sha512-P5snQf9m7i4TMIX2ZFb/9n017pTCkpJf/9OMtp2Q1rnQrukIZ3YigFQlTEzih5Me12gRnLfK7Y+RlS8sWu1u0A==
   dependencies:
     abort-controller "^3.0.0"
-    abort-controller-timer "^1.0.10"
+    abort-controller-timer "^1.0.11"
     bluebird "^3.7.2"
     cross-fetch "^3.1.4"
     hash-sum "^2.0.0"
     http-proxy-agent "^4.0.1"
     is-error-code "^1.0.0"
-    ts-type "^1.2.35"
+    ts-type "^1.2.39"
     tslib "^2.3.0"
 
 "@demonovel/local-or-rebuild-file@^1.0.4":
@@ -1383,10 +1383,10 @@
     "@types/node" "*"
     form-data "^3.0.0"
 
-"@types/node@*", "@types/node@>=13.7.0", "@types/node@^16.4.2":
-  version "16.4.2"
-  resolved "https://registry.npmjs.org/@types/node/-/node-16.4.2.tgz#0a95d7fd950cb1eaca0ce11031d72e8f680b775a"
-  integrity sha512-vxyhOzFCm+jC/T5KugbVsYy1DbQM0h3NCFUrVbu0+pYa/nr+heeucpqxpa8j4pUmIGLPYzboY9zIdOF0niFAjQ==
+"@types/node@*", "@types/node@>=13.7.0", "@types/node@^16.4.3":
+  version "16.4.3"
+  resolved "https://registry.npmjs.org/@types/node/-/node-16.4.3.tgz#c01c1a215721f6dec71b47d88b4687463601ba48"
+  integrity sha512-GKM4FLMkWDc0sfx7tXqPWkM6NBow1kge0fgQh0bOnlqo4iT1kvTvMEKE0c1RtUGnbLlGRXiAA8SumE//90uKAg==
 
 "@types/normalize-package-data@^2.4.0":
   version "2.4.1"
@@ -1589,7 +1589,7 @@ abbrev@1.0.x:
   resolved "https://registry.npmjs.org/abbrev/-/abbrev-1.0.9.tgz#91b4792588a7738c25f35dd6f63752a2f8776135"
   integrity sha1-kbR5JYinc4wl813W9jdSovh3YTU=
 
-abort-controller-timer@^1.0.10, abort-controller-timer@^1.0.11:
+abort-controller-timer@^1.0.11:
   version "1.0.11"
   resolved "https://registry.npmjs.org/abort-controller-timer/-/abort-controller-timer-1.0.11.tgz#fe943fa26bff7ee7216a2cde7024514d99611453"
   integrity sha512-lgvTXzeVGKRV9Br4I5wB1Fb7ch3hrFEvUD6VRgH/ae7jnrlwvFR5ZfZG53tXkkAIQWDB8fmdTy/sg8F2mwQTKQ==
@@ -2348,10 +2348,10 @@ cachedir@^2.3.0:
   resolved "https://registry.npmjs.org/cachedir/-/cachedir-2.3.0.tgz#0c75892a052198f0b21c7c1804d8331edfcae0e8"
   integrity sha512-A+Fezp4zxnit6FanDmv9EqXNAi3vt9DWp51/71UEhXukb7QUuvtv9344h91dyAxuTLoSYJFU299qzR3tzwPAhw==
 
-calibre-db@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/calibre-db/-/calibre-db-1.0.7.tgz#37bfaa09360ed8888e6947f887c85ca9aeedaf95"
-  integrity sha512-110ff80HRGHZ4JfTqkQ8Xp32betCMFnTti5kX3tRM7Ubmc5EsahGTssjACnslL4Y+1rMKWyRScSKcYeieDubEA==
+calibre-db@^1.0.8:
+  version "1.0.8"
+  resolved "https://registry.npmjs.org/calibre-db/-/calibre-db-1.0.8.tgz#091cd3fae7de1c7b3ecebfcaef22c0f57b2bb4e7"
+  integrity sha512-N1aqXatNwnPktNzX3HPeerl1sDez8NuRV+x0FQ1C3bmQiJnaGThGPOsUan5dn/PH4e3O8es+KR7CU5Trn1rP9w==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     bluebird "^3.7.2"
@@ -2381,15 +2381,15 @@ calibre-opds@^1.0.8:
     ts-type "^1.2.36"
     tslib "^2.3.0"
 
-calibre-server@^1.0.20:
-  version "1.0.20"
-  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.20.tgz#440335f84a4345a2ef60ace86d70978a76ae34e4"
-  integrity sha512-L9IGP5iKdVTYyXbASXSVOUzzBYB6A/gYxhjSguctIvjrZo/Xe9UUNRqBRri/Vm1NsVzIibW3oebqYrJSoZ1gWA==
+calibre-server@^1.0.21:
+  version "1.0.21"
+  resolved "https://registry.npmjs.org/calibre-server/-/calibre-server-1.0.21.tgz#4fea63a808ad6e201d7bb8497ee61211b658e0dd"
+  integrity sha512-c5rDLwAu31fztM7+mULkwAEwUW4RsE3Wfvr2cdmjIOJxZFiz6aLIvPZT/O5Sqs3XYIPpz8zV9haAf+vO9vBJDg==
   dependencies:
     address2 "^1.0.4"
     array-hyper-unique "^1.1.10"
     bluebird "^3.7.2"
-    calibre-db "^1.0.7"
+    calibre-db "^1.0.8"
     calibre-env "^1.0.1"
     calibre-opds "^1.0.8"
     debug-color2 "^1.2.5"
@@ -6974,10 +6974,10 @@ novel-epub@^2.0.10:
     uuid-by-string "^3.0.4"
     yargs "^17.0.1"
 
-novel-segment-cli@^1.1.85:
-  version "1.1.85"
-  resolved "https://registry.npmjs.org/novel-segment-cli/-/novel-segment-cli-1.1.85.tgz#cc7a66d844a81d559600eedae27cc75b658059d2"
-  integrity sha512-EkvA2c9rwiT1k2u85T64Y9Z/dy8V+4oIvfgF7KfbBPxuwmZMAVA1uzhlkNojoqMr50pv2ZYxfZuOQD4gwjF1ZQ==
+novel-segment-cli@^1.1.86:
+  version "1.1.86"
+  resolved "https://registry.npmjs.org/novel-segment-cli/-/novel-segment-cli-1.1.86.tgz#7006981ae35d36cc78a5fccd5e42eff9ab33327f"
+  integrity sha512-7xLGZcDUlARLmTQtHULhvYv5dcANiPmR/S+beB5/HX5vwg9RDs5+yWjNB4NgwLSLyEI+tesHzIQ5vp2/z85yhQ==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@yarn-tool/update-notifier" "^1.0.20"
@@ -6991,17 +6991,17 @@ novel-segment-cli@^1.1.85:
     iconv-jschardet "^2.0.17"
     lazy-cacache "^2.0.4"
     lodash "^4.17.21"
-    novel-segment "^2.7.67"
+    novel-segment "^2.7.68"
     pkg-up "^3.1.0"
     prettyuse "^0.0.0"
     tslib "^2.3.0"
     upath2 "^3.1.9"
     yargs "^17"
 
-novel-segment@^2.7.67:
-  version "2.7.67"
-  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.7.67.tgz#53d45af615124823cd8e2154ee263c9d5942f002"
-  integrity sha512-MA29JbyFs5U7enH1qsb3XLtSXbsxkJcZYX5HS9rlSK7Gsq/hHLHcfp/QKA+5tH50yaFkSiWf2jhmFn7m+MxXuQ==
+novel-segment@^2.7.68:
+  version "2.7.68"
+  resolved "https://registry.npmjs.org/novel-segment/-/novel-segment-2.7.68.tgz#a28e6a57bbc57b72c8c4953f66383c5f7dad3ac0"
+  integrity sha512-0Ak54h7HpELz+L//xtoAuakdgAEIKo9iuSzzks+Cqv6qLSkUXbDanNlWGNzHZ+2hHkCDeReqY2Tb9ecDiV+KFg==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@lazy-cjk/zh-table-list" "^1.0.67"
@@ -7014,7 +7014,7 @@ novel-segment@^2.7.67:
     deepmerge-plus "^2.1.3"
     lodash "^4.17.21"
     regexp-cjk "^3.3.94"
-    segment-dict "^2.3.149"
+    segment-dict "^2.3.150"
     sort-object-keys2 "^2.0.3"
     str-util "^2.3.27"
     ts-enum-util "4.0.2"
@@ -8538,10 +8538,10 @@ seek-bzip@^1.0.5:
   dependencies:
     commander "^2.8.1"
 
-segment-dict@^2.3.149:
-  version "2.3.149"
-  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.149.tgz#9237eabc0c60c5efc8ea2ec3436134bd846ea94f"
-  integrity sha512-PPqpAriiOIWmk9/bleZoVkAAxHG/pDQ5UTA1mRf8xv5j+c7Yl6Jz3gEho8S7seHxxi13KlVDTyQsrkrsE7WtRA==
+segment-dict@^2.3.150:
+  version "2.3.150"
+  resolved "https://registry.npmjs.org/segment-dict/-/segment-dict-2.3.150.tgz#43f67ea48356a8c30f3eff8ee1359814fe0d79bd"
+  integrity sha512-mHI29Gru8SqKPL/NOx/7yNpl7l+sY2YTDzkaaewabxyOadfQPLYJTk6NH7cCu5YbmwnxIvsAtY+8AyPssYszfQ==
   dependencies:
     "@bluelovers/fast-glob" "^3.0.4"
     "@novel-segment/dict-loader-core" "^1.0.11"

@@ -7,6 +7,11 @@ import { ITSResolvable } from 'ts-type/lib/generic';
 import { IUseIPFSApi } from '../../types';
 import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
+import {
+	saveDeepEntryListMapToFile,
+	saveDeepEntryListMapToMixin,
+	saveDeepEntryListMapToServer,
+} from '../mfs/deepEntryListMap';
 
 export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 	ipfs?: ITSResolvable<IUseIPFSApi>,
@@ -88,5 +93,5 @@ export function publishAndPokeIPFS(content: ITSResolvable<Buffer>, options?: {
 				})
 				;
 		})
-
+		.tap(saveDeepEntryListMapToMixin)
 }

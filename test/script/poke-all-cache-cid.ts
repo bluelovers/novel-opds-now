@@ -1,7 +1,11 @@
-import { deepEntryListMap, loadDeepEntryListMapFromFile } from "../../lib/ipfs/mfs/deepEntryListMap";
+import {
+	deepEntryListMap,
+	loadDeepEntryListMapFromFile,
+	loadDeepEntryListMapFromMixin,
+} from "../../lib/ipfs/mfs/deepEntryListMap";
 import pokeAll, { reportPokeAllSettledResult } from '../../lib/ipfs/pokeAll';
 
-export default loadDeepEntryListMapFromFile()
+export default loadDeepEntryListMapFromMixin()
 	.then(deepEntryListMap => [...deepEntryListMap])
 	.map(([path, cid], index, length) =>
 	{

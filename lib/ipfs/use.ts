@@ -31,6 +31,7 @@ import { initHello } from './use/initHello';
 import { initMutableFileSystem } from './mfs/initMutableFileSystem';
 import { initHelloCheck } from './use/initHelloCheck';
 import { saveMutableFileSystemRoots } from './mfs/saveMutableFileSystemRoots';
+import { loadDeepEntryListMapFromMixin } from './mfs/deepEntryListMap';
 
 inspect.defaultOptions ??= {};
 inspect.defaultOptions.colors = console.enabledColor;
@@ -124,6 +125,7 @@ export function useIPFS(options?: {
 					return pubsubSubscribe(ipfs)
 						.tap(async () =>
 						{
+							loadDeepEntryListMapFromMixin();
 							initHello(ipfs);
 							initHelloCheck(ipfs, ipfsd);
 						})

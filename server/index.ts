@@ -41,6 +41,7 @@ import { saveMixinPeers } from '../lib/ipfs/util/getMixinPeers';
 import { pokeRoot } from '../lib/ipfs/mfs/pokeRoot';
 import processExit from '../lib/util/processExit';
 import { saveMutableFileSystemRoots } from '../lib/ipfs/mfs/saveMutableFileSystemRoots';
+import { _saveDeepEntryListMapToFile } from '../lib/ipfs/mfs/deepEntryListMap';
 
 const app = express();
 
@@ -64,6 +65,7 @@ app.use('/*', (req, res, next) =>
 });
 
 processExit(() => getIPFSFromCache().then(saveMutableFileSystemRoots).catchReturn(null as null));
+processExit(_saveDeepEntryListMapToFile);
 
 app.use(calibreHandler);
 

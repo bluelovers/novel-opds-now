@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const deepEntryListMap_1 = require("../../lib/ipfs/mfs/deepEntryListMap");
 const pokeAll_1 = (0, tslib_1.__importStar)(require("../../lib/ipfs/pokeAll"));
-exports.default = (0, deepEntryListMap_1.loadDeepEntryListMapFromFile)()
+exports.default = (0, deepEntryListMap_1.loadDeepEntryListMapFromMixin)()
     .then(deepEntryListMap => [...deepEntryListMap])
     .map(([path, cid], index, length) => {
     let label = `${index.toString().padStart(5, '0')}／${length.toString().padStart(5, '0')}`;
