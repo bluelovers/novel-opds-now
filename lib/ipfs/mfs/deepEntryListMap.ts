@@ -107,6 +107,11 @@ export function _saveDeepEntryListMapToServer()
 					deepEntryListMap.set(path, cid);
 				});
 
+				if (!deepEntryListMap.size)
+				{
+					return;
+				}
+
 				newEntryListMap.clear();
 
 				return putRawRecord<[string, string][]>({
@@ -135,7 +140,14 @@ export async function _saveDeepEntryListMapToFile()
 
 	_notOK = true;
 
-	return outputJSON(file, [...deepEntryListMap, ...newEntryListMap], {
+	let ls = [...deepEntryListMap, ...newEntryListMap];
+
+	if (!ls.length)
+	{
+		return;
+	}
+
+	return outputJSON(file, ls, {
 		spaces: 2,
 	}).catch(e => null)
 }

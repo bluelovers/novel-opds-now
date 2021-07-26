@@ -14,7 +14,7 @@
 
 接著如果是 windows 系統 可以利用 win + R 然後輸入 cmd /k
 
-![image_1](docs/image_1.png)
+![image_1](docs/imgs/image_1.png)
 
 接著在終端機裡面輸入以下指令
 
@@ -61,6 +61,6 @@ npx novel-opds-now
 
 ---
 
-![image](docs/image.png)
+![image](docs/imgs/image.png)
 
-![image_2](docs/image_2.png)
+![image_2](docs/imgs/image_2.png)
