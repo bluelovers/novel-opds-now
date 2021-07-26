@@ -98,7 +98,7 @@ export function _saveDeepEntryListMapToServer()
 	return loadDeepEntryListMapFromServer()
 		.then(() =>
 		{
-			if (newEntryListMap.size)
+			if (_notOK === false || newEntryListMap.size)
 			{
 				_notOK = false;
 

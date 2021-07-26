@@ -9,6 +9,7 @@ import {
 
 export default loadDeepEntryListMapFromFile()
 	.tap(b => console.log(deepEntryListMap.size))
+	.tap(enableForceSave)
 	.tap(_saveDeepEntryListMapToServer)
 	.tap(b => console.log(deepEntryListMap.size))
 	.tap(enableForceSave)
