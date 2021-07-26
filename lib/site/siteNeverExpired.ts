@@ -11,13 +11,14 @@ export function siteNeverExpired(siteID: ITSValueOrArray<string | ISiteIDsPlus>)
 export function siteNotExpireCheck(siteIDs: ITSValueOrArray<string | ISiteIDsPlus>, timestamp: number)
 {
 	const day = 86400 * 1000;
-	let expire = day * 2;
+	let expire = day * 30;
 
 	for (const siteID of [siteIDs].flat())
 	{
-		if (/wenku8|dmzj/i.test(siteID))
+		if (/esjzone/i.test(siteID))
 		{
-			expire = day * 30;
+			expire = day * 2;
+			break;
 		}
 	}
 
