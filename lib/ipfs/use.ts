@@ -1,3 +1,4 @@
+import '../util/processHandle';
 import processExit from '../util/processExit';
 import { assertCheckIPFS, checkIPFS, ipfsAddresses } from 'ipfs-util-lib';
 import cloneDeep from 'lodash/cloneDeep';

@@ -1,3 +1,4 @@
+import '../util/processHandle';
 import { IIPFSAddresses } from 'ipfs-types';
 import Bluebird from 'bluebird';
 import { IUseIPFSApi } from '../types';
