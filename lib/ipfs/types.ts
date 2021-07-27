@@ -2,6 +2,7 @@ import { ITSPartialRecord } from 'ts-type';
 import CID from 'cids';
 import { IUseIPFSApi } from '../types';
 import { IIPFSEnv } from 'ipfs-env';
+import { ChildProcess } from 'child_process';
 
 export type IFill<T, U> = T & ITSPartialRecord<Exclude<keyof U, keyof T>, void>
 export type IOr<A extends any[]> =
@@ -75,6 +76,8 @@ export interface IIPFSControllerDaemon
 
 	disposable: boolean,
 
+	subprocess: ChildProcess,
+
 	init(options?: any): Promise<IIPFSControllerDaemon>
 
 	cleanup(): Promise<IIPFSControllerDaemon>
@@ -88,4 +91,11 @@ export interface IIPFSControllerDaemon
 	pid(): Promise<string>
 
 	isNewRepo?: boolean,
+}
+
+export interface IUseIPFSOptions
+{
+	disposable?: boolean;
+	factoryOptions?: Record<string, any>;
+	mfs?: boolean,
 }

@@ -128,6 +128,7 @@
     "ipfsd-ctl": "^9.0.0",
     "is-error-code": "^1.0.0",
     "it-all": "^1.0.5",
+    "it-first": "^1.0.6",
     "layerr": "^0.1.2",
     "lazy-url": "^1.0.12",
     "lodash": "^4.17.21",

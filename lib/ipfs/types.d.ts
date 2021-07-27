@@ -1,7 +1,9 @@
+/// <reference types="node" />
 import { ITSPartialRecord } from 'ts-type';
 import CID from 'cids';
 import { IUseIPFSApi } from '../types';
 import { IIPFSEnv } from 'ipfs-env';
+import { ChildProcess } from 'child_process';
 export declare type IFill<T, U> = T & ITSPartialRecord<Exclude<keyof U, keyof T>, void>;
 export declare type IOr<A extends any[]> = A extends [infer T1, infer T2] ? IFill<T1, T2> | IFill<T2, T1> : A extends [infer T1, infer T2, infer T3] ? IFill<T1, T2 & T3> | IFill<T2, T1 & T3> | IFill<T3, T1 & T2> : never;
 export interface IPubSubBase {
@@ -52,6 +54,7 @@ export interface IIPFSControllerDaemon {
         endpoint?: string;
     };
     disposable: boolean;
+    subprocess: ChildProcess;
     init(options?: any): Promise<IIPFSControllerDaemon>;
     cleanup(): Promise<IIPFSControllerDaemon>;
     start(): Promise<IIPFSControllerDaemon>;
@@ -59,4 +62,9 @@ export interface IIPFSControllerDaemon {
     version(): Promise<string>;
     pid(): Promise<string>;
     isNewRepo?: boolean;
+}
+export interface IUseIPFSOptions {
+    disposable?: boolean;
+    factoryOptions?: Record<string, any>;
+    mfs?: boolean;
 }

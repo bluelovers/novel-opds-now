@@ -131,14 +131,14 @@ export function _saveDeepEntryListMapToFile()
 
 	_notOK = true;
 
-	let ls = [...deepEntryListMap, ...newEntryListMap];
+	let ls = new Map([...deepEntryListMap, ...newEntryListMap]);
 
-	if (!ls.length)
+	if (!ls.size)
 	{
 		return;
 	}
 
-	return outputJSON(file, ls, {
+	return outputJSON(file, [...ls], {
 		spaces: 2,
 	}).catch(e => null)
 }
