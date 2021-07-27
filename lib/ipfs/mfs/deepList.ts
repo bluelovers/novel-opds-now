@@ -1,9 +1,11 @@
 import { IUseIPFSApi } from '../../types';
 import { isMatch } from 'micromatch';
 import Bluebird from 'bluebird';
+import console from 'debug-color2/logger';
 
 /**
- * @deprecated
+ * @deprecated because this will freeze ipfs files api
+ * @see https://github.com/ipfs/go-ipfs/issues/8301
  */
 export function deepList(ipfs: IUseIPFSApi, rootStart: string, options?: {
 	debug?: boolean,
@@ -74,6 +76,10 @@ export function deepList(ipfs: IUseIPFSApi, rootStart: string, options?: {
 								map.set(path, cid)
 							})
 						;
+					}
+					else
+					{
+						console.red.debug(`deepList`, path, entry.cid.toString(), ls2?.size)
 					}
 				}
 				else if (!options.glob?.length || isMatch(entry.name, options.glob, {
