@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.47](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.46...novel-opds-now@3.0.47) (2021-07-27)
+
+
+### ✨　Features
+
+* update deepList for more debug message ([5af6159](https://github.com/bluelovers/novel-opds-now/commit/5af6159864eb38e1371c4d6c447a909d411d9261))
+* 修改過期判定 除了 esjzone 以外 全部都改為 30 天 ([eb45782](https://github.com/bluelovers/novel-opds-now/commit/eb45782397bc04e64b83b2ca0657f8b27700b3c4))
+
+
+### 📦　Code Refactoring
+
+* move { test/novel-opds-now.cids.json => test/data/novel-opds-now.cids.json } ([a8dc9d9](https://github.com/bluelovers/novel-opds-now/commit/a8dc9d9aed6594b3eabeacdcb1be510d1c722c75))
+
+
+### 📚　Documentation
+
+* 下載任何支援的網站 ([b4a00dc](https://github.com/bluelovers/novel-opds-now/commit/b4a00dce7440d0f997635457b241c282b94b0664))
+* add 於 IPFS 管理介面導入 CID 的教學 ([be0458b](https://github.com/bluelovers/novel-opds-now/commit/be0458b38aac1247097ec2489d04782bf407d5eb))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([68ed592](https://github.com/bluelovers/novel-opds-now/commit/68ed5926f667d6edc9e629dc4e5dbd5dced7258b))
+* **cache:** update cache ([2bdf7ac](https://github.com/bluelovers/novel-opds-now/commit/2bdf7ac02bfa1827f51458107d7654241dd39f72))
+
+
+### 🔖　Miscellaneous
+
+* . ([9754df1](https://github.com/bluelovers/novel-opds-now/commit/9754df1aea11b7a94cebf929703db3a9f7a8f236))
+* . ([5e733a8](https://github.com/bluelovers/novel-opds-now/commit/5e733a8ede67a9896870ddd5f1208bf8af55d2ba))
+* . ([dba9a48](https://github.com/bluelovers/novel-opds-now/commit/dba9a48d6b51cea24f14108a8098a57fa4630de6))
+* . ([ec98352](https://github.com/bluelovers/novel-opds-now/commit/ec9835238af4b6ca0e18318bba3cf27b95b08646))
+
+
+
+
+
 ## [3.0.46](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.45...novel-opds-now@3.0.46) (2021-07-26)
 
 
