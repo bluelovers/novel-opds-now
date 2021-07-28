@@ -11,7 +11,6 @@ import Bluebird from 'bluebird';
 import { ICacheMap } from '../lib/types';
 import { PassThrough } from 'stream';
 import { fromBuffer } from 'file-type';
-import { __cacheMapFile } from '../lib/const';
 import fileHandler from './file';
 import __root from '../lib/__root';
 import favicon from 'serve-favicon';
