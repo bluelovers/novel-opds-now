@@ -124,23 +124,31 @@ export function enableForceSave()
 
 export function _saveDeepEntryListMapToFile()
 {
-	if (_notOK === true && !newEntryListMap.size)
-	{
-		return;
-	}
+	return Bluebird.resolve()
+		.then<void>(() =>
+		{
+			if (_notOK === true && !newEntryListMap.size)
+			{
+				return;
+			}
 
-	_notOK = true;
+			_notOK = true;
 
-	let ls = new Map([...deepEntryListMap, ...newEntryListMap]);
+			let ls = new Map([...deepEntryListMap, ...newEntryListMap]);
 
-	if (!ls.size)
-	{
-		return;
-	}
+			if (!ls.size)
+			{
+				return;
+			}
 
-	return outputJSON(file, [...ls], {
-		spaces: 2,
-	}).catch(e => null)
+			/**
+			 * 改用 sync 版本來試圖解決不明原因造成檔案有可能變成空的
+			 */
+			return outputJSONSync(file, [...ls], {
+				spaces: 2,
+			})
+		})
+		.catchReturn(null as null)
 }
 
 export const saveDeepEntryListMapToFile = debounce(_saveDeepEntryListMapToFile, 30 * 60 * 1000);
