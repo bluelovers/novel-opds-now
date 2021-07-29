@@ -21,6 +21,7 @@ import raceFetchIPFS from 'fetch-ipfs/race';
 import { raceFetchAll, raceFetchServerList } from '../../util/raceFetchServerList';
 import { cidToString } from '@lazy-ipfs/cid-to-string';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
+import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 
 export const deepEntryListMap = new Map<string, string>();
 export const newEntryListMap = new Map<string, string>();
@@ -45,7 +46,7 @@ export function appendDeepEntryListMapByStatResult(path: string, entry: StatResu
 }
 
 export function appendDeepEntryListMap(path: string,
-	cid: string | CID | StatResult["cid"],
+	cid: ICIDValue | StatResult["cid"],
 	isDirectory?: boolean,
 	forceAdd?: boolean,
 )

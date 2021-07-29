@@ -5,9 +5,10 @@ import CID from 'cids';
 import Bluebird from 'bluebird';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
+import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 
 export function ensureDir(ipfs: ITSResolvable<IUseIPFSApi>, dir_path: string, options?: CpOptions & MkdirOptions & {
-	fromCID?: string | CID,
+	fromCID?: ICIDValue,
 	overwriteTarget?: boolean,
 })
 {

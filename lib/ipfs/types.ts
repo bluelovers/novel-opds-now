@@ -3,6 +3,7 @@ import CID from 'cids';
 import { IUseIPFSApi } from '../types';
 import { IIPFSEnv } from 'ipfs-env';
 import { ChildProcess } from 'child_process';
+import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 
 export type IFill<T, U> = T & ITSPartialRecord<Exclude<keyof U, keyof T>, void>
 export type IOr<A extends any[]> =
@@ -21,7 +22,7 @@ export interface IPubSubEpub extends IPubSubBase
 	novelID: string | number;
 	data: {
 		path: string,
-		cid: string | CID,
+		cid: ICIDValue,
 		size: number,
 	};
 }

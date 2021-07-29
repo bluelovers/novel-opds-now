@@ -4,6 +4,7 @@ import { IPubSubBase, IPubSubEpub } from '../types';
 import { pubsubHandler } from './handler';
 import { ITSResolvable } from 'ts-type';
 import Bluebird from 'bluebird';
+import { cidToString } from '@lazy-ipfs/cid-to-string';
 
 export const EPUB_TOPIC = 'novel-opds-now';
 

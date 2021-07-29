@@ -1,12 +1,12 @@
 /// <reference types="lodash" />
 import Bluebird from 'bluebird';
-import CID from 'cids';
 import { StatResult } from 'ipfs-core-types/src/files';
+import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 export declare const deepEntryListMap: Map<string, string>;
 export declare const newEntryListMap: Map<string, string>;
 export declare function pathDeepEntryListMapJson(): "/novel-opds-now/novel-opds-now.cids.json";
 export declare function appendDeepEntryListMapByStatResult(path: string, entry: StatResult): boolean;
-export declare function appendDeepEntryListMap(path: string, cid: string | CID | StatResult["cid"], isDirectory?: boolean, forceAdd?: boolean): boolean;
+export declare function appendDeepEntryListMap(path: string, cid: ICIDValue | StatResult["cid"], isDirectory?: boolean, forceAdd?: boolean): boolean;
 export declare function loadDeepEntryListMapFromFile(): Bluebird<Map<string, string>>;
 export declare function loadDeepEntryListMapFromServer(): Bluebird<Map<string, string>>;
 export declare function loadDeepEntryListMapFromMixin(): Bluebird<Map<string, string>>;

@@ -9,12 +9,13 @@ import CID from 'cids';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 import { appendDeepEntryListMapByStatResult } from './deepEntryListMap';
+import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 
 export const waitingCache = new Set<string>()
 
 export function _addMutableFileSystem(dir_path: string, data: {
 	path: string,
-	cid: string | CID,
+	cid: ICIDValue,
 }, options?: {
 	ipfs?: ITSResolvable<IUseIPFSApi>,
 	done?(file_path: string): ITSResolvable<any>,

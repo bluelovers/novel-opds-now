@@ -12,6 +12,7 @@ import CID from 'cids';
 import itAll from 'it-all';
 import { IIPFSControllerDaemon } from '../types';
 import { loadDeepEntryListMapFromFile, loadDeepEntryListMapFromMixin } from '../mfs/deepEntryListMap';
+import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 
 export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
@@ -29,7 +30,7 @@ export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSCon
 
 			console.debug(`[IPFS]`, `initHelloCheck`, ls)
 
-			await Bluebird.any(ls.map(async (cid: string | CID) =>
+			await Bluebird.any(ls.map(async (cid: ICIDValue) =>
 				{
 					const timeout = 5000;
 
