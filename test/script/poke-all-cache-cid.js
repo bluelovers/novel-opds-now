@@ -6,13 +6,10 @@ const pokeAll_1 = (0, tslib_1.__importStar)(require("../../lib/ipfs/pokeAll"));
 const raceFetchServerList_1 = require("../../lib/util/raceFetchServerList");
 const array_hyper_unique_1 = require("array-hyper-unique");
 const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
-const events_1 = require("events");
 let oldSet = new Set();
 exports.default = bluebird_1.default.resolve()
     .then(async () => {
     let ls = [];
-    events_1.EventEmitter.defaultMaxListeners = 50;
-    process.setMaxListeners(50);
     await (0, deepEntryListMap_1.loadDeepEntryListMapFromFile)().then(m => ls.push(...m));
     console.debug(`loadDeepEntryListMapFromFile`, ls.length);
     await _json();

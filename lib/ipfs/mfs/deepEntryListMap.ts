@@ -13,12 +13,14 @@ import { publishToIPFSRace } from 'fetch-ipfs/put';
 import { filterList } from 'ipfs-server-list';
 import { getIPFSFromCache } from '../use';
 import { IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
-import { toLink } from 'to-ipfs-url';
+import toURL, { toLink } from 'to-ipfs-url';
 import { filterPokeAllSettledResult, pokeAll } from '../pokeAll';
 import console from 'debug-color2/logger';
 import { ipfsMainPeerID } from '../../dev/admin';
 import raceFetchIPFS from 'fetch-ipfs/race';
 import { raceFetchAll, raceFetchServerList } from '../../util/raceFetchServerList';
+import { cidToString } from '@lazy-ipfs/cid-to-string';
+import { isSameCID } from '@lazy-ipfs/is-same-cid';
 
 export const deepEntryListMap = new Map<string, string>();
 export const newEntryListMap = new Map<string, string>();
@@ -42,7 +44,11 @@ export function appendDeepEntryListMapByStatResult(path: string, entry: StatResu
 	return appendDeepEntryListMap(path, entry.cid as any, entry.type === 'directory')
 }
 
-export function appendDeepEntryListMap(path: string, cid: string | CID | StatResult["cid"], isDirectory?: boolean, forceAdd?: boolean)
+export function appendDeepEntryListMap(path: string,
+	cid: string | CID | StatResult["cid"],
+	isDirectory?: boolean,
+	forceAdd?: boolean,
+)
 {
 	if (isDirectory && path[path.length - 1] !== '/')
 	{
@@ -58,12 +64,16 @@ export function appendDeepEntryListMap(path: string, cid: string | CID | StatRes
 	{
 
 	}
-	else if (!/^\/novel-opds-now\//.test(path) || !cid || !isDirectory && isMatch(path, ['*.{jpg,txt}', '**/*.{jpg,txt}']))
+	else if (!/^\/novel-opds-now\//.test(path) || !cid || !isDirectory && isMatch(path, [
+		'*.{jpg,txt}',
+		'**/*.{jpg,txt}',
+	]))
 	{
 		return false;
 	}
 
 	cid = cid.toString();
+	//console.log(path, cid)
 
 	if (deepEntryListMap.get(path) !== cid && newEntryListMap.get(path) !== cid)
 	{
@@ -155,9 +165,11 @@ export function _saveDeepEntryListMapToServer()
 
 				newEntryListMap.clear();
 
+				deepEntryListMap.delete(pathDeepEntryListMapJson() + '/');
+
 				const ipfs = await getIPFSFromCache();
 
-				const peerID = await ipfs?.id().then(m => m.id).catchReturn(null as null);
+				const peerID = await ipfs?.id().then(m => m.id).catch(e => null as null);
 
 				if (ipfs && ipfsMainPeerID(peerID))
 				{
@@ -169,8 +181,16 @@ export function _saveDeepEntryListMapToServer()
 					{
 						await appendDeepEntryListMap(`/novel-opds-now/`, stat.cid as any, true);
 						await mergeDeepEntryListMap(newEntryListMap, deepEntryListMap);
+
+						pokeAll(cidToString(stat.cid), ipfs, {
+							filename,
+							hidden: true,
+							timeout: 20 * 1000,
+						});
 					}
 				}
+
+				deepEntryListMap.delete(pathDeepEntryListMapJson() + '/');
 
 				const content = JSON.stringify([...deepEntryListMap], null, 2);
 
@@ -206,16 +226,16 @@ export function _saveDeepEntryListMapToServer()
 				;
 
 				pokeAll(cid, ipfs, {
-					filename,
+					//filename,
 					//hidden: true,
-					timeout: 10 * 1000,
+					timeout: 20 * 1000,
 				}).then(settledResults =>
 				{
 					if (settledResults?.length)
 					{
 						let list = filterPokeAllSettledResult(settledResults)
 
-						console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResults.length} 節點中請求分流`, dataKey, list[list.length - 1]?.value?.href)
+						console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResults.length} 節點中請求分流`, dataKey, '\n' + list[list.length - 1]?.value?.href)
 					}
 				});
 
@@ -236,8 +256,25 @@ export function _saveDeepEntryListMapToServer()
 						if (stat?.cid)
 						{
 							await appendDeepEntryListMap(`/novel-opds-now/`, stat.cid as any, true);
+
+							pokeAll(cidToString(stat.cid), ipfs, {
+								filename,
+								hidden: true,
+								timeout: 20 * 1000,
+							});
 						}
 					}
+				}
+
+				if (ipfsMainPeerID(peerID))
+				{
+
+					let old_cid = deepEntryListMap.get(pathDeepEntryListMapJson());
+					if ((old_cid || cid) && !isSameCID(old_cid, cid))
+					{
+						await appendDeepEntryListMap(pathDeepEntryListMapJson() + '.bak', old_cid ?? cid, false, true);
+					}
+
 				}
 
 				await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid as any, false, true);
@@ -259,7 +296,7 @@ export function _saveDeepEntryListMapToServer()
 						{
 							_overwriteServer = false;
 						}
-						console.debug(`_saveDeepEntryListMapToServer`, v.timestamp, v.error, v?.data?.href)
+						console.debug(`_saveDeepEntryListMapToServer`, v.timestamp, v.error, '\n' + v?.data?.href)
 					})
 			}
 		})
@@ -354,12 +391,13 @@ export function mergeDeepEntryListMap(input: Map<string, string> | [string, stri
 
 export function fixDeepEntryListMap(deepEntryListMap: Map<string, string>)
 {
-	deepEntryListMap.forEach((value, key, map) => {
+	deepEntryListMap.forEach((value, key, map) =>
+	{
 
 		if (value.includes('novel-opds-now'))
 		{
-			deepEntryListMap.set(value,  key);
-			deepEntryListMap.delete( key);
+			deepEntryListMap.set(value, key);
+			deepEntryListMap.delete(key);
 
 			console.warn(`fixDeepEntryListMap`, value);
 		}

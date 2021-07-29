@@ -1,11 +1,12 @@
 import Bluebird from 'bluebird';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
+import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 export declare function notAllowedAddress(url: URL | string): boolean;
 export declare function getIpfsGatewayList(ipfs: any): Promise<{
     ipfsGatewayMain: string;
     ipfsGatewayList: string[];
 }>;
-export declare function pokeAll(cid: string, ipfs: any, options?: {
+export declare function pokeAll(cid: ICIDValue, ipfs: any, options?: {
     filename?: string;
     hidden?: boolean;
     timeout?: number;

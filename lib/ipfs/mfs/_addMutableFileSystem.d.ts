@@ -12,5 +12,5 @@ export declare function _addMutableFileSystem(dir_path: string, data: {
 }, ignoreWaitingCheck?: boolean): Bluebird<{
     dir_path: string;
     file_path: string;
-    file_cid: CID;
+    file_cid: import("@lazy-ipfs/to-cid").ICIDObject;
 }>;

@@ -11,7 +11,7 @@ import console from 'debug-color2/logger';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { parsePath } from '@lazy-ipfs/parse-ipfs-path';
 import { EnumParsePathResultNs, IParsePathResult, resultToPath } from '@lazy-ipfs/parse-ipfs-path/lib/parsePath';
-import CID from 'cids';
+import { ICIDObject, ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 
 export function notAllowedAddress(url: URL | string)
 {
@@ -61,7 +61,7 @@ export async function getIpfsGatewayList(ipfs)
  */
 let cachePoke = new Set<string>();
 
-export function pokeAll(cid: string, ipfs, options?: {
+export function pokeAll(cid: ICIDValue, ipfs, options?: {
 	filename?: string,
 	hidden?: boolean,
 	timeout?: number,
@@ -113,7 +113,7 @@ export function pokeAll(cid: string, ipfs, options?: {
 							{
 								data = {
 									ns: EnumParsePathResultNs.ipfs,
-									hash: cid,
+									hash: cid as any,
 									path: '',
 								}
 							}

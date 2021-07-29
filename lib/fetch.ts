@@ -5,6 +5,10 @@ import { RequestInit, RequestInfo, Response } from 'node-fetch';
 import Bluebird from 'bluebird';
 import isErrorCode from 'is-error-code';
 import AbortControllerTimer from 'abort-controller-timer';
+import { EventEmitter } from 'events';
+
+EventEmitter.defaultMaxListeners = 50;
+//process.setMaxListeners(50);
 
 export function fetch(url: RequestInfo,
 	init?: RequestInit & {

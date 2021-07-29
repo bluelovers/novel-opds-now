@@ -28,3 +28,4 @@ export declare function useIPFSFromCache(): Bluebird<{
     stopAsync(): Bluebird<void>;
 }>;
 export declare function getIPFSFromCache(): Bluebird<IUseIPFSApi>;
+export declare function setIPFSToCache(ipfs: IUseIPFSApi): void;

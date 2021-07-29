@@ -16,9 +16,6 @@ export default Bluebird.resolve()
 	{
 		let ls: [string, string][] = [];
 
-		EventEmitter.defaultMaxListeners = 50;
-		process.setMaxListeners(50);
-
 		await loadDeepEntryListMapFromFile().then(m => ls.push(...m));
 
 		console.debug(`loadDeepEntryListMapFromFile`, ls.length);
