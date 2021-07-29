@@ -16,6 +16,9 @@ import { IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import { toLink } from 'to-ipfs-url';
 import { filterPokeAllSettledResult, pokeAll } from '../pokeAll';
 import console from 'debug-color2/logger';
+import { ipfsMainPeerID } from '../../dev/admin';
+import raceFetchIPFS from 'fetch-ipfs/race';
+import { raceFetchAll, raceFetchServerList } from '../../util/raceFetchServerList';
 
 export const deepEntryListMap = new Map<string, string>();
 export const newEntryListMap = new Map<string, string>();
@@ -29,12 +32,17 @@ const file = join(__root, 'test', 'data', filename);
 const rootKey = 'ipfs' as const;
 const dataKey = 'deepEntryListMap' as const;
 
+export function pathDeepEntryListMapJson()
+{
+	return `/novel-opds-now/${filename}` as const
+}
+
 export function appendDeepEntryListMapByStatResult(path: string, entry: StatResult)
 {
 	return appendDeepEntryListMap(path, entry.cid as any, entry.type === 'directory')
 }
 
-export function appendDeepEntryListMap(path: string, cid: string | CID | StatResult["cid"], isDirectory?: boolean)
+export function appendDeepEntryListMap(path: string, cid: string | CID | StatResult["cid"], isDirectory?: boolean, forceAdd?: boolean)
 {
 	if (isDirectory && path[path.length - 1] !== '/')
 	{
@@ -46,7 +54,11 @@ export function appendDeepEntryListMap(path: string, cid: string | CID | StatRes
 		path = '/' + path;
 	}
 
-	if (!/^\/novel-opds-now\//.test(path) || !cid || !isDirectory && isMatch(path, ['*.{jpg,txt}', '**/*.{jpg,txt}']))
+	if (forceAdd)
+	{
+
+	}
+	else if (!/^\/novel-opds-now\//.test(path) || !cid || !isDirectory && isMatch(path, ['*.{jpg,txt}', '**/*.{jpg,txt}']))
 	{
 		return false;
 	}
@@ -85,11 +97,10 @@ export function loadDeepEntryListMapFromServer()
 			},
 		},
 	)
-		.then(raw =>
+		.then(async (raw) =>
 		{
-			return fetch(raw.data.href, {
-				timeout: 60 * 1000,
-			}).then(res => res.json())
+			return raceFetchAll(raceFetchServerList(null, raw.data.href), 60 * 1000)
+				.then(buf => JSON.parse(String(buf) as string) as [string, string][])
 				.tap(row =>
 				{
 					if (!row.length)
@@ -107,6 +118,8 @@ export function loadDeepEntryListMapFromServer()
 
 			mergeDeepEntryListMap(map, tmp);
 			mergeDeepEntryListMap(fixDeepEntryListMap(tmp), deepEntryListMap, _overwriteServer);
+
+			fixDeepEntryListMap(deepEntryListMap)
 
 		})
 		.tapCatch(e =>
@@ -144,7 +157,9 @@ export function _saveDeepEntryListMapToServer()
 
 				const ipfs = await getIPFSFromCache();
 
-				if (ipfs)
+				const peerID = await ipfs.id().then(m => m.id).catchReturn(null as null);
+
+				if (ipfs && ipfsMainPeerID(peerID))
 				{
 					let stat = await ipfs.files.stat(`/novel-opds-now/`, {
 						hash: true,
@@ -206,23 +221,26 @@ export function _saveDeepEntryListMapToServer()
 
 				if (ipfs)
 				{
-					await ipfs.files.write(`/novel-opds-now/${filename}`, content, {
+					await ipfs.files.write(pathDeepEntryListMapJson(), content, {
 						timeout: 10 * 1000,
 						create: true,
 						parents: true,
 					}).catch((e) => console.warn(`_saveDeepEntryListMapToServer`, `ipfs.files.write`, e))
 
-					let stat = await ipfs.files.stat(`/novel-opds-now/`, {
-						hash: true,
-					}).catch(e => null as null);
-
-					if (stat?.cid)
+					if (ipfsMainPeerID(peerID))
 					{
-						await appendDeepEntryListMap(`/novel-opds-now/`, stat.cid as any, true);
+						let stat = await ipfs.files.stat(`/novel-opds-now/`, {
+							hash: true,
+						}).catch(e => null as null);
+
+						if (stat?.cid)
+						{
+							await appendDeepEntryListMap(`/novel-opds-now/`, stat.cid as any, true);
+						}
 					}
 				}
 
-				await appendDeepEntryListMap(`/novel-opds-now/${filename}`, cid as any, true);
+				await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid as any, false, true);
 
 				return putFileRecord({
 						siteID: rootKey,

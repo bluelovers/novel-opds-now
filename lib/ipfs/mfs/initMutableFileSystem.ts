@@ -14,6 +14,37 @@ import { pokeRoot } from './pokeRoot';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 import { globalWaiting, newWaitingPromise } from '../../util/globalWaiting';
+import itFirst from 'it-first';
+
+export function _checkIPFSWithMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>): Bluebird<boolean>
+{
+	return Bluebird.resolve(ipfs)
+		.then(ipfs =>
+		{
+			return Bluebird.all([
+					ipfs.files.stat(`/novel-opds-now`, {
+						hash: true,
+						timeout: 5000,
+					}),
+					itFirst(ipfs.files.ls(`/`, {
+						timeout: 5000,
+					})).then(result =>
+					{
+						if (!result.name.length)
+						{
+							return Promise.reject()
+						}
+					}),
+				])
+				.tapCatch(e => {
+					//Error.captureStackTrace(e)
+					console.error(e)
+				})
+				;
+		})
+		.thenReturn(true)
+		.catchReturn(false)
+}
 
 export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
@@ -62,13 +93,13 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 
 									//console.yellow.debug(`[IPFS]`, isSameCID(cid, stat?.cid), cid, stat?.cid)
 
-									if (isSameCID(cid, stat?.cid))
+									if (isSameCID(cid, stat?.cid as any))
 									{
 										//console.gray.debug(`[IPFS]`, `skip restore mfs`, `${cid}`, target_path)
 
 										return;
 									}
-									else if (isSameCID('QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn', stat?.cid))
+									else if (isSameCID('QmUNLLsPACCz1vLxQVkXqqLX5R1X345qqfHbsf67hvA3Nn', stat?.cid as any))
 									{
 										await ipfs.files.rm(target_path).catch(e => null)
 									}
@@ -153,7 +184,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 					hash: true,
 				}).catch(e => null);
 
-				if (!isSameCID(file_stat?.cid, file_cid))
+				if (!isSameCID(file_stat?.cid as any, file_cid as any))
 				{
 					/*
 					await ipfs.files.mkdir(`/novel-opds-now/`, {
@@ -162,7 +193,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 					 */
 
 					await ipfs.files.rm(file_path).catch(e => null);
-					await _ipfsFilesCopyCID(ipfs, file_cid, file_path, {
+					await _ipfsFilesCopyCID(ipfs, file_cid as any, file_path, {
 						// @ts-ignore
 						pin: false,
 						parents: true,
