@@ -157,7 +157,7 @@ export function _saveDeepEntryListMapToServer()
 
 				const ipfs = await getIPFSFromCache();
 
-				const peerID = await ipfs.id().then(m => m.id).catchReturn(null as null);
+				const peerID = await ipfs?.id().then(m => m.id).catchReturn(null as null);
 
 				if (ipfs && ipfsMainPeerID(peerID))
 				{
