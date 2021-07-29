@@ -80,6 +80,7 @@ __snapshots__
 now.json
 radata
 package-lock.json
+/test/*
 !/yarn.lock
 !/.cache
 radata-*.tmp
@@ -89,3 +90,9 @@ npm-shrinkwrap.json
 /test/.identity.json
 .identity.json
 !test/data/novel-opds-now.cids.json
+
+/test/*.js
+/test/*.map
+/test/*.ts
+/test/*.json
+/test/.*
