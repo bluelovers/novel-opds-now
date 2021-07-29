@@ -22,6 +22,7 @@ import { raceFetchAll, raceFetchServerList } from '../../util/raceFetchServerLis
 import { cidToString } from '@lazy-ipfs/cid-to-string';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
+import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 
 export const deepEntryListMap = new Map<string, string>();
 export const newEntryListMap = new Map<string, string>();
@@ -273,7 +274,13 @@ export function _saveDeepEntryListMapToServer()
 					let old_cid = deepEntryListMap.get(pathDeepEntryListMapJson());
 					if ((old_cid || cid) && !isSameCID(old_cid, cid))
 					{
-						await appendDeepEntryListMap(pathDeepEntryListMapJson() + '.bak', old_cid ?? cid, false, true);
+						let bak = pathDeepEntryListMapJson() + '.bak';
+						let bak_cid = old_cid ?? cid;
+
+						await ipfs.files.rm(bak).catch(e => null)
+						await _ipfsFilesCopyCID(ipfs, bak_cid, bak).catch(e => null);
+
+						await appendDeepEntryListMap(bak, bak_cid, false, true);
 					}
 
 				}
