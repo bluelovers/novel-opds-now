@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.49](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.48...novel-opds-now@3.0.49) (2021-07-29)
+
+
+### 🐛　Bug Fixes
+
+* npm pack ignore ([a37abc2](https://github.com/bluelovers/novel-opds-now/commit/a37abc21e557e3c741722ec22bbed60d397f73fc))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([cdf1db6](https://github.com/bluelovers/novel-opds-now/commit/cdf1db626cedbc56baf7afec08987eec0180cd2c))
+
+
+
+
+
 ## [3.0.48](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.47...novel-opds-now@3.0.48) (2021-07-29)
 
 
