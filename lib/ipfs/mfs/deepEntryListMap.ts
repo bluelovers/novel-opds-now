@@ -7,21 +7,34 @@ import { StatResult } from 'ipfs-core-types/src/files';
 import { debounce, throttle } from 'lodash';
 import processExit from '../../util/processExit';
 import { isMatch } from 'micromatch';
-import { putRawRecord, getRawRecord } from '@demonovel/db-api';
+import { putRawRecord, getRawRecord, getFileRecord, putFileRecord } from '@demonovel/db-api';
+import fetch from '../../fetch';
+import { publishToIPFSRace } from 'fetch-ipfs/put';
+import { filterList } from 'ipfs-server-list';
+import { getIPFSFromCache } from '../use';
+import { IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
+import { toLink } from 'to-ipfs-url';
+import { filterPokeAllSettledResult, pokeAll } from '../pokeAll';
+import console from 'debug-color2/logger';
 
 export const deepEntryListMap = new Map<string, string>();
 export const newEntryListMap = new Map<string, string>();
 
 let _notOK = true;
+let _overwriteServer = false;
 
-const file = join(__root, 'test', 'data', 'novel-opds-now.cids.json');
+const filename = 'novel-opds-now.cids.json' as const;
+const file = join(__root, 'test', 'data', filename);
+
+const rootKey = 'ipfs' as const;
+const dataKey = 'deepEntryListMap' as const;
 
 export function appendDeepEntryListMapByStatResult(path: string, entry: StatResult)
 {
-	return appendDeepEntryListMap(path, entry.cid, entry.type === 'directory')
+	return appendDeepEntryListMap(path, entry.cid as any, entry.type === 'directory')
 }
 
-export function appendDeepEntryListMap(path: string, cid: string | CID, isDirectory?: boolean)
+export function appendDeepEntryListMap(path: string, cid: string | CID | StatResult["cid"], isDirectory?: boolean)
 {
 	if (isDirectory && path[path.length - 1] !== '/')
 	{
@@ -64,17 +77,41 @@ export function loadDeepEntryListMapFromFile()
 
 export function loadDeepEntryListMapFromServer()
 {
-	return getRawRecord<[string, string][]>({
-			rootKey: 'ipfs',
-			dataKey: 'deepEntryListMap',
+	return getFileRecord({
+			siteID: rootKey,
+			novelID: dataKey,
 			fetchOptions: {
-				timeout: 60 * 1000,
+				timeout: 20 * 1000,
 			},
 		},
 	)
-		.tap((raw) =>
+		.then(raw =>
 		{
-			mergeDeepEntryListMap(raw.data, deepEntryListMap);
+			return fetch(raw.data.href, {
+				timeout: 60 * 1000,
+			}).then(res => res.json())
+				.tap(row =>
+				{
+					if (!row.length)
+					{
+						const e = new TypeError(`deepEntryListMap data is broken`);
+						// @ts-ignore
+						e.data = row;
+						return Promise.reject(e)
+					}
+				})
+		})
+		.tap((map) =>
+		{
+			let tmp = new Map<string, string>();
+
+			mergeDeepEntryListMap(map, tmp);
+			mergeDeepEntryListMap(fixDeepEntryListMap(tmp), deepEntryListMap, _overwriteServer);
+
+		})
+		.tapCatch(e =>
+		{
+			console.error(`loadDeepEntryListMapFromServer`, e)
 		})
 		.catchReturn(null as null)
 		.thenReturn(deepEntryListMap)
@@ -90,13 +127,13 @@ export function loadDeepEntryListMapFromMixin()
 export function _saveDeepEntryListMapToServer()
 {
 	return loadDeepEntryListMapFromServer()
-		.then(() =>
+		.then(async () =>
 		{
-			if (_notOK === false || newEntryListMap.size)
+			if (_notOK === false || newEntryListMap.size || _overwriteServer)
 			{
 				_notOK = false;
 
-				mergeDeepEntryListMap(newEntryListMap, deepEntryListMap);
+				await mergeDeepEntryListMap(newEntryListMap, deepEntryListMap);
 
 				if (!deepEntryListMap.size)
 				{
@@ -105,14 +142,110 @@ export function _saveDeepEntryListMapToServer()
 
 				newEntryListMap.clear();
 
-				return putRawRecord<[string, string][]>({
-						rootKey: 'ipfs',
-						dataKey: 'deepEntryListMap',
-						data: [...deepEntryListMap, ...newEntryListMap],
+				const ipfs = await getIPFSFromCache();
+
+				if (ipfs)
+				{
+					let stat = await ipfs.files.stat(`/novel-opds-now/`, {
+						hash: true,
+					}).catch(e => null as null);
+
+					if (stat?.cid)
+					{
+						await appendDeepEntryListMap(`/novel-opds-now/`, stat.cid as any, true);
+						await mergeDeepEntryListMap(newEntryListMap, deepEntryListMap);
+					}
+				}
+
+				const content = JSON.stringify([...deepEntryListMap], null, 2);
+
+				let cid: string;
+
+				await publishToIPFSRace({
+					path: filename,
+					content,
+				}, [
+					ipfs as any,
+					...filterList('API'),
+				], {
+					addOptions: {
+						pin: true,
+					},
+					timeout: 60 * 1000,
+				})
+					.each((settledResult, index) =>
+					{
+						// @ts-ignore
+						let value: IIPFSFileApiAddReturnEntry[] = settledResult.value ?? settledResult.reason?.value;
+
+						if (value?.length)
+						{
+							const { status } = settledResult;
+
+							value.forEach((result, i) =>
+							{
+								cid = result.cid.toString();
+							});
+						}
+					})
+				;
+
+				pokeAll(cid, ipfs, {
+					filename,
+					//hidden: true,
+					timeout: 10 * 1000,
+				}).then(settledResults =>
+				{
+					if (settledResults?.length)
+					{
+						let list = filterPokeAllSettledResult(settledResults)
+
+						console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResults.length} 節點中請求分流`, dataKey, list[list.length - 1]?.value?.href)
+					}
+				});
+
+				if (ipfs)
+				{
+					await ipfs.files.write(`/novel-opds-now/${filename}`, content, {
+						timeout: 10 * 1000,
+						create: true,
+						parents: true,
+					}).catch((e) => console.warn(`_saveDeepEntryListMapToServer`, `ipfs.files.write`, e))
+
+					let stat = await ipfs.files.stat(`/novel-opds-now/`, {
+						hash: true,
+					}).catch(e => null as null);
+
+					if (stat?.cid)
+					{
+						await appendDeepEntryListMap(`/novel-opds-now/`, stat.cid as any, true);
+					}
+				}
+
+				await appendDeepEntryListMap(`/novel-opds-now/${filename}`, cid as any, true);
+
+				return putFileRecord({
+						siteID: rootKey,
+						novelID: dataKey,
+						data: {
+							timestamp: Date.now(),
+							exists: true,
+							filename,
+							href: toLink(cid),
+						},
 					},
 				)
+					.tap(v =>
+					{
+						if (!v.error && v?.data?.href)
+						{
+							_overwriteServer = false;
+						}
+						console.debug(`_saveDeepEntryListMapToServer`, v.timestamp, v.error, v?.data?.href)
+					})
 			}
 		})
+		.tapCatch(e => console.error(`_saveDeepEntryListMapToServer`, e))
 		.catchReturn(null)
 		.thenReturn(deepEntryListMap)
 }
@@ -120,6 +253,11 @@ export function _saveDeepEntryListMapToServer()
 export function enableForceSave()
 {
 	_notOK = false;
+}
+
+export function enableOverwriteServer()
+{
+	_overwriteServer = true;
 }
 
 export function _saveDeepEntryListMapToFile()
@@ -144,11 +282,14 @@ export function _saveDeepEntryListMapToFile()
 			/**
 			 * 改用 sync 版本來試圖解決不明原因造成檔案有可能變成空的
 			 */
-			return outputJSONSync(file, [...ls], {
+			outputJSONSync(file, [...ls], {
 				spaces: 2,
-			})
+			});
+
+			console.debug(`_saveDeepEntryListMapToFile`, ls.size)
 		})
 		.catchReturn(null as null)
+		.thenReturn(deepEntryListMap)
 }
 
 export const saveDeepEntryListMapToFile = debounce(_saveDeepEntryListMapToFile, 30 * 60 * 1000);
@@ -157,21 +298,55 @@ export const saveDeepEntryListMapToServer = debounce(_saveDeepEntryListMapToServ
 
 export function saveDeepEntryListMapToMixin()
 {
-	return Bluebird.all([
-		saveDeepEntryListMapToFile,
+	return Bluebird.mapSeries([
 		saveDeepEntryListMapToServer,
-	])
+		saveDeepEntryListMapToFile,
+	], (r) => r).thenReturn(deepEntryListMap)
 }
 
-export function mergeDeepEntryListMap(input: Map<string, string> | [string, string][], target: Map<string, string>)
+export function mergeDeepEntryListMap(input: Map<string, string> | [string, string][],
+	target: Map<string, string>,
+	keepExists?: boolean,
+)
 {
 	if (input)
 	{
-		for (const [path, cid] of (Array.isArray(input) ? input.values() : input.entries()))
+		if (keepExists)
 		{
-			target.set(path, cid);
+			for (const [path, cid] of (Array.isArray(input) ? input.values() : input.entries()))
+			{
+				if (target.get(path)?.length)
+				{
+					continue;
+				}
+				target.set(path, cid);
+			}
+		}
+		else
+		{
+			for (const [path, cid] of (Array.isArray(input) ? input.values() : input.entries()))
+			{
+				target.set(path, cid);
+			}
 		}
 	}
 
 	return target;
+}
+
+export function fixDeepEntryListMap(deepEntryListMap: Map<string, string>)
+{
+	deepEntryListMap.forEach((value, key, map) => {
+
+		if (value.includes('novel-opds-now'))
+		{
+			deepEntryListMap.set(value,  key);
+			deepEntryListMap.delete( key);
+
+			console.warn(`fixDeepEntryListMap`, value);
+		}
+
+	});
+
+	return deepEntryListMap
 }

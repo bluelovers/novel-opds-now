@@ -2,6 +2,7 @@ import { IUseIPFSApi } from '../../types';
 import { isMatch } from 'micromatch';
 import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
+import { mergeDeepEntryListMap } from './deepEntryListMap';
 
 /**
  * @deprecated because this will freeze ipfs files api
@@ -70,12 +71,7 @@ export function deepList(ipfs: IUseIPFSApi, rootStart: string, options?: {
 						map.set(path2, entry.cid.toString());
 						options.debug && debug(map, path2);
 
-						ls2
-							.forEach((path, cid) =>
-							{
-								map.set(path, cid)
-							})
-						;
+						mergeDeepEntryListMap(ls2, map);
 					}
 					else
 					{
