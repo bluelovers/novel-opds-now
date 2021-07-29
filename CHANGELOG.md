@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.48](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.47...novel-opds-now@3.0.48) (2021-07-29)
+
+
+### 🐛　Bug Fixes
+
+* TypeError: Cannot read property 'id' of null ([b70d8ca](https://github.com/bluelovers/novel-opds-now/commit/b70d8ca848b762fc721b216aaf2ff316be5ac369))
+* 修正 deepEntryListMap 內的錯誤資料 以及 修正 firebase 不能一次性上傳大量資料 ([e4a8efc](https://github.com/bluelovers/novel-opds-now/commit/e4a8efc7bd81f38d67f5bedc53891df7642c12cb))
+* 改用 sync 版本來試圖解決不明原因造成 DeepEntryListMap 檔案有可能變成空的 ([14714ca](https://github.com/bluelovers/novel-opds-now/commit/14714ca86906b7f29772d33d984572dfd9c7b2f8))
+
+
+### ✨　Features
+
+* unhandledRejection ([e457d80](https://github.com/bluelovers/novel-opds-now/commit/e457d801e8a0021ebef6cb30d5e95fd3169f1ec1))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([636eae7](https://github.com/bluelovers/novel-opds-now/commit/636eae7199d5ab1327249ee8cd9b8635ac19a2d3))
+
+
+### ⚙️　Continuous Integration
+
+* update poke script ([8a6bde9](https://github.com/bluelovers/novel-opds-now/commit/8a6bde9bfee60b623771ab839e270d2bc5e87039))
+
+
+### 🔖　Miscellaneous
+
+* . ([5f3c5c8](https://github.com/bluelovers/novel-opds-now/commit/5f3c5c8ffbbd0d1db2a35a2799bce736397b3dec))
+* . ([05633e4](https://github.com/bluelovers/novel-opds-now/commit/05633e412b1e150ba6512d45fb3fa18ffda3c3cf))
+* . ([e078107](https://github.com/bluelovers/novel-opds-now/commit/e0781071d9959c4033cc324fc44b5d75075e7670))
+* . ([55100f3](https://github.com/bluelovers/novel-opds-now/commit/55100f3331ed888683b2bd8b60be7899c32ccdc7))
+* . ([221ec14](https://github.com/bluelovers/novel-opds-now/commit/221ec147e5ee24062d9d275bfe74ace2c0daa583))
+
+
+
+
+
 ## [3.0.47](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.46...novel-opds-now@3.0.47) (2021-07-27)
 
 

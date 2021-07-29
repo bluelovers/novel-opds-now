@@ -15,4 +15,6 @@ export default loadDeepEntryListMapFromFile()
 	.tap(enableForceSave)
 	.tap(_saveDeepEntryListMapToFile)
 	.tap(b => console.log(deepEntryListMap.size))
+	.delay(30 * 1000)
+	.tap(b => process.exit())
 ;
