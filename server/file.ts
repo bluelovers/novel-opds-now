@@ -24,6 +24,8 @@ import { doPackEpubFromSource } from '../lib/doPackEpubFromSource';
 import { getNovelData } from '../lib/site/cached-data/getNovelData';
 import { siteNeverExpired } from '../lib/site/siteNeverExpired';
 import { demoNovelFileHandler } from './router/file/demonovel';
+import { deleteEpubProcessCacheJson, getEpubProcessCacheJson } from '../lib/epub/epubProcessCacheJson';
+import { getIPFS, getIPFSFromCache } from '../lib/ipfs/use';
 
 export type IRouter = Router;
 
@@ -148,11 +150,9 @@ function fileHandler()
 							return Promise.reject(cp.error)
 						}
 
-						let map: ICacheMap = await readJSON(__cacheMapFile)
-							.catch(e => console.error(`readJSON`, __cacheMapFile, e))
-						;
+						let _data = await getEpubProcessCacheJson(IDKEY, novel_id);
 
-						if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id]))
+						if (!gunData && !_data)
 						{
 							gunData = await getGunEpubFile2([
 								//req.params.siteID,
@@ -171,13 +171,11 @@ function fileHandler()
 							}
 						}
 
-						if (!map || !map[IDKEY] || !map[IDKEY][novel_id])
+						if (!_data)
 						{
-							console.dir(map);
-
 							return Promise.reject(new Error(`建立檔案時失敗，${siteID} ${novel_id} 可能不存在或解析失敗...`))
 						}
-						else if (map[IDKEY][novel_id].status === EnumCacheMapRowStatus.WAITING_RETRY)
+						else if (_data.status === EnumCacheMapRowStatus.WAITING_RETRY)
 						{
 							let e = new Error(`抓取 ${siteID} ${novel_id} 來源時失敗，伺服器可能忙碌或拒絕回應，請之後再重試...`);
 
@@ -187,15 +185,7 @@ function fileHandler()
 							return Promise.reject(e)
 						}
 
-						let _data = map[IDKEY][novel_id];
-
-						delete map[IDKEY][_data.novel_id2];
-						delete map[IDKEY][_data.novel_id];
-
-						await writeJSON(__cacheMapFile, map, { spaces: 2 }).catch(e =>
-						{
-							console.error(`發生錯誤，無法寫入緩存檔案 ${__cacheMapFile}`, String(e));
-						});
+						deleteEpubProcessCacheJson(IDKEY, novel_id, _data);
 
 						return _data
 					})
@@ -306,6 +296,21 @@ function fileHandler()
 					res.set('Content-disposition', attachment);
 					res.set('Content-Type', mime);
 
+					let cid: string;
+					if (data?.href)
+					{
+						cid = new URL(data.href).pathname
+					}
+					else
+					{
+						cid = await getIPFSFromCache().then(ipfs => ipfs.files.stat(`/novel-opds-now/${IDKEY}/${novel_id}/${filename}`)).then(r => '/ipfs/' + r.cid.toString()).catch(e => null)
+					}
+
+					if (cid?.length)
+					{
+						res.set('X-Ipfs-Path', cid);
+					}
+
 					console.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename)
 						? `=> ${http_filename}`
 						: '', novelData?.title);
@@ -347,7 +352,7 @@ export function removeTempOutputDir(query: {
 	removeCallback?(): any
 })
 {
-	return Promise.resolve()
+	return Bluebird.resolve().delay(30 * 1000)
 		.then(() =>
 		{
 			if (query.debug)

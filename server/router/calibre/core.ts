@@ -2,7 +2,7 @@ import createHandler from 'calibre-server/lib/handler';
 import { ParsedQs } from 'qs';
 import { NextFunction, ParamsDictionary, Request, Response } from 'express-serve-static-core';
 import { buildLibraryList } from 'calibre-server/lib/db/buildList';
-import { pathWithPrefix } from './util';
+import { getCalibrePaths, pathWithPrefix } from './util';
 import console from 'debug-color2/logger';
 import { showClient } from '../../util/showClient';
 import { Router } from 'express';
@@ -40,18 +40,7 @@ async function calibreHandlerCore(): Promise<Router>
 {
 	//process.env.CALIBRE_PATH = `D:\\Program Files (Portable)\\Calibre Portable`;
 
-	let calibrePaths: string | string[] = envCalibrePath(process.env);
-
-	if (typeof calibrePaths === 'string')
-	{
-		calibrePaths = calibrePaths.split(delimiter);
-	}
-	else
-	{
-		calibrePaths = [calibrePaths];
-	}
-
-	calibrePaths = calibrePaths.flat().filter(v => Boolean(v) && v !== 'undefined' && v !== 'null');
+	let calibrePaths = getCalibrePaths();
 
 	console.debug(`[Calibre]`, `delimiter`, delimiter);
 	console.debug(`[Calibre]`, `calibrePaths`, calibrePaths);
@@ -76,9 +65,7 @@ async function calibreHandlerCore(): Promise<Router>
 
 	const updateLibraryList = throttle(() => {
 		return buildLibraryList({
-			// @ts-ignore
 			calibrePaths,
-			// @ts-ignore
 			cwd: calibrePaths[0],
 		}).then(dbList => calibreOptions.dbList = dbList)
 	}, 12 * 60 * 60 * 1000);

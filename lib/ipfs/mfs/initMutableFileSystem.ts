@@ -75,7 +75,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 					await readJSON(join(__root, 'test', '.mfs.roots.json'))
 						.then(async (record: Record<string, string>) =>
 						{
-							let pa = [[]] as Promise<any>[][];
+							let pa = [[], []] as Promise<any>[][];
 
 							await Bluebird.resolve(Object.entries(record))
 								.mapSeries(async ([path, cid]) =>
@@ -146,15 +146,16 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 											//parents: true,
 										})
 											.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
-											.catch(e => null)
 									;
 
 									if (path.includes('novel-opds-now'))
 									{
+										pa[0] ??= [];
 										pa[0].push(p)
 									}
 									else
 									{
+										pa[1] ??= [];
 										pa[1].push(p)
 									}
 								})
@@ -163,9 +164,11 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 							//await itAll(ipfs.files.ls('/')).then(console.debug)
 							//console.dir(record);
 
+							//console.dir(pa)
+
 							return Promise.all(pa[0])
 						})
-						.catch(e => null)
+						.catch(e => console.error(e))
 					;
 				}
 

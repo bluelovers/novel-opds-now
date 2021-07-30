@@ -40,6 +40,7 @@ switch (argv.mod as 'handle' | 'download')
 		}
 
 		spawnSync('node', [
+			'--enable-source-maps',
 			'--experimental-worker',
 			resolve(__dirname, `./mod/${argv.mod}`),
 			'--IDKEY',

@@ -12,7 +12,7 @@ export declare function useIPFS(options?: {
     stop: (done?: any) => void;
     stopAsync(): Bluebird<void>;
 }>;
-export declare function searchIpfs(): Promise<{
+export declare function searchIpfs(): Bluebird<{
     ipfsd: null;
     ipfs: IUseIPFSApi;
     stop(...argv: any[]): Promise<void>;

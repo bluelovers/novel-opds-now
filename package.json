@@ -132,6 +132,7 @@
     "layerr": "^0.1.2",
     "lazy-url": "^1.0.12",
     "lodash": "^4.17.21",
+    "many-keys-map": "^1.0.3",
     "many-keys-weakmap": "^1.0.0",
     "mem": "<9",
     "micro": "^9.3.5-canary.3",

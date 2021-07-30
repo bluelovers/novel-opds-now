@@ -194,34 +194,36 @@ function _handle(cache: typeof _cache)
 		;
 }
 
-export async function searchIpfs()
+export function searchIpfs()
 {
-	console.info(`[IPFS]`, `搜尋可用的 IPFS 伺服器...`, `可使用 IPFS_ADDRESSES_API 來指定特定伺服器`);
+	return Bluebird.resolve().then(async () => {
+		console.info(`[IPFS]`, `搜尋可用的 IPFS 伺服器...`, `可使用 IPFS_ADDRESSES_API 來指定特定伺服器`);
 
-	let ipfsServerList = getDefaultServerList();
+		let ipfsServerList = getDefaultServerList();
 
-	let ipfs: IUseIPFSApi = await findIpfsClient(ipfsServerList as any);
+		let ipfs: IUseIPFSApi = await findIpfsClient(ipfsServerList as any);
 
-	if (!await checkIPFS(ipfs).catch(e => null))
-	{
-		return Promise.reject(new Error)
-	}
-
-	return {
-		ipfsd: undefined as null,
-		ipfs,
-
-		async stop(...argv)
+		if (!await checkIPFS(ipfs).catch(e => null))
 		{
-			// 連接到已經存在的 ipfs 伺服器時，不執行 stop 指令
-			return ipfsAddresses(ipfs as any)
-				.then(addr =>
-				{
-					console.warn(`[IPFS]`, `IPFS 伺服器可能仍在執行中，請自行停止伺服器`, addr);
-				})
-				.catch(e => null as null)
-		},
-	}
+			return Promise.reject(new Error)
+		}
+
+		return {
+			ipfsd: undefined as null,
+			ipfs,
+
+			async stop(...argv)
+			{
+				// 連接到已經存在的 ipfs 伺服器時，不執行 stop 指令
+				return ipfsAddresses(ipfs as any)
+					.then(addr =>
+					{
+						console.warn(`[IPFS]`, `IPFS 伺服器可能仍在執行中，請自行停止伺服器`, addr);
+					})
+					.catch(e => null as null)
+			},
+		}
+	})
 }
 
 function _useIPFS(options?: {

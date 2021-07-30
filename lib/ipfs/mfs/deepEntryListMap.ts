@@ -285,7 +285,7 @@ export function _saveDeepEntryListMapToServer()
 
 				}
 
-				await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid as any, false, true);
+				await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid, false, true);
 
 				return putFileRecord({
 						siteID: rootKey,

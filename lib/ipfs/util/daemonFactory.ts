@@ -64,6 +64,9 @@ export async function daemonFactory(disposable: boolean, options?: IUseIPFSOptio
 		//test: disposable,
 		forceKill: true,
 		forceKillTimeout: 3000,
+		args: [
+			'--enable-gc',
+		]
 	});
 
 	const ipfsd = await myFactory.spawn() as IIPFSControllerDaemon

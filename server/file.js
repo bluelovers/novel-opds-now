@@ -5,7 +5,6 @@ const tslib_1 = require("tslib");
 const express_1 = require("express");
 const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 const const_1 = require("novel-downloader/src/all/const");
-const const_2 = require("../lib/const");
 const path_1 = require("path");
 const fs_extra_1 = require("fs-extra");
 const stream_1 = require("stream");
@@ -20,6 +19,8 @@ const doPackEpubFromSource_1 = require("../lib/doPackEpubFromSource");
 const getNovelData_1 = require("../lib/site/cached-data/getNovelData");
 const siteNeverExpired_1 = require("../lib/site/siteNeverExpired");
 const demonovel_1 = require("./router/file/demonovel");
+const epubProcessCacheJson_1 = require("../lib/epub/epubProcessCacheJson");
+const use_1 = require("../lib/ipfs/use");
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/demo(novel)?', (0, demonovel_1.demoNovelFileHandler)());
@@ -92,9 +93,8 @@ function fileHandler() {
                 if (cp.error) {
                     return Promise.reject(cp.error);
                 }
-                let map = await (0, fs_extra_1.readJSON)(const_2.__cacheMapFile)
-                    .catch(e => logger_1.default.error(`readJSON`, const_2.__cacheMapFile, e));
-                if (!gunData && (!map || !map[IDKEY] || !map[IDKEY][novel_id])) {
+                let _data = await (0, epubProcessCacheJson_1.getEpubProcessCacheJson)(IDKEY, novel_id);
+                if (!gunData && !_data) {
                     gunData = await (0, store_1.getGunEpubFile2)([
                         IDKEY,
                     ], [
@@ -107,21 +107,15 @@ function fileHandler() {
                         return gunData;
                     }
                 }
-                if (!map || !map[IDKEY] || !map[IDKEY][novel_id]) {
-                    logger_1.default.dir(map);
+                if (!_data) {
                     return Promise.reject(new Error(`建立檔案時失敗，${siteID} ${novel_id} 可能不存在或解析失敗...`));
                 }
-                else if (map[IDKEY][novel_id].status === 504) {
+                else if (_data.status === 504) {
                     let e = new Error(`抓取 ${siteID} ${novel_id} 來源時失敗，伺服器可能忙碌或拒絕回應，請之後再重試...`);
                     e.StatusCode = 504;
                     return Promise.reject(e);
                 }
-                let _data = map[IDKEY][novel_id];
-                delete map[IDKEY][_data.novel_id2];
-                delete map[IDKEY][_data.novel_id];
-                await (0, fs_extra_1.writeJSON)(const_2.__cacheMapFile, map, { spaces: 2 }).catch(e => {
-                    logger_1.default.error(`發生錯誤，無法寫入緩存檔案 ${const_2.__cacheMapFile}`, String(e));
-                });
+                (0, epubProcessCacheJson_1.deleteEpubProcessCacheJson)(IDKEY, novel_id, _data);
                 return _data;
             })
                 .catch(e => {
@@ -184,6 +178,16 @@ function fileHandler() {
                 let attachment = (0, content_disposition_1.default)(http_filename);
                 res.set('Content-disposition', attachment);
                 res.set('Content-Type', mime);
+                let cid;
+                if (data === null || data === void 0 ? void 0 : data.href) {
+                    cid = new URL(data.href).pathname;
+                }
+                else {
+                    cid = await (0, use_1.getIPFSFromCache)().then(ipfs => ipfs.files.stat(`/novel-opds-now/${IDKEY}/${novel_id}/${filename}`)).then(r => '/ipfs/' + r.cid.toString()).catch(e => null);
+                }
+                if (cid === null || cid === void 0 ? void 0 : cid.length) {
+                    res.set('X-Ipfs-Path', cid);
+                }
                 logger_1.default.info(`將檔案傳送至客戶端 ( ${req.clientIp} )...`, filename, (filename !== http_filename)
                     ? `=> ${http_filename}`
                     : '', novelData === null || novelData === void 0 ? void 0 : novelData.title);
@@ -208,7 +212,7 @@ function fileHandler() {
     return router;
 }
 function removeTempOutputDir(query, data) {
-    return Promise.resolve()
+    return bluebird_1.default.resolve().delay(30 * 1000)
         .then(() => {
         if (query.debug) {
             logger_1.default.debug(`忽略刪除下載暫存 ${data.outputDir}`);

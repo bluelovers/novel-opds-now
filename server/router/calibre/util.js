@@ -1,8 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.pathWithPrefix = void 0;
+exports.pathWithPrefix = exports.getCalibrePaths = void 0;
 const path_1 = require("path");
 const isBookFile_1 = require("calibre-server/lib/util/isBookFile");
+const calibre_env_1 = require("calibre-env");
+function getCalibrePaths() {
+    return [(0, calibre_env_1.envCalibrePath)(process.env)].flatMap(v => v === null || v === void 0 ? void 0 : v.split(path_1.delimiter)).flat().filter(v => Boolean(v) && v !== 'undefined' && v !== 'null');
+}
+exports.getCalibrePaths = getCalibrePaths;
 function pathWithPrefix(a = '', ...input) {
     var _a, _b, _c, _d;
     let prefix = '/opds/calibre';

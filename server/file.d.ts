@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import Bluebird from 'bluebird';
 export declare type IRouter = Router;
 declare function fileHandler(): Router;
 export declare function removeTempOutputDir(query: {
@@ -6,5 +7,5 @@ export declare function removeTempOutputDir(query: {
 }, data: {
     outputDir: string;
     removeCallback?(): any;
-}): Promise<any>;
+}): Bluebird<any>;
 export default fileHandler;

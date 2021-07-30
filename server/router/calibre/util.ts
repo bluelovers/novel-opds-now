@@ -1,6 +1,12 @@
-import { basename, extname } from "path";
+import { basename, delimiter, extname } from "path";
 import { IBook } from 'calibre-db/lib/types';
 import { isBookFile } from 'calibre-server/lib/util/isBookFile';
+import { envCalibrePath } from 'calibre-env';
+
+export function getCalibrePaths(): string[]
+{
+	return [envCalibrePath(process.env)].flatMap(v => v?.split(delimiter)).flat().filter(v => Boolean(v) && v !== 'undefined' && v !== 'null');
+}
 
 export function pathWithPrefix(this: IBook, a = '', ...input)
 {

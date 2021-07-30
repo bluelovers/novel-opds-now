@@ -10,7 +10,6 @@ const path_1 = require("path");
 const mimeFromBuffer_1 = require("../../../lib/util/mimeFromBuffer");
 const content_disposition_1 = (0, tslib_1.__importDefault)(require("@lazy-http/content-disposition"));
 const path_2 = require("path");
-const calibre_env_1 = require("calibre-env");
 const fs_extra_1 = require("fs-extra");
 const http_response_stream_1 = require("http-response-stream");
 const publishAndPoke_1 = require("../../../lib/ipfs/publish/publishAndPoke");
@@ -25,14 +24,7 @@ const library_1 = require("./library");
 const search_1 = require("./search");
 const lodash_1 = require("lodash");
 async function calibreHandlerCore() {
-    let calibrePaths = (0, calibre_env_1.envCalibrePath)(process.env);
-    if (typeof calibrePaths === 'string') {
-        calibrePaths = calibrePaths.split(path_2.delimiter);
-    }
-    else {
-        calibrePaths = [calibrePaths];
-    }
-    calibrePaths = calibrePaths.flat().filter(v => Boolean(v) && v !== 'undefined' && v !== 'null');
+    let calibrePaths = (0, util_1.getCalibrePaths)();
     logger_1.default.debug(`[Calibre]`, `delimiter`, path_2.delimiter);
     logger_1.default.debug(`[Calibre]`, `calibrePaths`, calibrePaths);
     if (!calibrePaths.length) {

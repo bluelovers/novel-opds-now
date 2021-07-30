@@ -10,3 +10,15 @@ declare module "find-free-port-sync-fixed"
 
 	export = findFreePortSync
 }
+
+declare module 'many-keys-weakmap'
+{
+	class ManyKeysWeakMap<K extends object, V> extends WeakMap<K, V> {}
+	export = ManyKeysWeakMap
+}
+
+declare module 'many-keys-map'
+{
+	class ManyKeysMap<K, V> extends Map<K, V> {}
+	export = ManyKeysMap
+}
