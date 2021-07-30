@@ -7,7 +7,7 @@ const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
     .tap(async ({ ipfs, stop }) => {
     let i = 0;
     for await (const result of ipfs.pin.ls()) {
-        console.log(`pin`, result.type, result.cid, result.metadata);
+        console.info(`pin`, result.type, result.cid, result.metadata);
     }
     for await (const result of ipfs.repo.gc()) {
         console.log(`gc`, result.err, result.cid);
