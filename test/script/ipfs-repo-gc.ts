@@ -10,7 +10,7 @@ searchIpfs()
 
 		for await (const result of ipfs.pin.ls())
 		{
-			console.log(`pin`, result.type, result.cid, result.metadata)
+			console.info(`pin`, result.type, result.cid, result.metadata)
 		}
 
 		for await (const result of ipfs.repo.gc())
