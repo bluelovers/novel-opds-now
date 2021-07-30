@@ -1,17 +1,17 @@
-import { outputJSON, outputJSONSync, readJSON } from 'fs-extra';
+import { outputFile, outputFileSync, outputJSON, outputJSONSync, readJSON } from 'fs-extra';
 import { join } from 'path';
 import { __root } from '../../const';
 import Bluebird from 'bluebird';
 import CID from 'cids';
 import { StatResult } from 'ipfs-core-types/src/files';
-import { debounce, throttle } from 'lodash';
+import { debounce, sortBy, throttle } from 'lodash';
 import processExit from '../../util/processExit';
 import { isMatch } from 'micromatch';
 import { putRawRecord, getRawRecord, getFileRecord, putFileRecord } from '@demonovel/db-api';
 import fetch from '../../fetch';
 import { publishToIPFSRace } from 'fetch-ipfs/put';
 import { filterList } from 'ipfs-server-list';
-import { getIPFSFromCache } from '../use';
+import { getIPFSFromCache, useIPFSFromCache } from '../use';
 import { IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import toURL, { toLink } from 'to-ipfs-url';
 import { filterPokeAllSettledResult, pokeAll } from '../pokeAll';
@@ -23,6 +23,7 @@ import { cidToString } from '@lazy-ipfs/cid-to-string';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
+import { toCID } from '@lazy-ipfs/to-cid';
 
 export const deepEntryListMap = new Map<string, string>();
 export const newEntryListMap = new Map<string, string>();
@@ -33,12 +34,14 @@ let _overwriteServer = false;
 const filename = 'novel-opds-now.cids.json' as const;
 const file = join(__root, 'test', 'data', filename);
 
+const msf_file = `/.cache/${filename}` as const;
+
 const rootKey = 'ipfs' as const;
 const dataKey = 'deepEntryListMap' as const;
 
 export function pathDeepEntryListMapJson()
 {
-	return `/novel-opds-now/${filename}` as const
+	return msf_file
 }
 
 export function appendDeepEntryListMapByStatResult(path: string, entry: StatResult)
@@ -62,7 +65,7 @@ export function appendDeepEntryListMap(path: string,
 		path = '/' + path;
 	}
 
-	if (forceAdd)
+	if (forceAdd || /^\/\.cache\//.test(path))
 	{
 
 	}
@@ -167,8 +170,6 @@ export function _saveDeepEntryListMapToServer()
 
 				newEntryListMap.clear();
 
-				deepEntryListMap.delete(pathDeepEntryListMapJson() + '/');
-
 				const ipfs = await getIPFSFromCache();
 
 				const peerID = await ipfs?.id().then(m => m.id).catch(e => null as null);
@@ -192,9 +193,7 @@ export function _saveDeepEntryListMapToServer()
 					}
 				}
 
-				deepEntryListMap.delete(pathDeepEntryListMapJson() + '/');
-
-				const content = JSON.stringify([...deepEntryListMap], null, 2);
+				const content = stringifyDeepEntryListMap(deepEntryListMap);
 
 				let cid: string;
 
@@ -227,28 +226,10 @@ export function _saveDeepEntryListMapToServer()
 					})
 				;
 
-				pokeAll(cid, ipfs, {
-					//filename,
-					//hidden: true,
-					timeout: 20 * 1000,
-				}).then(settledResults =>
-				{
-					if (settledResults?.length)
-					{
-						let list = filterPokeAllSettledResult(settledResults)
-
-						console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResults.length} 節點中請求分流`, dataKey, '\n' + list[list.length - 1]?.value?.href)
-					}
-				});
+				pokeDeepEntryListMap(cid, peerID);
 
 				if (ipfs)
 				{
-					await ipfs.files.write(pathDeepEntryListMapJson(), content, {
-						timeout: 10 * 1000,
-						create: true,
-						parents: true,
-					}).catch((e) => console.warn(`_saveDeepEntryListMapToServer`, `ipfs.files.write`, e))
-
 					if (ipfsMainPeerID(peerID))
 					{
 						let stat = await ipfs.files.stat(`/novel-opds-now/`, {
@@ -266,24 +247,11 @@ export function _saveDeepEntryListMapToServer()
 							});
 						}
 					}
+
+					await _writeDeepEntryListMapToMfs(content);
 				}
 
-				if (ipfsMainPeerID(peerID))
-				{
-
-					let old_cid = deepEntryListMap.get(pathDeepEntryListMapJson());
-					if ((old_cid || cid) && !isSameCID(old_cid, cid))
-					{
-						let bak = pathDeepEntryListMapJson() + '.bak';
-						let bak_cid = old_cid ?? cid;
-
-						await ipfs.files.rm(bak).catch(e => null)
-						await _ipfsFilesCopyCID(ipfs, bak_cid, bak).catch(e => null);
-
-						await appendDeepEntryListMap(bak, bak_cid, false, true);
-					}
-
-				}
+				await _backupDeepEntryListMap(cid, peerID);
 
 				await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid, false, true);
 
@@ -323,6 +291,110 @@ export function enableOverwriteServer()
 	_overwriteServer = true;
 }
 
+export function _writeDeepEntryListMapToMfs(content: string | [string, string][] | Map<string, string>)
+{
+	return getIPFSFromCache().then(ipfs =>
+		{
+			if (!ipfs)
+			{
+				return null;
+			}
+
+			if (typeof content !== 'string')
+			{
+				content = stringifyDeepEntryListMap(content)
+			}
+
+			return ipfs.files.write(pathDeepEntryListMapJson(), content, {
+				timeout: 10 * 1000,
+				parents: true,
+				create: true,
+			})
+		})
+		.catch(e => console.error(`_writeDeepEntryListMapToMfs`, e))
+}
+
+export async function _backupDeepEntryListMap(cid: ICIDValue, peerID?: string)
+{
+	const ipfs = await getIPFSFromCache();
+	const timeout = 10 * 1000;
+
+	if (typeof peerID === 'undefined')
+	{
+		peerID = await ipfs?.id({ timeout }).then(m => m.id).catch(e => null as null);
+	}
+
+	if (ipfsMainPeerID(peerID))
+	{
+		let old_cid = deepEntryListMap.get(pathDeepEntryListMapJson());
+
+		if ((old_cid || cid) && !isSameCID(old_cid, cid))
+		{
+			let bak = pathDeepEntryListMapJson() + '.bak';
+			let bak_cid = old_cid ?? cid;
+
+			await ipfs.files.rm(bak, { timeout }).catch(e => null);
+			await _ipfsFilesCopyCID(ipfs, bak_cid, bak, { timeout }).catch(e => null);
+
+			await appendDeepEntryListMap(bak, bak_cid, false, true);
+		}
+
+		await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid, false, true);
+	}
+}
+
+export function _pokeDeepEntryListMap(cid?: ICIDValue, peerID?: string)
+{
+	return Bluebird.resolve()
+		.then(async () =>
+		{
+			const ipfs = await getIPFSFromCache();
+			const timeout = 10 * 1000;
+
+			if (typeof peerID === 'undefined')
+			{
+				peerID = await ipfs?.id({ timeout }).then(m => m.id).catch(e => null as null);
+			}
+
+			cid = cid || await ipfs.files.stat(pathDeepEntryListMapJson(), {
+				hash: true,
+				timeout,
+			}).then(m => m.cid);
+
+			await _backupDeepEntryListMap(cid, peerID);
+
+			if (!cid)
+			{
+				return;
+			}
+
+			cid = toCID(cid);
+
+			return pokeAll(cid, ipfs, {
+				timeout: 20 * 1000,
+			}).then(settledResults =>
+			{
+				if (settledResults?.length)
+				{
+					let list = filterPokeAllSettledResult(settledResults)
+
+					console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResults.length} 節點中請求分流`, dataKey, '\n' + list[list.length - 1]?.value?.href)
+				}
+			});
+		})
+		.catchReturn(null as null)
+		;
+}
+
+export const pokeDeepEntryListMap = debounce(_pokeDeepEntryListMap, 30 * 1000);
+
+export function stringifyDeepEntryListMap(deepEntryListMap: Map<string, string> | [string, string][])
+{
+	let ls = [...new Map<string, string>([...deepEntryListMap])];
+
+	return JSON.stringify(sortBy(ls, '0'), null, 2)
+}
+
 export function _saveDeepEntryListMapToFile()
 {
 	return Bluebird.resolve()
@@ -342,17 +414,22 @@ export function _saveDeepEntryListMapToFile()
 				return;
 			}
 
+			const content = stringifyDeepEntryListMap(ls);
+
 			/**
 			 * 改用 sync 版本來試圖解決不明原因造成檔案有可能變成空的
 			 */
-			outputJSONSync(file, [...ls], {
-				spaces: 2,
-			});
+			outputFileSync(file, content);
 
 			console.debug(`_saveDeepEntryListMapToFile`, ls.size)
+
+			return _writeDeepEntryListMapToMfs(content);
 		})
 		.catchReturn(null as null)
 		.thenReturn(deepEntryListMap)
+		.finally(() => {
+			pokeDeepEntryListMap();
+		})
 }
 
 export const saveDeepEntryListMapToFile = debounce(_saveDeepEntryListMapToFile, 30 * 60 * 1000);
