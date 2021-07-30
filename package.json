@@ -1,6 +1,6 @@
 {
   "name": "novel-opds-now",
-  "version": "3.0.50",
+  "version": "3.0.51",
   "description": "按需生成 epub，此模組不使用排程任務來生成 epub",
   "keywords": [
     "opds",
@@ -50,7 +50,7 @@
     "lerna:publish:yes": "yarn run prepublishOnly && yarn run prepublish:commit && npx lerna publish --yes --cd-version patch",
     "preversion": "yarn run prepublish:cache && ts-node ./test/script/prepublish && yarn run prepublish:commit",
     "prepublish:cache": "ts-node ./cli/cache.ts -f",
-    "prepublish:commit": "git commit -m \"build(cache): update cache\" ./.cache & echo prepublish:commit",
+    "prepublish:commit": "git commit -m \"build(cache): update cache\" ./.cache ./test/data/novel-opds-now.cids.json & echo prepublish:commit",
     "prepublish:update-deps": "yarn run ncu && yarn run sort-package-json",
     "prepublishOnly_": "yarn run prepublishOnly:check-bin && yarn run prepublishOnly:update && yarn run test",
     "prepublishOnly:check-bin": "ynpx --quiet @yarn-tool/check-pkg-bin",
