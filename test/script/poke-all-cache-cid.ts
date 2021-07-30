@@ -8,6 +8,7 @@ import { raceFetchAll, raceFetchServerList } from '../../lib/util/raceFetchServe
 import { array_unique_overwrite } from 'array-hyper-unique';
 import Bluebird from 'bluebird';
 import { EventEmitter } from 'events';
+import { unionBy, uniqBy } from 'lodash';
 
 let oldSet = new Set();
 
@@ -69,7 +70,15 @@ export default Bluebird.resolve()
 
 		console.debug(`array_unique_overwrite`, ls.length);
 
-		return ls
+		ls = uniqBy(ls, '1');
+
+		console.debug(`lodash.uniqBy`, ls.length);
+
+		let day = new Date().getDay();
+
+		let chunk_len = Math.ceil(ls.length / 7);
+
+		return ls.slice(day * chunk_len, ((day+1) * chunk_len) + 1)
 	})
 	.each(([path, cid], index, length) =>
 	{
