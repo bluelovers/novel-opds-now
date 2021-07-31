@@ -74,14 +74,14 @@
     bluebird "^3"
     fast-glob "^3"
 
-"@bluelovers/ipfs-http-client@^1.0.78":
-  version "1.0.78"
-  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.78.tgz#bcaadbe567d4b5dad99649824c6e48ff93ebaa51"
-  integrity sha512-uWMeGUSaQtmqYywFze0+81F0cqamBFUOr8VFTu4pD6X656cQ0PH+IzPAy4yl4hqiC+fjl2UBwDFv0Fjoc4CV6A==
+"@bluelovers/ipfs-http-client@^1.0.82":
+  version "1.0.82"
+  resolved "https://registry.npmjs.org/@bluelovers/ipfs-http-client/-/ipfs-http-client-1.0.82.tgz#c7290e3b6365664c688ed32437b8cbfa4ba56cc4"
+  integrity sha512-C1pKBSMR1ThXvifd8/iOj0c1V3mbCPkYgDdIQLiqSV/3NtZS7Q8r+EpiAz9mAqwyeAuzMj1GBfnluzNguMOcNQ==
   dependencies:
     ipfs-env "^1.0.11"
     ipfs-types "^1.0.37"
-    ipfs-util-lib "^1.0.63"
+    ipfs-util-lib "^1.0.67"
     ts-type "^1.2.39"
     tslib "^2.3.0"
 
@@ -662,76 +662,89 @@
     multiaddr-to-url "^1.0.17"
     tslib "^2.3.0"
 
-"@lazy-ipfs/ipfs-protocol@^1.0.6":
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/ipfs-protocol/-/ipfs-protocol-1.0.6.tgz#5c8da9340c2d22f65403488a3348527b3a4bfc4f"
-  integrity sha512-QAlDV0Hdw5JSsGjZh+24JG40yzM1nRkmO6hJxaQmfyFmWqoe5Fl31pYJL4ZbDqgljgkVDbgjdP4UUivKdjHd2Q==
+"@lazy-ipfs/ipfs-protocol@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/ipfs-protocol/-/ipfs-protocol-1.0.7.tgz#d2a4c9f502f98add964c3e5850478b1ff2a42325"
+  integrity sha512-su2B4hUpdQxeVi+pb5V0k0O2LHByomWRVBdzxtiJpozwGRpGbBlDcm1z29LYM7soKz8TMICB20f0Mk/t8Z6WWA==
   dependencies:
     tslib "^2.3.0"
 
-"@lazy-ipfs/ipfs-subdomain@^1.0.34":
-  version "1.0.34"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/ipfs-subdomain/-/ipfs-subdomain-1.0.34.tgz#53c1c94fadc5bb380b1703bc343020f38a29aa3a"
-  integrity sha512-TzLOTjaOPWfZHl53szR/foe3xoKeYy9Lzfl1+ftPjzmfZrQBuZzYibJH75c2mw3GgRjOzaBQghSH7GFizpXbAA==
+"@lazy-ipfs/ipfs-subdomain@^1.0.38":
+  version "1.0.38"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/ipfs-subdomain/-/ipfs-subdomain-1.0.38.tgz#4cc27d5b94f8c8d2aa362a113dbbcd2e542f7c5a"
+  integrity sha512-Tdl8Fsr9r56/z6OGH0H8MF4iIBO7ewcley3RORSDOEm5W5wiT0HbxRcy+HxQK9WbANqVPsG5l3IlvdEvj7JaQw==
   dependencies:
     "@lazy-ipfs/cid-to-string" "^1.0.2"
     "@lazy-ipfs/detect-cid-lib" "^1.0.2"
-    "@lazy-ipfs/parse-ipfs-path" "^1.0.11"
-    "@lazy-ipfs/to-cid" "^1.0.20"
-    ipfs-server-list "^1.0.62"
+    "@lazy-ipfs/parse-ipfs-path" "^1.0.15"
+    "@lazy-ipfs/to-cid" "^1.0.24"
+    err-code "^3.0.1"
+    ipfs-server-list "^1.0.66"
     tslib "^2.3.0"
 
-"@lazy-ipfs/is-same-cid@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/is-same-cid/-/is-same-cid-1.0.7.tgz#623cfebf70a12c167eb48994de3fc183cbb189c2"
-  integrity sha512-6bgUysU1O3zoxOKgMWU3UbM820vb/KdCEUEFmwm0sGlPk92/cEowrPy9B8csUscKr/U+Fc5dnsI3knKpQvFivA==
+"@lazy-ipfs/is-cid@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/is-cid/-/is-cid-1.0.1.tgz#4b6c2fdd91534f7e23642f24cc0224c729de24d2"
+  integrity sha512-k1FiyviozWNKRBqb8ezCBFq/bhGVFcJGp4uWM40J5ErS/PdbDCyRB95VJlBA9ITUl/2CnLzK9mVFzi+B5KnMoQ==
+  dependencies:
+    err-code "^3.0.1"
+    tslib "^2.3.0"
+
+"@lazy-ipfs/is-same-cid@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/is-same-cid/-/is-same-cid-1.0.11.tgz#1112383c996567cda0da9b3fea8b2581a66704e1"
+  integrity sha512-+/8ipzGRH/eqwD57D1qtfAoEpfugWGVfV/QdqoHtnW4CErYx2cMsVLcYwMCjl41S/XhRztqqkz+IwjFPrdFaEg==
   dependencies:
     "@lazy-ipfs/detect-cid-lib" "^1.0.2"
-    "@lazy-ipfs/to-cid" "^1.0.20"
+    "@lazy-ipfs/to-cid" "^1.0.24"
     tslib "^2.3.0"
 
-"@lazy-ipfs/make-url-list@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/make-url-list/-/make-url-list-1.0.1.tgz#311b0747f08ca461c538ee79a911ea1c9289be41"
-  integrity sha512-DnoZ3tzubS5LaWJR67NZicNCTbHmebQiTwC7xTDBCfu190n23Iem7jLbN0u5srlBvXOU8xR7naCyjPHO5TycyA==
+"@lazy-ipfs/make-url-list@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/make-url-list/-/make-url-list-1.0.5.tgz#f81a107a3d8c65466ac91f93a49b956aeb28ef42"
+  integrity sha512-lUYW61edlIGnRxzuQvdMY3I3BN2HzVo5QgMmRTTXnxxPvssxRGh0rcFHotipLP11UufxntncJUzWoaMEp8anfg==
   dependencies:
     "@lazy-ipfs/detect-cid-lib" "^1.0.2"
     "@lazy-ipfs/ipfs-api-url" "^1.0.1"
-    "@lazy-ipfs/ipfs-subdomain" "^1.0.34"
-    "@lazy-ipfs/parse-ipfs-path" "^1.0.11"
+    "@lazy-ipfs/ipfs-subdomain" "^1.0.38"
+    "@lazy-ipfs/parse-ipfs-path" "^1.0.15"
     array-hyper-unique "^1.1.10"
     ipfs-core-types "^0.6.1"
-    ipfs-server-list "^1.0.62"
-    ipfs-util-lib "^1.0.63"
+    ipfs-server-list "^1.0.66"
+    ipfs-util-lib "^1.0.67"
     lazy-url "^1.0.12"
-    to-ipfs-url "^1.0.31"
+    to-ipfs-url "^1.0.35"
     tslib "^2.3.0"
 
-"@lazy-ipfs/parse-ipfs-from-header@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/parse-ipfs-from-header/-/parse-ipfs-from-header-1.0.1.tgz#744f25ee9c999bd10acf9044ffe5e26ac476ebbc"
-  integrity sha512-sLOi3wYSxP18lrv+wW8GFtlTu5t4b2/KzD8lZ666aRPAIA9oCLhk/JnKn8AOEDBDSSjeXPVamTQKSYWOwZKJ/Q==
+"@lazy-ipfs/parse-ipfs-from-header@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/parse-ipfs-from-header/-/parse-ipfs-from-header-1.0.2.tgz#c90909e666950f9c1016042a821e40fb555f7010"
+  integrity sha512-4TxhOkBa2NLbFB8XIfQ2Lig2Q9lVjJBgqmHDKtvG9SB0Nk1D9W7AgjO4sH9Jj3D3wvdv1TBku3bbsP0qbHEcwg==
   dependencies:
     tslib "^2.3.0"
     value-from-record "^1.0.3"
 
-"@lazy-ipfs/parse-ipfs-path@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/parse-ipfs-path/-/parse-ipfs-path-1.0.11.tgz#3dcf8bfb5c27968a5801a640f1c8250f859f00ad"
-  integrity sha512-b//CgyUhapkFT0u9x6tUBoLmeygNTGn8tzj5Rn931rc4v/B8nBI70PZrZLZ9d0VH4kvCeVqRjQKdjJOhixJEaA==
+"@lazy-ipfs/parse-ipfs-path@^1.0.15":
+  version "1.0.15"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/parse-ipfs-path/-/parse-ipfs-path-1.0.15.tgz#a0e78c11dcd02b367e32f1565964c0c1db5c64e8"
+  integrity sha512-yz95cUjmsAgiQiZQYXz8N3026lcFrjn2KYuXO8RgWIGcCsUByPdlsJp1CkpC10JAapl6KJuru59u694JZq87/A==
   dependencies:
     "@lazy-ipfs/cid-to-string" "^1.0.2"
     "@lazy-ipfs/detect-cid-lib" "^1.0.2"
-    "@lazy-ipfs/to-cid" "^1.0.20"
+    "@lazy-ipfs/is-cid" "^1.0.1"
+    "@lazy-ipfs/to-cid" "^1.0.24"
+    err-code "^3.0.1"
     is-valid-domain "^0.1.2"
     tslib "^2.3.0"
 
-"@lazy-ipfs/to-cid@^1.0.20":
-  version "1.0.20"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/to-cid/-/to-cid-1.0.20.tgz#3a43f064fd0e806dbc898290e9c56e0328e77559"
-  integrity sha512-Xc/DvRhcHvZGpAvYhVsbw1XAfNMlItqoWe2mIBXTWpIJh37Wv6lyqMyJS/jCwFyDZklYJzAjFvi5ZmD1mxre0g==
+"@lazy-ipfs/to-cid@^1.0.24":
+  version "1.0.24"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/to-cid/-/to-cid-1.0.24.tgz#82520cf19f19295a40a25dd14e5f73b87ca344e9"
+  integrity sha512-H1zfS3xDKkC+qqM9+y+JjxskLr/aCxTqOWeU3m9ood6ccxbDZiCizH9N/E5F2nqWoc1OP0VUhAjtKbuLfjLXbg==
   dependencies:
     "@lazy-ipfs/detect-cid-lib" "^1.0.2"
+    "@lazy-ipfs/is-cid" "^1.0.1"
+    "@lazy-ipfs/parse-ipfs-path" "^1.0.15"
     err-code "^3.0.1"
     tslib "^2.3.0"
 
@@ -3842,12 +3855,12 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-fetch-ipfs@^1.0.85:
-  version "1.0.85"
-  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.85.tgz#39cb77ae6d11c0dec8bc43b7664ad4f45dbbe7b5"
-  integrity sha512-6caqC4tyjfYWaiLRK2XG/iKjoSe2mA34hPMeUlZrcnjYaj/3tQTmPoj6zkzgjsTRVX3d0luiVI6wRnN7TOhzVw==
+fetch-ipfs@^1.0.90:
+  version "1.0.90"
+  resolved "https://registry.npmjs.org/fetch-ipfs/-/fetch-ipfs-1.0.90.tgz#1af5c6fd4c502733e138630c51d8fecab1dd8d1c"
+  integrity sha512-OyZ0l5FBXoafv11UB6WAmZuB/FIA+U/aXKf8ZNcm9H/XnFLSzIifcJixUI/j3DDtiMX/tg+19p3sYqSDNBqlHA==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.78"
+    "@bluelovers/ipfs-http-client" "^1.0.82"
     "@lazy-ipfs/compatible-add" "^1.0.11"
     abort-controller "^3.0.0"
     abort-controller-timer "^1.0.13"
@@ -3856,10 +3869,10 @@ fetch-ipfs@^1.0.85:
     cross-fetch "^3.1.4"
     ipfs-core-types "*"
     ipfs-types "^1.0.37"
-    ipfs-util-lib "^1.0.63"
+    ipfs-util-lib "^1.0.67"
     is-error-code "^1.0.0"
     p-any "<4 >=3"
-    to-ipfs-url "^1.0.31"
+    to-ipfs-url "^1.0.35"
     ts-type "^1.2.39"
     tslib "^2.3.0"
 
@@ -5037,12 +5050,12 @@ ipfs-core-utils@^0.9.1:
     timeout-abort-controller "^1.1.1"
     uint8arrays "^2.1.6"
 
-ipfs-defaults@^1.0.43:
-  version "1.0.43"
-  resolved "https://registry.npmjs.org/ipfs-defaults/-/ipfs-defaults-1.0.43.tgz#f150182481f18da8259632fd438364c8a5d20b18"
-  integrity sha512-MqHKVt2NYn7SjcKaD24dftX89egUTxSXRbtRuWbXq5WMaCEsCpAlhpwhvvDVb4D9GgdlAO0X/spAfoBlAvYBgg==
+ipfs-defaults@^1.0.47:
+  version "1.0.47"
+  resolved "https://registry.npmjs.org/ipfs-defaults/-/ipfs-defaults-1.0.47.tgz#b1c0da97c0e94fe99567a1758a7426cb2e46b641"
+  integrity sha512-+DkPeLQP9kBPHuesTi7MV6YpLfLR1fvk5w2wDajKFdjnucvqb+IgF6uswvr1BrS7yRY6H9d+C7ygZ3skhjsSWg==
   dependencies:
-    ipfs-server-list "^1.0.62"
+    ipfs-server-list "^1.0.66"
     lodash "^4.17.21"
     tslib "^2.3.0"
 
@@ -5090,12 +5103,12 @@ ipfs-only-hash@^4.0.0:
     ipfs-unixfs-importer "^7.0.1"
     meow "^9.0.0"
 
-ipfs-server-list@^1.0.62:
-  version "1.0.62"
-  resolved "https://registry.npmjs.org/ipfs-server-list/-/ipfs-server-list-1.0.62.tgz#64a2a355661623de907482ab5fabb1b05d6037b4"
-  integrity sha512-ym+s3rkwOLHgPderDskr41/DerG+XK1yiRLU406ktOmvZiWXceTIktzwfPMXpEs6XoxYpWDIeAd9hYZ6/a0i1A==
+ipfs-server-list@^1.0.66:
+  version "1.0.66"
+  resolved "https://registry.npmjs.org/ipfs-server-list/-/ipfs-server-list-1.0.66.tgz#03f73b26211eed4cec128d66867fdf404fee90b4"
+  integrity sha512-Vjc1n7A+FqLLI3txHTntEmlhfaJ5cyE6ixuW7n4N3TYusZE+iTjj+izmv84M8Z+9i36JQL7npWudIqRo8QrFMQ==
   dependencies:
-    "@bluelovers/ipfs-http-client" "^1.0.78"
+    "@bluelovers/ipfs-http-client" "^1.0.82"
     ipfs-types "^1.0.37"
     ts-type "^1.2.39"
     tslib "^2.3.0"
@@ -5146,20 +5159,20 @@ ipfs-unixfs@^5.0.0:
     err-code "^3.0.1"
     protobufjs "^6.10.2"
 
-ipfs-util-lib@^1.0.63:
-  version "1.0.63"
-  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.63.tgz#928e6ba8a141dde1d44f4bedf34c9f7756012b77"
-  integrity sha512-jmzL7BVb7H693zxTLmntCDWHdpJXVc9WlpuRBGH4xbpnM6GUGRGw8iUm1NIUdIH/LkuZX6Nr3GAU54a5VkpJ8A==
+ipfs-util-lib@^1.0.67:
+  version "1.0.67"
+  resolved "https://registry.npmjs.org/ipfs-util-lib/-/ipfs-util-lib-1.0.67.tgz#52b0fdb5a38980e71cc4d920c57490679461784b"
+  integrity sha512-Jsu8mdB5IevbWAPbFVG1M+hW8lFqZKlqobZdMeDBt3HTfrye8N6bkTZTFKPaLOqQj08S4CZ6opFRAT0amSY0Iw==
   dependencies:
     "@lazy-ipfs/cid-to-string" "^1.0.2"
     "@lazy-ipfs/ipfs-api-url" "^1.0.1"
-    "@lazy-ipfs/to-cid" "^1.0.20"
+    "@lazy-ipfs/to-cid" "^1.0.24"
     array-hyper-unique "^1.1.10"
     bluebird "^3.7.2"
     debug-color2 "^1.2.7"
     get-stream "^6.0.1"
     ipfs-api-type "^1.0.18"
-    ipfs-server-list "^1.0.62"
+    ipfs-server-list "^1.0.66"
     ipfs-types "^1.0.37"
     micromatch "^4.0.4"
     multiaddr-to-uri "^8.0.0"
@@ -7664,13 +7677,13 @@ pngquant-bin@^6.0.0:
     execa "^4.0.0"
     logalot "^2.0.0"
 
-poke-ipfs@^1.1.19:
-  version "1.1.19"
-  resolved "https://registry.npmjs.org/poke-ipfs/-/poke-ipfs-1.1.19.tgz#49eaa45be9d49c1d36b4e47233fabbfbd1457d37"
-  integrity sha512-NAZw/H1fqDuaFndh/t9BlHxX5mpQOetuhzEZOQf1bvXTavB3zmXYFVnzAnFnOAklXtE2zIz9AP4JFvOypV1MAg==
+poke-ipfs@^1.1.21:
+  version "1.1.21"
+  resolved "https://registry.npmjs.org/poke-ipfs/-/poke-ipfs-1.1.21.tgz#096a3890d15c3f7bf2cd87a7cdd896dbc6f559f9"
+  integrity sha512-xpOBohLS+IN5RYikCvgO2bFzC2l7JH2F4oSMhAViZRERRpbJzy5htWdzUmsez0xBC11RD+bj98NqAIZJBU7++w==
   dependencies:
     "@lazy-ipfs/detect-cid-lib" "^1.0.2"
-    "@lazy-ipfs/parse-ipfs-from-header" "^1.0.1"
+    "@lazy-ipfs/parse-ipfs-from-header" "^1.0.2"
     abort-controller "^3.0.0"
     abort-controller-timer "^1.0.13"
     bluebird-allsettled "^1.0.3"
@@ -9353,15 +9366,16 @@ to-ipfs-hash@^1.0.26:
     ipfs-only-hash "^4.0.0"
     tslib "^2.3.0"
 
-to-ipfs-url@^1.0.31:
-  version "1.0.31"
-  resolved "https://registry.npmjs.org/to-ipfs-url/-/to-ipfs-url-1.0.31.tgz#2d29fe917f61320bec6b10815389bf2f7bcd47c2"
-  integrity sha512-Lq2D6NfDHJdMneiBQGRZNRKq3zzwXj49DPFZRYoYn60Becam6LJ9WgmXtcaRDMIMbaN7ICY1vCiw8yqmmNyd0g==
+to-ipfs-url@^1.0.35:
+  version "1.0.35"
+  resolved "https://registry.npmjs.org/to-ipfs-url/-/to-ipfs-url-1.0.35.tgz#42d56f80c4db8b198162d2f938cf697b21f23ef9"
+  integrity sha512-Z/XvvMg6tJzSzVp5LQ/u9rfmedaUNFTKq3ZeeUm66CNluOFHq5WQH3wUoju9/Wz2XQsGCJHh+nPD1vUUl75I1A==
   dependencies:
     "@lazy-ipfs/cid-to-string" "^1.0.2"
     "@lazy-ipfs/detect-cid-lib" "^1.0.2"
-    "@lazy-ipfs/to-cid" "^1.0.20"
-    ipfs-server-list "^1.0.62"
+    "@lazy-ipfs/to-cid" "^1.0.24"
+    err-code "^3.0.1"
+    ipfs-server-list "^1.0.66"
     is-ipfs "^6.0.1"
     tslib "^2.3.0"
 

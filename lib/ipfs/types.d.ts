@@ -1,9 +1,9 @@
 /// <reference types="node" />
 import { ITSPartialRecord } from 'ts-type';
-import { IUseIPFSApi } from '../types';
 import { IIPFSEnv } from 'ipfs-env';
 import { ChildProcess } from 'child_process';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
+import { Controller, ControllerOptions } from 'ipfsd-ctl/dist/src/types';
 export declare type IFill<T, U> = T & ITSPartialRecord<Exclude<keyof U, keyof T>, void>;
 export declare type IOr<A extends any[]> = A extends [infer T1, infer T2] ? IFill<T1, T2> | IFill<T2, T1> : A extends [infer T1, infer T2, infer T3] ? IFill<T1, T2 & T3> | IFill<T2, T1 & T3> | IFill<T3, T1 & T2> : never;
 export interface IPubSubBase {
@@ -32,10 +32,9 @@ declare module 'ipfs-env' {
         IPFS_DISPOSABLE?: boolean;
     }
 }
-export interface IIPFSControllerDaemon {
+export declare type IIPFSControllerDaemon = Controller & {
     started: boolean;
     path: string;
-    api: IUseIPFSApi;
     env: IIPFSEnv;
     opts: {
         type?: 'go' | 'js' | 'proc';
@@ -60,11 +59,10 @@ export interface IIPFSControllerDaemon {
     start(): Promise<IIPFSControllerDaemon>;
     stop(): Promise<IIPFSControllerDaemon>;
     version(): Promise<string>;
-    pid(): Promise<string>;
     isNewRepo?: boolean;
-}
+};
 export interface IUseIPFSOptions {
     disposable?: boolean;
-    factoryOptions?: Record<string, any>;
+    factoryOptions?: ControllerOptions;
     mfs?: boolean;
 }

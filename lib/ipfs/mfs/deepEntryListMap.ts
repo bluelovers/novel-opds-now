@@ -17,7 +17,6 @@ import toURL, { toLink } from 'to-ipfs-url';
 import { pokeAll } from '../pokeAll';
 import console from 'debug-color2/logger';
 import { ipfsMainPeerID } from '../../dev/admin';
-import raceFetchIPFS from 'fetch-ipfs/race';
 import { raceFetchAll, raceFetchServerList } from '../../util/raceFetchServerList';
 import { cidToString } from '@lazy-ipfs/cid-to-string';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';

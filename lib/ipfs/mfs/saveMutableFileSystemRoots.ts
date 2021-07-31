@@ -6,7 +6,7 @@ import { __root } from '../../const';
 import console from 'debug-color2/logger';
 import throttle from 'lodash/throttle';
 
-export const saveMutableFileSystemRoots = throttle(function (ipfs: IUseIPFSApi)
+export function _saveMutableFileSystemRoots(ipfs: IUseIPFSApi)
 {
 	return Promise.resolve(ipfs).then(async () => {
 
@@ -25,4 +25,6 @@ export const saveMutableFileSystemRoots = throttle(function (ipfs: IUseIPFSApi)
 
 		console.debug(`[IPFS]`, `saveMutableFileSystemRoots`, length);
 	}).catch(e => void 0)
-}, 5 * 60 * 1000);
+}
+
+export const saveMutableFileSystemRoots = throttle(_saveMutableFileSystemRoots, 5 * 60 * 1000);

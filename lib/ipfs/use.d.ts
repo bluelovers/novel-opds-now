@@ -7,14 +7,18 @@ export declare function useIPFS(options?: {
 }): Bluebird<{
     ipfsd: import("./types").IIPFSControllerDaemon;
     path: string;
-    readonly ipfs: IUseIPFSApi;
+    readonly ipfs: import("ipfsd-ctl/dist/src/types").API | (import("ipfs-core-types").IPFS<{}> & {
+        getEndpointConfig(): import("ipfs-http-client/dist/src/types").EndpointConfig;
+    });
     address(): Promise<IIPFSAddresses>;
     stop: (done?: any) => void;
     stopAsync(): Bluebird<void>;
 }>;
 export declare function searchIpfs(): Bluebird<{
     ipfsd: null;
-    ipfs: IUseIPFSApi;
+    ipfs: import("ipfs-core-types").IPFS<{}> & {
+        getEndpointConfig(): import("ipfs-http-client/dist/src/types").EndpointConfig;
+    };
     stop(...argv: any[]): Promise<void>;
 }>;
 export declare function _info(data?: any): void;
@@ -22,7 +26,9 @@ export declare function getIPFS(): Bluebird<IUseIPFSApi>;
 export declare function useIPFSFromCache(): Bluebird<{
     ipfsd: import("./types").IIPFSControllerDaemon;
     path: string;
-    readonly ipfs: IUseIPFSApi;
+    readonly ipfs: import("ipfsd-ctl/dist/src/types").API | (import("ipfs-core-types").IPFS<{}> & {
+        getEndpointConfig(): import("ipfs-http-client/dist/src/types").EndpointConfig;
+    });
     address(): Promise<IIPFSAddresses>;
     stop: (done?: any) => void;
     stopAsync(): Bluebird<void>;

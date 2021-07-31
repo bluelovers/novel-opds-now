@@ -39,7 +39,7 @@ import calibreHandler from './router/calibre/index';
 import { saveMixinPeers } from '../lib/ipfs/util/getMixinPeers';
 import { pokeRoot } from '../lib/ipfs/mfs/pokeRoot';
 import processExit from '../lib/util/processExit';
-import { saveMutableFileSystemRoots } from '../lib/ipfs/mfs/saveMutableFileSystemRoots';
+import { _saveMutableFileSystemRoots, saveMutableFileSystemRoots } from '../lib/ipfs/mfs/saveMutableFileSystemRoots';
 import { _saveDeepEntryListMapToFile } from '../lib/ipfs/mfs/deepEntryListMap';
 
 const app = express();
@@ -63,8 +63,12 @@ app.use('/*', (req, res, next) =>
 	next();
 });
 
-processExit(() => getIPFSFromCache().then(saveMutableFileSystemRoots).catchReturn(null as null));
-processExit(_saveDeepEntryListMapToFile);
+processExit(() => {
+	return Promise.all([
+		_saveDeepEntryListMapToFile(),
+		getIPFSFromCache().then(_saveMutableFileSystemRoots).catchReturn(null as null),
+	])
+});
 
 app.use(calibreHandler);
 

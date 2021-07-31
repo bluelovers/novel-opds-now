@@ -80,7 +80,7 @@ export default Bluebird.resolve()
 
 		return ls.slice(day * chunk_len, ((day+1) * chunk_len) + 1)
 	})
-	.each(([path, cid], index, length) =>
+	.map(([path, cid], index, length) =>
 	{
 		let label = `${index.toString().padStart(5, '0')}／${length.toString().padStart(5, '0')}`
 
@@ -89,5 +89,7 @@ export default Bluebird.resolve()
 		}, label, path)
 			.tap(ls => reportPokeAllSettledResult(ls, label, path))
 			.catchReturn(null as null)
+	}, {
+		concurrency: 3,
 	})
 ;

@@ -4,6 +4,7 @@ import { IUseIPFSApi } from '../types';
 import { IIPFSEnv } from 'ipfs-env';
 import { ChildProcess } from 'child_process';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
+import { Controller, ControllerOptions } from 'ipfsd-ctl/dist/src/types';
 
 export type IFill<T, U> = T & ITSPartialRecord<Exclude<keyof U, keyof T>, void>
 export type IOr<A extends any[]> =
@@ -48,13 +49,10 @@ declare module 'ipfs-env'
 	}
 }
 
-export interface IIPFSControllerDaemon
-{
+export type IIPFSControllerDaemon = Controller & {
 
 	started: boolean,
 	path: string,
-
-	api: IUseIPFSApi,
 
 	env: IIPFSEnv,
 
@@ -89,14 +87,12 @@ export interface IIPFSControllerDaemon
 
 	version(): Promise<string>
 
-	pid(): Promise<string>
-
 	isNewRepo?: boolean,
 }
 
 export interface IUseIPFSOptions
 {
 	disposable?: boolean;
-	factoryOptions?: Record<string, any>;
+	factoryOptions?: ControllerOptions;
 	mfs?: boolean,
 }

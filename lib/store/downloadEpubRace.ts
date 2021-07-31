@@ -3,7 +3,7 @@ import { IUseIPFSApi } from '../types';
 import { handleCID, IFetchOptions, lazyRaceServerList } from 'fetch-ipfs/util';
 import raceFetchIPFS from 'fetch-ipfs/race';
 import Bluebird from 'bluebird';
-import { getIPFS } from '../ipfs/use';
+import { getIPFS, getIPFSFromCache } from '../ipfs/use';
 import { toLink as toIpfsLink } from 'to-ipfs-url';
 import { assertEpubByMime } from './fetch/util';
 import { fetchEpub } from './fetch/fetchEpub';
@@ -72,8 +72,7 @@ export function downloadEpubRace(ipfs_href: string,
 	return Bluebird.resolve(useIPFS)
 		.then(useIPFS =>
 		{
-			return useIPFS ?? Bluebird.resolve(getIPFS().timeout(3 * 1000)
-					.catch(e => null as null))
+			return useIPFS ?? getIPFSFromCache()
 				.then(ipfs =>
 				{
 					return [

@@ -52,7 +52,7 @@ async function calibreHandlerCore(): Promise<Router>
 		{
 			res.setHeader('Content-Type', 'text/html; charset=utf-8');
 			res.charset = 'utf-8';
-			console.error(`[Calibre]`, `請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`);
+			console.warn(`[Calibre]`, `請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`);
 			res.status(404).end(`請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`)
 		};
 	}

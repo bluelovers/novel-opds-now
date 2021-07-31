@@ -168,7 +168,7 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 
 							return Promise.all(pa[0])
 						})
-						.catch(e => console.error(e))
+						.catch(e => console.warn(e))
 					;
 				}
 

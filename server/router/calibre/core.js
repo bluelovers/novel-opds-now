@@ -31,7 +31,7 @@ async function calibreHandlerCore() {
         return (req, res, next) => {
             res.setHeader('Content-Type', 'text/html; charset=utf-8');
             res.charset = 'utf-8';
-            logger_1.default.error(`[Calibre]`, `請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`);
+            logger_1.default.warn(`[Calibre]`, `請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`);
             res.status(404).end(`請使用 CALIBRE_PATH 或 --calibre-paths 來啟用 Calibre 模組`);
         };
     }

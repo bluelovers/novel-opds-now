@@ -1,7 +1,6 @@
 import { array_unique, array_unique_overwrite } from 'array-hyper-unique';
 import { handleArgvList } from '../util/index';
 import Bluebird from 'bluebird';
-import fetchIPFS from 'fetch-ipfs';
 import fetch from '../fetch';
 import hashSum from 'hash-sum';
 import { IGunEpubNode } from '../types';

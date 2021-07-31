@@ -49,12 +49,14 @@ exports.default = bluebird_1.default.resolve()
     let chunk_len = Math.ceil(ls.length / 7);
     return ls.slice(day * chunk_len, ((day + 1) * chunk_len) + 1);
 })
-    .each(([path, cid], index, length) => {
+    .map(([path, cid], index, length) => {
     let label = `${index.toString().padStart(5, '0')}／${length.toString().padStart(5, '0')}`;
     return (0, pokeAll_1.default)(cid, null, {
         timeout: 10 * 1000,
     }, label, path)
         .tap(ls => (0, pokeAll_1.reportPokeAllSettledResult)(ls, label, path))
         .catchReturn(null);
+}, {
+    concurrency: 3,
 });
 //# sourceMappingURL=poke-all-cache-cid.js.map

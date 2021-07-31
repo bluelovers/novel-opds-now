@@ -1,8 +1,5 @@
 import { IIPFSControllerDaemon, IUseIPFSOptions } from '../types';
 export declare function daemonFactory(disposable: boolean, options?: IUseIPFSOptions): Promise<{
-    myFactory: {
-        opts: IIPFSControllerDaemon["opts"];
-        spawn(): IIPFSControllerDaemon;
-    };
+    myFactory: import("ipfsd-ctl/dist/src/types").Factory;
     ipfsd: IIPFSControllerDaemon;
 }>;

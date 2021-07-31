@@ -21,10 +21,7 @@ export async function daemonFactory(disposable: boolean, options?: IUseIPFSOptio
 		}
 	}
 
-	const myFactory: {
-		opts: IIPFSControllerDaemon["opts"],
-		spawn(): IIPFSControllerDaemon,
-	} = createFactory({
+	const myFactory = createFactory({
 		ipfsHttpModule: await import('ipfs-http-client')
 //			.then(m =>
 //			{
@@ -54,6 +51,7 @@ export async function daemonFactory(disposable: boolean, options?: IUseIPFSOptio
 		ipfsOptions: {
 			EXPERIMENTAL: {
 				ipnsPubsub: true,
+				// @ts-ignore
 				repoAutoMigrate: true,
 			},
 			//init: true,
@@ -64,7 +62,9 @@ export async function daemonFactory(disposable: boolean, options?: IUseIPFSOptio
 		//test: disposable,
 		forceKill: true,
 		forceKillTimeout: 3000,
+		repoAutoMigrate: true,
 		args: [
+			...(options?.factoryOptions?.args ?? []),
 			'--enable-gc',
 		]
 	});

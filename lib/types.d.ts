@@ -2,6 +2,7 @@
 import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { EndpointConfig } from 'ipfs-http-client';
 import { IPFS } from 'ipfs-core-types';
+import { Controller } from 'ipfsd-ctl';
 export declare type ICacheMap = {
     [siteID in (ICacheMapRow["IDKEY"] & ICacheMapRow["siteID"])]: {
         [novel_id: string]: ICacheMapRow;
@@ -49,6 +50,6 @@ export interface IGunEpubData extends Exclude<IGunEpubNode, {
 }> {
     isGun: boolean;
 }
-export declare type IUseIPFSApi = IPFS & {
+export declare type IUseIPFSApi = (IPFS & {
     getEndpointConfig(): EndpointConfig;
-};
+}) | Controller["api"];

@@ -41,8 +41,12 @@ app.use('/*', (req, res, next) => {
     (0, pokeRoot_1.pokeRoot)();
     next();
 });
-(0, processExit_1.default)(() => (0, use_1.getIPFSFromCache)().then(saveMutableFileSystemRoots_1.saveMutableFileSystemRoots).catchReturn(null));
-(0, processExit_1.default)(deepEntryListMap_1._saveDeepEntryListMapToFile);
+(0, processExit_1.default)(() => {
+    return Promise.all([
+        (0, deepEntryListMap_1._saveDeepEntryListMapToFile)(),
+        (0, use_1.getIPFSFromCache)().then(saveMutableFileSystemRoots_1._saveMutableFileSystemRoots).catchReturn(null),
+    ]);
+});
 app.use(index_2.default);
 app.use('/file', (0, file_1.default)());
 app.use('/opds', (0, opds_1.default)());

@@ -247,7 +247,7 @@ function _useIPFS(options?: {
 
 			if (disposable)
 			{
-				let Addresses = await findFreeAddresses(ipfsd.opts)
+				let Addresses = await findFreeAddresses(ipfsd.opts as any)
 
 				ipfsd.opts.ipfsOptions.config ??= {};
 
@@ -380,6 +380,7 @@ function _useIPFS(options?: {
 				{
 					console.debug(`[IPFS]`, `ipfsd`, `cleanup`);
 					ls.push(rimrafSync(ipfsd.path) as any)
+					// @ts-ignore
 					ls.push(ipfsd.cleanup())
 				}
 
