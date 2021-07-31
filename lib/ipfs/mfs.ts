@@ -96,7 +96,7 @@ export function addMutableFileSystem(options: IPubSubEpub, ...msg: any[])
 
 					await saveMutableFileSystemRoots(ipfs);
 
-					pokeMutableFileSystem(options, novel?.title, ...msg);
+					pokeMutableFileSystem(options, novel?.title ?? file_path, ...msg);
 
 					//console.debug(`[IPFS]`, `addMutableFileSystem:done`, dir_path, dir_stat)
 				})
