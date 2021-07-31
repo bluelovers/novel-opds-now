@@ -1,79 +1,22 @@
 import Bluebird from 'bluebird';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
-export declare function notAllowedAddress(url: URL | string): boolean;
-export declare function getIpfsGatewayList(ipfs: any): Promise<{
-    ipfsGatewayMain: string;
-    ipfsGatewayList: string[];
-}>;
 export declare function pokeAll(cid: ICIDValue, ipfs: any, options?: {
     filename?: string;
     hidden?: boolean;
     timeout?: number;
-}, ...msg: any[]): Bluebird<import("ts-type").ITSPromiseSettledResult<{
-    href: string;
-    error?: Error;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
+}, ...msg: any[]): Bluebird<import("ts-type").ITSPromiseSettledResult<(Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: string;
-} | {
-    href: string;
-    error?: Error;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
+}) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: false;
-} | {
-    href: string;
-    value?: never;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
+}) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "error"> & {
     error: Error;
-}, any>[]>;
-export declare function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>): import("ts-type").ITSPromiseSettledResult<{
-    href: string;
-    error?: Error;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
+}), any>[]>;
+export declare function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any): Bluebird<import("ts-type").ITSPromiseSettledResult<(Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: string;
-} | {
-    href: string;
-    error?: Error;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
+}) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: false;
-} | {
-    href: string;
-    value?: never;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
+}) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "error"> & {
     error: Error;
-}, any>[];
-export declare function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any): Bluebird<import("ts-type").ITSPromiseSettledResult<{
-    href: string;
-    error?: Error;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
-    value: string;
-} | {
-    href: string;
-    error?: Error;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
-    value: false;
-} | {
-    href: string;
-    value?: never;
-    status?: number;
-    headers?: Headers;
-    statusText?: string;
-    error: Error;
-}, any>[]>;
+}), any>[]>;
 export default pokeAll;

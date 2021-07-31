@@ -5,12 +5,16 @@ import raceFetchIPFS from 'fetch-ipfs/race';
 import Bluebird from 'bluebird';
 import { getIPFS } from '../ipfs/use';
 import { toLink as toIpfsLink } from 'to-ipfs-url';
-import { getIpfsGatewayList } from '../ipfs/pokeAll';
 import { assertEpubByMime } from './fetch/util';
 import { fetchEpub } from './fetch/fetchEpub';
+import lazyMakeIpfsAllServerURL, { _notAllowedAddress as notAllowedAddress } from '@lazy-ipfs/make-url-list';
+import { ipfsGatewayAddressesLink } from 'ipfs-util-lib/lib/api/multiaddr';
+import AbortControllerTimer from 'abort-controller-timer';
+import { RequestInit } from 'node-fetch';
 
 export async function fetchEpubAll(ipfs_href: string, timeout: number, options?: {
 	filter?(buf: Buffer): boolean;
+	fetchOptions?: RequestInit,
 } & IFetchOptions)
 {
 	const cid = handleCID(ipfs_href, true, options);
@@ -19,26 +23,28 @@ export async function fetchEpubAll(ipfs_href: string, timeout: number, options?:
 		.catch(e => null as null)
 	;
 
-	//console.log(cid)
-
-	let list = await getIpfsGatewayList(ipfs)
-		.then(v => v.ipfsGatewayList)
-		.then(list =>
-		{
-			return list.map(gateway =>
-			{
-				return toIpfsLink(cid, {
-					prefix: {
-						ipfs: gateway,
-					},
-				});
-			})
-		})
-	;
+	let list = lazyMakeIpfsAllServerURL(cid, {
+		serverList: [
+			await ipfsGatewayAddressesLink(ipfs),
+		],
+	});
 
 	//console.dir(list)
 
+	let controller: AbortControllerTimer;
+
+	if (timeout)
+	{
+		controller = new AbortControllerTimer(timeout);
+		options ??= {};
+		options.fetchOptions ??= {};
+		options.fetchOptions.signal ??= controller.signal
+		options.fetchOptions.timeout ??= controller.timeout
+	}
+
 	return Bluebird.any(list.map(ipfs_href => fetchEpub(ipfs_href, timeout, options)))
+		.finally(() => controller?.abort())
+	;
 }
 
 export function downloadEpubRace(ipfs_href: string,
@@ -46,10 +52,22 @@ export function downloadEpubRace(ipfs_href: string,
 	timeout?: number,
 	options?: {
 		filter?(buf: Buffer): boolean;
+		fetchOptions?: RequestInit,
 	} & IFetchOptions,
 )
 {
 	timeout ??= 20 * 60 * 1000;
+
+	let controller: AbortControllerTimer;
+
+	if (timeout)
+	{
+		controller = new AbortControllerTimer(timeout);
+		options ??= {};
+		options.fetchOptions ??= {};
+		options.fetchOptions.signal ??= controller.signal
+		options.fetchOptions.timeout ??= controller.timeout
+	}
 
 	return Bluebird.resolve(useIPFS)
 		.then(useIPFS =>
@@ -72,5 +90,6 @@ export function downloadEpubRace(ipfs_href: string,
 			])
 		})
 		.tap(assertEpubByMime)
+		.finally(() => controller?.abort())
 }
 

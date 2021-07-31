@@ -14,7 +14,7 @@ import { filterList } from 'ipfs-server-list';
 import { getIPFSFromCache, useIPFSFromCache } from '../use';
 import { IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import toURL, { toLink } from 'to-ipfs-url';
-import { filterPokeAllSettledResult, pokeAll } from '../pokeAll';
+import { pokeAll } from '../pokeAll';
 import console from 'debug-color2/logger';
 import { ipfsMainPeerID } from '../../dev/admin';
 import raceFetchIPFS from 'fetch-ipfs/race';
@@ -24,6 +24,7 @@ import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 import { toCID } from '@lazy-ipfs/to-cid';
+import { getPokeAllSettledResultWithHref } from 'poke-ipfs/lib/util/filterPokeAllSettledResult';
 
 export const deepEntryListMap = new Map<string, string>();
 export const newEntryListMap = new Map<string, string>();
@@ -374,11 +375,11 @@ export function _pokeDeepEntryListMap(cid?: ICIDValue, peerID?: string)
 				timeout: 20 * 1000,
 			}).then(settledResults =>
 			{
-				if (settledResults?.length)
-				{
-					let list = filterPokeAllSettledResult(settledResults)
+				let list = getPokeAllSettledResultWithHref(settledResults ?? [])
 
-					console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResults.length} 節點中請求分流`, dataKey, '\n' + list[list.length - 1]?.value?.href)
+				if (list?.length)
+				{
+					console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResults.length} 節點中請求分流`, dataKey, '\n' + list[list.length - 1])
 				}
 			});
 		})

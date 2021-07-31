@@ -1,4 +1,3 @@
-import { getIpfsGatewayList } from '../ipfs/pokeAll';
 import { toLink as toIpfsLink } from 'to-ipfs-url';
 import { IPFS } from 'ipfs-core-types';
 import { handleCID, IFetchOptions } from 'fetch-ipfs/util';
@@ -7,6 +6,8 @@ import { ITSResolvable } from 'ts-type/lib/generic';
 import Bluebird from 'bluebird';
 import { fetch } from '../fetch';
 import AbortControllerTimer from 'abort-controller-timer';
+import lazyMakeIpfsAllServerURL, { _notAllowedAddress as notAllowedAddress } from '@lazy-ipfs/make-url-list';
+import { ipfsGatewayAddressesLink } from 'ipfs-util-lib/lib/api/multiaddr';
 
 export async function raceFetchServerList(ipfs: IPFS, ipfs_href: string, timeout?: number, options?: {
 	filter?(buf: Buffer): boolean;
@@ -16,23 +17,15 @@ export async function raceFetchServerList(ipfs: IPFS, ipfs_href: string, timeout
 
 	ipfs = ipfs ?? await getIPFSFromCache();
 
-	return getIpfsGatewayList(ipfs)
-		.then(v => v.ipfsGatewayList)
-		.then(list =>
-		{
-			return list.map(gateway =>
-			{
-				return toIpfsLink(cid, {
-					prefix: {
-						ipfs: gateway,
-					},
-				});
-			})
-		})
-		;
+	return lazyMakeIpfsAllServerURL(cid, {
+		serverList: [
+			await ipfsGatewayAddressesLink(ipfs),
+		],
+		ipfsGatewayDomainList: [],
+	});
 }
 
-export function raceFetchAll(list: ITSResolvable<string[]>, timeout?: number, options?: {
+export function raceFetchAll(list: ITSResolvable<(string | URL)[]>, timeout?: number, options?: {
 	filter?(buf: Buffer): boolean;
 } & IFetchOptions)
 {

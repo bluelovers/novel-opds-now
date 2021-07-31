@@ -14,7 +14,7 @@ import { publishToIPFSAll, publishToIPFSRace } from 'fetch-ipfs/put';
 import { IIPFSFileApi, IFileData, IIPFSFileApiAddOptions, IIPFSFileApiAddReturnEntry } from 'ipfs-types/lib/ipfs/file';
 import { inspect } from 'util';
 import { EPUB_TOPIC, getPubsubPeers, pubsubPublish, pubsubPublishEpub } from '../ipfs/pubsub';
-import { filterPokeAllSettledResult, pokeAll, reportPokeAllSettledResult } from '../ipfs/pokeAll';
+import { pokeAll, reportPokeAllSettledResult } from '../ipfs/pokeAll';
 import { addMutableFileSystem } from '../ipfs/mfs';
 import { fromBuffer } from 'file-type';
 import { downloadEpubRace } from './downloadEpubRace';

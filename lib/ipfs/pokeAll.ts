@@ -1,4 +1,4 @@
-import { pokeIPLD, pokeURL } from 'poke-ipfs';
+import { pokeAllURL, pokeIPLD, pokeURL } from 'poke-ipfs';
 import ipfsProtocol from '@lazy-ipfs/ipfs-protocol';
 import { filterList } from 'ipfs-server-list';
 import { array_unique_overwrite } from 'array-hyper-unique';
@@ -12,49 +12,8 @@ import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { parsePath } from '@lazy-ipfs/parse-ipfs-path';
 import { EnumParsePathResultNs, IParsePathResult, resultToPath } from '@lazy-ipfs/parse-ipfs-path/lib/parsePath';
 import { ICIDObject, ICIDValue } from '@lazy-ipfs/detect-cid-lib';
-
-export function notAllowedAddress(url: URL | string)
-{
-	if (typeof url === 'string')
-	{
-		url = new URL(url.toString());
-	}
-
-	return url.protocol === 'ipfs:' || [
-		'localhost',
-		'127.0.0.1',
-		'::',
-		'::1',
-	].includes(url.hostname)
-}
-
-export async function getIpfsGatewayList(ipfs)
-{
-	let ipfsGatewayMain: string;
-	const ipfsGatewayList: string[] = [];
-
-	await ipfsGatewayAddressesLink(ipfs)
-		.then(gateway =>
-		{
-			ipfsGatewayList.push(ipfsGatewayMain = gateway);
-		})
-		.catch(e => null)
-	;
-
-	filterList('Gateway')
-		.forEach(gateway =>
-		{
-			ipfsGatewayList.push(gateway);
-		})
-	;
-
-	array_unique_overwrite(ipfsGatewayList);
-
-	return {
-		ipfsGatewayMain,
-		ipfsGatewayList,
-	}
-}
+import lazyMakeIpfsAllServerURL, { _notAllowedAddress as notAllowedAddress } from '@lazy-ipfs/make-url-list';
+import { filterPokeAllSettledResultWithValue, getPokeAllSettledResultWithHref } from 'poke-ipfs/lib/util/filterPokeAllSettledResult';
 
 /**
  * make sure only poke once
@@ -88,96 +47,29 @@ export function pokeAll(cid: ICIDValue, ipfs, options?: {
 
 					const { filename } = options ?? {};
 
-					let list = await getIpfsGatewayList(ipfs)
-						.then(v => v.ipfsGatewayList)
-						.then(list =>
-						{
-							return list.map(gateway =>
-							{
-								return toIpfsLink(cid, {
-									prefix: {
-										ipfs: gateway,
-									},
-								});
-							})
-						})
-						.then(list =>
-						{
-							let data: IParsePathResult
 
-							try
-							{
-								data = parsePath(cid)
-							}
-							catch (e)
-							{
-								data = {
-									ns: EnumParsePathResultNs.ipfs,
-									hash: cid as any,
-									path: '',
-								}
-							}
 
-							//const ipfs_url = ipfsProtocol(cid);
-							const ipfs_share_url = `https://share.ipfs.io/#/${data.hash}`;
-
-							list.unshift(ipfs_share_url);
-							//list.unshift(ipfs_url);
-
-							filterList('GatewayDomain')
-								.forEach((gateway) =>
-								{
-									try
-									{
-										list.push(ipfsSubdomain(resultToPath(data), gateway));
-									}
-									catch (e)
-									{
-
-									}
-								})
-							;
-
-							return list;
-						})
-					;
-
-					list = array_unique_overwrite(list).filter(href => !notAllowedAddress(href));
+					let list = lazyMakeIpfsAllServerURL(cid, {
+						serverList: [
+							await ipfsGatewayAddressesLink(ipfs),
+						],
+						handleOptions: {
+							filename,
+						}
+					}).filter(href => !notAllowedAddress(href));
 
 					!options?.hidden && console.debug(`[IPFS]`, `pokeAll:start`, list.length, cid, filename, ...msg);
 					//console.debug(`[IPFS]`, `pokeAll:start`, list);
 
-					return allSettled(list
-						.map((href) =>
-						{
 
-							if (filename?.length)
-							{
-								let url = new URL(href);
-								url.searchParams.set('filename', filename);
-								href = url.toString();
-							}
 
-							return pokeURL(href, {
-								//cors: true,
-								timeout: (options?.timeout | 0) || 10 * 60 * 1000,
-							}).then(data =>
-							{
-								return {
-									...data,
-									href,
-								}
-							})
-						}))
+					return pokeAllURL(list, {
+						timeout: (options?.timeout | 0) || 10 * 60 * 1000,
+					})
 				}).finally(() => cachePoke.delete(cid_str))
 
 		})
 		;
-}
-
-export function filterPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>)
-{
-	return settledResult.filter(v => !v.value.error && v.value.value !== false && v.value.value?.length)
 }
 
 export function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>,
@@ -186,25 +78,12 @@ export function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike
 {
 	return Bluebird.resolve(settledResult).tap(settledResult =>
 	{
-		if (settledResult?.length)
+		let list = getPokeAllSettledResultWithHref(settledResult ?? []);
+
+		if (list?.length)
 		{
-			let list = filterPokeAllSettledResult(settledResult)
-				.map(m =>
-				{
-
-					// @ts-ignore
-					if (m.value?.value?.length)
-					{
-						return m.value.href
-					}
-
-					return m
-				})
-			;
-
 			console.debug(`[IPFS]`, `pokeAll:done`, list)
 			console.info(`[IPFS]`, `pokeAll:end`, `結束於 ${list.length} ／ ${settledResult.length} 節點中請求分流`, ...msg)
-
 			return list
 		}
 	})
