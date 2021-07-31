@@ -42,6 +42,8 @@ let _waiting: ReturnType<typeof _useIPFS>;
 
 let _timeout;
 
+let _failed_count = 0;
+
 export function useIPFS(options?: {
 	disposable?: boolean
 })
@@ -80,8 +82,10 @@ export function useIPFS(options?: {
 				console.warn(`[IPFS]`, `IPFS 伺服器已斷線`);
 			}
 
-			if (_timeout)
+			if (_timeout || _failed_count > 5)
 			{
+				console.error(`[IPFS]`, `IPFS 無法啟動，請手動重新啟動伺服器`);
+
 				return Promise.reject(null)
 			}
 
@@ -144,6 +148,8 @@ export function useIPFS(options?: {
 			{
 				console.error(`[IPFS]`, `啟動 IPFS 時發生錯誤，可能無法正常連接至 IPFS 網路`)
 				console.error(e)
+
+				_failed_count++;
 			}
 
 			return null as null
