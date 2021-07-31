@@ -99,8 +99,6 @@ const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFile
                                 i++;
                             }
                             if (i >= 100) {
-                                await (0, it_all_1.default)(ipfs.repo.gc());
-                                await ipfs.repo.stat().then(logger_1.default.log);
                                 logger_1.default.yellow.debug(`delay`, '10s', _cacheTask.size);
                                 await bluebird_1.default.delay(30 * 1000);
                                 break;
@@ -111,11 +109,13 @@ const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFile
                 else {
                     logger_1.default.gray.log(label, `skip`, _dbEntry.id, db.name(), book.book_title, book.book_id, book.book_path, stat);
                     (0, deepEntryListMap_1.appendDeepEntryListMap)(mfs_path, stat);
-                    await (0, it_all_1.default)(ipfs.block.rm((0, to_cid_1.toCID)(stat), {
-                        force: true,
-                    }))
-                        .then(r => logger_1.default.debug(`ipfs.block.rm`, mfs_path, r))
-                        .catch(logger_1.default.error);
+                    if (0) {
+                        await (0, it_all_1.default)(ipfs.block.rm((0, to_cid_1.toCID)(stat), {
+                            force: true,
+                        }))
+                            .then(r => logger_1.default.debug(`ipfs.block.rm`, mfs_path, r))
+                            .catch(logger_1.default.error);
+                    }
                 }
             });
         });
@@ -128,7 +128,11 @@ const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFile
     await (0, deepEntryListMap_1._saveDeepEntryListMapToServer)();
     (0, deepEntryListMap_1.enableForceSave)();
     await (0, deepEntryListMap_1._saveDeepEntryListMapToFile)();
-    ipfs && await (0, saveMutableFileSystemRoots_1.saveMutableFileSystemRoots)(ipfs);
+    await (0, saveMutableFileSystemRoots_1._saveMutableFileSystemRoots)(ipfs);
     return stop();
+})
+    .finally(async () => {
+    await bluebird_1.default.delay(30 * 1000);
+    process.exit();
 });
 //# sourceMappingURL=calibre-import-all.js.map

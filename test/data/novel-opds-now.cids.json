@@ -1,7 +1,7 @@
 [
   [
     "/.cache/novel-opds-now.cids.json",
-    "QmTYparHA5RWvgbHiPgpq4yqLHj9Ac8wBkvYdCvbb781j3"
+    "QmQZaRLTp6YiLdA5yHgJ7iZiJFgKPG9mfxjGUPscSegpNc"
   ],
   [
     "/.cache/novel-opds-now.cids.json.bak",
@@ -9,7 +9,7 @@
   ],
   [
     "/novel-opds-now/",
-    "bafybeifbvqvfdhh2uwdbmnw3x2po3by275mg7rtbfzmdatc2fbdaedl53q"
+    "bafybeiclzykfdvddzjgxz4comwixnmci25ypdzwvy524phx4qm5wexdeti"
   ],
   [
     "/novel-opds-now/calibre/",
@@ -84,6 +84,14 @@
     "QmR92b2A2Gx4rBM1QzBYdKshm1up3MnUPHeVNxnUnVomUu"
   ],
   [
+    "/novel-opds-now/calibre/37fbdb/伏見司/",
+    "bafybeig5rucubjyvk7dn3mw5ziojbms64ksn3a6q6b3aubarfjbf5eviwa"
+  ],
+  [
+    "/novel-opds-now/calibre/37fbdb/棹末高彰/",
+    "bafybeidqzha466s5oxz6modi5lytkugijfnw22kdu2uj3dzwok27uakuwq"
+  ],
+  [
     "/novel-opds-now/calibre/37fbdb/烟雨江南/",
     "bafybeiaezozavrktsrteckvu3xeesojo25jzrqv6k735ddk5sjc5qxf7wu"
   ],
@@ -92,12 +100,24 @@
     "QmSg4NsYMSgdAscpANGgctuQ6erLzMqug3tWxmtJKAZvUD"
   ],
   [
+    "/novel-opds-now/calibre/37fbdb/西野かつみ/",
+    "bafybeif5sq4aivqbgbkydyv46uqpjcv7vzqv7zlvonwvvyj5vqs3efu2em"
+  ],
+  [
+    "/novel-opds-now/calibre/37fbdb/谷川流/",
+    "bafybeihhs6coehjc5t4mkedqewekgy37rvsnrk7vv3ljiamc57637qux7i"
+  ],
+  [
     "/novel-opds-now/calibre/37fbdb/野村美月/",
     "bafybeignnmtiyolema7sjtwahfk3vr54zl72bq3mi34hmjvsvq5qmcene4"
   ],
   [
     "/novel-opds-now/calibre/37fbdb/野村美月/1.文學少女 - 野村美月 - 已完成 - 野村美月.epub",
     "QmTQzpepYCtyoYPUz7eufKzTDiB5N5GH6cQEGRSeMsnvvi"
+  ],
+  [
+    "/novel-opds-now/calibre/37fbdb/鷹野佑希/",
+    "bafybeid5p6bh4am4yqvr63epwgbk3q62yikd2ehxlpgpoczhtmlgvgqgou"
   ],
   [
     "/novel-opds-now/calibre/4f243f/",
@@ -14369,7 +14389,7 @@
   ],
   [
     "/novel-opds-now/wenku8/",
-    "QmVTPF1PmncmpaynYECEvzAofuNsA8D39b7G885HgdDdWd"
+    "QmQzwZ8AarT9bRRNCpzcYQdUfQjKgCFu9PA3diPMMBHqYJ"
   ],
   [
     "/novel-opds-now/wenku8/1020/",
@@ -14524,6 +14544,14 @@
     "QmZdgU7EsvnZfFwdhPci8Wz9vgrZjJ7BbfzujFPZNWm8kV"
   ],
   [
+    "/novel-opds-now/wenku8/2373/",
+    "QmVpxRQv9k8ZcPmWjCJCFTWxfJjs3szduTrEzb1iGj5DXE"
+  ],
+  [
+    "/novel-opds-now/wenku8/2373/wenku8_2373.epub",
+    "QmYonzcdLcpWbAWRCboTTHviyEUQFu6qBWse2w5Xmpdrct"
+  ],
+  [
     "/novel-opds-now/wenku8/2441/",
     "QmUrAGt1NZhs53NFKH2mtQzQXx64me5wqjn5Sqo6CrqWNn"
   ],
@@ -14589,11 +14617,11 @@
   ],
   [
     "/novel-opds-now/wenku8/2536/",
-    "QmWGnGoJxR9NmL7jXuUP1XTw7pFpX85XThgQBZvCrfGBAE"
+    "QmVo4fHsB424anNFa8MJQAxF8iuxSw2AnJMp27WQkChmiv"
   ],
   [
     "/novel-opds-now/wenku8/2536/wenku8_2536.epub",
-    "QmeKJf4qa7GKd321FEQRgMETfGmdcXEBiwYg3ywaL5wkGt"
+    "QmUGe6cf7zEnaSyNWjaiSiNTHu42VBGjub75uYnFGySKjx"
   ],
   [
     "/novel-opds-now/wenku8/2537/",
@@ -15030,6 +15058,14 @@
   [
     "/novel-opds-now/wenku8/381/wenku8_381.epub",
     "QmYg4hsDxqjGsGm573jrD4e8ctK6Th1cxc1rtVrefuR1a4"
+  ],
+  [
+    "/novel-opds-now/wenku8/63/",
+    "QmVzuAcYXC9gEvXreLwxbTiM7hj6UHu6DtPWppmPLM9mgi"
+  ],
+  [
+    "/novel-opds-now/wenku8/63/wenku8_63.epub",
+    "QmVuqw83CoiC15Wsu2ZUtR3nLftUeZu1gmLjuL1L5YDPEc"
   ],
   [
     "/novel-opds-now/wenku8/754/",

@@ -21,7 +21,7 @@ import itAll from 'it-all';
 import itMap from 'it-map';
 import { pathToCid } from 'to-ipfs-url';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
-import { saveMutableFileSystemRoots } from '../../lib/ipfs/mfs/saveMutableFileSystemRoots';
+import { _saveMutableFileSystemRoots, saveMutableFileSystemRoots } from '../../lib/ipfs/mfs/saveMutableFileSystemRoots';
 
 searchIpfs()
 	.tap(async ({ ipfs, stop }) =>
@@ -152,9 +152,9 @@ searchIpfs()
 
 								if (i >= 100)
 								{
-									await itAll(ipfs.repo.gc());
+									//await itAll(ipfs.repo.gc());
 
-									await ipfs.repo.stat().then(console.log);
+									//await ipfs.repo.stat().then(console.log);
 
 									console.yellow.debug(`delay`, '10s', _cacheTask.size);
 									await Bluebird.delay(30 * 1000);
@@ -170,12 +170,15 @@ searchIpfs()
 
 						appendDeepEntryListMap(mfs_path, stat);
 
-						await itAll(ipfs.block.rm(toCID<MultiformatsCID>(stat), {
-							force: true,
-							//quiet: true,
-						}))
-							.then(r => console.debug(`ipfs.block.rm`, mfs_path, r))
-							.catch(console.error)
+						if (0)
+						{
+							await itAll(ipfs.block.rm(toCID<MultiformatsCID>(stat), {
+								force: true,
+								//quiet: true,
+							}))
+								.then(r => console.debug(`ipfs.block.rm`, mfs_path, r))
+								.catch(console.error)
+						}
 					}
 				})
 			});
@@ -195,8 +198,13 @@ searchIpfs()
 
 		await _saveDeepEntryListMapToFile();
 
-		ipfs && await saveMutableFileSystemRoots(ipfs)
+		await _saveMutableFileSystemRoots(ipfs)
 
 		return stop();
+	})
+	.finally(async () => {
+		await Bluebird.delay(30 * 1000);
+
+		process.exit();
 	})
 ;
