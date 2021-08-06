@@ -29,34 +29,37 @@ export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSCon
 			let ls = await readFile(join(__root, 'lib/static/build-in-cids.txt'))
 				.then(handleCachePeersFile);
 
-			console.debug(`[IPFS]`, `initHelloCheck`, ls)
+			if (ls.length)
+			{
+				console.debug(`[IPFS]`, `initHelloCheck`, ls)
 
-			await Bluebird.any(ls.map(async (cid: ICIDValue) =>
-				{
-					const timeout = 5000;
+				await Bluebird.any(ls.map(async (cid: ICIDValue) =>
+					{
+						const timeout = 5000;
 
-					cid = toCID<MultiformatsCID>(cid);
+						cid = toCID<MultiformatsCID>(cid);
 
-					await ipfs.pin.rm(cid, {
-						timeout,
-					}).catch(e => null);
+						await ipfs.pin.rm(cid, {
+							timeout,
+						}).catch(e => null);
 
-					await itAll(ipfs.block.rm(cid as any, {
-						force: true,
-						quiet: true,
-						timeout,
-					})).catch(e => null);
+						await itAll(ipfs.block.rm(cid as any, {
+							force: true,
+							quiet: true,
+							timeout,
+						})).catch(e => null);
 
-					return itAll(ipfs.get(cid, {
-						preload: true,
-						timeout: 10 * 60 * 1000,
+						return itAll(ipfs.get(cid, {
+							preload: true,
+							timeout: 10 * 60 * 1000,
+						}))
 					}))
-				}))
-				.catch(e =>
-				{
-					console.warn(`[IPFS]`, `initHelloCheck`, e)
-				})
-			;
+					.catch(e =>
+					{
+						console.warn(`[IPFS]`, `initHelloCheck`, e)
+					})
+				;
+			}
 
 			await initMutableFileSystem(ipfs, ipfsd);
 		})
