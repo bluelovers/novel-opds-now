@@ -3,7 +3,7 @@ import CID from 'cids';
 import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { isSameCID } from '@lazy-ipfs/is-same-cid';
 import { IPFS } from 'ipfs-core-types';
-import { toPath, pathToCid } from 'to-ipfs-url';
+import { toPath, pathToCid, pathToCidSource } from 'to-ipfs-url';
 import { toCID } from '@lazy-ipfs/to-cid';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 
@@ -18,7 +18,7 @@ export function _ipfsFilesCopyCID(ipfs: IPFS, file_cid: ICIDValue, file_path: st
 				hash: true,
 			}).catch(e => null);
 
-			if (!file_stat || !isSameCID(file_stat.cid, pathToCid(file_cid)))
+			if (!file_stat || !isSameCID(file_stat.cid, file_cid))
 			{
 				return Promise.reject(e)
 			}

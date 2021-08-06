@@ -15,6 +15,7 @@ import { ipfsFilesCopy } from '@lazy-ipfs/compatible-files';
 import { _ipfsFilesCopyCID } from './_ipfsFilesCopy';
 import { globalWaiting, newWaitingPromise } from '../../util/globalWaiting';
 import itFirst from 'it-first';
+import { toCID } from '@lazy-ipfs/to-cid';
 
 export function _checkIPFSWithMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>): Bluebird<boolean>
 {
@@ -92,6 +93,9 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 									}).catch(e => null as null);
 
 									//console.yellow.debug(`[IPFS]`, isSameCID(cid, stat?.cid), cid, stat?.cid)
+
+									// @ts-ignore
+									cid = toCID(cid);
 
 									if (isSameCID(cid, stat?.cid as any))
 									{

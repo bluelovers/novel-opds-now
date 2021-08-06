@@ -13,6 +13,7 @@ import itAll from 'it-all';
 import { IIPFSControllerDaemon } from '../types';
 import { loadDeepEntryListMapFromFile, loadDeepEntryListMapFromMixin } from '../mfs/deepEntryListMap';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
+import { CID as MultiformatsCID } from 'multiformats';
 
 export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSControllerDaemon)
 {
@@ -34,7 +35,7 @@ export function initHelloCheck(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: IIPFSCon
 				{
 					const timeout = 5000;
 
-					cid = toCID(cid);
+					cid = toCID<MultiformatsCID>(cid);
 
 					await ipfs.pin.rm(cid, {
 						timeout,
