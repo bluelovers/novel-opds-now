@@ -7,7 +7,6 @@ import console from 'debug-color2/logger';
 export function updateAllCacheTask(force?: boolean)
 {
 	return Promise.all([
-		//updateCacheAll(force),
 
 		loadCacheAll(force),
 
