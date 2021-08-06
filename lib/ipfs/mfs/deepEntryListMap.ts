@@ -253,7 +253,7 @@ export function _saveDeepEntryListMapToServer()
 
 				await _backupDeepEntryListMap(cid, peerID);
 
-				await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid, false, true);
+				newEntryListMap.set(pathDeepEntryListMapJson(), cid);
 
 				return putFileRecord({
 						siteID: rootKey,
@@ -310,6 +310,15 @@ export function _writeDeepEntryListMapToMfs(content: string | [string, string][]
 				parents: true,
 				create: true,
 			})
+				.then(async () => {
+					let cid = await ipfs.files.stat(pathDeepEntryListMapJson(), {
+						hash: true,
+						timeout: 3000,
+					}).then(m => m.cid);
+
+					// @ts-ignore
+					return _backupDeepEntryListMap(cid, await useIPFSFromCache().then(m => m?.ipfs?.peerId?.id));
+				})
 		})
 		.catch(e => console.error(`_writeDeepEntryListMapToMfs`, e))
 }
@@ -326,7 +335,9 @@ export async function _backupDeepEntryListMap(cid: ICIDValue, peerID?: string)
 
 	if (ipfsMainPeerID(peerID))
 	{
-		let old_cid = deepEntryListMap.get(pathDeepEntryListMapJson());
+		let tmp = new Map([...deepEntryListMap, ...newEntryListMap]);
+
+		let old_cid = tmp.get(pathDeepEntryListMapJson());
 
 		if ((old_cid || cid) && !isSameCID(old_cid, cid))
 		{
@@ -336,10 +347,12 @@ export async function _backupDeepEntryListMap(cid: ICIDValue, peerID?: string)
 			await ipfs.files.rm(bak, { timeout }).catch(e => null);
 			await _ipfsFilesCopyCID(ipfs, bak_cid, bak, { timeout }).catch(e => null);
 
-			await appendDeepEntryListMap(bak, bak_cid, false, true);
+			//await appendDeepEntryListMap(bak, bak_cid, false, true);
+			newEntryListMap.set(bak, bak_cid.toString());
 		}
 
-		await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid, false, true);
+		//await appendDeepEntryListMap(pathDeepEntryListMapJson(), cid, false, true);
+		newEntryListMap.set(pathDeepEntryListMapJson(), cid.toString());
 	}
 }
 
