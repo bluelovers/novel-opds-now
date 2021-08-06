@@ -10,7 +10,9 @@ export const pokeRoot = throttle(async function (ipfs?: ITSResolvable<IPFS>)
 	return Bluebird.resolve(ipfs ?? getIPFS())
 		.then(async (ipfs) =>
 		{
-			for await (const ret of ipfs.files.ls('/'))
+			for await (const ret of ipfs.files.ls('/', {
+				timeout: 5000,
+			}))
 			{
 				pokeAll(ret.cid as any, ipfs, {
 					filename: ret.name,
