@@ -23,6 +23,8 @@ export async function updateCache(force: boolean)
 
 		force,
 
+		ttl: 30 * 24 * 60 * 60 * 1000,
+
 		makeFns: [
 			() => Bluebird.resolve()
 				.then(e => {

@@ -7,7 +7,7 @@ import Bluebird from 'bluebird';
 
 export function loadCacheAll(force: boolean)
 {
-	return Bluebird.all((<ISiteIDs[]>['wenku8', 'dmzj','esjzone'] ).map((siteID) => loadCache(siteID, force)))
+	return Bluebird.all((<ISiteIDs[]>['wenku8', 'dmzj', 'esjzone']).map((siteID) => loadCache(siteID, force)))
 }
 
 /**
@@ -21,6 +21,8 @@ export function loadCache(siteID: ISiteIDs, force: boolean): ReturnType<typeof b
 		console,
 
 		force,
+
+		ttl: 2 * 24 * 60 * 60 * 1000,
 
 		makeFns: [
 			() =>

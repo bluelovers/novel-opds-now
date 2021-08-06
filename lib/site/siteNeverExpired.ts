@@ -17,7 +17,7 @@ export function siteNotExpireCheck(siteIDs: ITSValueOrArray<string | ISiteIDsPlu
 	{
 		if (/esjzone/i.test(siteID))
 		{
-			expire = day * 2;
+			expire = day * 5;
 			break;
 		}
 	}

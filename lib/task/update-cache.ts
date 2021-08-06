@@ -1,9 +1,8 @@
-
 import updateCache from '../site/demonovel/update';
 import loadCacheMasiro from '../site/masiro/load';
 import updateSegmentCache from '../segment/update';
-import { loadCache, loadCacheAll } from '../site/cached-data/load';
-import { ISiteIDs } from '../site/types';
+import { loadCacheAll } from '../site/cached-data/load';
+import console from 'debug-color2/logger';
 
 export function updateAllCacheTask(force?: boolean)
 {
@@ -15,5 +14,5 @@ export function updateAllCacheTask(force?: boolean)
 		updateCache(force),
 		loadCacheMasiro(force),
 		updateSegmentCache(force),
-	]).catch(e => null)
+	]).catch(e => console.error(`updateAllCacheTask`, force, e))
 }
