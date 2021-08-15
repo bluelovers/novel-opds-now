@@ -25,7 +25,7 @@ export async function fetchEpubAll(ipfs_href: string, timeout: number, options?:
 
 	let list = lazyMakeIpfsAllServerURL(cid, {
 		serverList: [
-			await ipfsGatewayAddressesLink(ipfs),
+			await ipfsGatewayAddressesLink(ipfs).catch(e => null),
 		],
 	});
 

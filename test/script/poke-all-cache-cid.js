@@ -76,6 +76,7 @@ exports.default = bluebird_1.default.resolve()
     let chunk_len = Math.ceil(ls.length / 7);
     let ls3 = ls.slice(day * chunk_len, ((day + 1) * chunk_len) + 1);
     ls3.unshift(...ls2);
+    ls3.push(...ls2);
     return ls3;
 })
     .map(([path, cid], index, length) => {

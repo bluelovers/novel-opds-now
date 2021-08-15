@@ -19,7 +19,7 @@ export async function raceFetchServerList(ipfs: IPFS, ipfs_href: string, timeout
 
 	return lazyMakeIpfsAllServerURL(cid, {
 		serverList: [
-			await ipfsGatewayAddressesLink(ipfs),
+			await ipfsGatewayAddressesLink(ipfs).catch(e => null),
 		],
 		ipfsGatewayDomainList: [],
 	});

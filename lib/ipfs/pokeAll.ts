@@ -10,7 +10,6 @@ import ipfsSubdomain from '@lazy-ipfs/ipfs-subdomain';
 import console from 'debug-color2/logger';
 import { ITSUnpackedPromiseLike } from 'ts-type/lib/helper/unpacked';
 import { parsePath } from '@lazy-ipfs/parse-ipfs-path';
-import { EnumParsePathResultNs, IParsePathResult, resultToPath } from '@lazy-ipfs/parse-ipfs-path/lib/parsePath';
 import { ICIDObject, ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 import lazyMakeIpfsAllServerURL, { _notAllowedAddress as notAllowedAddress } from '@lazy-ipfs/make-url-list';
 import { filterPokeAllSettledResultWithValue, getPokeAllSettledResultWithHref } from 'poke-ipfs/lib/util/filterPokeAllSettledResult';
@@ -51,7 +50,7 @@ export function pokeAll(cid: ICIDValue, ipfs, options?: {
 
 					let list = lazyMakeIpfsAllServerURL(cid, {
 						serverList: [
-							await ipfsGatewayAddressesLink(ipfs),
+							await ipfsGatewayAddressesLink(ipfs).catch(e => null),
 						],
 						handleOptions: {
 							filename,

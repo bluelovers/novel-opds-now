@@ -114,6 +114,7 @@ export default Bluebird.resolve()
 		let ls3 = ls.slice(day * chunk_len, ((day+1) * chunk_len) + 1);
 
 		ls3.unshift(...ls2);
+		ls3.push(...ls2);
 
 		return ls3
 	})
