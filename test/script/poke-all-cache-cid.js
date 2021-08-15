@@ -8,19 +8,46 @@ const array_hyper_unique_1 = require("array-hyper-unique");
 const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
 const lodash_1 = require("lodash");
 let oldSet = new Set();
+let oldSet2 = new Set();
 exports.default = bluebird_1.default.resolve()
     .then(async () => {
     let ls = [];
+    let ls2 = [];
     await (0, deepEntryListMap_1.loadDeepEntryListMapFromFile)().then(m => ls.push(...m));
     console.debug(`loadDeepEntryListMapFromFile`, ls.length);
-    await _json();
+    await _always();
     await (0, deepEntryListMap_1.loadDeepEntryListMapFromServer)().then(m => ls.push(...m));
     console.debug(`loadDeepEntryListMapFromServer`, ls.length);
-    await _json();
-    async function _json() {
-        let json_path = deepEntryListMap_1.deepEntryListMap.get((0, deepEntryListMap_1.pathDeepEntryListMapJson)());
-        if ((json_path === null || json_path === void 0 ? void 0 : json_path.length) && !oldSet.has(json_path)) {
-            await (0, raceFetchServerList_1.raceFetchAll)((0, raceFetchServerList_1.raceFetchServerList)(null, json_path), 60 * 1000)
+    await _always();
+    async function _always() {
+        [
+            '/.cache/',
+            '/.cache/novel-opds-now.cids.json',
+            '/.cache/novel-opds-now.cids.json.bak',
+            '/novel-opds-now/',
+            '/novel-opds-now/calibre/',
+            '/novel-opds-now/demonovel/',
+            '/novel-opds-now/dmzj/',
+            '/novel-opds-now/esjzone/',
+            '/novel-opds-now/masiro/',
+            '/novel-opds-now/wenku8/',
+        ].forEach(json_path => {
+            let cid = deepEntryListMap_1.deepEntryListMap.get(json_path);
+            if ((cid === null || cid === void 0 ? void 0 : cid.length) && !oldSet2.has(cid)) {
+                ls2.push([json_path, String(cid)]);
+                oldSet2.add(cid);
+            }
+        });
+        return Promise.all([
+            _json(),
+            _json((0, deepEntryListMap_1.pathDeepEntryListMapJson)() + '.bak'),
+        ]);
+    }
+    async function _json(json_path = (0, deepEntryListMap_1.pathDeepEntryListMapJson)()) {
+        let cid = deepEntryListMap_1.deepEntryListMap.get(json_path);
+        if ((cid === null || cid === void 0 ? void 0 : cid.length) && !oldSet.has(cid)) {
+            ls2.push([json_path, String(cid)]);
+            await (0, raceFetchServerList_1.raceFetchAll)((0, raceFetchServerList_1.raceFetchServerList)(null, cid), 60 * 1000)
                 .then(buf => JSON.parse(String(buf)))
                 .tap(row => {
                 if (!row.length) {
@@ -34,12 +61,12 @@ exports.default = bluebird_1.default.resolve()
                 (0, deepEntryListMap_1.mergeDeepEntryListMap)(map, tmp);
                 (0, deepEntryListMap_1.fixDeepEntryListMap)(tmp);
                 ls.push(...tmp);
-                console.debug((0, deepEntryListMap_1.pathDeepEntryListMapJson)(), json_path, ls.length);
+                console.debug(json_path, cid, ls.length);
             })
                 .catchReturn(null)
-                .finally(() => deepEntryListMap_1.deepEntryListMap.delete((0, deepEntryListMap_1.pathDeepEntryListMapJson)()));
+                .finally(() => deepEntryListMap_1.deepEntryListMap.delete(json_path));
         }
-        oldSet.add(json_path);
+        oldSet.add(cid);
     }
     ls = (0, array_hyper_unique_1.array_unique_overwrite)(ls);
     console.debug(`array_unique_overwrite`, ls.length);
@@ -47,7 +74,9 @@ exports.default = bluebird_1.default.resolve()
     console.debug(`lodash.uniqBy`, ls.length);
     let day = new Date().getDay();
     let chunk_len = Math.ceil(ls.length / 7);
-    return ls.slice(day * chunk_len, ((day + 1) * chunk_len) + 1);
+    let ls3 = ls.slice(day * chunk_len, ((day + 1) * chunk_len) + 1);
+    ls3.unshift(...ls2);
+    return ls3;
 })
     .map(([path, cid], index, length) => {
     let label = `${index.toString().padStart(5, '0')}／${length.toString().padStart(5, '0')}`;

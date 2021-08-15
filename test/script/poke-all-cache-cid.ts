@@ -11,31 +11,64 @@ import { EventEmitter } from 'events';
 import { unionBy, uniqBy } from 'lodash';
 
 let oldSet = new Set();
+let oldSet2 = new Set();
 
 export default Bluebird.resolve()
 	.then(async () =>
 	{
 		let ls: [string, string][] = [];
+		let ls2: [string, string][] = [];
 
 		await loadDeepEntryListMapFromFile().then(m => ls.push(...m));
 
 		console.debug(`loadDeepEntryListMapFromFile`, ls.length);
 
-		await _json();
+		await _always();
 
 		await loadDeepEntryListMapFromServer().then(m => ls.push(...m));
 
 		console.debug(`loadDeepEntryListMapFromServer`, ls.length);
 
-		await _json();
+		await _always();
 
-		async function _json()
+		async function _always()
 		{
-			let json_path = deepEntryListMap.get(pathDeepEntryListMapJson());
+			[
+				'/.cache/',
+				'/.cache/novel-opds-now.cids.json',
+				'/.cache/novel-opds-now.cids.json.bak',
+				'/novel-opds-now/',
+				'/novel-opds-now/calibre/',
+				'/novel-opds-now/demonovel/',
+				'/novel-opds-now/dmzj/',
+				'/novel-opds-now/esjzone/',
+				'/novel-opds-now/masiro/',
+				'/novel-opds-now/wenku8/',
+			].forEach(json_path => {
+				let cid = deepEntryListMap.get(json_path);
 
-			if (json_path?.length && !oldSet.has(json_path))
+				if (cid?.length && !oldSet2.has(cid))
+				{
+					ls2.push([json_path, String(cid)]);
+					oldSet2.add(cid);
+				}
+			});
+
+			return Promise.all([
+				_json(),
+				_json(pathDeepEntryListMapJson() + '.bak'),
+			]);
+		}
+
+		async function _json(json_path: string = pathDeepEntryListMapJson())
+		{
+			let cid = deepEntryListMap.get(json_path);
+
+			if (cid?.length && !oldSet.has(cid))
 			{
-				await raceFetchAll(raceFetchServerList(null, json_path), 60 * 1000)
+				ls2.push([json_path, String(cid)]);
+
+				await raceFetchAll(raceFetchServerList(null, cid), 60 * 1000)
 					.then(buf => JSON.parse(String(buf) as string) as [string, string][])
 					.tap(row =>
 					{
@@ -55,15 +88,15 @@ export default Bluebird.resolve()
 
 						ls.push(...tmp);
 
-						console.debug(pathDeepEntryListMapJson(), json_path, ls.length);
+						console.debug(json_path, cid, ls.length);
 
 					})
 					.catchReturn(null as null)
-					.finally(() => deepEntryListMap.delete(pathDeepEntryListMapJson()))
+					.finally(() => deepEntryListMap.delete(json_path))
 				;
 			}
 
-			oldSet.add(json_path);
+			oldSet.add(cid);
 		}
 
 		ls = array_unique_overwrite(ls);
@@ -78,7 +111,11 @@ export default Bluebird.resolve()
 
 		let chunk_len = Math.ceil(ls.length / 7);
 
-		return ls.slice(day * chunk_len, ((day+1) * chunk_len) + 1)
+		let ls3 = ls.slice(day * chunk_len, ((day+1) * chunk_len) + 1);
+
+		ls3.unshift(...ls2);
+
+		return ls3
 	})
 	.map(([path, cid], index, length) =>
 	{
