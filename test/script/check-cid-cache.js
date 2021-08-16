@@ -85,8 +85,11 @@ util_1.inspect.defaultOptions.colors = logger_1.default.enabledColor;
     await (0, deepEntryListMap_1._pokeDeepEntryListMap)();
     (0, deepEntryListMap_1.enableForceSave)();
     (0, deepEntryListMap_1.enableOverwriteServer)();
-    let { cid, content } = await (0, deepEntryListMap_1._publishDeepEntryListMapToServer)(ipfs, deepEntryListMap_1.deepEntryListMap);
-    await (0, deepEntryListMap_1._pokeDeepEntryListMap)(cid, null);
+    let { cid, content } = await (0, deepEntryListMap_1._publishDeepEntryListMapToIPFS)(ipfs, deepEntryListMap_1.deepEntryListMap);
+    await Promise.all([
+        (0, deepEntryListMap_1._putDeepEntryListMapToServer)(ipfs, cid),
+        (0, deepEntryListMap_1._pokeDeepEntryListMap)(cid, null),
+    ]);
     (0, deepEntryListMap_1.enableForceSave)();
     await (0, fs_extra_1.writeFile)((0, path_1.join)(__root_1.default, 'test', 'data', 'novel-opds-now.cids.json'), content);
     await (0, deepEntryListMap_1._writeDeepEntryListMapToMfs)(content);

@@ -10,7 +10,7 @@ import { _useIPFS, setIPFSToCache, useIPFSFromCache } from '../../lib/ipfs/use';
 import { raceFetchIPFS } from 'fetch-ipfs/race';
 import Bluebird from 'bluebird';
 import {
-	_pokeDeepEntryListMap, _publishDeepEntryListMapToServer,
+	_pokeDeepEntryListMap, _publishDeepEntryListMapToIPFS, _putDeepEntryListMapToServer,
 	_saveDeepEntryListMapToFile, _saveDeepEntryListMapToServer,
 	_setDeepEntryListMapBoth, _writeDeepEntryListMapToMfs,
 	deepEntryListMap, enableForceSave, enableOverwriteServer,
@@ -136,9 +136,12 @@ inspect.defaultOptions.colors = console.enabledColor;
 	enableForceSave();
 	enableOverwriteServer();
 
-	let { cid, content } = await _publishDeepEntryListMapToServer(ipfs, deepEntryListMap);
+	let { cid, content } = await _publishDeepEntryListMapToIPFS(ipfs, deepEntryListMap);
 
-	await _pokeDeepEntryListMap(cid, null);
+	await Promise.all([
+		_putDeepEntryListMapToServer(ipfs, cid),
+		_pokeDeepEntryListMap(cid, null),
+	]);
 
 	//await _saveDeepEntryListMapToServer();
 
