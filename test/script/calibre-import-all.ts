@@ -1,4 +1,4 @@
-import { searchIpfs } from '../../lib/ipfs/use';
+import { searchIpfs, setIPFSToCache } from '../../lib/ipfs/use';
 import { buildLibraryList } from 'calibre-server/lib/db/buildList';
 import { getCalibrePaths } from '../../server/router/calibre/util';
 import fetch from '../../lib/fetch';
@@ -13,7 +13,11 @@ import {
 	loadDeepEntryListMapFromFile,
 	deepEntryListMap,
 	enableForceSave,
-	enableOverwriteServer, _saveDeepEntryListMapToFile, _saveDeepEntryListMapToServer, appendDeepEntryListMap,
+	enableOverwriteServer,
+	_saveDeepEntryListMapToFile,
+	_saveDeepEntryListMapToServer,
+	appendDeepEntryListMap,
+	_setDeepEntryListMapBoth,
 } from '../../lib/ipfs/mfs/deepEntryListMap';
 import { toCID } from '@lazy-ipfs/to-cid';
 import { CID as MultiformatsCID } from 'multiformats';
@@ -26,6 +30,8 @@ import { _saveMutableFileSystemRoots, saveMutableFileSystemRoots } from '../../l
 searchIpfs()
 	.tap(async ({ ipfs, stop }) =>
 	{
+		setIPFSToCache(ipfs);
+
 		let calibrePaths = getCalibrePaths();
 		await loadDeepEntryListMapFromFile();
 
@@ -113,7 +119,7 @@ searchIpfs()
 							await Bluebird.delay(30 * 1000);
 						}
 
-						if (_cacheTask.size >= 200)
+						if (0 && _cacheTask.size >= 200)
 						{
 							let i = 0;
 
@@ -168,7 +174,7 @@ searchIpfs()
 					{
 						console.gray.log(label, `skip`, _dbEntry.id, db.name(), book.book_title, book.book_id, book.book_path, stat);
 
-						appendDeepEntryListMap(mfs_path, stat);
+						_setDeepEntryListMapBoth(mfs_path, stat);
 
 						if (0)
 						{

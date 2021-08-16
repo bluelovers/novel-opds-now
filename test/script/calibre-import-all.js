@@ -19,6 +19,7 @@ const to_ipfs_url_1 = require("to-ipfs-url");
 const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFileSystemRoots");
 (0, use_1.searchIpfs)()
     .tap(async ({ ipfs, stop }) => {
+    (0, use_1.setIPFSToCache)(ipfs);
     let calibrePaths = (0, util_1.getCalibrePaths)();
     await (0, deepEntryListMap_1.loadDeepEntryListMapFromFile)();
     let baseURL = await (0, ipfs_util_lib_1.ipfsAddresses)(ipfs).then(info => new lazy_url_1.LazyURL((0, multiaddr_to_url_1.multiaddrToURL)(info.API)));
@@ -74,7 +75,7 @@ const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFile
                         logger_1.default.debug(`delay`, '30s', _cacheTask.size);
                         await bluebird_1.default.delay(30 * 1000);
                     }
-                    if (_cacheTask.size >= 200) {
+                    if (0 && _cacheTask.size >= 200) {
                         let i = 0;
                         for (const [path, cid] of _cacheTask) {
                             let c2;
@@ -108,7 +109,7 @@ const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFile
                 }
                 else {
                     logger_1.default.gray.log(label, `skip`, _dbEntry.id, db.name(), book.book_title, book.book_id, book.book_path, stat);
-                    (0, deepEntryListMap_1.appendDeepEntryListMap)(mfs_path, stat);
+                    (0, deepEntryListMap_1._setDeepEntryListMapBoth)(mfs_path, stat);
                     if (0) {
                         await (0, it_all_1.default)(ipfs.block.rm((0, to_cid_1.toCID)(stat), {
                             force: true,

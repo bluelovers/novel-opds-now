@@ -123,3 +123,5 @@ radata-*.tmp
 /test/.mfs.roots.json
 /test/.peers.mixin.txt
 !/test/script/*.js
+/test/cache/check-cid-cache.json
+/test/cache/check-cid-cache.error.json
