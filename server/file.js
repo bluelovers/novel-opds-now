@@ -176,7 +176,11 @@ function fileHandler() {
                     http_filename = String(query.filename);
                 }
                 let attachment = (0, content_disposition_1.default)(http_filename);
-                res.set('Content-disposition', attachment);
+                try {
+                    res.set('Content-disposition', attachment);
+                }
+                catch (e) {
+                }
                 res.set('Content-Type', mime);
                 let cid;
                 if (data === null || data === void 0 ? void 0 : data.href) {

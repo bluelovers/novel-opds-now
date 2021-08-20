@@ -71,7 +71,7 @@ const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFile
                         (0, deepEntryListMap_1.enableForceSave)();
                         (0, deepEntryListMap_1.enableOverwriteServer)();
                         await (0, deepEntryListMap_1._saveDeepEntryListMapToFile)();
-                        await (0, saveMutableFileSystemRoots_1.saveMutableFileSystemRoots)(ipfs);
+                        await (0, saveMutableFileSystemRoots_1._saveMutableFileSystemRoots)(ipfs);
                         logger_1.default.debug(`delay`, '30s', _cacheTask.size);
                         await bluebird_1.default.delay(30 * 1000);
                     }

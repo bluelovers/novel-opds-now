@@ -30,12 +30,11 @@ function opdsHandler()
 		let feed = await makeOPDSOther();
 		res.setHeader('Content-Type', 'application/xml');
 
-		let xml = feed.toXML();
-
 		feed.updated ||= moment().startOf('day')
 
-		res.send(xml)
+		let xml = feed.toXML();
 
+		res.send(xml)
 	});
 
 	router.use('/:siteID.xml', async (req, res, next) =>
@@ -58,9 +57,9 @@ function opdsHandler()
 		let feed = await makeOPDSSite(siteID);
 		res.setHeader('Content-Type', 'application/xml');
 
-		let xml = feed.toXML();
-
 		feed.updated ||= moment().startOf('day');
+
+		let xml = feed.toXML();
 
 		res.send(xml)
 	});
@@ -70,9 +69,9 @@ function opdsHandler()
 		let feed = await makeOPDSPortal();
 		res.setHeader('Content-Type', 'application/xml');
 
-		let xml = feed.toXML();
+		feed.updated = moment().startOf('day')
 
-		feed.updated ||= moment().startOf('day')
+		let xml = feed.toXML();
 
 		res.send(xml)
 	});

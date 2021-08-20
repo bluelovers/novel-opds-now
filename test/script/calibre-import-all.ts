@@ -113,7 +113,7 @@ searchIpfs()
 
 							await _saveDeepEntryListMapToFile();
 
-							await saveMutableFileSystemRoots(ipfs);
+							await _saveMutableFileSystemRoots(ipfs);
 
 							console.debug(`delay`, '30s', _cacheTask.size);
 							await Bluebird.delay(30 * 1000);

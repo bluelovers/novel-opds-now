@@ -34,12 +34,19 @@ export async function startServer(options: {
 
 	const web = await _createServer(micro(await import('./server/index').then(m => m.default)));
 
-	port = (port as number | 0) || getPort(getPortEnv());
+	if (!options.port)
+	{
+		port = (port as number | 0) || getPort(getPortEnv());
 
-	// @ts-ignore
-	process.env.PORT = port = await findPort({
-		port: makeRange(port, (port | 0) + 10),
-	});
+		console.debug(`[express]`, `port:init`, port);
+
+		// @ts-ignore
+		process.env.PORT = port = await findPort({
+			port: makeRange(port, (port | 0) + 10),
+		});
+
+		console.debug(`[express]`, `port:done`, port);
+	}
 
 	web.listen(port, async () =>
 	{

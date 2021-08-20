@@ -293,7 +293,15 @@ function fileHandler()
 					})
 					 */
 
-					res.set('Content-disposition', attachment);
+					try
+					{
+						res.set('Content-disposition', attachment);
+					}
+					catch (e)
+					{
+
+					}
+
 					res.set('Content-Type', mime);
 
 					let cid: string;

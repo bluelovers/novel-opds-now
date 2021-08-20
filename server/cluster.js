@@ -10,6 +10,8 @@ if (0 && cluster_1.default.isMaster) {
     });
 }
 else {
-    (0, index_1.startServer)();
+    (0, index_1.startServer)({
+        port: 3000,
+    });
 }
 //# sourceMappingURL=cluster.js.map

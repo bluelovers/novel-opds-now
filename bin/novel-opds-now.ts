@@ -11,7 +11,7 @@ let argv = yargs
 	.option('port', {
 		number: true,
 		alias: ['p'],
-		default: getPort(getPortEnv())
+		//default: getPort(getPortEnv())
 	})
 	.option('proxy', {
 		string: true,
@@ -26,6 +26,7 @@ let argv = yargs
 		array: true,
 		string: true,
 	})
+	.showHelp()
 	.parseSync()
 ;
 

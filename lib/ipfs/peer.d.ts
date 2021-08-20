@@ -1,10 +1,11 @@
+/// <reference types="node" />
 import { IUseIPFSApi } from '../types';
 import { IDResult } from 'ipfs-core-types/src/root';
 import Bluebird from 'bluebird';
 import { Multiaddr } from 'multiaddr';
 import AbortControllerTimer from 'abort-controller-timer';
 import { ITSResolvable } from 'ts-type';
-export declare const peerAbortController: AbortControllerTimer;
+export declare const peerAbortController: AbortControllerTimer<number | NodeJS.Timeout>;
 export declare function getPeerCacheKey(peerID: string): {
     peer_id: string;
     _not_multiaddr: boolean;

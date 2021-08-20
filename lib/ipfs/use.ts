@@ -232,7 +232,7 @@ export function searchIpfs()
 	})
 }
 
-function _useIPFS(options?: {
+export function _useIPFS(options?: {
 	disposable?: boolean,
 })
 {

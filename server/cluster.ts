@@ -17,5 +17,7 @@ if (0 && cluster.isMaster)
 }
 else
 {
-	startServer();
+	startServer({
+		port: 3000,
+	});
 }

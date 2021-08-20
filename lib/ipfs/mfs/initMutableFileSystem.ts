@@ -148,11 +148,13 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 
 									const p = _ipfsFilesCopyCID(ipfs, cid, target_path, {
 											//parents: true,
+										timeout: 3 * 60 * 1000,
 										})
+										.then(() => console.success(`[IPFS]`, `restore mfs`, cid, target_path))
 											.catch(e => console.error(`[IPFS]`, `restore mfs`, String(e)))
 									;
 
-									if (path.includes('novel-opds-now'))
+									if (/novel-opds-now|\.cache/.test(path))
 									{
 										pa[0] ??= [];
 										pa[0].push(p)

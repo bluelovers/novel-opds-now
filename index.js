@@ -21,10 +21,14 @@ async function startServer(options = {}) {
         process.env.CALIBRE_PATH = options.calibrePaths;
     }
     const web = await (0, http_1.createServer)((0, micro_1.default)(await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('./server/index'))).then(m => m.default)));
-    port = port || (0, getPort_1.default)((0, getPort_1.getPortEnv)());
-    process.env.PORT = port = await (0, get_port_1.default)({
-        port: (0, get_port_1.makeRange)(port, (port | 0) + 10),
-    });
+    if (!options.port) {
+        port = port || (0, getPort_1.default)((0, getPort_1.getPortEnv)());
+        logger_1.default.debug(`[express]`, `port:init`, port);
+        process.env.PORT = port = await (0, get_port_1.default)({
+            port: (0, get_port_1.makeRange)(port, (port | 0) + 10),
+        });
+        logger_1.default.debug(`[express]`, `port:done`, port);
+    }
     web.listen(port, async () => {
         await (0, ip_1.default)(port);
         (0, use_1.useIPFS)().catch(e => logger_1.default.error(`[IPFS]`, e)).tap(() => (0, use_1._info)());

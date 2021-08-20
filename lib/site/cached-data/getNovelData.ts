@@ -12,7 +12,7 @@ export function getNovelData<T extends Record<string, any>>(siteID: string | ISi
 {
 	return Bluebird.resolve(import(getCacheFilename(`${siteID}/map.json`)))
 		.then(data => {
-			return data[novelID] as T
+			return data?.[novelID] as T
 		})
 		.catch(e => null as null)
 }
