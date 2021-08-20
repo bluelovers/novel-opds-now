@@ -401,7 +401,7 @@ export function _useIPFS(options?: {
 				stop,
 			}
 		})
-		.timeout(5 * 60 * 1000)
+		.timeout(60 * 1000)
 		.tapCatch(TimeoutError, e =>
 		{
 			_timeout = true;

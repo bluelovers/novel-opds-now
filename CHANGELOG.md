@@ -3,6 +3,75 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.52](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.51...novel-opds-now@3.0.52) (2021-08-20)
+
+
+### 🐛　Bug Fixes
+
+* 當有指定 port 時，不再試圖尋找可用的 port ([2eb31d9](https://github.com/bluelovers/novel-opds-now/commit/2eb31d916daafb45367bbd1b55e01829fa4c7a33))
+* Input array must contain at least 1 items but contains only 0 items ([99f8189](https://github.com/bluelovers/novel-opds-now/commit/99f818963b75f76acd67a17c13642f7f04d3f68b))
+* avoid loop call ([94fd18c](https://github.com/bluelovers/novel-opds-now/commit/94fd18c9e6b1ca34b13a775f1330642dc11ca6bd))
+* update cid ([506e790](https://github.com/bluelovers/novel-opds-now/commit/506e7904e2ee580c083b4a06d08e15a387295258))
+* add timeout for ipfs.files.ls ([e66c420](https://github.com/bluelovers/novel-opds-now/commit/e66c420154c3d49d75476acad1994100286f56e5))
+* 防止無限試圖啟動 IPFS 伺服器 ([e25112f](https://github.com/bluelovers/novel-opds-now/commit/e25112fab2393e2ac9f55a8a6e94c85505a7acf6))
+* 沒有書名的會顯示路徑 ([34f904f](https://github.com/bluelovers/novel-opds-now/commit/34f904f0dcefef6f983f860ea2086b5708454c21))
+* 排序 novel-opds-now.cids.json 內容 ([dcb3ede](https://github.com/bluelovers/novel-opds-now/commit/dcb3ede5cc2d5c6a3e32ea7904b62dc65d596f08))
+
+
+### ✨　Features
+
+* update expire ([e8524c2](https://github.com/bluelovers/novel-opds-now/commit/e8524c2181617fdbd8c5518d22946fc4ed135654))
+
+
+### 📦　Code Refactoring
+
+* use `@lazy-ipfs/make-url-list` ([2932673](https://github.com/bluelovers/novel-opds-now/commit/2932673a12eeb416baa2fdb52bc09defe4ea19bd))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([b896b91](https://github.com/bluelovers/novel-opds-now/commit/b896b91ebe7691db48403be71a537ba10178c514))
+
+
+### ⚙️　Continuous Integration
+
+* update poke script ([90110f4](https://github.com/bluelovers/novel-opds-now/commit/90110f4234f16fd808a453554f640788ce11b9ca))
+* update poke script ([f0734e1](https://github.com/bluelovers/novel-opds-now/commit/f0734e148501b2260f199e9caf54d4b322f5214c))
+* 將 cids 分成 七份 來執行 避免一次執行太多 ([c9816e7](https://github.com/bluelovers/novel-opds-now/commit/c9816e7679ad4530a100adf15bd627faf4dee394))
+
+
+### ♻️　Chores
+
+* update timeout ([747d3e3](https://github.com/bluelovers/novel-opds-now/commit/747d3e3a833441ac7bade3fdbcb9186b7c9b5271))
+* remove `Hello from novel-opds-now Checker.txt` from `build-in-cids.txt` ([d0be885](https://github.com/bluelovers/novel-opds-now/commit/d0be885838cff22eef132fc2eb12c7addf663065))
+* . ([46da79e](https://github.com/bluelovers/novel-opds-now/commit/46da79efa04eb3e7dc3d8847242cf1f5f1a7d904))
+* **deps:** update deps ([6648f96](https://github.com/bluelovers/novel-opds-now/commit/6648f964c2598900f6c144bafa1374ec0e91ae59))
+
+
+### 🔖　Miscellaneous
+
+* . ([4f6b432](https://github.com/bluelovers/novel-opds-now/commit/4f6b432a3eafd754b0b7bf911de9009034a07c28))
+* . ([bf7d659](https://github.com/bluelovers/novel-opds-now/commit/bf7d6595cbe2855b21d1e5d185e499e89f922cfd))
+* . ([44a80ea](https://github.com/bluelovers/novel-opds-now/commit/44a80ea805d009914564e04b5e22ba8e6a4b0ded))
+* . ([ceb783d](https://github.com/bluelovers/novel-opds-now/commit/ceb783de1a4e7bd5540768d51382d7ad201fd05c))
+* . ([44bc8a5](https://github.com/bluelovers/novel-opds-now/commit/44bc8a5b459e833fd76650a323f6578508d6dcee))
+* . ([65ddd09](https://github.com/bluelovers/novel-opds-now/commit/65ddd095f822a68a40129ec53b169134ff4e6158))
+* . ([db4486e](https://github.com/bluelovers/novel-opds-now/commit/db4486e513c7904608caa4e157c912af77d1d2fa))
+* . ([8e9d946](https://github.com/bluelovers/novel-opds-now/commit/8e9d9461b4b07ab1ab93d78927d28de47f3c14b9))
+* . ([9f82603](https://github.com/bluelovers/novel-opds-now/commit/9f82603583bb78f12e655e807011de5326e35b11))
+* . ([2f902ad](https://github.com/bluelovers/novel-opds-now/commit/2f902ad19879819e0783ac57c5069d9406d6f05f))
+* . ([727d45e](https://github.com/bluelovers/novel-opds-now/commit/727d45e7bb67e06e4aa53ba70b51e61fdae4d07c))
+* . ([509dd27](https://github.com/bluelovers/novel-opds-now/commit/509dd271b7ba6a68b9706839638ba5661ea59766))
+
+
+### BREAKING CHANGE
+
+* 當有指定 port 時，不再試圖尋找可用的 port
+
+
+
+
+
 ## [3.0.51](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.50...novel-opds-now@3.0.51) (2021-07-30)
 
 
