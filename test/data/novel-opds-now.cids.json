@@ -5,7 +5,7 @@
   ],
   [
     "/.cache/novel-opds-now.cids.json",
-    "QmZH9nC6ce8X1CkQvzW5Q2U7gDcN1MyvV19wGdo8JexB9D"
+    "QmSJF5DHa4XogNVQh1AH1UTGM9QN1ZqAywEgvPrfPP9f28"
   ],
   [
     "/.cache/novel-opds-now.cids.json.bak",
@@ -13,7 +13,7 @@
   ],
   [
     "/novel-opds-now/",
-    "bafybeihn5fnht4z7qavppb4nxegbueoy54wftdp4vvlgb42pi2iaq5yrha"
+    "bafybeicpcddyooltglxjlgjnuxdwqecjmhgwtqe44xpkfdmqxz5s2p74se"
   ],
   [
     "/novel-opds-now/calibre/",
@@ -13265,7 +13265,7 @@
   ],
   [
     "/novel-opds-now/dmzj/",
-    "QmSGRqYs74yrJ788fd11bybmfQhcbHMHLHukNp4bVoynp5"
+    "QmcjA7uCgPqayCUpZhtk9X3f5kJjwhhNr8CuL2b5UnscMw"
   ],
   [
     "/novel-opds-now/dmzj/1045/",
@@ -13292,6 +13292,14 @@
     "QmR8N9ngoQEUShTXgYRGugsJutpKA64b1b2q2VMRxUBU5s"
   ],
   [
+    "/novel-opds-now/dmzj/1728/",
+    "QmaUjwTbbKDDaFF32UyKijTUwheByQEvqjeCsDXhXmNw97"
+  ],
+  [
+    "/novel-opds-now/dmzj/1728/dmzj_1728.epub",
+    "QmWpEkkAFvnoCi4sDVkevbj8GiKjjNkAMxW6RKCtiZMw4c"
+  ],
+  [
     "/novel-opds-now/dmzj/1956/",
     "QmZqn3sP8ySssG7xMbm7XsjbFNzzCv8eHRpZX93dUSoDgQ"
   ],
@@ -13314,6 +13322,14 @@
   [
     "/novel-opds-now/dmzj/2012/dmzj_2012.epub",
     "QmZy9nWfUTGPHvvwvXLKW5vUyx6cb6TUFUk4HxdH13sgNe"
+  ],
+  [
+    "/novel-opds-now/dmzj/2061/",
+    "QmdptnmyKPfQSEM4buxf2cYhZyRkz8zHWpeQvMnxsfGuyD"
+  ],
+  [
+    "/novel-opds-now/dmzj/2061/dmzj_2061.epub",
+    "QmNZkdMHKKJtX13wpnMnsL2Lmwqqbyge4p3PAwHGLKcxeS"
   ],
   [
     "/novel-opds-now/dmzj/2117/",
@@ -13538,6 +13554,14 @@
   [
     "/novel-opds-now/dmzj/3118/dmzj_3118.epub",
     "QmfNC31Fdkj1CMkvFGKgcjG4HihDHwCdQHrjFGF7AW9Z1z"
+  ],
+  [
+    "/novel-opds-now/dmzj/3120/",
+    "QmSM8YtvbWBbJKCS1hJfXTGCwkToXUbuuWKpgsmcrhJ9Cw"
+  ],
+  [
+    "/novel-opds-now/dmzj/3120/dmzj_3120.epub",
+    "QmW7pNqGZZxNMYhVht47CoW1uRfxBSf5Noo9z9Exiuu5Mr"
   ],
   [
     "/novel-opds-now/esjzone/",
@@ -14618,6 +14642,14 @@
   [
     "/novel-opds-now/esjzone/1623854439/esjzone_1623854439.epub",
     "QmTV7P4zVvkWanQRokjCLENQrTgkMUsHwKzieaCADSZ2x3"
+  ],
+  [
+    "/novel-opds-now/esjzone/1624038928/",
+    "Qmf5MvyeSTdZKkmDrQ5MRjVahMYfyVtB86j2L4v4pFMAGm"
+  ],
+  [
+    "/novel-opds-now/esjzone/1624038928/esjzone_1624038928.epub",
+    "QmeYmvbsd51zwnYtM8AUQxcFShgYznfB6X8znSQaEPS8k8"
   ],
   [
     "/novel-opds-now/esjzone/1624117113/",
@@ -16409,7 +16441,7 @@
   ],
   [
     "/novel-opds-now/wenku8/",
-    "QmNnvFvEZFmd1A17wusdUDZH22L3mnkDxv6MxBT4xQwEz8"
+    "QmcqByAC9Wt3BajHexquHEzsAs9Ycp2u1hw6QJLJnjSMXw"
   ],
   [
     "/novel-opds-now/wenku8/1020/",
@@ -16418,6 +16450,14 @@
   [
     "/novel-opds-now/wenku8/1020/wenku8_1020.epub",
     "QmNorCy5LLWL6ao7VghhFubqqJbYzrTargv4FZnTE9R9Qb"
+  ],
+  [
+    "/novel-opds-now/wenku8/1028/",
+    "QmcdL5BcuYPTxjRMxQqeP1MEJP7J99LqQX15shpjoxAq7N"
+  ],
+  [
+    "/novel-opds-now/wenku8/1028/wenku8_1028.epub",
+    "QmfRBGpTSohp9ivfix8cpzptHxYFcK4wgwqVFawKZ4qwh8"
   ],
   [
     "/novel-opds-now/wenku8/1168/",
@@ -16474,6 +16514,14 @@
   [
     "/novel-opds-now/wenku8/1508/wenku8_1508.epub",
     "QmeQpsLV3RvPbnaBcPQVeXSbGp7ySKo23cD7pxbMXnqdph"
+  ],
+  [
+    "/novel-opds-now/wenku8/1527/",
+    "Qmc9yhkEiAUpmhz74CqAQthGrrXyvyAgu9mFg43ubvjg8H"
+  ],
+  [
+    "/novel-opds-now/wenku8/1527/wenku8_1527.epub",
+    "QmWfbwhQJ1mrZYUwDLLvE9fgw4MV8ckXUDqoLhi2SDTYus"
   ],
   [
     "/novel-opds-now/wenku8/1546/",
@@ -16596,6 +16644,14 @@
     "QmPAEZfCUyDo5XWW7L7QFEhg9Nt5XXftYnZzCstGywE2yc"
   ],
   [
+    "/novel-opds-now/wenku8/2118/",
+    "QmSpo2L2eASxNyv2fxePDA8L2bS3fTt94EdbiM55LKKstz"
+  ],
+  [
+    "/novel-opds-now/wenku8/2118/wenku8_2118.epub",
+    "Qmc4Evr3o2CUWZVM7bwfjhCMC2HKGwaV22h5NC6hWhFG8R"
+  ],
+  [
     "/novel-opds-now/wenku8/2171/",
     "QmVLDNLJirkxZCya6Q3Z4D4DMy243BN4vpsGkYbhiJbGD4"
   ],
@@ -16701,11 +16757,11 @@
   ],
   [
     "/novel-opds-now/wenku8/2527/",
-    "QmYK3T9EMLA65s4Z3TJ6mHfU338kmrrbJ96iJSJCTrU38s"
+    "QmfUZPLtSL9R1QBXp5BansoyzSdh5UmD1g1pZFbjMpG1D1"
   ],
   [
     "/novel-opds-now/wenku8/2527/wenku8_2527.epub",
-    "QmUt4u6SUreX7JopnpizHfBCcYQTNH4eE3x7RgwnypivxA"
+    "QmVzod2P3PPAu61GbzawKNNGJEFUMcrbferLFtug7hEbP6"
   ],
   [
     "/novel-opds-now/wenku8/2530/",
@@ -16738,6 +16794,30 @@
   [
     "/novel-opds-now/wenku8/2542/wenku8_2542.epub",
     "QmT6WzQ8bCra8xFNepXEEvyr9uiyVFMzTfYXkxjEsPQFPE"
+  ],
+  [
+    "/novel-opds-now/wenku8/2560/",
+    "QmSpZSi244fJ8FeEYnRLRgqR8W8gBQD3c42z9qYCebNMGb"
+  ],
+  [
+    "/novel-opds-now/wenku8/2560/wenku8_2560.epub",
+    "QmbfDHgrxmv2DTDFRUz3gX9ghHA8V6gLDgYeDcZeueRJwr"
+  ],
+  [
+    "/novel-opds-now/wenku8/2566/",
+    "QmX1eKo172Q7LdDNbxvgyDSYsaCtZuiKmnTuiNXH5icdqE"
+  ],
+  [
+    "/novel-opds-now/wenku8/2566/wenku8_2566.epub",
+    "QmSEUdAoUAR64S11YqNquQdJqSg1eDLpMVJfqYudPdtwCa"
+  ],
+  [
+    "/novel-opds-now/wenku8/2573/",
+    "QmXAvUarQbrreNDh1eqEcrYCjn4T8Tn7jpkd5QDJLrmHUw"
+  ],
+  [
+    "/novel-opds-now/wenku8/2573/wenku8_2573.epub",
+    "QmfYLVHF7N8E3Ch5CQwz1dJuQCG8eBVp3onJcNBSRQoRXw"
   ],
   [
     "/novel-opds-now/wenku8/2582/",
@@ -16970,6 +17050,14 @@
   [
     "/novel-opds-now/wenku8/2866/wenku8_2866.epub",
     "QmVDB5SkiBPoVikgPmmXmQYPLMyf495yqFAhCgFuXNDbLu"
+  ],
+  [
+    "/novel-opds-now/wenku8/2875/",
+    "QmczvmkcNLgKFWhotXQJ19es7wzFnpTy336ib2sy78fvzn"
+  ],
+  [
+    "/novel-opds-now/wenku8/2875/wenku8_2875.epub",
+    "QmNczqp9ucrgAEGf4cEA5cjtHbM3TSa42KaQokQaLT7FLc"
   ],
   [
     "/novel-opds-now/wenku8/2883/",
@@ -17270,6 +17358,38 @@
   [
     "/novel-opds-now/wenku8/3003/wenku8_3003.epub",
     "QmeCL8UxDAg45Jovw8Z2e5avcB8ANZTes6fYy4cmwzwgLe"
+  ],
+  [
+    "/novel-opds-now/wenku8/3006/",
+    "QmSqr69E5LZ7s9oN3SoPL9jWsexxym4ExRps8tm3kah9wt"
+  ],
+  [
+    "/novel-opds-now/wenku8/3006/wenku8_3006.epub",
+    "QmfKbFgsVViN6FvzPhY4TEQpxry8DtUyNfUARWXXo9tyex"
+  ],
+  [
+    "/novel-opds-now/wenku8/3008/",
+    "QmQH4bY5UiSbiZ8tZi3HQSSgVH4LYd1pi5m41yHCutVS9i"
+  ],
+  [
+    "/novel-opds-now/wenku8/3008/wenku8_3008.epub",
+    "Qmf6jt1ioTm6ba3Rx3Xq5urJwWRkV1WsvX1ZeVgsxHZaz8"
+  ],
+  [
+    "/novel-opds-now/wenku8/3010/",
+    "QmcFPqMhPpjzYSPZ3xKiqmJhKFwAPWVNoGZXoNW7zuwsy8"
+  ],
+  [
+    "/novel-opds-now/wenku8/3010/wenku8_3010.epub",
+    "QmWfuM8KKL8YH2Hdq3voqfF52fusNggWUiBjuxcAycjkjj"
+  ],
+  [
+    "/novel-opds-now/wenku8/3011/",
+    "QmQ8uxY8cc6HKByxeMAc87MiM3wCypBcBFuvfvRvoDN9dP"
+  ],
+  [
+    "/novel-opds-now/wenku8/3011/wenku8_3011.epub",
+    "QmeFHw2PBECDTspjAMcJq6jH1iR7s5yWXk8tfVSCzvWiYR"
   ],
   [
     "/novel-opds-now/wenku8/381/",
