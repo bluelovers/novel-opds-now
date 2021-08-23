@@ -40,6 +40,7 @@ Bluebird
 		download,
 	}) =>
 	{
+
 		let {
 				cwd,
 				novel_id,
@@ -50,7 +51,7 @@ Bluebird
 			} = await download()
 				.tapCatch(e =>
 				{
-					console.error(`[epub]`, IDKEY, novel_id, `下載來源時發生錯誤`, e)
+					console.error(`[epub]`, argv.siteID, argv.novel_id, `下載來源時發生錯誤`, e)
 				})
 		;
 

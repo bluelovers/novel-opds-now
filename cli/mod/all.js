@@ -35,7 +35,7 @@ bluebird_1.default
     .then(async ({ options, download, }) => {
     let { cwd, novel_id, IDKEY, outputDir, novel, ...arr } = await download()
         .tapCatch(e => {
-        logger_1.default.error(`[epub]`, IDKEY, novel_id, `下載來源時發生錯誤`, e);
+        logger_1.default.error(`[epub]`, argv.siteID, argv.novel_id, `下載來源時發生錯誤`, e);
     });
     const _info = await (0, getNovelData_1.getNovelData)(IDKEY, novel_id);
     const title = _info === null || _info === void 0 ? void 0 : _info.title;
