@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.54](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.53...novel-opds-now@3.0.54) (2021-08-23)
+
+
+### 📦　Code Refactoring
+
+* use `@lazy-ipfs/identity` ([c0717a6](https://github.com/bluelovers/novel-opds-now/commit/c0717a692d0b716f2a77933b65adc4b146520ee4))
+* use `@lazy-ipfs/get-mixin-peers` ([4ba8079](https://github.com/bluelovers/novel-opds-now/commit/4ba80798fc66e4f2a53cf208bfca952467ea562b))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([b9a89cc](https://github.com/bluelovers/novel-opds-now/commit/b9a89ccc7c6a89cf116bcfef4638135155194d7c))
+
+
+
+
+
 ## [3.0.53](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.52...novel-opds-now@3.0.53) (2021-08-23)
 
 
