@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.53](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.52...novel-opds-now@3.0.53) (2021-08-23)
+
+
+### 🐛　Bug Fixes
+
+* ReferenceError: Cannot access 'IDKEY' before initialization ([ecf167c](https://github.com/bluelovers/novel-opds-now/commit/ecf167cea2f5f26e50de020c4ccef5488d28ab2f))
+
+
+### 📦　Code Refactoring
+
+* update `@lazy-ipfs/compatible-files` ([7b12761](https://github.com/bluelovers/novel-opds-now/commit/7b1276189a270d4c5fbd0a020aaafe8e3c3278c1))
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([5a70f67](https://github.com/bluelovers/novel-opds-now/commit/5a70f6704916012a0310f52263d7c01789403c71))
+
+
+### 🔖　Miscellaneous
+
+* . ([4a84f90](https://github.com/bluelovers/novel-opds-now/commit/4a84f9075c84abcf3ba743c1517909b33ad7e339))
+
+
+
+
+
 ## [3.0.52](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.51...novel-opds-now@3.0.52) (2021-08-20)
 
 
