@@ -655,10 +655,10 @@
     it-last "^1.0.5"
     tslib "^2.3.1"
 
-"@lazy-ipfs/compatible-files@^1.0.4":
-  version "1.0.4"
-  resolved "https://registry.npmjs.org/@lazy-ipfs/compatible-files/-/compatible-files-1.0.4.tgz#84ebed64c8044a9d0fb2d711ff8059318aa17245"
-  integrity sha512-Mkcbt/hUORPlXOKFFn5jMsgt98qDArEdFBk3xuifM+uqVl4npFqoiMxOjWDQqpgJxeY0za9xId6IZEwE0mtevw==
+"@lazy-ipfs/compatible-files@^1.0.6":
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/@lazy-ipfs/compatible-files/-/compatible-files-1.0.6.tgz#c246e56781070beab3dff7a42492c1e7e148ae1b"
+  integrity sha512-E5LX/L5OkdcdlxCeaDDYk4tLm7wGYF4C6upCqJrNzHRZY40wIHIQUlpVpm4pjmfXm9n9EekjcfzmbEgnXmBS4Q==
   dependencies:
     "@lazy-ipfs/is-same-cid" "^1.0.13"
     ipfs-core-types "*"
@@ -773,14 +773,14 @@
     err-code "^3.0.1"
     tslib "^2.3.1"
 
-"@lazy-node/is-writeable-path@^1.0.6", "@lazy-node/is-writeable-path@^1.0.7":
+"@lazy-node/is-writeable-path@^1.0.7":
   version "1.0.7"
   resolved "https://registry.npmjs.org/@lazy-node/is-writeable-path/-/is-writeable-path-1.0.7.tgz#d245a34b1984536bc7484d1f2f379bbed534c73f"
   integrity sha512-W31UBtySQb5qeAIaphZyhmTAkBkX2ZEaGdLC4cHRfERQrPBITfz7A5aNYYGj5TRtKNDMP3NpDDTaNDTzOAvhdw==
   dependencies:
     tslib "^2.3.1"
 
-"@lazy-node/sanitize-filename@^1.0.1", "@lazy-node/sanitize-filename@^1.0.2":
+"@lazy-node/sanitize-filename@^1.0.2":
   version "1.0.2"
   resolved "https://registry.npmjs.org/@lazy-node/sanitize-filename/-/sanitize-filename-1.0.2.tgz#57ccc48bfe425ba63288248a2bafa4c69633c0bf"
   integrity sha512-kr3HgsvnDXs0WquZC4YCNz3uxKwpt6xagOCvId4yuDeE8J7L8QOE8WQ+SJEUXAaduOrnUqy1S0/BxPj0lTbUYw==
@@ -1668,7 +1668,7 @@
   dependencies:
     "@types/yargs-parser" "*"
 
-"@yarn-tool/find-root@^1.0.49", "@yarn-tool/find-root@^1.0.50":
+"@yarn-tool/find-root@^1.0.50":
   version "1.0.50"
   resolved "https://registry.npmjs.org/@yarn-tool/find-root/-/find-root-1.0.50.tgz#93f45a66aa54edf2bfdcc112df66b8972c99a7a6"
   integrity sha512-Gg/TNR8QaV5FnT/vQOOQ/9qADXAFnRKbRL3REPK9KK/Ti8RL5AoWV0JvHUPNKsSD/wlVKUtjWW9+K2NmUeSdrA==
@@ -4193,7 +4193,7 @@ find-versions@^3.0.0:
   dependencies:
     semver-regex "^2.0.0"
 
-find-yarn-workspace-root2@^1.2.31, find-yarn-workspace-root2@^1.2.32:
+find-yarn-workspace-root2@^1.2.32:
   version "1.2.32"
   resolved "https://registry.npmjs.org/find-yarn-workspace-root2/-/find-yarn-workspace-root2-1.2.32.tgz#7529d817f0c01444cbfec3bf87d186286e4e774e"
   integrity sha512-n/e8B+regyMkDCmqjU6BsHeyiM3i7QUJz3NR6/3Cioy10v5AybixEJCXOgOXXJt829Tcq456Tp6rvMIrcu/xDA==
@@ -7780,7 +7780,7 @@ path-is-absolute@^1.0.0:
   resolved "https://registry.npmjs.org/path-is-absolute/-/path-is-absolute-1.0.1.tgz#174b9268735534ffbc7ace6bf53a5a9e1b5c5f5f"
   integrity sha1-F0uSaHNVNP+8es5r9TpanhtcX18=
 
-path-is-network-drive@^1.0.10, path-is-network-drive@^1.0.9:
+path-is-network-drive@^1.0.10:
   version "1.0.10"
   resolved "https://registry.npmjs.org/path-is-network-drive/-/path-is-network-drive-1.0.10.tgz#d9d7164e6d05a49d7876813a53ec5c4ae86aa542"
   integrity sha512-D6kJYPUSKGZBpTM2nv10sOWNdC056p4JDx0y7ARe6gop0aXXm5G86Gn/SyKvaf0Ce8c9Guctf+J+qoFmzuhDQg==
@@ -7807,7 +7807,7 @@ path-starts-with@^2.0.0:
   resolved "https://registry.npmjs.org/path-starts-with/-/path-starts-with-2.0.0.tgz#ffd6d51926cd497022b44d392196033d5451892f"
   integrity sha512-3UHTHbJz5+NLkPafFR+2ycJOjoc4WV2e9qCZCnm71zHiWaFrm1XniLVTkZXvaRgxr1xFh9JsTdicpH2yM03nLA==
 
-path-strip-sep@^1.0.6, path-strip-sep@^1.0.7:
+path-strip-sep@^1.0.7:
   version "1.0.7"
   resolved "https://registry.npmjs.org/path-strip-sep/-/path-strip-sep-1.0.7.tgz#51f31fd53099b7ba59876b7b9e6492397441223d"
   integrity sha512-9xDVZPblHde4lTuTDnwqBKr9LTbPZW+Iae63ho500+BpEiZe3X6wvLInHgbB6FSMtwCTvztljw3k2zcNDNESzg==

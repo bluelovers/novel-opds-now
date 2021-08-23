@@ -201,11 +201,14 @@ export function initMutableFileSystem(ipfs: ITSResolvable<IUseIPFSApi>, ipfsd: I
 					}).catch(e => null);
 					 */
 
-					await ipfs.files.rm(file_path).catch(e => null);
+					//await ipfs.files.rm(file_path).catch(e => null);
 					await _ipfsFilesCopyCID(ipfs, file_cid as any, file_path, {
 						// @ts-ignore
 						pin: false,
 						parents: true,
+							extraOptions: {
+								overwrite: true,
+							},
 					});
 				}
 

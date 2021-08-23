@@ -42,15 +42,19 @@ export function _addMutableFileSystem(dir_path: string, data: {
 
 					if (!file_stat || !isSameCID(file_stat.cid, file_cid))
 					{
-						await ipfs.files.rm(file_path).catch(e => null);
+						//await ipfs.files.rm(file_path).catch(e => null);
 
-						await _ipfsFilesCopyCID(ipfs, file_cid, file_path, {
+						file_stat = await _ipfsFilesCopyCID(ipfs, file_cid, file_path, {
 							parents: true,
+							extraOptions: {
+								overwrite: true,
+								returnStat: true,
+							},
 						})
 
-						file_stat = await ipfs.files.stat(file_path, {
-							hash: true,
-						}).catch(e => null)
+//						file_stat = await ipfs.files.stat(file_path, {
+//							hash: true,
+//						}).catch(e => null)
 					}
 
 					if (file_stat)

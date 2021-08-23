@@ -333,8 +333,13 @@ export async function _backupDeepEntryListMap(cid: ICIDValue, peerID?: string)
 			let bak = pathDeepEntryListMapJson() + '.bak';
 			let bak_cid = old_cid ?? cid;
 
-			await ipfs.files.rm(bak, { timeout }).catch(e => null);
-			await _ipfsFilesCopyCID(ipfs, bak_cid, bak, { timeout }).catch(e => null);
+			//await ipfs.files.rm(bak, { timeout }).catch(e => null);
+			await _ipfsFilesCopyCID(ipfs, bak_cid, bak, {
+				timeout,
+				extraOptions: {
+					overwrite: true,
+				},
+			}).catch(e => null);
 
 			//await appendDeepEntryListMap(bak, bak_cid, false, true);
 			_setDeepEntryListMapBoth(bak, bak_cid);
@@ -571,8 +576,6 @@ export async function _publishDeepEntryListMapToIPFS(ipfs, deepEntryListMap: Map
 			}
 		})
 	;
-
-
 
 	return {
 		cid,

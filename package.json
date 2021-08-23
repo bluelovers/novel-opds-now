@@ -75,7 +75,7 @@
     "@demonovel/local-or-rebuild-file": "^1.0.5",
     "@demonovel/uuid": "^1.0.2",
     "@lazy-http/content-disposition": "^1.0.2",
-    "@lazy-ipfs/compatible-files": "^1.0.4",
+    "@lazy-ipfs/compatible-files": "^1.0.6",
     "@lazy-ipfs/ipfs-api-url": "^1.0.2",
     "@lazy-ipfs/ipfs-protocol": "^1.0.8",
     "@lazy-ipfs/ipfs-subdomain": "^1.0.41",
