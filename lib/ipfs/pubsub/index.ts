@@ -5,6 +5,7 @@ import { pubsubHandler } from './handler';
 import { ITSResolvable } from 'ts-type';
 import Bluebird from 'bluebird';
 import { cidToString } from '@lazy-ipfs/cid-to-string';
+import { ipfsPubsubPeers } from '@lazy-ipfs/get-mixin-peers';
 
 export const EPUB_TOPIC = 'novel-opds-now';
 
@@ -64,9 +65,9 @@ export function pubsubSubscribe(ipfs: IUseIPFSApi)
 		;
 }
 
-export async function getPubsubPeers(ipfs: IUseIPFSApi): Promise<string[]>
+export function getPubsubPeers(ipfs: IUseIPFSApi)
 {
-	return ipfs.pubsub.peers(EPUB_TOPIC)
+	return ipfsPubsubPeers(ipfs, EPUB_TOPIC)
 		.catch(e =>
 		{
 			//console.warn(`[IPFS]`, `[pubsub.peers]`, String(e))

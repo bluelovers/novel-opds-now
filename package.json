@@ -76,6 +76,7 @@
     "@demonovel/uuid": "^1.0.2",
     "@lazy-http/content-disposition": "^1.0.2",
     "@lazy-ipfs/compatible-files": "^1.0.6",
+    "@lazy-ipfs/get-mixin-peers": "^1.0.2",
     "@lazy-ipfs/ipfs-api-url": "^1.0.2",
     "@lazy-ipfs/ipfs-protocol": "^1.0.8",
     "@lazy-ipfs/ipfs-subdomain": "^1.0.41",
