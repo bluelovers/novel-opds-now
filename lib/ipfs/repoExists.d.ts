@@ -1,1 +1,1 @@
-export declare function repoExists(repoPath: string): Promise<boolean>;
+export { existsRepoConfig as repoExists } from '@lazy-ipfs/repo-config';

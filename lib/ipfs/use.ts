@@ -24,7 +24,7 @@ import { inspect } from 'util';
 import { pubsubSubscribe, pubsubUnSubscribe } from './pubsub/index';
 import { repoExists } from './repoExists';
 import { __root } from '../const';
-import { backupIdentity, restoreIdentity } from './util/back-up-identity';
+import { backupIdentity, FILE_IDENTITY, restoreIdentity } from './util/back-up-identity';
 import { connectBuildInPeers } from './util/connect-build-in-peers';
 import { daemonFactory } from './util/daemonFactory';
 import { envDisposable } from './util/envDisposable';
@@ -33,6 +33,7 @@ import { initMutableFileSystem } from './mfs/initMutableFileSystem';
 import { initHelloCheck } from './use/initHelloCheck';
 import { saveMutableFileSystemRoots } from './mfs/saveMutableFileSystemRoots';
 import { loadDeepEntryListMapFromMixin } from './mfs/deepEntryListMap';
+import { writeRepoConfig } from '@lazy-ipfs/repo-config';
 
 inspect.defaultOptions ??= {};
 inspect.defaultOptions.colors = console.enabledColor;
@@ -293,7 +294,7 @@ export function _useIPFS(options?: {
 
 				if (!disposable && await repoExists(ipfsd.path))
 				{
-					let bool = await pathExists(join(__root, 'test', '.identity.json'));
+					let bool = await pathExists(FILE_IDENTITY);
 
 					if (!oldExists && bool)
 					{
@@ -336,9 +337,7 @@ export function _useIPFS(options?: {
 									}
 								};
 
-								return writeJSON(join(ipfsd.path, 'config'), config, {
-									spaces: 2,
-								})
+								return writeRepoConfig(ipfsd.path, config)
 							})
 						;
 					}
