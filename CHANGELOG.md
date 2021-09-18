@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.1.1](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.54...novel-opds-now@3.1.1) (2021-09-18)
+
+
+### 🛠　Build System
+
+* **cache:** update cache ([0a68a2d](https://github.com/bluelovers/novel-opds-now/commit/0a68a2df17106d9973922fc9cfc0f6aa10db66e0))
+
+
+### ♻️　Chores
+
+* **deps:** 試圖防止 `npm` 沒有正確安裝 `node-fetch` 的問題 ([60dd5d7](https://github.com/bluelovers/novel-opds-now/commit/60dd5d742a6f9843353407e97fd9129c8b081ed9))
+
+
+
+
+
 ## [3.0.54](https://github.com/bluelovers/novel-opds-now/compare/novel-opds-now@3.0.53...novel-opds-now@3.0.54) (2021-08-23)
 
 
