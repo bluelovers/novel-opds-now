@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createLibraryHandler = void 0;
 const tslib_1 = require("tslib");
 const express_1 = require("express");
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
-const index_1 = (0, tslib_1.__importDefault)(require("calibre-server/lib/opds/index"));
-const db_1 = (0, tslib_1.__importDefault)(require("calibre-server/lib/opds/db"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
+const index_1 = tslib_1.__importDefault(require("calibre-server/lib/opds/index"));
+const db_1 = tslib_1.__importDefault(require("calibre-server/lib/opds/db"));
 const search_1 = require("../../../lib/opds/search");
-const moment_1 = (0, tslib_1.__importDefault)(require("moment"));
+const moment_1 = tslib_1.__importDefault(require("moment"));
 function createLibraryHandler(options) {
     const router = (0, express_1.Router)();
     logger_1.default.dir(options.dbList);

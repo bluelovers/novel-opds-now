@@ -2,14 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const express_1 = require("express");
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
 const showClient_1 = require("../util/showClient");
-const pokeAll_1 = (0, tslib_1.__importStar)(require("../../lib/ipfs/pokeAll"));
+const pokeAll_1 = tslib_1.__importStar(require("../../lib/ipfs/pokeAll"));
 const use_1 = require("../../lib/ipfs/use");
-const lazy_url_1 = (0, tslib_1.__importDefault)(require("lazy-url"));
+const lazy_url_1 = tslib_1.__importDefault(require("lazy-url"));
 const parse_ipfs_path_1 = require("@lazy-ipfs/parse-ipfs-path");
 const parsePath_1 = require("@lazy-ipfs/parse-ipfs-path/lib/parsePath");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
+const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
 function routerPokeHandler() {
     const router = (0, express_1.Router)();
     router.use('/*', async (req, res, next) => {

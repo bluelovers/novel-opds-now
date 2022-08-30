@@ -4,8 +4,8 @@ import { IIPFSEnv } from 'ipfs-env';
 import { ChildProcess } from 'child_process';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';
 import { Controller, ControllerOptions } from 'ipfsd-ctl/dist/src/types';
-export declare type IFill<T, U> = T & ITSPartialRecord<Exclude<keyof U, keyof T>, void>;
-export declare type IOr<A extends any[]> = A extends [infer T1, infer T2] ? IFill<T1, T2> | IFill<T2, T1> : A extends [infer T1, infer T2, infer T3] ? IFill<T1, T2 & T3> | IFill<T2, T1 & T3> | IFill<T3, T1 & T2> : never;
+export type IFill<T, U> = T & ITSPartialRecord<Exclude<keyof U, keyof T>, void>;
+export type IOr<A extends any[]> = A extends [infer T1, infer T2] ? IFill<T1, T2> | IFill<T2, T1> : A extends [infer T1, infer T2, infer T3] ? IFill<T1, T2 & T3> | IFill<T2, T1 & T3> | IFill<T3, T1 & T2> : never;
 export interface IPubSubBase {
     peers?: string[];
 }
@@ -32,7 +32,7 @@ declare module 'ipfs-env' {
         IPFS_DISPOSABLE?: boolean;
     }
 }
-export declare type IIPFSControllerDaemon = Controller & {
+export type IIPFSControllerDaemon = Controller & {
     started: boolean;
     path: string;
     env: IIPFSEnv;

@@ -3,7 +3,7 @@ import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
 import { EndpointConfig } from 'ipfs-http-client';
 import { IPFS } from 'ipfs-core-types';
 import { Controller } from 'ipfsd-ctl';
-export declare type ICacheMap = {
+export type ICacheMap = {
     [siteID in (ICacheMapRow["IDKEY"] & ICacheMapRow["siteID"])]: {
         [novel_id: string]: ICacheMapRow;
     };
@@ -32,7 +32,7 @@ export declare const enum EnumCacheMapRowStatus {
     DONE = 2,
     WAITING_RETRY = 504
 }
-export declare type IGunEpubNode = {
+export type IGunEpubNode = {
     timestamp: number;
     exists: false;
     filename: never;
@@ -50,6 +50,6 @@ export interface IGunEpubData extends Exclude<IGunEpubNode, {
 }> {
     isGun: boolean;
 }
-export declare type IUseIPFSApi = (IPFS & {
+export type IUseIPFSApi = (IPFS & {
     getEndpointConfig(): EndpointConfig;
 }) | Controller["api"];

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import Bluebird from 'bluebird';
-export declare type IRouter = Router;
+export type IRouter = Router;
 declare function fileHandler(): Router;
 export declare function removeTempOutputDir(query: {
     debug?: boolean;

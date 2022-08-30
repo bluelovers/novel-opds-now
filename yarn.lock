@@ -4623,10 +4623,10 @@ globby@^11.0.4:
     merge2 "^1.3.0"
     slash "^3.0.0"
 
-go-ipfs@^0.9.1:
-  version "0.9.1"
-  resolved "https://registry.npmjs.org/go-ipfs/-/go-ipfs-0.9.1.tgz#347acbcd0c6a75c87db4c974ea6cb73dc23cd610"
-  integrity sha512-69sDGENU7xEPDNytEzE+swKTNSLr+OJEfdEYQ41m91dzNyHyxABB4Rteg4uzsj34lTizjVI1m7Gld3g5Dgf6Ag==
+"go-ipfs@<0.11.0 >= 0.9.1":
+  version "0.10.0"
+  resolved "https://registry.npmjs.org/go-ipfs/-/go-ipfs-0.10.0.tgz#e3d9a9cbaa09d4711e5461e6c4c4839c2567cbe3"
+  integrity sha512-48C43JJ0uObCo4Lc/S/G2p09IxpA89ppXEYZAvTozc7/Jxd1w9Z967fwzmUNzr00nEsnJhD+q1svUFZVRaCRqA==
   dependencies:
     cachedir "^2.3.0"
     go-platform "^1.0.0"
@@ -9858,6 +9858,14 @@ ts-type-predicates@^1.0.5:
   resolved "https://registry.npmjs.org/ts-type-predicates/-/ts-type-predicates-1.0.5.tgz#7116c0086739fd8c08eefc0cc583478d34b19d7d"
   integrity sha512-SnrWMn1qklxk/WwVd0Rs3WQ7ydivfyB2g1ngovwTOQ+HtLvjZx2wkHFifC5opj3bARXIMRDrc2EqU9LXExXwig==
 
+ts-type@>=2:
+  version "2.1.10"
+  resolved "https://registry.npmjs.org/ts-type/-/ts-type-2.1.10.tgz#09ae593829af0023f5e0f98799121b362303f657"
+  integrity sha512-cung450P5HbC+xTimzw8DcFqP4MjxH3aCt2m6IZMs0aMatEOIasPmtECKK1WChg9j/wB8U5zYFCRHcS6xmdSNw==
+  dependencies:
+    tslib "^2"
+    typedarray-dts "^1.0.0"
+
 ts-type@^1.2.23, ts-type@^1.2.35, ts-type@^1.2.36, ts-type@^1.2.39, ts-type@^1.2.40:
   version "1.2.40"
   resolved "https://registry.npmjs.org/ts-type/-/ts-type-1.2.40.tgz#db3ceb95281567fe72591b9a904488e85c5b74fe"
@@ -9866,15 +9874,15 @@ ts-type@^1.2.23, ts-type@^1.2.35, ts-type@^1.2.36, ts-type@^1.2.39, ts-type@^1.2
     tslib "^2.3.0"
     typedarray-dts "^1.0.0"
 
+tslib@>=2, tslib@^2, tslib@^2.3.0, tslib@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
+
 tslib@^1.9.2:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
-
-tslib@^2.3.0, tslib@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.3.1.tgz#e8a335add5ceae51aa261d32a490158ef042ef01"
-  integrity sha512-77EbyPPpMz+FRFRuAFlWMtmgUWGe9UOG2Z25NqCwiIjRhOf5iKGuzSe5P2w1laq+FkRy4p+PCuVkJSGkzTEKVw==
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
@@ -10608,10 +10616,10 @@ yocto-queue@^0.1.0:
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zero-width@^1.0.16:
-  version "1.0.16"
-  resolved "https://registry.npmjs.org/zero-width/-/zero-width-1.0.16.tgz#dd4dae3448849a08f608fcffea9d29892859488e"
-  integrity sha512-tg1dQVutI50fEciD24NNGW9rvArbvMiXV59p4pDC3v0H6jJ9S2eM2AU3TzEQBt4iGeEeWFifOtnCWglkVlDr5A==
+zero-width@^1.0.16, zero-width@^1.0.22:
+  version "1.0.22"
+  resolved "https://registry.npmjs.org/zero-width/-/zero-width-1.0.22.tgz#4f82459677814f4633cb28216cbfdd5bdd6579e1"
+  integrity sha512-kX85mzPUyZqG23+ZiMEMXLu+JTT+CZjUiNTkr13jF0N4gaDjY+iVE0huEaAEi1eSlDM4131hd6PkLFD/QxDxMg==
   dependencies:
-    regexp-helper-core "^1.0.18"
-    tslib "^2.3.0"
+    regexp-helper-core "^1.0.19"
+    tslib "^2"

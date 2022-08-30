@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const load_1 = (0, tslib_1.__importDefault)(require("../../lib/site/masiro/load"));
+const load_1 = tslib_1.__importDefault(require("../../lib/site/masiro/load"));
 const use_1 = require("../../lib/ipfs/use");
 const deepEntryListMap_1 = require("../../lib/ipfs/mfs/deepEntryListMap");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
+const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
 const ipfs_util_lib_1 = require("ipfs-util-lib");
 const lazy_url_1 = require("lazy-url");
 const multiaddr_to_url_1 = require("multiaddr-to-url");
-const fetch_1 = (0, tslib_1.__importDefault)(require("../../lib/fetch"));
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
+const fetch_1 = tslib_1.__importDefault(require("../../lib/fetch"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
 const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFileSystemRoots");
 (0, use_1.searchIpfs)()
     .tap(async ({ ipfs, stop }) => {

@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.gun = exports.useGunRoot = exports.useGun = exports.setupGun = void 0;
 const tslib_1 = require("tslib");
-const gun_1 = (0, tslib_1.__importDefault)(require("gun"));
+const gun_1 = tslib_1.__importDefault(require("gun"));
 require("gun-tag");
 const path_1 = require("path");
 const const_1 = require("../../lib/const");
 const fs_extra_1 = require("fs-extra");
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
 let gun;
 exports.gun = gun;
 gun_1.default.log = Object.assign(() => { }, gun_1.default.log, {

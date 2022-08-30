@@ -2,15 +2,15 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
 const util_1 = require("util");
 const use_1 = require("../../lib/ipfs/use");
 const deepEntryListMap_1 = require("../../lib/ipfs/mfs/deepEntryListMap");
 const fs_extra_1 = require("fs-extra");
 const path_1 = require("path");
-const __root_1 = (0, tslib_1.__importDefault)(require("../../lib/__root"));
+const __root_1 = tslib_1.__importDefault(require("../../lib/__root"));
 const saveMutableFileSystemRoots_1 = require("../../lib/ipfs/mfs/saveMutableFileSystemRoots");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
+const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
 logger_1.default.enabledColor = true;
 (_a = util_1.inspect.defaultOptions) !== null && _a !== void 0 ? _a : (util_1.inspect.defaultOptions = {});
 util_1.inspect.defaultOptions.colors = logger_1.default.enabledColor;

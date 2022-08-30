@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.startServer = void 0;
 const tslib_1 = require("tslib");
 const http_1 = require("http");
-const micro_1 = (0, tslib_1.__importDefault)(require("micro"));
-const getPort_1 = (0, tslib_1.__importStar)(require("./lib/util/getPort"));
-const ip_1 = (0, tslib_1.__importDefault)(require("./lib/ip"));
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
-const get_port_1 = (0, tslib_1.__importStar)(require("get-port"));
+const micro_1 = tslib_1.__importDefault(require("micro"));
+const getPort_1 = tslib_1.__importStar(require("./lib/util/getPort"));
+const ip_1 = tslib_1.__importDefault(require("./lib/ip"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
+const get_port_1 = tslib_1.__importStar(require("get-port"));
 const use_1 = require("./lib/ipfs/use");
 async function startServer(options = {}) {
     var _a;
@@ -20,7 +20,7 @@ async function startServer(options = {}) {
     if (typeof options.calibrePaths !== 'undefined') {
         process.env.CALIBRE_PATH = options.calibrePaths;
     }
-    const web = await (0, http_1.createServer)((0, micro_1.default)(await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('./server/index'))).then(m => m.default)));
+    const web = await (0, http_1.createServer)((0, micro_1.default)(await Promise.resolve().then(() => tslib_1.__importStar(require('./server/index'))).then(m => m.default)));
     if (!options.port) {
         port = port || (0, getPort_1.default)((0, getPort_1.getPortEnv)());
         logger_1.default.debug(`[express]`, `port:init`, port);

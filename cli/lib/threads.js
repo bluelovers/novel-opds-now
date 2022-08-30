@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const worker_threads_1 = require("worker_threads");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("@bluelovers/fast-glob/bluebird"));
+const bluebird_1 = tslib_1.__importDefault(require("@bluelovers/fast-glob/bluebird"));
 const path_1 = require("path");
 const const_1 = require("../../lib/const");
 const fs_extra_1 = require("fs-extra");
-const bluebird_2 = (0, tslib_1.__importDefault)(require("bluebird"));
+const bluebird_2 = tslib_1.__importDefault(require("bluebird"));
 const cn2tw_min_1 = require("../../lib/cn2tw_min");
 const array_hyper_unique_1 = require("array-hyper-unique");
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
-const fix_zh_harmony_1 = (0, tslib_1.__importDefault)(require("fix-zh-harmony"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
+const fix_zh_harmony_1 = tslib_1.__importDefault(require("fix-zh-harmony"));
 const util_1 = require("util");
 const handleAsync = function handleAsync(id, IDKEY, outputDir = const_1.OUTPUT_DIR) {
     return null;
@@ -154,8 +154,8 @@ else {
     function _handle(list) {
         return bluebird_2.default.resolve(list)
             .then(async (list) => {
-            const doSegment = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('../../lib/doSegment'))).then(v => v.default);
-            const handleContext = await Promise.resolve().then(() => (0, tslib_1.__importStar)(require('../../lib/epub/doLayout'))).then(v => v.default);
+            const doSegment = await Promise.resolve().then(() => tslib_1.__importStar(require('../../lib/doSegment'))).then(v => v.default);
+            const handleContext = await Promise.resolve().then(() => tslib_1.__importStar(require('../../lib/epub/doLayout'))).then(v => v.default);
             return bluebird_2.default.resolve(list)
                 .each(async (file, index, length) => {
                 logger_1.default.debug(`${String(index).padStart(4, '0')}/${String(length).padStart(4, '0')}`, (0, path_1.relative)(outputDir, file));

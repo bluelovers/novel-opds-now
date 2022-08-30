@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const use_1 = require("../../lib/ipfs/use");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
+const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
 (0, use_1.searchIpfs)()
     .tap(async ({ ipfs, stop }) => {
     let i = 0;

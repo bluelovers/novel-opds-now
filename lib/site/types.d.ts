@@ -1,6 +1,6 @@
 import type { siteID as siteIDOfDemoNovel } from './demonovel/types';
-export declare type ISiteIDs = keyof typeof builded_map;
-export declare type ISiteIDsPlus = ISiteIDs | typeof siteIDOfDemoNovel;
+export type ISiteIDs = keyof typeof builded_map;
+export type ISiteIDsPlus = ISiteIDs | typeof siteIDOfDemoNovel;
 export declare const builded_map: {
     dmzj: string;
     esjzone: string;

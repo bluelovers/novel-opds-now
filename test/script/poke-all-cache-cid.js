@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const deepEntryListMap_1 = require("../../lib/ipfs/mfs/deepEntryListMap");
-const pokeAll_1 = (0, tslib_1.__importStar)(require("../../lib/ipfs/pokeAll"));
+const pokeAll_1 = tslib_1.__importStar(require("../../lib/ipfs/pokeAll"));
 const raceFetchServerList_1 = require("../../lib/util/raceFetchServerList");
 const array_hyper_unique_1 = require("array-hyper-unique");
-const bluebird_1 = (0, tslib_1.__importDefault)(require("bluebird"));
+const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
 const lodash_1 = require("lodash");
 let oldSet = new Set();
 let oldSet2 = new Set();

@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const express_1 = require("express");
 const types_1 = require("../lib/site/types");
-const index_1 = (0, tslib_1.__importStar)(require("../lib/opds/index"));
-const demonovel_1 = (0, tslib_1.__importDefault)(require("./opds/demonovel"));
+const index_1 = tslib_1.__importStar(require("../lib/opds/index"));
+const demonovel_1 = tslib_1.__importDefault(require("./opds/demonovel"));
 const other_1 = require("../lib/opds/other");
 const update_cache_1 = require("../lib/task/update-cache");
 const showClient_1 = require("./util/showClient");
-const logger_1 = (0, tslib_1.__importDefault)(require("debug-color2/logger"));
-const moment_1 = (0, tslib_1.__importDefault)(require("moment"));
+const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
+const moment_1 = tslib_1.__importDefault(require("moment"));
 function opdsHandler() {
     const router = (0, express_1.Router)();
     router.use('/*', async (req, res, next) => {
