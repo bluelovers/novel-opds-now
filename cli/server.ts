@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
-import startServer from '../index';
+import 'v8-compile-cache';
+import { startServer } from '../index';
 
 startServer();

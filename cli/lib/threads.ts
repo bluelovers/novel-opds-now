@@ -2,6 +2,7 @@
  * Created by user on 2020/1/31.
  */
 
+import 'v8-compile-cache';
 import {
 	Worker, isMainThread, parentPort, workerData,
 } from 'worker_threads';

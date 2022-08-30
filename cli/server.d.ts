@@ -1,2 +1,2 @@
 #!/usr/bin/env node
-export {};
+import 'v8-compile-cache';

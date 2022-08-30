@@ -8547,7 +8547,7 @@ regexp-cjk@^3.3.94, regexp-cjk@^3.3.96, regexp-cjk@^3.3.97:
     regexp-range "^1.0.31"
     tslib "^2.3.1"
 
-regexp-helper-core@^1.0.18, regexp-helper-core@^1.0.19:
+regexp-helper-core@^1.0.19:
   version "1.0.19"
   resolved "https://registry.npmjs.org/regexp-helper-core/-/regexp-helper-core-1.0.19.tgz#afab41fd22d990611439ff8ce16ce394df311d12"
   integrity sha512-MiR/okNBaeYsa+CLeA78lgN5PYZ+AgAKb2EzRa1SyiMThO25HMX9kzm54+kZsdvFLTO2rBNouN4toy+C2TeOsQ==
@@ -9858,14 +9858,6 @@ ts-type-predicates@^1.0.5:
   resolved "https://registry.npmjs.org/ts-type-predicates/-/ts-type-predicates-1.0.5.tgz#7116c0086739fd8c08eefc0cc583478d34b19d7d"
   integrity sha512-SnrWMn1qklxk/WwVd0Rs3WQ7ydivfyB2g1ngovwTOQ+HtLvjZx2wkHFifC5opj3bARXIMRDrc2EqU9LXExXwig==
 
-ts-type@>=2:
-  version "2.1.10"
-  resolved "https://registry.npmjs.org/ts-type/-/ts-type-2.1.10.tgz#09ae593829af0023f5e0f98799121b362303f657"
-  integrity sha512-cung450P5HbC+xTimzw8DcFqP4MjxH3aCt2m6IZMs0aMatEOIasPmtECKK1WChg9j/wB8U5zYFCRHcS6xmdSNw==
-  dependencies:
-    tslib "^2"
-    typedarray-dts "^1.0.0"
-
 ts-type@^1.2.23, ts-type@^1.2.35, ts-type@^1.2.36, ts-type@^1.2.39, ts-type@^1.2.40:
   version "1.2.40"
   resolved "https://registry.npmjs.org/ts-type/-/ts-type-1.2.40.tgz#db3ceb95281567fe72591b9a904488e85c5b74fe"
@@ -9874,15 +9866,15 @@ ts-type@^1.2.23, ts-type@^1.2.35, ts-type@^1.2.36, ts-type@^1.2.39, ts-type@^1.2
     tslib "^2.3.0"
     typedarray-dts "^1.0.0"
 
-tslib@>=2, tslib@^2, tslib@^2.3.0, tslib@^2.3.1:
-  version "2.4.0"
-  resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
-  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
-
 tslib@^1.9.2:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
   integrity sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==
+
+tslib@^2, tslib@^2.3.0, tslib@^2.3.1:
+  version "2.4.0"
+  resolved "https://registry.npmjs.org/tslib/-/tslib-2.4.0.tgz#7cecaa7f073ce680a05847aa77be941098f36dc3"
+  integrity sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==
 
 tunnel-agent@^0.6.0:
   version "0.6.0"
@@ -10247,6 +10239,11 @@ uuid@^8.3.2:
   version "8.3.2"
   resolved "https://registry.npmjs.org/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+
+v8-compile-cache@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.npmjs.org/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
+  integrity sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==
 
 valid-data-url@^4.0.0:
   version "4.0.0"
@@ -10616,7 +10613,7 @@ yocto-queue@^0.1.0:
   resolved "https://registry.npmjs.org/yocto-queue/-/yocto-queue-0.1.0.tgz#0294eb3dee05028d31ee1a5fa2c556a6aaf10a1b"
   integrity sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==
 
-zero-width@^1.0.16, zero-width@^1.0.22:
+zero-width@^1.0.16:
   version "1.0.22"
   resolved "https://registry.npmjs.org/zero-width/-/zero-width-1.0.22.tgz#4f82459677814f4633cb28216cbfdd5bdd6579e1"
   integrity sha512-kX85mzPUyZqG23+ZiMEMXLu+JTT+CZjUiNTkr13jF0N4gaDjY+iVE0huEaAEi1eSlDM4131hd6PkLFD/QxDxMg==

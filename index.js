@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.startServer = void 0;
 const tslib_1 = require("tslib");
+require("v8-compile-cache");
 const http_1 = require("http");
 const micro_1 = tslib_1.__importDefault(require("micro"));
 const getPort_1 = tslib_1.__importStar(require("./lib/util/getPort"));

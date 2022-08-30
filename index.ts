@@ -1,3 +1,4 @@
+import 'v8-compile-cache';
 import { createServer as _createServer } from "http";
 import micro from 'micro';
 import getPort, { getPortEnv } from './lib/util/getPort';

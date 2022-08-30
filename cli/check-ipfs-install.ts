@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+import 'v8-compile-cache';
 import { checkIpfsInstall } from '../lib/task/check-ipfs-install';
 import console from 'debug-color2/logger';
 

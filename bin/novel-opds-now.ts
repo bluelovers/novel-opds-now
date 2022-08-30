@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 
+import 'v8-compile-cache';
 import yargs from 'yargs';
-import updateNotifier from '@yarn-tool/update-notifier';
+import { updateNotifier } from '@yarn-tool/update-notifier';
 import getPort, { getPortEnv } from '../lib/util/getPort';
-import startServer from '../index';
+import { startServer } from '../index';
 
 updateNotifier([__dirname, '..']);
 

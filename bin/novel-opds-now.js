@@ -2,10 +2,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
+require("v8-compile-cache");
 const yargs_1 = tslib_1.__importDefault(require("yargs"));
-const update_notifier_1 = tslib_1.__importDefault(require("@yarn-tool/update-notifier"));
-const index_1 = tslib_1.__importDefault(require("../index"));
-(0, update_notifier_1.default)([__dirname, '..']);
+const update_notifier_1 = require("@yarn-tool/update-notifier");
+const index_1 = require("../index");
+(0, update_notifier_1.updateNotifier)([__dirname, '..']);
 let argv = yargs_1.default
     .option('port', {
     number: true,
@@ -26,5 +27,5 @@ let argv = yargs_1.default
 })
     .showHelp()
     .parseSync();
-exports.default = (0, index_1.default)(argv);
+exports.default = (0, index_1.startServer)(argv);
 //# sourceMappingURL=novel-opds-now.js.map

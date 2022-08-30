@@ -175,6 +175,7 @@
     "ts-type": "^1.2.40",
     "tslib": "^2.3.1",
     "unsafe-https-agent": "^1.0.3",
+    "v8-compile-cache": "^2.3.0",
     "yargs": "^17.1.1",
     "zero-width": "^1.0.16"
   },
@@ -202,6 +203,9 @@
     "@types/source-map-support": "^0.5.4",
     "@types/tmp": "^0.2.1",
     "@types/yargs": "^17.0.2"
+  },
+  "resolutions": {
+    "ts-type": ">=2"
   },
   "gitHead": "04094d27dd4f2a9f3cd74198d0169d773d9d7fe9"
 }

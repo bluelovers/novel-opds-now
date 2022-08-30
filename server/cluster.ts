@@ -2,6 +2,7 @@
  * Created by user on 2020/2/2.
  */
 
+import 'v8-compile-cache';
 import cluster from 'cluster';
 import { startServer } from '../index';
 

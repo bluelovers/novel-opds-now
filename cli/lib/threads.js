@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
+require("v8-compile-cache");
 const worker_threads_1 = require("worker_threads");
 const bluebird_1 = tslib_1.__importDefault(require("@bluelovers/fast-glob/bluebird"));
 const path_1 = require("path");
