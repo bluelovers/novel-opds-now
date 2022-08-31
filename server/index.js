@@ -72,7 +72,7 @@ app.use('/.status', async (req, res, next) => {
     let interfaces = isLocal && Promise.resolve().then(() => {
         let ip = (0, address2_1.default)();
         let interfaceName = ip;
-        let port = process.env.PORT;
+        let port = process.env['PORT'];
         let interfaces = (0, os_1.networkInterfaces)();
         Object.entries(interfaces)
             .forEach(([name, data]) => {

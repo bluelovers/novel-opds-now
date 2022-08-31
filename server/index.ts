@@ -111,7 +111,7 @@ app.use('/.status', async (req, res, next) =>
 	{
 		let ip = searchIPAddress();
 		let interfaceName = ip;
-		let port = process.env.PORT;
+		let port = process.env['PORT'];
 
 		let interfaces = networkInterfaces();
 		Object.entries(interfaces)
