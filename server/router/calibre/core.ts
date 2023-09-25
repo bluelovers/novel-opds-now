@@ -9,7 +9,7 @@ import { Router } from 'express';
 import { basename, extname, join } from 'path';
 import { createReadStream } from 'fs';
 import { fixFileTypeResult, mimeFromBuffer } from '../../../lib/util/mimeFromBuffer';
-import { fromBuffer, fromStream } from 'file-type';
+import { fileTypeFromBuffer as fromBuffer, fileTypeFromStream as fromStream } from 'file-type';
 import contentDisposition from '@lazy-http/content-disposition';
 import { PassThrough } from 'stream';
 import { delimiter } from 'path';

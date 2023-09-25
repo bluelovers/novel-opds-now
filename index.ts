@@ -1,11 +1,11 @@
 import 'v8-compile-cache';
 import { createServer as _createServer } from "http";
-import micro from 'micro';
+import { serve as micro } from 'micro';
 import getPort, { getPortEnv } from './lib/util/getPort';
 import showIP from './lib/ip';
 import Bluebird from 'bluebird';
 import console from 'debug-color2/logger';
-import findPort, { makeRange } from 'get-port';
+import findPort, { portNumbers as makeRange } from 'get-port';
 import { _info, useIPFS } from './lib/ipfs/use';
 import { envCalibrePath, ICalibreEnv } from 'calibre-env';
 import { sep } from 'path';
@@ -22,7 +22,7 @@ export async function startServer(options: {
 
 	if (options.proxy)
 	{
-		process.env.HTTP_PROXY = process.env.HTTPS_PROXY = options.proxy;
+		process.env['HTTP_PROXY'] = process.env['HTTPS_PROXY'] = options.proxy;
 	}
 
 	process.env.IPFS_DISPOSABLE = options.disposable ?? process.env.IPFS_DISPOSABLE;

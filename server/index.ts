@@ -10,7 +10,7 @@ import { join, basename } from "path";
 import Bluebird from 'bluebird';
 import { ICacheMap } from '../lib/types';
 import { PassThrough } from 'stream';
-import { fromBuffer } from 'file-type';
+import { fileTypeFromBuffer as fromBuffer } from 'file-type';
 import fileHandler from './file';
 import __root from '../lib/__root';
 import favicon from 'serve-favicon';

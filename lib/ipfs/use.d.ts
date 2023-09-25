@@ -7,7 +7,7 @@ export declare function useIPFS(options?: {
 }): Bluebird<{
     ipfsd: import("./types").IIPFSControllerDaemon;
     path: string;
-    readonly ipfs: import("ipfs-types").IIPFSPromiseApi<{}>;
+    readonly ipfs: IUseIPFSApi;
     address(): Promise<IIPFSAddresses>;
     stop: (done?: any) => void;
     stopAsync(): Bluebird<void>;
@@ -22,7 +22,7 @@ export declare function _useIPFS(options?: {
 }): Bluebird<{
     ipfsd: import("./types").IIPFSControllerDaemon;
     path: string;
-    readonly ipfs: import("ipfs-types").IIPFSPromiseApi<{}>;
+    readonly ipfs: IUseIPFSApi;
     address(): Promise<IIPFSAddresses>;
     stop: (done?: any) => void;
     stopAsync(): Bluebird<void>;
@@ -32,7 +32,7 @@ export declare function getIPFS(): Bluebird<IUseIPFSApi>;
 export declare function useIPFSFromCache(): Bluebird<{
     ipfsd: import("./types").IIPFSControllerDaemon;
     path: string;
-    readonly ipfs: import("ipfs-types").IIPFSPromiseApi<{}>;
+    readonly ipfs: IUseIPFSApi;
     address(): Promise<IIPFSAddresses>;
     stop: (done?: any) => void;
     stopAsync(): Bluebird<void>;

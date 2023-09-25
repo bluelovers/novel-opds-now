@@ -1,4 +1,4 @@
-import { fromBuffer, FileTypeResult, MimeType } from 'file-type';
+import { fileTypeFromBuffer as fromBuffer, FileTypeResult, MimeType } from 'file-type';
 import { FileExtension } from 'file-type/core';
 import { lookup } from 'mime-types';
 import { isBookFile } from 'calibre-server/lib/util/isBookFile';

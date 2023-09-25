@@ -9,7 +9,6 @@ const const_1 = require("../../lib/const");
 const fs_extra_1 = require("fs-extra");
 const logger_1 = tslib_1.__importDefault(require("debug-color2/logger"));
 let gun;
-exports.gun = gun;
 gun_1.default.log = Object.assign(() => { }, gun_1.default.log, {
     verbose: false,
 });

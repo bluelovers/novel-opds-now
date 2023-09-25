@@ -11,12 +11,12 @@ export declare function pokeAll(cid: ICIDValue, ipfs: any, options?: {
     value: false;
 }) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "error"> & {
     error: Error;
-}), any>[]>;
+})>[]>;
 export declare function reportPokeAllSettledResult(settledResult: ITSUnpackedPromiseLike<ReturnType<typeof pokeAll>>, ...msg: any): Bluebird<import("ts-type").ITSPromiseSettledResult<(Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: string;
 }) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: false;
 }) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "error"> & {
     error: Error;
-}), any>[]>;
+})>[]>;
 export default pokeAll;

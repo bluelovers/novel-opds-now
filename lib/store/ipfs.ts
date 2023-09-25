@@ -13,7 +13,7 @@ import { inspect } from 'util';
 import { EPUB_TOPIC, getPubsubPeers, pubsubPublish, pubsubPublishEpub } from '../ipfs/pubsub';
 import { pokeAll, reportPokeAllSettledResult } from '../ipfs/pokeAll';
 import { addMutableFileSystem } from '../ipfs/mfs';
-import { fromBuffer } from 'file-type';
+import { fileTypeFromBuffer as fromBuffer } from 'file-type';
 import { downloadEpubRace } from './downloadEpubRace';
 import { updateCachePubSubPeers } from '../ipfs/pubsub/cache';
 import { siteNeverExpired, siteNotExpireCheck } from '../site/siteNeverExpired';

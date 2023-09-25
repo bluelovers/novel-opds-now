@@ -24,7 +24,7 @@ export declare function _pokeDeepEntryListMap(cid?: ICIDValue, peerID?: string):
     value: false;
 }) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "error"> & {
     error: Error;
-}), any>[], any>[]>;
+})>[]>[]>;
 export declare const pokeDeepEntryListMap: import("lodash").DebouncedFunc<typeof _pokeDeepEntryListMap>;
 export declare function stringifyDeepEntryListMap(deepEntryListMap: Map<string, string> | [string, string][]): string;
 export declare function _saveDeepEntryListMapToFile(): Bluebird<Map<string, string>>;

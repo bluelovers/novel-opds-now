@@ -10,7 +10,7 @@ import { join, basename } from "path";
 import { readJSON, writeJSON, readFile, remove } from 'fs-extra';
 import { ICacheMap, IGunEpubNode, IGunEpubData, ICacheMapRow, EnumCacheMapRowStatus } from '../lib/types';
 import { PassThrough } from "stream";
-import { fromBuffer } from 'file-type';
+import { fileTypeFromBuffer as fromBuffer } from 'file-type';
 import __root from '../lib/__root';
 import { siteID2IDKEY } from 'novel-downloader/src/all/util';
 import console from 'debug-color2/logger';
