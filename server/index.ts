@@ -1,16 +1,9 @@
 /**
  * Created by user on 2020/1/28.
  */
-import micro, { RequestHandler, buffer, text, json } from 'micro';
 import express from 'express';
-import { EnumNovelSiteList } from 'novel-downloader/src/all/const';
-import { spawnSync } from 'child_process';
-import { readJSON, readJSONSync, readFile, remove, writeJSON } from 'fs-extra';
-import { join, basename } from "path";
+import { join } from "path";
 import Bluebird from 'bluebird';
-import { ICacheMap } from '../lib/types';
-import { PassThrough } from 'stream';
-import { fileTypeFromBuffer as fromBuffer } from 'file-type';
 import fileHandler from './file';
 import __root from '../lib/__root';
 import favicon from 'serve-favicon';
@@ -23,14 +16,12 @@ import opdsHandler from './opds';
 //import gunHttp from 'gun/lib/http';
 import searchHandler from "./search";
 import { mw } from 'request-ip';
-import { Request } from 'express-serve-static-core';
-import { Details, express as useragent } from 'express-useragent';
+import { express as useragent } from 'express-useragent';
 import { showClient } from './util/showClient';
-import { getIPFS, getIPFSFromCache, useIPFS } from '../lib/ipfs/use';
-import { isLocalNetwork, notAllowCors } from '../lib/ip';
+import { getIPFSFromCache, useIPFS } from '../lib/ipfs/use';
+import { isLocalNetwork } from '../lib/ip';
 import { networkInterfaces } from 'os';
 import { format as urlFormat } from 'url';
-import terminalLink from 'terminal-link';
 import searchIPAddress from 'address2';
 import routerPokeHandler from './router/poke';
 import { getPubsubPeers } from '../lib/ipfs/pubsub/index';
@@ -39,7 +30,7 @@ import calibreHandler from './router/calibre/index';
 import { saveMixinPeers } from '../lib/ipfs/util/getMixinPeers';
 import { pokeRoot } from '../lib/ipfs/mfs/pokeRoot';
 import processExit from '../lib/util/processExit';
-import { _saveMutableFileSystemRoots, saveMutableFileSystemRoots } from '../lib/ipfs/mfs/saveMutableFileSystemRoots';
+import { _saveMutableFileSystemRoots } from '../lib/ipfs/mfs/saveMutableFileSystemRoots';
 import { _saveDeepEntryListMapToFile } from '../lib/ipfs/mfs/deepEntryListMap';
 
 const app = express();
