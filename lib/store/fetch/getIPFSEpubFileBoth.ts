@@ -30,7 +30,7 @@ export function getIPFSEpubFileBoth(siteID: string, novelID: string, options: {
 								return Buffer.from(gunData.base64)
 							}
 
-							return Promise.reject(new Error(`下載緩存檔案失敗... ${filename}`))
+							return Promise.reject(new Error(`下載緩存檔案失敗(not exists)... ${filename}`))
 						}),
 						fetchEpub(href, 5 * 60 * 1000),
 					])
@@ -48,7 +48,7 @@ export function getIPFSEpubFileBoth(siteID: string, novelID: string, options: {
 							};
 						}
 
-						return Promise.reject(new Error(`下載緩存檔案失敗... ${filename}`))
+						return Promise.reject(new Error(`下載緩存檔案失敗(0)... ${filename}`))
 					})
 			;
 		})

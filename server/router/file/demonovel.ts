@@ -56,9 +56,9 @@ export function demoNovelFileHandler()
 
 				let filename = novel.cache.epub_basename
 				let http_filename = filename;
-				if (req.query.filename?.length)
+				if (req.query['filename']?.length)
 				{
-					http_filename = basename(String(req.query.filename))
+					http_filename = basename(String(req.query['filename']))
 				}
 
 				let attachment = contentDisposition(http_filename);

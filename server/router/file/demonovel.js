@@ -43,8 +43,8 @@ function demoNovelFileHandler() {
             let result = await (0, mimeFromBuffer_1.mimeFromBuffer)(content);
             let filename = novel.cache.epub_basename;
             let http_filename = filename;
-            if ((_c = req.query.filename) === null || _c === void 0 ? void 0 : _c.length) {
-                http_filename = (0, path_1.basename)(String(req.query.filename));
+            if ((_c = req.query['filename']) === null || _c === void 0 ? void 0 : _c.length) {
+                http_filename = (0, path_1.basename)(String(req.query['filename']));
             }
             let attachment = (0, content_disposition_1.default)(http_filename);
             try {
