@@ -25,6 +25,7 @@ import { siteNeverExpired } from '../lib/site/siteNeverExpired';
 import { demoNovelFileHandler } from './router/file/demonovel';
 import { deleteEpubProcessCacheJson, getEpubProcessCacheJson } from '../lib/epub/epubProcessCacheJson';
 import { getIPFS, getIPFSFromCache } from '../lib/ipfs/use';
+import { omit } from 'lodash';
 
 export type IRouter = Router;
 
@@ -119,11 +120,11 @@ function fileHandler()
 								msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`
 							}
 
-							console.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id);
+							console.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id, omit(gunData, ['base64']));
 						}
 						else
 						{
-							console.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id);
+							console.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id, omit(gunData, ['base64']));
 						}
 
 					})
@@ -191,7 +192,7 @@ function fileHandler()
 					.catch(e =>
 					{
 
-						if (gunData && gunData.exists)
+						if (gunData?.exists)
 						{
 							console.warn(`檔案建立失敗，使用P2P緩存代替`, siteID, novel_id);
 

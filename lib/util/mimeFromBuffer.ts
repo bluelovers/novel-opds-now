@@ -2,6 +2,8 @@ import { fromBuffer, FileTypeResult, MimeType } from 'file-type';
 import { FileExtension } from 'file-type/core';
 import { lookup } from 'mime-types';
 import { isBookFile } from 'calibre-server/lib/util/isBookFile';
+import Bluebird from 'bluebird';
+import console from 'debug-color2/logger';
 
 export async function fixFileTypeResult(result: FileTypeResult, fileExt?: string | FileExtension)
 {
@@ -46,7 +48,10 @@ export async function fixFileTypeResult(result: FileTypeResult, fileExt?: string
 	}
 }
 
-export async function mimeFromBuffer(buffer: Buffer, ext?: string | FileExtension)
+export function mimeFromBuffer(buffer: Buffer, ext?: string | FileExtension)
 {
-	return fromBuffer(buffer).then(result => fixFileTypeResult(result, ext))
+	return Bluebird.resolve().then(() => fromBuffer(buffer).then(result => fixFileTypeResult(result, ext)))
+		.tapCatch(e => {
+			console.error(`mimeFromBuffer`, e)
+		})
 }
