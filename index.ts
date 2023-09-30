@@ -17,7 +17,14 @@ export async function startServer(options: {
 	calibrePaths?: string[],
 } = {})
 {
-	options = options || {};
+	options ||= {};
+
+	// @ts-ignore
+	if (options.help)
+	{
+		return;
+	}
+
 	let { port } = options;
 
 	if (options.proxy)

@@ -12,7 +12,10 @@ const get_port_1 = tslib_1.__importStar(require("get-port"));
 const use_1 = require("./lib/ipfs/use");
 async function startServer(options = {}) {
     var _a;
-    options = options || {};
+    options || (options = {});
+    if (options.help) {
+        return;
+    }
     let { port } = options;
     if (options.proxy) {
         process.env['HTTP_PROXY'] = process.env['HTTPS_PROXY'] = options.proxy;
