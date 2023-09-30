@@ -47,7 +47,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 			{
 				console.debug(`下載緩存檔案...`, siteID, novelID, data.href)
 
-				let buf = await downloadEpubRace(data.href)
+				let buf = await downloadEpubRace(data.href, void 0, (query.debug || query.force) ? 5 * 60 * 1000 : void 0)
 						.catch(e =>
 						{
 							console.debug(`下載緩存檔案失敗...`, siteID, novelID, data.href, String(e))

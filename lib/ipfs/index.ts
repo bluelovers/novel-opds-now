@@ -7,6 +7,7 @@ import { IGunEpubNode } from '../types';
 import { RequestInit, RequestInfo, Response, FetchError } from 'node-fetch';
 import { putFileRecord } from '@demonovel/db-api';
 import { newFileURL } from '@demonovel/db-api/lib/util';
+import console from 'debug-color2/logger';
 
 export function getEpubFileInfo(_siteID: string | string[], _novelID: string | string[])
 {
@@ -18,6 +19,7 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 	{
 		let max = siteID.length * novelID.length;
 		let i = 0;
+		let idx = 0;
 
 		function _resolve(e)
 		{
@@ -49,7 +51,7 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 			{
 				let url = newFileURL(siteID, novelID);
 
-				//console.debug(url.href)
+				//console.debug(`getEpubFileInfo(${++idx})`, siteID, novelID, url.href)
 
 				fetch(url.href, {
 					timeout,
