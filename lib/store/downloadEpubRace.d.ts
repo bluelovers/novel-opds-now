@@ -7,7 +7,7 @@ import { RequestInit } from 'node-fetch';
 export declare function fetchEpubAll(ipfs_href: string, timeout: number, options?: {
     filter?(buf: Buffer): boolean;
     fetchOptions?: RequestInit;
-} & IFetchOptions): Promise<Buffer>;
+} & IFetchOptions): Bluebird<Buffer>;
 export declare function downloadEpubRace(ipfs_href: string, useIPFS?: ITSValueOrArray<string | IUseIPFSApi>, timeout?: number, options?: {
     filter?(buf: Buffer): boolean;
     fetchOptions?: RequestInit;

@@ -11,40 +11,52 @@ import lazyMakeIpfsAllServerURL, { _notAllowedAddress as notAllowedAddress } fro
 import { ipfsGatewayAddressesLink } from 'ipfs-util-lib/lib/api/multiaddr';
 import AbortControllerTimer from 'abort-controller-timer';
 import { RequestInit } from 'node-fetch';
+import { allSettled } from 'bluebird-allsettled';
+import console from 'debug-color2/logger';
+import moment from 'moment';
 
-export async function fetchEpubAll(ipfs_href: string, timeout: number, options?: {
+const SymbolSource = Symbol.for('href');
+
+export function fetchEpubAll(ipfs_href: string, timeout: number, options?: {
 	filter?(buf: Buffer): boolean;
 	fetchOptions?: RequestInit,
 } & IFetchOptions)
 {
-	const cid = handleCID(ipfs_href, true, options);
+	return Bluebird.resolve()
+		.then(async () => {
+			const cid = handleCID(ipfs_href, true, options);
 
-	let ipfs = getIPFS().timeout(3 * 1000)
-		.catch(e => null as null)
-	;
+			let ipfs = getIPFS().timeout(3 * 1000)
+				.catch(e => null as null)
+			;
 
-	let list = lazyMakeIpfsAllServerURL(cid, {
-		serverList: [
-			await ipfsGatewayAddressesLink(ipfs).catch(e => null),
-		],
-	});
+			let list = lazyMakeIpfsAllServerURL(cid, {
+				serverList: [
+					await ipfsGatewayAddressesLink(ipfs).catch(e => null),
+				],
+			});
 
-	//console.dir(list)
+			//console.dir(list)
 
-	let controller: AbortControllerTimer;
+			let controller: AbortControllerTimer;
 
-	if (timeout)
-	{
-		controller = new AbortControllerTimer(timeout);
-		options ??= {};
-		options.fetchOptions ??= {};
-		options.fetchOptions.signal ??= controller.signal
-		options.fetchOptions.timeout ??= controller.timeout
-	}
+			if (timeout)
+			{
+				controller = new AbortControllerTimer(timeout);
+				options ??= {};
+				options.fetchOptions ??= {};
+				options.fetchOptions.signal ??= controller.signal
+				options.fetchOptions.timeout ??= controller.timeout
+			}
 
-	return Bluebird.any(list.map(ipfs_href => fetchEpub(ipfs_href, timeout, options)))
-		.finally(() => controller?.abort())
-	;
+			return Bluebird.any(list.map(ipfs_href => fetchEpub(ipfs_href, timeout, options).then(ret =>
+				{
+					ret[SymbolSource] = ipfs_href;
+					return ret;
+				}).tap(assertEpubByMime)))
+				.finally(() => controller?.abort())
+				;
+		})
 }
 
 export function downloadEpubRace(ipfs_href: string,
@@ -68,6 +80,9 @@ export function downloadEpubRace(ipfs_href: string,
 		options.fetchOptions.signal ??= controller.signal
 		options.fetchOptions.timeout ??= controller.timeout
 	}
+
+	console.debug(`downloadEpubRace`, ipfs_href, options, timeout && moment()
+		.locale('zh-tw').add(timeout/1000, 'seconds').fromNow(true))
 
 	return Bluebird.resolve(useIPFS)
 		.then(useIPFS =>
