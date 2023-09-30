@@ -11,7 +11,7 @@ export function siteNeverExpired(siteID: ITSValueOrArray<string | ISiteIDsPlus>)
 export function siteNotExpireCheck(siteIDs: ITSValueOrArray<string | ISiteIDsPlus>, timestamp: number)
 {
 	const day = 86400 * 1000;
-	let expire = day * 30;
+	let expire = day * 30 * 2;
 
 	for (const siteID of [siteIDs].flat())
 	{
