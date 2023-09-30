@@ -21,6 +21,7 @@ import {
 	saveDeepEntryListMapToMixin,
 	saveDeepEntryListMapToServer,
 } from '../ipfs/mfs/deepEntryListMap';
+import { omit } from 'lodash';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -36,27 +37,27 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 	return getEpubFileInfo(siteID, novelID)
 		.catch(TimeoutError, e =>
 		{
-			console.error(`getEpubFileInfo`, String(e));
+			console.error(`getEpubFileInfo`, siteID, novelID, String(e));
 			return null
 		})
 		.then(async (data) =>
 		{
-			console.debug(`驗證緩存檔案...`)
+			console.debug(`驗證緩存檔案...`, siteID, novelID, omit(data, ['base64']))
 			if (checkGunData(data))
 			{
-				console.debug(`下載緩存檔案...`, data.href)
+				console.debug(`下載緩存檔案...`, siteID, novelID, data.href)
 
 				let buf = await downloadEpubRace(data.href)
 						.catch(e =>
 						{
-							console.debug(`下載緩存檔案失敗...`, data.href, String(e))
+							console.debug(`下載緩存檔案失敗...`, siteID, novelID, data.href, String(e))
 							return null as null
 						})
 				;
 
 				if (buf?.length)
 				{
-					console.debug(`分析緩存檔案...`, data.href)
+					console.debug(`分析緩存檔案...`, siteID, novelID, data.href)
 
 					data.base64 = Buffer.from(buf);
 
@@ -90,12 +91,12 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 
 				if (json.error !== true)
 				{
-					console.debug(`getEpubFileInfo`, json);
+					console.debug(`getEpubFileInfo`, siteID, novelID, json);
 				}
 			}
 			catch (e2)
 			{
-				console.error(`getEpubFileInfo`, e);
+				console.error(`getEpubFileInfo`, siteID, novelID, e);
 			}
 
 			return null as null
