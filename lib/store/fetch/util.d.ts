@@ -1,2 +1,3 @@
 /// <reference types="node" />
-export declare function assertEpubByMime(buffer: Buffer): Promise<never>;
+import Bluebird from 'bluebird';
+export declare function assertEpubByMime(buffer: Buffer): Bluebird<void>;

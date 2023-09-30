@@ -1,11 +1,23 @@
+import Bluebird from 'bluebird';
 import { mimeFromBuffer } from '../../util/mimeFromBuffer';
+import console from 'debug-color2/logger';
 
-export async function assertEpubByMime(buffer: Buffer)
+const SymbolSource = Symbol.for('href');
+
+export function assertEpubByMime(buffer: Buffer)
 {
-	let { mime, ext } = await mimeFromBuffer(buffer);
+	return Bluebird.resolve()
+		.tap(async () => {
+			let { mime, ext } = await mimeFromBuffer(buffer);
 
-	if (ext !== 'epub' && ext !== 'zip')
-	{
-		return Promise.reject(new Error(JSON.stringify({ mime, ext })))
-	}
+			if (ext !== 'epub' && ext !== 'zip')
+			{
+				throw new Error(JSON.stringify({ mime, ext }))
+			}
+		})
+		.tapCatch(e => {
+			e.href = e[SymbolSource] = buffer?.[SymbolSource].toString();
+			console.error(`assertEpubByMime`, buffer?.length, e[SymbolSource]);
+			console.error(e)
+		})
 }
