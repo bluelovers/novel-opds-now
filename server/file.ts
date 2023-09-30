@@ -26,6 +26,7 @@ import { demoNovelFileHandler } from './router/file/demonovel';
 import { deleteEpubProcessCacheJson, getEpubProcessCacheJson } from '../lib/epub/epubProcessCacheJson';
 import { getIPFS, getIPFSFromCache } from '../lib/ipfs/use';
 import { omit } from 'lodash';
+import moment from 'moment';
 
 export type IRouter = Router;
 
@@ -120,7 +121,8 @@ function fileHandler()
 								msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`
 							}
 
-							console.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id, omit(gunData, ['base64']));
+							console.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), moment(gunData.timestamp)
+								.locale('zh-tw').fromNow(), siteID, novel_id, omit(gunData, ['base64']));
 						}
 						else
 						{

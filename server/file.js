@@ -22,6 +22,7 @@ const demonovel_1 = require("./router/file/demonovel");
 const epubProcessCacheJson_1 = require("../lib/epub/epubProcessCacheJson");
 const use_1 = require("../lib/ipfs/use");
 const lodash_1 = require("lodash");
+const moment_1 = tslib_1.__importDefault(require("moment"));
 function fileHandler() {
     const router = (0, express_1.Router)();
     router.use('/demo(novel)?', (0, demonovel_1.demoNovelFileHandler)());
@@ -77,7 +78,8 @@ function fileHandler() {
                     else if (!gunData.isGun) {
                         msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`;
                     }
-                    logger_1.default.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), siteID, novel_id, (0, lodash_1.omit)(gunData, ['base64']));
+                    logger_1.default.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), (0, moment_1.default)(gunData.timestamp)
+                        .locale('zh-tw').fromNow(), siteID, novel_id, (0, lodash_1.omit)(gunData, ['base64']));
                 }
                 else {
                     logger_1.default.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id, (0, lodash_1.omit)(gunData, ['base64']));
