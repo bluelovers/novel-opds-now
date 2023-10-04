@@ -22,6 +22,8 @@ import {
 	saveDeepEntryListMapToServer,
 } from '../ipfs/mfs/deepEntryListMap';
 import { omit } from 'lodash';
+import moment from 'moment';
+import { createMoment } from '@node-novel/cache-loader';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -42,7 +44,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 		})
 		.then(async (data) =>
 		{
-			console.debug(`驗證緩存檔案...`, siteID, novelID, omit(data, ['base64']))
+			console.debug(`驗證緩存檔案...`, siteID, novelID, omit(data, ['base64']), moment(data.timestamp).locale('zh-tw').fromNow())
 			if (checkGunData(data))
 			{
 				console.debug(`下載緩存檔案...`, siteID, novelID, data.href)
@@ -264,8 +266,9 @@ export async function putIPFSEpubFile(_siteID: string | string[],
 	await putEpubFileInfo(siteID, novelID, data as any)
 		.tap(async (json) =>
 		{
+			const m = createMoment(json.data.timestamp).locale('zh-tw');
 
-			console.debug(`putEpubFileInfo:return`, json);
+			console.debug(`putEpubFileInfo:return`, json, m.fromNow(), m.format());
 
 			let url = new URL(json.data.href);
 			let cid = pathToCid(url.pathname);

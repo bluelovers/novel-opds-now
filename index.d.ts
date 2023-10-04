@@ -5,5 +5,5 @@ export declare function startServer(options?: {
     proxy?: string;
     disposable?: boolean;
     calibrePaths?: string[];
-}): Promise<import("http").Server>;
+}): Promise<import("http").Server<typeof import("http").IncomingMessage, typeof import("http").ServerResponse>>;
 export default startServer;

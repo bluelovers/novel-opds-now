@@ -18,13 +18,13 @@ export declare function enableForceSave(): void;
 export declare function enableOverwriteServer(): void;
 export declare function _writeDeepEntryListMapToMfs(content: string | [string, string][] | Map<string, string>): Bluebird<void>;
 export declare function _backupDeepEntryListMap(cid: ICIDValue, peerID?: string): Promise<void>;
-export declare function _pokeDeepEntryListMap(cid?: ICIDValue, peerID?: string): Bluebird<void | import("ts-type").ITSPromiseSettledResult<import("ts-type").ITSPromiseSettledResult<(Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "error"> & {
+export declare function _pokeDeepEntryListMap(cid?: ICIDValue, peerID?: string): Bluebird<void | import("ts-type").ITSPromiseSettledResult<import("ts-type").ITSPromiseSettledResult<ITSUnpackedPromiseLike<Promise<(Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "error"> & {
     error: Error;
 }) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: string;
 }) | (Omit<import("poke-ipfs/lib/types").IPokeReturnBase, "value"> & {
     value: false;
-})>[]>[]>;
+})>>>[]>[]>;
 export declare const pokeDeepEntryListMap: import("lodash").DebouncedFunc<typeof _pokeDeepEntryListMap>;
 export declare function stringifyDeepEntryListMap(deepEntryListMap: Map<string, string> | [string, string][]): string;
 export declare function _saveDeepEntryListMapToFile(): Bluebird<Map<string, string>>;
