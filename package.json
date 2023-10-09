@@ -152,8 +152,8 @@
     "novel-downloader": "^2.0.35",
     "novel-downloader-cli": "^1.0.64",
     "novel-epub": "^2.0.16",
-    "novel-segment": "^2.7.111",
-    "novel-segment-cli": "^1.1.129",
+    "novel-segment": "^2.7.113",
+    "novel-segment-cli": "^1.1.131",
     "opds-extra": "^3.0.10",
     "p-memoize": "^7.1.1",
     "poke-ipfs": "^1.2.1",
@@ -165,7 +165,7 @@
     "regexp-cjk-plugin-extra": "^1.0.42",
     "request-ip": "^3.3.0",
     "rimraf": "^5.0.5",
-    "segment-dict": "^2.3.197",
+    "segment-dict": "^2.3.199",
     "serve-favicon": "^2.5.0",
     "sort-object-keys2": "^3.0.5",
     "source-map-support": "^0.5.21",
@@ -196,7 +196,7 @@
     "@types/micromatch": "^4.0.3",
     "@types/mime-types": "^2.1.2",
     "@types/ndjson": "^2.0.2",
-    "@types/node": "^20.8.0",
+    "@types/node": "^20.8.3",
     "@types/node-fetch": "< 3 >= 2",
     "@types/qrcode": "^1.5.2",
     "@types/request-ip": "^0.0.39",
@@ -204,7 +204,7 @@
     "@types/serve-favicon": "^2.5.5",
     "@types/source-map-support": "^0.5.8",
     "@types/tmp": "^0.2.4",
-    "@types/yargs": "^17.0.26"
+    "@types/yargs": "^17.0.28"
   },
   "resolutions": {
     "@bluelovers/string-natural-compare": "^2.0.7",
