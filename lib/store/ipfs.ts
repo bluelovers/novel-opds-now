@@ -1,5 +1,5 @@
 import { handleArgvList } from '../util/index';
-import { getEpubFileInfo, putEpubFileInfo } from '../ipfs/index';
+import { getEpubFileInfo, putEpubFileInfo, SymNovelID, SymSiteID } from '../ipfs/index';
 import Bluebird, { TimeoutError } from 'bluebird';
 import checkGunData from '../util/checkData';
 import { getIPFS, useIPFS } from '../ipfs/use';
@@ -24,6 +24,7 @@ import {
 import { omit } from 'lodash';
 import moment from 'moment';
 import { createMoment } from '@node-novel/cache-loader';
+import { getNovelData } from '../site/cached-data/getNovelData';
 
 export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | string[], options: {
 	query: {
@@ -44,22 +45,26 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 		})
 		.then(async (data) =>
 		{
-			console.debug(`驗證緩存檔案...`, siteID, novelID, omit(data, ['base64']), moment(data.timestamp).locale('zh-tw').fromNow())
+			const novelData = await getNovelData(data[SymSiteID] ?? siteID[0], data[SymNovelID] ?? novelID[0]);
+
+			console.debug(`驗證緩存檔案...`, siteID, novelID, omit(data, ['base64']), moment(data.timestamp).locale('zh-tw').fromNow(), novelData?.title)
 			if (checkGunData(data))
 			{
-				console.debug(`下載緩存檔案...`, siteID, novelID, data.href)
+				console.debug(`下載緩存檔案...`, siteID, novelID, data.href, novelData?.title)
 
 				let buf = await downloadEpubRace(data.href, void 0, (query.debug || query.force) ? 5 * 60 * 1000 : void 0)
 						.catch(e =>
 						{
-							console.debug(`下載緩存檔案失敗...`, siteID, novelID, data.href, String(e))
+							console.debug(`下載緩存檔案失敗...`, siteID, novelID, data.href, String(e), novelData?.title)
 							return null as null
 						})
 				;
 
 				if (buf?.length)
 				{
-					console.debug(`分析緩存檔案...`, siteID, novelID, data.href)
+					let infoDate = novelData?.updated && createMoment(novelData.updated);
+
+					console.debug(`分析緩存檔案...`, siteID, novelID, data.href, novelData?.title, infoDate?.format())
 
 					data.base64 = Buffer.from(buf);
 
@@ -67,9 +72,31 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 
 					let isGun = false;
 
-					if (siteNeverExpired(siteID) || !(query.debug || query.force) && siteNotExpireCheck(siteID, data.timestamp))
+					if (siteNeverExpired(siteID))
 					{
 						isGun = true;
+					}
+					else if (!(query.debug || query.force) && siteNotExpireCheck(siteID, data.timestamp))
+					{
+						isGun = true;
+
+						/**
+						 * 增加檢查索引目錄日期與緩存打包日期的差異
+						 * 如此一來在緩存沒有過期的情況下
+						 * 如果發現打包日期早於索引日期
+						 * 則視為過期
+						 */
+						if (infoDate)
+						{
+							const days = infoDate.diff(data.timestamp, 'days');
+
+							console.debug(`檢查小說最後更新日期與緩存日期的差異`, days, '天', [infoDate.format(), createMoment(data.timestamp).format()])
+
+							if (days > 1)
+							{
+								isGun = false;
+							}
+						}
 					}
 
 					return {

@@ -5,7 +5,12 @@ import { ITSValueOrArray } from 'ts-type';
 export function siteNeverExpired(siteID: ITSValueOrArray<string | ISiteIDsPlus>)
 {
 	return [siteID].flat()
-		.findIndex(v => ['masiro', siteIDOfDemoNovel, 'calibre'].includes(v)) !== -1
+		.findIndex(v => [
+			'masiro',
+			siteIDOfDemoNovel,
+			'calibre',
+			'esjzone',
+		].includes(v)) !== -1
 }
 
 export function siteNotExpireCheck(siteIDs: ITSValueOrArray<string | ISiteIDsPlus>, timestamp: number)

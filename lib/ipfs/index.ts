@@ -7,7 +7,10 @@ import { IGunEpubNode } from '../types';
 import { RequestInit, RequestInfo, Response, FetchError } from 'node-fetch';
 import { putFileRecord } from '@demonovel/db-api';
 import { newFileURL } from '@demonovel/db-api/lib/util';
-import console from 'debug-color2/logger';
+import { consoleLogger as console } from 'debug-color2/logger';
+
+export const SymSiteID = Symbol.for('siteID');
+export const SymNovelID = Symbol.for('novelID');
 
 export function getEpubFileInfo(_siteID: string | string[], _novelID: string | string[])
 {
@@ -58,6 +61,13 @@ export function getEpubFileInfo(_siteID: string | string[], _novelID: string | s
 				})
 					.then(v => v.json())
 					.then(_resolve)
+					.then(v => {
+
+						v[SymSiteID] = siteID;
+						v[SymNovelID] = novelID;
+
+						return v
+					})
 					.catch(_reject)
 				;
 			})
