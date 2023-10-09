@@ -58,7 +58,8 @@ function fileHandler() {
             }
         })
             .then(async () => {
-            logger_1.default.info(`檢查是否存在緩存...`, siteID, novel_id);
+            const novelData = await (0, getNovelData_1.getNovelData)(siteID, novel_id);
+            logger_1.default.info(`檢查是否存在緩存...`, siteID, novel_id, novelData === null || novelData === void 0 ? void 0 : novelData.title);
             return (0, ipfs_1.getIPFSEpubFile)(IDKEY, [
                 req.params.novelID,
                 novel_id,
@@ -79,10 +80,10 @@ function fileHandler() {
                         msg = `，但已超過緩存時間，將試圖先從原始網站抓取更新`;
                     }
                     logger_1.default.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), (0, moment_1.default)(gunData.timestamp)
-                        .locale('zh-tw').fromNow(), siteID, novel_id, (0, lodash_1.omit)(gunData, ['base64']));
+                        .locale('zh-tw').fromNow(), siteID, novel_id, (0, lodash_1.omit)(gunData, ['base64']), novelData === null || novelData === void 0 ? void 0 : novelData.title);
                 }
                 else {
-                    logger_1.default.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id, (0, lodash_1.omit)(gunData, ['base64']));
+                    logger_1.default.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id, (0, lodash_1.omit)(gunData, ['base64']), novelData === null || novelData === void 0 ? void 0 : novelData.title);
                 }
             });
         })

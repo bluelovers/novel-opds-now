@@ -27,6 +27,7 @@ import { deleteEpubProcessCacheJson, getEpubProcessCacheJson } from '../lib/epub
 import { getIPFS, getIPFSFromCache } from '../lib/ipfs/use';
 import { omit } from 'lodash';
 import moment from 'moment';
+import { SymNovelID, SymSiteID } from '../lib/ipfs/index';
 
 export type IRouter = Router;
 
@@ -90,7 +91,9 @@ function fileHandler()
 			})
 			.then(async () =>
 			{
-				console.info(`檢查是否存在緩存...`, siteID, novel_id);
+				const novelData = await getNovelData(siteID, novel_id);
+
+				console.info(`檢查是否存在緩存...`, siteID, novel_id, novelData?.title);
 
 				/**
 				 * @todo 修改為直接先判斷是否過期，如果過期則同時下載緩存以及從原始網站打包
@@ -122,11 +125,11 @@ function fileHandler()
 							}
 
 							console.yellow.info(`於緩存發現檔案${msg}...`, new Date(gunData.timestamp), moment(gunData.timestamp)
-								.locale('zh-tw').fromNow(), siteID, novel_id, omit(gunData, ['base64']));
+								.locale('zh-tw').fromNow(), siteID, novel_id, omit(gunData, ['base64']), novelData?.title);
 						}
 						else
 						{
-							console.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id, omit(gunData, ['base64']));
+							console.yellow.info(`沒有發現緩存，或緩存已損毀...`, siteID, novel_id, omit(gunData, ['base64']), novelData?.title);
 						}
 
 					})
