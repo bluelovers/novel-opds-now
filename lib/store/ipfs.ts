@@ -90,7 +90,7 @@ export function getIPFSEpubFile(_siteID: string | string[], _novelID: string | s
 						{
 							const days = infoDate.diff(data.timestamp, 'days');
 
-							console.debug(`檢查小說最後更新日期與緩存日期的差異`, days, '天', [infoDate.format(), createMoment(data.timestamp).format()])
+							console.debug(`檢查索引目錄日期與緩存打包日期的差異`, days, '天', [infoDate.format(), createMoment(data.timestamp).format()])
 
 							if (days > 1)
 							{
