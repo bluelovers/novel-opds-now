@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.startServer = void 0;
+exports.startServer = startServer;
 const tslib_1 = require("tslib");
 require("v8-compile-cache");
 const http_1 = require("http");
@@ -39,6 +39,5 @@ async function startServer(options = {}) {
     });
     return web;
 }
-exports.startServer = startServer;
 exports.default = startServer;
 //# sourceMappingURL=index.js.map

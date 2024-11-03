@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.removeTempOutputDir = void 0;
+exports.removeTempOutputDir = removeTempOutputDir;
 const tslib_1 = require("tslib");
 const express_1 = require("express");
 const bluebird_1 = tslib_1.__importDefault(require("bluebird"));
@@ -236,6 +236,5 @@ function removeTempOutputDir(query, data) {
         logger_1.default.warn(`removeTempOutputDir`, e);
     });
 }
-exports.removeTempOutputDir = removeTempOutputDir;
 exports.default = fileHandler;
 //# sourceMappingURL=file.js.map

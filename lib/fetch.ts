@@ -56,7 +56,7 @@ export function fetch(...argv): Bluebird<Response>
 		{
 			if (isErrorCode(v.status))
 			{
-				return Promise.reject(v)
+				return Bluebird.reject(v)
 			}
 		})
 		.finally(cb)

@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { ITSValueOrArray } from 'ts-type';
 import { IUseIPFSApi } from '../types';
 import { IFetchOptions } from 'fetch-ipfs/util';

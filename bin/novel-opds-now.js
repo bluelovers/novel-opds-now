@@ -25,7 +25,6 @@ let argv = yargs_1.default
     array: true,
     string: true,
 })
-    .showHelp()
     .parseSync();
 exports.default = (0, index_1.startServer)(argv);
 //# sourceMappingURL=novel-opds-now.js.map

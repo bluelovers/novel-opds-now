@@ -1,7 +1,7 @@
 import { IFetchOptions } from 'fetch-ipfs/util';
-import fetch from '../../fetch';
-import { assertEpubByMime } from './util';
+import { fetch } from '../../fetch';
 import { RequestInit } from 'node-fetch';
+import Bluebird from 'bluebird';
 
 const SymbolSource = Symbol.for('href');
 
@@ -13,8 +13,14 @@ export function fetchEpub(ipfs_href: string | URL, timeout: number, options?: {
 	return fetch(ipfs_href, {
 		...options?.fetchOptions,
 		timeout,
-	}).then(res => res.buffer()).tap(buf => {
-		buf[SymbolSource] = ipfs_href;
-		//return assertEpubByMime(buf)
 	})
+		.then(res => res.buffer())
+		.tap(buf =>
+		{
+			buf[SymbolSource] = ipfs_href;
+			if (!buf.length)
+			{
+				return Bluebird.reject(buf)
+			}
+		})
 }

@@ -1,4 +1,3 @@
-/// <reference types="lodash" />
 import Bluebird from 'bluebird';
 import { StatResult } from 'ipfs-core-types/src/files';
 import { ICIDValue } from '@lazy-ipfs/detect-cid-lib';

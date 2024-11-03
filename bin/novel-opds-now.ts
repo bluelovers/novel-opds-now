@@ -27,7 +27,7 @@ let argv = yargs
 		array: true,
 		string: true,
 	})
-	.showHelp()
+//	.showHelp()
 	.parseSync()
 ;
 

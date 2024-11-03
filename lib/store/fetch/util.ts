@@ -12,12 +12,16 @@ export function assertEpubByMime(buffer: Buffer)
 
 			if (ext !== 'epub' && ext !== 'zip')
 			{
-				throw new Error(JSON.stringify({ mime, ext }))
+				throw new TypeError(JSON.stringify({ mime, ext }))
 			}
 		})
 		.tapCatch(e => {
 			e.href = e[SymbolSource] = buffer?.[SymbolSource].toString();
 			console.error(`assertEpubByMime`, buffer?.length, e[SymbolSource]);
-			console.error(e)
+			if (buffer?.length)
+			{
+				console.error(e);
+				console.trace()
+			}
 		})
 }
