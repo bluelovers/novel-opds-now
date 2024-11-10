@@ -1,7 +1,7 @@
 import { ITSValueOrArray } from 'ts-type';
 import { IUseIPFSApi } from '../types';
 import { handleCID, IFetchOptions, lazyRaceServerList } from 'fetch-ipfs/util';
-import raceFetchIPFS from 'fetch-ipfs/race';
+import { raceFetchIPFS } from 'fetch-ipfs/race';
 import Bluebird from 'bluebird';
 import { getIPFS, getIPFSFromCache } from '../ipfs/use';
 import { toLink as toIpfsLink } from 'to-ipfs-url';
@@ -14,6 +14,8 @@ import { RequestInit } from 'node-fetch';
 import { allSettled } from 'bluebird-allsettled';
 import console from 'debug-color2/logger';
 import moment from 'moment';
+import { promiseTapLazyBoth } from 'promise-tap-then-catch';
+import { _getControllerFromSignal } from 'abort-controller-util';
 
 const SymbolSource = Symbol.for('href');
 
@@ -45,17 +47,20 @@ export function fetchEpubAll(ipfs_href: string, timeout: number, options?: {
 				controller = new AbortControllerTimer(timeout);
 				options ??= {};
 				options.fetchOptions ??= {};
+				// @ts-ignore
 				options.fetchOptions.signal ??= controller.signal
 				options.fetchOptions.timeout ??= controller.timeout
 			}
 
-			return Bluebird.any(list.map(ipfs_href => fetchEpub(ipfs_href, timeout, options).then(ret =>
-				{
-					ret[SymbolSource] = ipfs_href;
-					return ret;
-				}).tap(assertEpubByMime)))
-				.finally(() => controller?.abort())
-				;
+			const p = Bluebird.any(list.map(ipfs_href => fetchEpub(ipfs_href, timeout, options).then(ret =>
+			{
+				ret[SymbolSource] = ipfs_href;
+				return ret;
+			}).tap(assertEpubByMime)));
+
+			return promiseTapLazyBoth(p, () => {
+				_abortController(controller, options?.fetchOptions?.signal);
+			})
 		})
 }
 
@@ -77,6 +82,7 @@ export function downloadEpubRace(ipfs_href: string,
 		controller = new AbortControllerTimer(timeout);
 		options ??= {};
 		options.fetchOptions ??= {};
+		// @ts-ignore
 		options.fetchOptions.signal ??= controller.signal
 		options.fetchOptions.timeout ??= controller.timeout
 	}
@@ -84,7 +90,7 @@ export function downloadEpubRace(ipfs_href: string,
 	console.debug(`downloadEpubRace`, ipfs_href, options, timeout && moment()
 		.locale('zh-tw').add(timeout/1000, 'seconds').fromNow(true))
 
-	return Bluebird.resolve(useIPFS)
+	const p = Bluebird.resolve(useIPFS)
 		.then(useIPFS =>
 		{
 			return useIPFS ?? getIPFSFromCache()
@@ -104,6 +110,33 @@ export function downloadEpubRace(ipfs_href: string,
 			])
 		})
 		.tap(assertEpubByMime)
-		.finally(() => controller?.abort())
+	;
+
+	return promiseTapLazyBoth(p, () => {
+		_abortController(controller, options?.fetchOptions?.signal);
+	})
 }
 
+export function _abortController(controller: any, signal: any)
+{
+	try
+	{
+		controller?.abort();
+	}
+	catch (e)
+	{
+
+	}
+	if (signal)
+	{
+		try
+		{
+			_getControllerFromSignal(signal)?.abort();
+			signal.abort?.();
+		}
+		catch (e)
+		{
+
+		}
+	}
+}

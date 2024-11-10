@@ -35,6 +35,7 @@ export function fetch(...argv): Bluebird<Response>
 		{
 			const controller = new AbortControllerTimer(options.timeout);
 
+			// @ts-ignore
 			options.signal = controller.signal;
 
 			cb = () => controller.clear();
