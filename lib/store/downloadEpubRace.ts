@@ -4,18 +4,16 @@ import { handleCID, IFetchOptions, lazyRaceServerList } from 'fetch-ipfs/util';
 import { raceFetchIPFS } from 'fetch-ipfs/race';
 import Bluebird from 'bluebird';
 import { getIPFS, getIPFSFromCache } from '../ipfs/use';
-import { toLink as toIpfsLink } from 'to-ipfs-url';
 import { assertEpubByMime } from './fetch/util';
 import { fetchEpub } from './fetch/fetchEpub';
-import lazyMakeIpfsAllServerURL, { _notAllowedAddress as notAllowedAddress } from '@lazy-ipfs/make-url-list';
+import lazyMakeIpfsAllServerURL from '@lazy-ipfs/make-url-list';
 import { ipfsGatewayAddressesLink } from 'ipfs-util-lib/lib/api/multiaddr';
 import AbortControllerTimer from 'abort-controller-timer';
 import { RequestInit } from 'node-fetch';
-import { allSettled } from 'bluebird-allsettled';
 import console from 'debug-color2/logger';
 import moment from 'moment';
 import { promiseTapLazyBoth } from 'promise-tap-then-catch';
-import { _getControllerFromSignal } from 'abort-controller-util';
+import { _abortController } from '../util/abort';
 
 const SymbolSource = Symbol.for('href');
 
@@ -117,26 +115,3 @@ export function downloadEpubRace(ipfs_href: string,
 	})
 }
 
-export function _abortController(controller: any, signal: any)
-{
-	try
-	{
-		controller?.abort();
-	}
-	catch (e)
-	{
-
-	}
-	if (signal)
-	{
-		try
-		{
-			_getControllerFromSignal(signal)?.abort();
-			signal.abort?.();
-		}
-		catch (e)
-		{
-
-		}
-	}
-}

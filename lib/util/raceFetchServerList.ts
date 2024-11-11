@@ -8,6 +8,8 @@ import { fetch } from '../fetch';
 import AbortControllerTimer from 'abort-controller-timer';
 import lazyMakeIpfsAllServerURL, { _notAllowedAddress as notAllowedAddress } from '@lazy-ipfs/make-url-list';
 import { ipfsGatewayAddressesLink } from 'ipfs-util-lib/lib/api/multiaddr';
+import { _abortController } from './abort';
+import { promiseTapLazyBoth } from 'promise-tap-then-catch';
 
 export async function raceFetchServerList(ipfs: IPFS, ipfs_href: string, timeout?: number, options?: {
 	filter?(buf: Buffer): boolean;
@@ -22,6 +24,9 @@ export async function raceFetchServerList(ipfs: IPFS, ipfs_href: string, timeout
 			await ipfsGatewayAddressesLink(ipfs).catch(e => null),
 		],
 		ipfsGatewayDomainList: [],
+	}).filter(u =>
+	{
+		return !/cloudflare-ipfs|cf-ipfs|jorropo\.net|ipfs\.runfission\.com|ipfs\.mrh\.io|ipfs\.yt|ipfs\.drink\.cafe|ipfs\.telos\.miami|ipfs\.itargo\.io|bluelight\.link|ipfs\.smartholdem\.io/i.test(u.hostname)
 	});
 }
 
@@ -29,32 +34,33 @@ export function raceFetchAll(list: ITSResolvable<(string | URL)[]>, timeout?: nu
 	filter?(buf: Buffer): boolean;
 } & IFetchOptions)
 {
+	const controller = new AbortControllerTimer(timeout);
+
 	return Bluebird.resolve(list)
-		.then(list =>
-		{
-			const controller = new AbortControllerTimer(timeout);
+		.then(list => {
+			const p = Bluebird.any([...list].map(ipfs_href =>
+			{
+				return fetch(ipfs_href, {
+					timeout,
+					// @ts-ignore
+					signal: controller.signal,
+				})
+					.then(res => res.buffer())
+					.tap(async (buf) =>
+					{
+						let result = (await options?.filter?.(buf)) ?? true
 
-			return Bluebird.resolve(list.map(ipfs_href =>
-				{
-
-					return fetch(ipfs_href, {
-						timeout,
-						signal: controller.signal,
-					})
-						.then(res => res.buffer())
-						.tap(async (buf) =>
+						if (!result)
 						{
-							let result = (await options?.filter?.(buf)) ?? true
+							return Promise.reject(new Error(`reject by filter: ${result}\n${ipfs_href}`))
+						}
+					})
 
-							if (!result)
-							{
-								return Promise.reject(new Error(`reject by filter: ${result}\n${ipfs_href}`))
-							}
-						})
+			}));
 
-				}))
-				.any()
-				.finally(() => controller.abort())
+			return promiseTapLazyBoth(p, () =>
+			{
+				_abortController(controller)
+			})
 		})
-		;
 }

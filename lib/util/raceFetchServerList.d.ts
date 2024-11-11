@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { IPFS } from 'ipfs-core-types';
 import { IFetchOptions } from 'fetch-ipfs/util';
 import { ITSResolvable } from 'ts-type/lib/generic';
@@ -8,4 +7,4 @@ export declare function raceFetchServerList(ipfs: IPFS, ipfs_href: string, timeo
 } & IFetchOptions): Promise<URL[]>;
 export declare function raceFetchAll(list: ITSResolvable<(string | URL)[]>, timeout?: number, options?: {
     filter?(buf: Buffer): boolean;
-} & IFetchOptions): Bluebird<Bluebird<Buffer>>;
+} & IFetchOptions): Bluebird<Buffer<ArrayBufferLike>>;

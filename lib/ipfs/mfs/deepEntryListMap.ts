@@ -140,7 +140,21 @@ export function loadDeepEntryListMapFromServer()
 	)
 		.then(async (raw) =>
 		{
-			return raceFetchAll(raceFetchServerList(null, raw.data.href), 60 * 1000)
+			let servers = await raceFetchServerList(null, raw.data.href);
+
+			return raceFetchAll(servers, 60 * 1000, {
+				filter(buf: Buffer)
+				{
+					if (buf?.length)
+					{
+						let r = JSON.parse(String(buf) as string);
+
+						return r.length && Array.isArray(r)
+					}
+
+					return false
+				},
+			})
 				.then(buf => JSON.parse(String(buf) as string) as [string, string][])
 				.tap(row =>
 				{

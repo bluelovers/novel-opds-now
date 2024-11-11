@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { IUseIPFSApi } from '../types';
 import { IDResult } from 'ipfs-core-types/src/root';
 import Bluebird from 'bluebird';

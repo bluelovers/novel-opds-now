@@ -11,4 +11,3 @@ export declare function downloadEpubRace(ipfs_href: string, useIPFS?: ITSValueOr
     filter?(buf: Buffer): boolean;
     fetchOptions?: RequestInit;
 } & IFetchOptions): Bluebird<Buffer<ArrayBufferLike>>;
-export declare function _abortController(controller: any, signal: any): void;
