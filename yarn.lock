@@ -122,13 +122,12 @@
     request-promise-core "1.1.3"
     stealthy-require "^1.1.1"
 
-"@bluelovers/string-natural-compare@^2.0.11", "@bluelovers/string-natural-compare@^2.0.13", "@bluelovers/string-natural-compare@^2.0.7":
-  version "2.0.7"
-  resolved "https://registry.npmjs.org/@bluelovers/string-natural-compare/-/string-natural-compare-2.0.7.tgz#7b61bec43dc40ee578edbb9ea71d6f61df2e94ec"
-  integrity sha512-/3sl9N/BYgqlOepA92k5kbVva4KuoGkfyOkJR1GIPbDlOmaA0pEN1sznS2LR3vQv64Q0/o5HT/rsMmaQIJKEwQ==
+"@bluelovers/string-natural-compare@^2.0.11", "@bluelovers/string-natural-compare@^2.0.13":
+  version "2.0.13"
+  resolved "https://registry.npmjs.org/@bluelovers/string-natural-compare/-/string-natural-compare-2.0.13.tgz#94cd1774373a98333f8ab5220c08080970357579"
+  integrity sha512-3S72SrVIlnxQSyao0tlLR4E2A4oMZZWjyRPQO+GV8JYAB1q42Lvnc0DpmP8UBuy4TdVDJDsGVf6FNlEg/kjeLg==
   dependencies:
-    string-natural-compare "^3.0.1"
-    tslib "^2"
+    string-natural-compare2 "^3.0.1"
 
 "@bluelovers/to-regex-range2@^5.0.1":
   version "5.0.1"
@@ -694,31 +693,30 @@
     "@lazy-cjk/japanese" "^1.2.34"
     chinese-parseint2 "^2.0.6"
 
-"@lazy-glob/sort-entries@^1.0.11", "@lazy-glob/sort-entries@^1.0.12", "@lazy-glob/sort-entries@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.npmjs.org/@lazy-glob/sort-entries/-/sort-entries-1.0.9.tgz#1f2e4948fe2ec9c88e6a9aa3bb4c54588ed6a063"
-  integrity sha512-MV6KRVpxVBNNCyuhjFb9BdrLCROnzO1gDXBnMXkW1uOHSnrHDKmCiKo7mljoLQ/lfYGqdt4lRPf71acGxvxehQ==
+"@lazy-glob/sort-entries@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/@lazy-glob/sort-entries/-/sort-entries-1.0.12.tgz#226db743a6bcfb92ea65d1a5922327f681459889"
+  integrity sha512-4mhjgEIduj23GD7gdTPNYprucmKf5d0CbIEd1o54+wzZyZLRk0mLNxVfRMok2art1A4JjPMsZv8C6AXifcLvWw==
   dependencies:
-    "@bluelovers/string-natural-compare" "^2.0.7"
-    "@lazy-glob/util" "^1.0.10"
-    tslib "^2"
+    "@bluelovers/string-natural-compare" "^2.0.11"
+    "@lazy-glob/util" "^1.0.12"
 
 "@lazy-glob/sort-tree@^1.0.12", "@lazy-glob/sort-tree@^1.0.13":
-  version "1.0.12"
-  resolved "https://registry.npmjs.org/@lazy-glob/sort-tree/-/sort-tree-1.0.12.tgz#101e30699bf3c0232832f84bb8f8a5382fc931d2"
-  integrity sha512-tom/rg9ghcaABlhdakYnnIVeS6+ImvpJETpa2r/Mcka4lkQHMlJCFT1DgpgTJxAdIINJAs1MSTipMUSSZXvMNg==
+  version "1.0.13"
+  resolved "https://registry.npmjs.org/@lazy-glob/sort-tree/-/sort-tree-1.0.13.tgz#4692119e88e4596d6a93d370cf6b6db364d8e6a5"
+  integrity sha512-NcQVMaibNNhZfG2K/WwGEgS+UwyIpQkuNSxWL4I/cbFmsQR5nPccsWTDmtUVp69Tl0v5DHMBTSJ5Sk1ugv4kyQ==
   dependencies:
-    "@lazy-glob/sort-entries" "^1.0.11"
-    "@lazy-glob/util" "^1.0.11"
-    "@node-novel/normalize" "^1.0.30"
-    "@node-novel/sort" "^1.0.20"
-    glob-tree-list "^2.0.2"
+    "@lazy-glob/sort-entries" "^1.0.12"
+    "@lazy-glob/util" "^1.0.12"
+    "@node-novel/normalize" "^1.0.33"
+    "@node-novel/sort" "^1.0.23"
+    glob-tree-list "^2.0.3"
     tslib "^2"
 
-"@lazy-glob/util@^1.0.10", "@lazy-glob/util@^1.0.11", "@lazy-glob/util@^1.0.12":
-  version "1.0.10"
-  resolved "https://registry.npmjs.org/@lazy-glob/util/-/util-1.0.10.tgz#5672ed705197cc4a87a3d09332cc904fb3a6dbea"
-  integrity sha512-dgATUfJrDFH7dfPRw5Cm049B4627fO7Lda1HEyCwaDWwxM3nZNW4bDR44wawXNoaz2oGADzRTEUrMNkYumuupg==
+"@lazy-glob/util@^1.0.12":
+  version "1.0.12"
+  resolved "https://registry.npmjs.org/@lazy-glob/util/-/util-1.0.12.tgz#49238d268e1a5f45dda88d5535859df666fbab28"
+  integrity sha512-7zT1wHP3lMfSdlS+1KKrMj1qZmrKXsCHzHNsdHvI12UclJxMAIr0PLVBvAbp+imKhgoGNEnkhj12jga1nT4oCQ==
   dependencies:
     globby "<13 >=12.2.0"
     tslib "^2"
@@ -1049,7 +1047,7 @@
     str-util "^3.0.2"
     tslib "^2"
 
-"@node-novel/normalize@^1.0.30", "@node-novel/normalize@^1.0.31", "@node-novel/normalize@^1.0.33":
+"@node-novel/normalize@^1.0.31", "@node-novel/normalize@^1.0.33":
   version "1.0.33"
   resolved "https://registry.npmjs.org/@node-novel/normalize/-/normalize-1.0.33.tgz#dd917114b208602d03774b8dce36e97eadb43399"
   integrity sha512-2AIkLAhemJCuAlPie21lSciIHlvZJuYjR1VB8t3abT4toqnZ2i/syNUtjd2tsv27nTa6d0PZDU7zbtxDoLQV6w==
@@ -1078,7 +1076,7 @@
     ts-type "^3.0.1"
     tslib "^2"
 
-"@node-novel/sort@^1.0.20", "@node-novel/sort@^1.0.23":
+"@node-novel/sort@^1.0.23":
   version "1.0.23"
   resolved "https://registry.npmjs.org/@node-novel/sort/-/sort-1.0.23.tgz#aaaa971e7b010034e11d7335819e3aba6dfd8db6"
   integrity sha512-3g4kcwxGsbPSu/D4KCDRarY+fDXsTv954lysU3VdZP0xa+LStKiPxuHnWyPRM25yHYzgqa1fAoawQ0+5egAAyQ==
@@ -2158,9 +2156,9 @@ array-flatten@1.1.1:
   integrity sha1-ml9pkFGx5wczKPKgCJaLZOopVdI=
 
 array-hyper-unique@^1.1.10, array-hyper-unique@^1.1.9, array-hyper-unique@^2.1.4, array-hyper-unique@^2.1.6:
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/array-hyper-unique/-/array-hyper-unique-2.1.4.tgz#6c3aa746905e0b89214beedff4707f1be57b767b"
-  integrity sha512-RVsGx2YpFGhGpgdkK7A0VjFQecVUCowpkQerGCsyXVRXHxccAlPPTDt9ueF/X7Zq/6z6duZ49i9WzTCzcnQygQ==
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/array-hyper-unique/-/array-hyper-unique-2.1.6.tgz#429412fd63b7bd7c920f6cdbf60d1dd292855b2e"
+  integrity sha512-BdlHRqjKSYs88WFaVNVEc6Kv8ln/FdzCKPbcDPuWs4/EXkQFhnjc8TyR7hnPxRjcjo5LKOhUMGUWpAqRgeJvpA==
   dependencies:
     deep-eql "= 4.0.0"
     lodash "^4.17.21"
@@ -4838,7 +4836,7 @@ glob-parent@^5.1.2:
   dependencies:
     is-glob "^4.0.1"
 
-glob-tree-list@^2.0.2, glob-tree-list@^2.0.3:
+glob-tree-list@^2.0.3:
   version "2.0.3"
   resolved "https://registry.npmjs.org/glob-tree-list/-/glob-tree-list-2.0.3.tgz#ba3349aa834f072fbfa03d8b8074bf21d026601e"
   integrity sha512-6NKErUz7fxYRosOeszM6XAq6sNYq1W5/a6YPMr/DGgFZLIG17w8b6v0xP17gj9pCf7fOV/PvYPkMzx2ihiIJTA==
@@ -9890,10 +9888,10 @@ string-detect-indent@^1.0.7:
   resolved "https://registry.npmjs.org/string-detect-indent/-/string-detect-indent-1.0.7.tgz#bfa9bc96274afea1b48512599e80c483edc54719"
   integrity sha512-HtSOZ51rCjW3JlzzPrfSic/VlQOaxInIlzcWrEkHr6zMR5NZTVwr5T5L+x3F1NabPnF2fVG3BU4XzBeeovCWHA==
 
-string-natural-compare@^3.0.1:
+string-natural-compare2@^3.0.1:
   version "3.0.1"
-  resolved "https://registry.npmjs.org/string-natural-compare/-/string-natural-compare-3.0.1.tgz#7a42d58474454963759e8e8b7ae63d71c1e7fdf4"
-  integrity sha512-n3sPwynL1nwKi3WJ6AIsClwBMa0zTi54fn2oLU6ndfTSIO05xaznjSf15PcBZU6FNWbmN5Q6cxT4V5hGvB4taw==
+  resolved "https://registry.npmjs.org/string-natural-compare2/-/string-natural-compare2-3.0.1.tgz#f6e956929064f5811a72f54fdde7f4862e715aa5"
+  integrity sha512-2g5OCprlirAeevzB1hmxas7fFhXQpAH12uJrU7/+DSSk+KRw6hO9h+XW5CwFjnzxa0FRNYvrGtb0WvXDjEME5g==
 
 string-split-keep2@^1.0.12:
   version "1.0.12"
