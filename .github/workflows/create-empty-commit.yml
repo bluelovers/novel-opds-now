@@ -4,9 +4,12 @@ on:
     -
       cron: '0 0 5 * *'
 jobs:
-  uses: velocibear/create-empty-commit@v1.0.0
-  with:
-    token: ${{ secrets.GITHUB_TOKEN }}
-    email: action@github.com
-    name: GitHub Action
-    message: "ci: dummy commit"
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: tbvjaos510/empty-commit-action@0.0.2
+      - with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          email: action@github.com
+          name: GitHub Action
+          message: "ci: dummy commit"
