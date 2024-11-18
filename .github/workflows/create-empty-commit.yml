@@ -2,14 +2,30 @@ on:
   workflow_dispatch:
   schedule:
     -
-      cron: '0 0 5 * *'
+      cron: '0 0 5,20 * *'
 jobs:
-  deploy:
+  main-action:
     runs-on: ubuntu-latest
     steps:
-      - uses: tbvjaos510/empty-commit-action@0.0.2
-      - with:
+      -
+        uses: actions/checkout@main
+        with:
+          fetch-depth: 2
+          ref: master
           token: ${{ secrets.GITHUB_TOKEN }}
-          email: action@github.com
-          name: GitHub Action
-          message: "ci: dummy commit"
+      -
+        name: setup git config
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+      -
+        name: setup git config
+        run: |
+          git commit --allow-empty -m 'ci(dummy): keep actions alive'
+      -
+        name: Push changes
+        if: success()
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: master
